@@ -1,0 +1,5 @@
+<!--components/error/error.wxml-->
+<view class='error-body'>
+    <image class='error-logo' src='../../assets/images/error.png' mode='widthFix'></image>
+    <view class='error-text'>暂无数据</view>
+</view>

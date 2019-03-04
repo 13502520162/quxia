@@ -1,0 +1,26 @@
+/* pages/manage/toll/putaway.wxss */
+.header {
+  background: #fff;
+  padding: 20rpx;
+  font-size: 32rpx;
+}
+.header > text:nth-child(1){
+  color: var(--error-color)
+}
+.header picker{
+  color: var(--main-color);
+  float: right;
+}
+
+.list {
+  margin-top: 20rpx;
+}
+
+.card {
+  background: #fff;
+  padding-left: 20rpx;
+}
+
+.place-num{
+  float: right;
+}

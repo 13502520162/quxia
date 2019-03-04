@@ -1,0 +1,5 @@
+/* pages/manage/shareAd/toll/selectPeriods.wxss */
+.header-right {
+  float: right;
+  color: var(--main-color)
+}

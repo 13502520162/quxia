@@ -1,0 +1,47 @@
+<!--pages/manage/device/group/group.wxml-->
+
+
+<scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}">
+  <view class='card'  wx:for="{{listData}}" wx:key="{{item.createdDate}}" data-id='{{item.id}}' data-name='{{item.name}}' bindtap='showActionSheet'>
+      <view class="weui-cell weui-cell_select card-item">
+          <view class="weui-cell__bd">
+              <view class="weui-select">
+                  <view class='list-item'>
+                    <text>{{item.name}}</text>
+                    <text class='devices-num'>{{item.devices || 0}}台设备</text>
+                  </view>
+              </view>
+          </view>
+      </view>
+  </view>
+
+  <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+  </view>
+  
+  <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+  </view>
+</scroll-view>
+
+<dialog
+  use-slot
+  async-close
+  show="{{ isShowDialog }}"
+  show-cancel-button
+  bind:close="onDialogClose"
+>
+  <field
+    value="{{ newGroundName }}"
+    type="text"
+    label="分组名称"
+    border="{{ false }}"
+    bindinput="onNewGroundNameChange"
+    placeholder="请输入分组名称"
+  />
+</dialog>
+
+<view class='bottom-btn' bindtap='onAddGround' wx:if="{{!disAdd}}">
+  <button  class="weui-btn" type="primary">添加</button>
+</view>

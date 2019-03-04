@@ -1,0 +1,11 @@
+.details-container {
+  background: #fff;
+}
+
+.weui-cells {
+  margin-top: 0rpx;
+}
+
+.weui-cell:before {
+  border-top: none;
+}

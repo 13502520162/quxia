@@ -1,0 +1,32 @@
+/* pages/manage/device/list/quxia/door.wxss */
+
+.list {
+  height: calc( 100vh - 100rpx );
+  overflow: scroll;
+}
+
+label {
+  margin: 10rpx 0rpx;
+  background: #fff;
+  padding: 20rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.item-num{
+  margin-right: 40rpx;
+}
+.item-left, .item-right {
+  display: inline-flex;
+  align-items: center;
+}
+.item-left > view {
+  display: inline-block;
+}
+
+
+
+.item-left image {
+  max-width: 100rpx;
+  max-height: 100rpx;
+  margin-right: 20rpx;
+}

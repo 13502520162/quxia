@@ -1,0 +1,24 @@
+<!--pages/manage/device/list/quxia/door.wxml-->
+  <view class='list'>
+    <label wx:for="{{goods}}" wx:key="{{index}}">
+        <view class='item-left'>
+          <view class='item-num'>{{item.number}}</view>
+          <view ><image  mode="aspectFill" src="{{item.image}}"></image></view>
+          <view>{{item.name}}</view>
+          <view wx:if="{{item.state =='OUT_OF_STOCK'}}" class='card-status-fail'>缺货</view> 
+        </view>
+        <view class='item-right'>
+            <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                <button class="weui-btn mini-btn" type="primary" size="mini" bindtap='openDoor' data-number='{{item.number}}'>开门</button>
+            </view>
+        </view>
+    </label>
+    <view class="weui-loadmore weui-loadmore_line" wx:if="{{goods.length == 0}}">
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+    </view>
+  </view>
+
+    <view class='bottom-btn' bindtap='openAllDoors'>
+      <button  class="weui-btn" type="primary">一键开门</button>
+    </view>
+    

@@ -1,0 +1,56 @@
+<!--pages/manage/coupon/detailsOfCouponData/detailsOfCouponData.wxml-->
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title">{{coupon.name}}</view>
+    <view class="page__desc">
+      有效期：
+       <text>{{startDate}} 至 {{endDate}}</text>
+    </view>
+  </view>
+
+  <view>
+    <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+      <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+        <image class="weui-media-box__thumb" src="{{location.image}}" />
+      </view>
+      <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+        <view class="weui-media-box__title">{{location.name}}</view>
+        <view class="weui-media-box__desc">{{location.province}}{{location.city}}{{location.district}}{{location.street}}</view>
+      </view>
+    </navigator>
+  </view>
+</view>
+
+
+<view class='list'>
+  <view class="weui-cell weui-cell_access">
+    <view class="weui-cell__bd">
+      <view style="display: inline-block; vertical-align: middle">已领取</view>
+    </view>
+    <view class="weui-cell__ft">{{acquired}}张</view>
+  </view>
+  <view class="weui-cell weui-cell_access">
+    <view class="weui-cell__bd">
+      <view style="display: inline-block; vertical-align: middle">领取人数</view>
+    </view>
+    <view class="weui-cell__ft">{{users}}人</view>
+  </view>
+  <view class="weui-cell weui-cell_access">
+    <view class="weui-cell__bd">
+      <view style="display: inline-block; vertical-align: middle">已使用</view>
+    </view>
+    <view class="weui-cell__ft">{{redeemed}}张</view>
+  </view>
+  <view class="weui-cell weui-cell_access">
+    <view class="weui-cell__bd">
+      <view style="display: inline-block; vertical-align: middle">累计消费</view>
+    </view>
+    <view class="weui-cell__ft">{{orderTotal}}元</view>
+  </view>
+  <view class="weui-cell weui-cell_access">
+    <view class="weui-cell__bd">
+      <view style="display: inline-block; vertical-align: middle">累计优惠</view>
+    </view>
+    <view class="weui-cell__ft">{{totalDiscount}}元</view>
+  </view>
+</view>

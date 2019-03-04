@@ -1,0 +1,65 @@
+<!--pages/manage/account/accounts/details.wxml-->
+<form bindsubmit="submit">
+
+  <view>
+    <view class="weui-panel">
+        <view class="weui-panel__bd">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">角色名</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" placeholder="请输入角色名" value='{{roleData.name}}' bindinput="onNameChange" />
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class='permission-list'>
+      <view class="weui-panel" wx:for="{{permissionsList}}" wx:key="{{index}}">
+          <view class="weui-panel__hd">
+            <view class='permission-header-left'>{{item.permission.name}} </view>
+            <view class='permission-header-right'>
+                <switch 
+                  wx:if="{{item.permission.name !='我的'}}"
+                  name="{{item.permission.value}}" 
+                  checked='{{item.permission.checked}}' 
+                  data-index='{{index}}'  
+                  bindchange='onPermissionChange'>
+                </switch>
+            </view>
+          </view>
+          <view class="weui-panel__bd">
+              <view class="weui-media-box weui-media-box_small-appmsg">
+                  <view class="weui-cells weui-cells_in-small-appmsg">
+                      <view class="weui-cell weui-cell_access"  
+                        wx:for="{{item.subpermissions}}"  
+                        wx:for-index="subIndex"
+                        wx:key="value" 
+                        wx:for-item="subpermission">
+                          <view class="weui-cell__bd weui-cell_primary">
+                              <view class='subpermission-name'>{{subpermission.name}}</view>
+                          </view>
+                          <view class="weui-cell__ft">
+                              <switch  
+                                bindchange='onSubPermissionChange' 
+                                data-index='{{index}}' 
+                                data-subIndex='{{subIndex}}'   
+                                name="{{subpermission.value}}" 
+                                checked='{{subpermission.checked}}'></switch>
+                          </view>
+                      </view>
+                  </view>
+              </view>
+          </view>
+      </view>
+    </view>
+
+  </view>
+
+  
+
+    <view class='bottom-btn'  >
+      <button  class="weui-btn" type="primary" form-type="submit">提交</button>
+    </view>
+
+</form>

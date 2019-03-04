@@ -1,0 +1,111 @@
+<!--pages/index/analysis.wxml-->
+
+
+<view class='header'>
+    <view class='place-info'> 
+      <view class='place-name'>{{deviceTypeData.name}}</view>
+      <view class='place-device-num'>{{deviceTypeData.deviceNum}}台设备</view>
+    </view>
+    <view class='date'>
+      <view class='date-item {{dateItem.today? "active":""}}' data-item='today' bindtap='selectDateItem'>今天</view>
+      <view class='date-item {{dateItem.week? "active":""}}' data-item='week' bindtap='selectDateItem'>本周</view>
+      <view class='date-item {{dateItem.month? "active":""}}' data-item='month' bindtap='selectDateItem'>本月</view>
+      <view class='filter-btn'>
+        <image src='../../../../assets/images/filter.png' mode='widthFix' bindtap='toggleFilterMenue'></image> 
+      </view>
+    </view>
+</view>
+
+<view class='analysis-date'>
+  <view class='analysis-date-header'>
+    <view><image src='../../../../assets/images/leftBackBtn.png' bindtap='lastData'></image></view>
+      <view class='date-range'>
+        <view>
+          <picker mode="date" bindchange="onStartDateChange" >{{date.start}}</picker>
+            -  
+          <picker mode="date" bindchange='onEndDateChange'>{{date.end}}</picker>
+        </view>
+      </view>
+      <view><image src='../../../../assets/images/rightBackBtn.png' bindtap='nextData'></image></view> 
+  </view>
+</view>
+
+<view class='report'>
+   <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
+      <view class='card'  wx:for="{{listData}}" wx:key="{{index}}" data-id='{{item.id}}' data-name='{{item.name}}' bindtap='gotoDetail'>
+          <view class="weui-cell weui-cell_select card-item">
+              <view class="weui-cell__bd">
+                  <view class="weui-select">
+                      <view class='list-item'>
+                        <view>
+                            <view class='item-left-top'><text>{{item.id}}</text><text>{{item.name}}</text></view>
+                            <view class='item-left-bottom'><text>营业额：{{item.sales ? item.sales : 0 }}</text><text>订单数：{{item.orders ? item.orders: 0}}</text></view>
+                        </view>
+                      </view>
+                  </view>
+              </view>
+          </view>
+      </view>
+
+      <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+          <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+      </view>
+      
+      <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips">正在加载</view>
+      </view>
+    </scroll-view>
+</view>
+
+<!-- 弹框数据筛选 -->
+<popup
+  show="{{showFilterMenue}}"
+  position="right"
+  custom-class="popup"
+  bind:close="toggleFilterMenue"
+>
+ <view class='popup-content'>
+    <view class="popup-panel">
+
+      <view class='popup-device-id'>
+        <view class='popup-title'>设备编号</view>
+          <view>
+            <input placeholder='请输入设备编号' bindinput="onDeviceIdChange" value='{{filterParams.query}}' ></input>
+          </view>     
+      </view>
+
+      <view class='popup-device-place'>
+        <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                <view class="weui-label popup-title" style='margin:0'>场地</view>
+            </view>
+            <view class="weui-cell__bd">
+                <picker bindchange="onFilterPlaceChange" range="{{placesData}}" value='全部' range-key="name" >
+                    <view class="weui-select">{{placesData[placesDataIndex].name}}</view>
+                </picker>
+            </view>
+        </view>
+      </view>
+
+      <view class='popup-device-group'>
+        <view class='popup-title'>设备分组</view>
+          <view class='popup-device-group-items'>
+            <text 
+              wx:for="{{groupsData}}"
+              wx:key="id"
+              class='tag-item {{item.selected ? "tag-item-selected":"" }}' 
+              bindtap='onselectGroup'
+              data-id='{{item.id}}'
+            >{{ item.name }}</text>
+          </view>     
+      </view>
+
+    </view>
+    <view class='popup-bottom'>
+        <text bindtap='resetPopData'>重置</text>
+        <text bindtap='onSubmit'>确定</text>
+    </view>
+ </view>
+</popup>
+

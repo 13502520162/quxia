@@ -1,0 +1,39 @@
+<!--pages/login/login.wxml-->
+
+<view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{tips}}</view>
+<view class="page__bd">
+  <view class="header horizontal__vertical__center">
+    <view class='header-cicle1'>
+      <view class='header-cicle2'>
+        <image src="{{userInfo.avatarUrl}}" class="avatar" ></image>
+      </view>
+    </view>
+  </view>
+
+
+  <view class="input-group">
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label"><image src='/assets/images/loginUser.png'></image></view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input"  placeholder-style="color:rgba(255,255,255,0.30);" placeholder="请输入用户名" bindinput="userNameChangeHandle"/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label" ><image src='/assets/images/loginPasswd.png'></image></view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input"  placeholder-style="color:rgba(255,255,255,0.30);" placeholder="请输入密码" type='password' bindinput='passwordChangehandle'/>
+        </view>
+    </view>
+  </view>
+
+  <view class="weui-btn-area">
+      <button class="weui-btn button-hover" type="primary" bindtap="loginHandle">登陆</button>
+  </view>
+
+  <!-- <view wx:if='{{isCanRegister}}' class='register-btn' bindtap='gotoRegister'><text>注册账号</text></view> -->
+</view>
+

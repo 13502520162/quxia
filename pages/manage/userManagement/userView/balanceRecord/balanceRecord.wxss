@@ -1,0 +1,107 @@
+/* pages/manage/userManagement/userView/balanceRecord/balanceRecord.wxss */
+
+.cumulative {
+  background: #fff;
+  display: flex;
+  padding: 20rpx;
+}
+
+.cumulative>view {
+  flex: 1;
+  width: 240rpx;
+  margin: 0 30rpx;
+  height: 100rpx;
+  border: 1px solid #d9d9d9;
+  border-radius: 10rpx;
+}
+
+.cumulative-l {
+  padding: 20rpx;
+}
+
+.cumulative-l>view:nth-child(2) {
+  color: #188ae2;
+  font-weight: bold;
+  margin-top: 10rpx;
+}
+
+.content {
+  padding: 20rpx 20rpx 0;
+  background: #fff;
+  margin-top: 20rpx;
+}
+
+.content-screen {
+  font-weight: bold;
+  padding-left: 30rpx;
+}
+
+.content-screen .icon {
+  position: relative;
+  top: 30rpx;
+  left: 10rpx;
+  width: 0;
+  height: 0;
+  border-left: 8rpx solid transparent;
+  border-right: 8rpx solid transparent;
+  border-top: 20rpx solid #000;
+}
+
+.content-info>view {
+  display: inline-block;
+  padding-left: 30rpx;
+}
+
+.content-info text {
+  color: #188ae2;
+}
+
+.content-tab {
+  margin-top: 20rpx;
+  display: flex;
+  padding: 10rpx 30rpx 0;
+}
+
+.content-tab>view {
+  padding: 20rpx;
+  margin: 0 20rpx;
+  text-align: center;
+}
+
+.content-tab>view:nth-child(1) {
+  margin-left: 0;
+}
+
+.content-tab>view.active {
+  color: #188ae2;
+  border-bottom: 2px solid #188ae2;
+}
+
+.list {
+  border-top: 1px solid #d9d9d9;
+  padding: 0 30rpx;
+  background: #fff;
+}
+
+.list-content {
+  display: flex;
+  border-bottom: 1px solid #d9d9d9;
+  padding: 15rpx;
+}
+
+.list-content>view {
+  flex: 1;
+}
+
+.list-content>view:nth-child(2) {
+  text-align: right;
+  font-weight: bold;
+  color: #188ae2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.list-content .date {
+  color: rgba(153, 148, 148, 1);
+}

@@ -1,0 +1,25 @@
+.list {
+  height: calc( 100vh - 100rpx )
+}
+.card {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.card-item {
+  width: 100%;
+}
+
+.item-body {
+  height: 140rpx;
+  margin-left: 20rpx;
+}
+.weui-select {
+  border-right: none;
+}
+
+.goods-num, .goods-devices-num {
+  color: var(--prompt-color);
+}

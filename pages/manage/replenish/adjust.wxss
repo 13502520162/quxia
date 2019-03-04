@@ -1,0 +1,78 @@
+/* pages/manage/replenish/replenish.wxss */
+.header {
+  background: #fff;
+  padding: 20rpx;
+}
+
+.location-name {
+  font-size: 40rpx;
+  font-weight: bold;
+}
+.device-id {
+  margin: 20rpx 0;
+}
+
+.card-status-success,.card-status-fail {
+  padding: 10rpx;
+  color: #fff;
+  border-radius: 10rpx;
+  margin-left: 20rpx;
+}
+.card-status-success {
+  background: var(--main-color);
+}
+.card-status-fail {
+  background: var(--error-color);
+}
+
+checkbox-group {
+  height: 800rpx;
+  overflow: auto;
+}
+
+label {
+  margin: 10rpx 0rpx;
+  background: #fff;
+  padding: 20rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.item-num{
+  margin-right: 40rpx;
+}
+.item-left, .item-right {
+  display: inline-flex;
+  align-items: center;
+}
+.item-left > view {
+  display: inline-block;
+}
+
+
+
+.item-left image {
+  max-width: 100rpx;
+  max-height: 100rpx;
+  margin-right: 20rpx;
+}
+
+.bottom-btn-group {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100rpx;
+  line-height: 100rpx;
+   vertical-align: top;
+   display: flex;
+   justify-content: space-around;
+
+}
+.bottom-btn-group button {
+  position: relative;
+  width: 40%;
+  height: 92rpx;
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0 !important;
+}

@@ -1,0 +1,44 @@
+/* pages/manage/partner/list/list.wxss */
+
+.list {
+  height: calc( 100vh - 100rpx );
+}
+.card {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.card-item {
+  width: 100%;
+}
+
+.item-body {
+  height: 140rpx;
+  margin-left: 20rpx;
+}
+.item-top  text:not(:first-child) { 
+  margin-left: 20rpx;
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+}
+.item-top  text:nth-child(2) {
+  background: var(--main-color);
+  color: #fff;
+  border-radius: 10rpx;
+}
+.location-name {
+  color: var(--prompt-color)
+}
+.card-status-success,.card-status-fail {
+  padding: 10rpx;
+  color: #fff;
+  border-radius: 10rpx;
+}
+.card-status-success {
+  background: var(--main-color);
+}
+.card-status-fail {
+  background: var(--error-color);
+}

@@ -1,0 +1,139 @@
+<!--pages/index/analysis.wxml-->
+
+
+
+
+
+<view id='userScreen'>
+  <view class='header'>
+    <view class='place-info'>
+      <view class='date'>
+        <view class='date-item {{dateItem.today? "active":""}}' data-item='today' bindtap='selectDateItem'>今天</view>
+        <view class='date-item {{dateItem.week? "active":""}}' data-item='week' bindtap='selectDateItem'>本周</view>
+        <view class='date-item {{dateItem.month? "active":""}}' data-item='month' bindtap='selectDateItem'>本月</view>
+      </view>
+      <image src='../../../assets/images/filter.png' mode='widthFix' bindtap='toggleFilterMenue'></image>
+    </view>
+
+  </view>
+
+
+  <view class='content'>
+    <view class='screen'>
+      <view class='screen-item {{screenItem.consumption? "screenActive":""}}' data-item='consumption' bindtap='screenItem'>
+        <text>消费</text>
+        <text class='iconfont icon-xia {{isTop && screenItem.consumption? "iconActive":""}}'></text>
+        <text class='iconfont icon-shang {{!isTop && screenItem.consumption? "iconActive":""}}'></text>
+
+      </view>
+      <view class='screen-item {{screenItem.balance? "screenActive":""}}' data-item='balance' bindtap='screenItem'>
+        <text>余额</text>
+        <text class='iconfont icon-xia {{isTop1 && screenItem.balance? "iconActive":""}}'></text>
+        <text class='iconfont icon-shang {{!isTop1  && screenItem.balance? "iconActive":""}}'></text>
+      </view>
+      <view class='screen-item {{screenItem.recharge? "screenActive":""}}' data-item='recharge' bindtap='screenItem'>
+        <text>充值</text>
+        <text class='iconfont icon-xia {{isTop2  && screenItem.recharge? "iconActive":""}}'></text>
+        <text class='iconfont icon-shang {{!isTop2 && screenItem.recharge? "iconActive":""}}'></text>
+      </view>
+      <view class='screen-item {{screenItem.register? "screenActive":""}}' data-item='register' bindtap='screenItem'>
+        <text>注册</text>
+        <text class='iconfont icon-xia {{isTop3 && screenItem.register? "iconActive":""}}'></text>
+        <text class='iconfont icon-shang {{!isTop3 && screenItem.register? "iconActive":""}}'></text>
+      </view>
+    </view>
+    <view class='userNum'>100个用户</view>
+  </view>
+</view>
+
+
+<scroll-view scroll-y='true' style='height: calc( 100vh - {{userScreenHeight}} )' bindscrolltolower="userScrollLIst">
+  <view class='user'>
+
+    <view class="weui-cell" wx:for="{{listData}}" wx:key='{{index}}' bindtap='userInfo' data-id='{{item.id}}'>
+      <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+        <image src="{{item.headImageUrl}}" style="width: 50px; height: 50px; display: block;border-radius:50%;" />
+      </view>
+      <view class="weui-cell__bd">
+        <view>{{item.name}}</view>
+        <view style="font-size: 13px;color: #888888;">累计消费{{item.value}}元</view>
+      </view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">
+        <text class='level'>{{item.cardName}}</text>
+      </view>
+    </view>
+
+  </view>
+</scroll-view>
+
+
+
+
+
+<!-- 弹框数据筛选 -->
+<popup show="{{showFilterMenue}}" position="right" custom-class="popup" bind:close="toggleFilterMenue">
+  <view class='popup-content'>
+    <view class="popup-panel">
+      <view class='popup-field'>
+        <text class='title'>姓名</text>
+        <input type='text' value="{{name}}" bindinput='paramesNmae' class='screeb-ipt' />
+      </view>
+      <view class='popup-field'>
+        <text class='title'>手机号</text>
+        <input type='number' value="{{mobile}}" bindinput='paramesMobile' class='screeb-ipt' />
+      </view>
+    </view>
+    <view class='popup-level'>
+      <view>会员等级</view>
+      <view class='level-list'>
+        <text bindtap='selectVip' wx:for="{{vipCards}}" wx:key="{{index}}" class='{{item.checked?"selectAc":""}}' data-checked="{{item.checked}}" data-id='{{item.id}}'>{{item.name}}</text>
+      </view>
+    </view>
+
+    <view class='popup-level'>
+      <view>性别</view>
+      <view class='level-list'>
+        <text bindtap='selectSex' wx:for="{{sexArr}}" wx:key="{{index}}" class='{{item.checked?"selectAc":""}}' data-checked="{{item.checked}}" data-id='{{item.id}}'>{{item.name}}</text>
+      </view>
+    </view>
+
+    <view class='popup-date'>
+      <view>筛选时间</view>
+      <view class='date-screen'>
+        <picker class='date-ipt' mode="date" value="{{date.start}}" start="{{date.start}}" end="" bindchange="screenStartDateChange">
+          <view class="picker ">
+            {{date.start}}
+          </view>
+        </picker>
+        <text>至</text>
+        <picker class='date-ipt' mode="date" value="{{date.start}}" start="{{date.start}}" end="" bindchange="srceenEndDateChange">
+          <view class="picker ">
+            {{date.end}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class='popup-date'>
+      <view>注册时间</view>
+      <view class='date-screen'>
+        <picker class='date-ipt' mode="date" value="{{joinDate.joinDateStart}}" start="{{joinDate.joinDateStart}}" end="" bindchange="rigisterStartDateChange">
+          <view class="picker ">
+            {{joinDate.joinDateStart}}
+          </view>
+        </picker>
+        <text>至</text>
+        <picker class='date-ipt' mode="date" value="{{joinDate.joinDateEnd}}" start="{{joinDate.joinDateStart}}" end="" bindchange="rigisterEndDateChange">
+          <view class="picker ">
+            {{joinDate.joinDateEnd}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class='popup-bottom'>
+      <text bindtap='resetPopData'>重置</text>
+      <text bindtap='onSubmit'>确定</text>
+    </view>
+  </view>
+</popup>

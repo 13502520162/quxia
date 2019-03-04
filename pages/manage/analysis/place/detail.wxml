@@ -1,0 +1,84 @@
+<!--pages/index/analysis.wxml-->
+
+
+<view class='header'>
+    <view class='place-info'> 
+      <view class='place-name'>{{placeData.name}}</view>
+      <view class='place-device-num'>{{placeData.deviceNum}}台设备</view>
+    </view>
+    <view class='date'>
+      <view class='date-item {{dateItem.today? "active":""}}' data-item='today' bindtap='selectDateItem'>今天</view>
+      <view class='date-item {{dateItem.week? "active":""}}' data-item='week' bindtap='selectDateItem'>本周</view>
+      <view class='date-item {{dateItem.month? "active":""}}' data-item='month' bindtap='selectDateItem'>本月</view>
+    </view>
+</view>
+
+<view class='analysis-date'>
+  <view class='analysis-date-header'>
+    <view><image src='../../../../assets/images/leftBackBtn.png' bindtap='lastData'></image></view>
+      <view class='date-range'>
+        <view>
+          <picker mode="date" bindchange="onStartDateChange" >{{date.start}}</picker>
+            -  
+          <picker mode="date" bindchange='onEndDateChange'>{{date.end}}</picker>
+        </view>
+      </view>
+      <view><image src='../../../../assets/images/rightBackBtn.png' bindtap='nextData'></image></view> 
+  </view>
+
+  <view class='icome'>
+      <text>营业额</text>
+      <text class='income-money'>￥{{sales}}</text>
+      <text>￥{{diffSales}}</text>
+      <image class='analysis-date-diff-img' src='{{diffSales > 0 ?"../../../../assets/images/arrow-up.png":"../../../../assets/images/arrow-down.png"}}'></image>
+  </view>
+
+  <view class='analysis-date-diff'>
+
+      <view>
+        <view class='analysis-date-diff-title'>订单数</view>
+        <view class='analysis-date-diff-num'>￥{{orders}}</view>
+        <view>
+          <text class='analysis-date-diff-text'>￥{{diffOrders}}</text>
+          <image class='analysis-date-diff-img' src='{{diffOrders > 0 ?"../../../../assets/images/arrow-up.png":"../../../../assets/images/arrow-down.png"}}'></image>
+        </view>
+      </view>
+      <view>
+        <view class='analysis-date-diff-title'>用户数</view>
+        <view class='analysis-date-diff-num'>{{customers}}</view>
+        <view>
+          <text class='analysis-date-diff-text'>{{diffCustomers}}</text>
+          <image class='analysis-date-diff-img' src='{{diffCustomers > 0 ?"../../../../assets/images/arrow-up.png":"../../../../assets/images/arrow-down.png"}}'></image>
+        </view>
+      </view>
+  </view>
+</view>
+
+<view class='report'>
+   <view class='report-title'>报表明细</view>
+   <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
+      <view class='card'  wx:for="{{listData}}" wx:key="{{item.date}}" data-date='{{item.date}}' bindtap='onShowOrder'>
+          <view class="weui-cell weui-cell_select card-item">
+              <view class="weui-cell__bd">
+                  <view class="weui-select">
+                      <view class='list-item'>
+                        <image src='../../../../assets/images/calendar.png' class='calendar-icon'></image>
+                        <text>{{item.date}}</text>
+                        <text class='item-num'>营业额：{{item.value}}</text>
+                      </view>
+                  </view>
+              </view>
+          </view>
+      </view>
+
+      <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+          <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+      </view>
+      
+      <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips">正在加载</view>
+      </view>
+    </scroll-view>
+</view>
+

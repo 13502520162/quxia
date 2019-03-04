@@ -1,0 +1,25 @@
+/* pages/manage/device/group/group.wxss */
+.card {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.card-item {
+  width: 100%;
+}
+.weui-select {
+  border-right: none;
+}
+.devices-num {
+  color: #fff;
+  margin-left: 20rpx;
+  background: var(--main-color);
+  padding: 5rpx 10rpx;
+  font-size: 32rpx;
+  border-radius: 10rpx;
+}
+.list-item {
+  font-size: 32rpx;
+}

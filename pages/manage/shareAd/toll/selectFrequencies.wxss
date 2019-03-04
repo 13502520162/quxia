@@ -1,0 +1,9 @@
+/* pages/manage/shareAd/toll/selectFrequencies.wxss */
+.header-left, .header-right {
+  /* font-size: 32rpx;
+  color: #000; */
+}
+.header-right {
+  float: right;
+  color: var(--main-color)
+}

@@ -1,0 +1,121 @@
+/* pages/manage/device/list/list.wxss */
+.devices-header {
+  background: #fff;
+  line-height: 60rpx;
+  padding: 20rpx;
+  font-weight: bold;
+  font-size: 32rpx;
+  text-align: right;
+}
+.devices-header image {
+  width: 60rpx;
+}
+
+.tag-item {
+  padding: 10rpx 20rpx;
+  margin: 20rpx;
+  border: 1rpx solid var(--main-color);
+  border-radius: 10rpx;
+  color: var(--main-color);
+  display: inline-block;
+}
+
+.tag-item-selected  {
+  background: var(--main-color);
+  color: #fff;
+}
+
+.device-list {
+  height: calc( 100vh - 200rpx );
+}
+.card {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.card-item {
+  width: 100%;
+}
+
+.item-body {
+  height: 140rpx;
+  margin-left: 20rpx;
+}
+.item-top  text:not(:first-child) { 
+  margin-left: 20rpx;
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+}
+.item-top  text:nth-child(2) {
+  background: var(--main-color);
+  color: #fff;
+  border-radius: 10rpx;
+}
+.location-name {
+  color: var(--prompt-color)
+}
+.card-status-success,.card-status-fail {
+  padding: 10rpx;
+  color: #fff;
+  border-radius: 10rpx;
+}
+.card-status-success {
+  background: var(--main-color);
+}
+.card-status-fail {
+  background: var(--error-color);
+}
+
+.popup {
+  background: var(--background-color) !important;
+}
+.popup-content {
+  width: 600rpx;
+  height: 100vh;
+  position: relative;
+}
+
+.popup-title {
+  font-weight: bold;
+  font-size: 28rpx;
+  margin-bottom: 30rpx;
+}
+
+.popup-device-place {
+  background: #fff;
+}
+
+.popup-device-status, .popup-device-group, .popup-device-id {
+  background: #fff;
+  padding: 20rpx;
+}
+.popup-device-group, .popup-device-place, .popup-device-id {
+  margin-top: 20rpx;
+}
+
+.popup-device-group-items {
+  height: 450rpx;
+  overflow: scroll;
+}
+
+.popup-bottom {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background: #fff;
+}
+.popup-bottom text {
+  padding: 20rpx 0rpx;
+  font-size: 32rpx;
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+}
+
+.popup-bottom text:nth-child(2){
+  background: var(--main-color);
+  color: #fff;
+}
+

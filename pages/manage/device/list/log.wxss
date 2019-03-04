@@ -1,0 +1,46 @@
+/* pages/manage/device/list/log.wxss */
+.device-list {
+  height: calc( 100vh - 100rpx );
+}
+.card {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.card-item {
+  width: 100%;
+}
+.item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-status-success,.card-status-fail {
+  padding: 10rpx;
+  height: 28rpx;
+  color: #fff;
+  line-height: 28rpx;
+  border-radius: 10rpx;
+  vertical-align: middle;
+
+}
+.card-status-success {
+  background: var(--main-color);
+}
+.card-status-fail {
+  background: var(--error-color);
+}
+.weui-select {
+  padding-right: 0;
+  border-right: none;
+  margin-right: 20rpx;
+}
+.weui-select:before {
+  content: '';
+  border: none;
+  width: 0;
+  height: 0;
+}

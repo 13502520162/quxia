@@ -1,0 +1,39 @@
+/* pages/manage/userManagement/userView/membershipLevel/membershipLevel.wxss */
+
+.membershipLevel {
+  background: #fff;
+}
+
+.weui-cell1 {
+  padding: 10px 15px;
+  display: flex;
+}
+
+.weui-cell1>view {
+  flex: 1;
+}
+
+.weui-cell1>view:nth-child(2) {
+  flex: 4;
+}
+
+.weui-cell1  textarea {
+  border: 1px solid #ccc;
+  height: 150rpx;
+  width: 100%;
+  border-radius: 10rpx;
+  margin-top: 15rpx;
+  padding-left: 15rpx;
+  box-sizing: border-box;
+}
+
+.weui-cell:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 1px;
+  border-top: 1rpx solid #d9d9d9;
+  color: #d9d9d9;
+}

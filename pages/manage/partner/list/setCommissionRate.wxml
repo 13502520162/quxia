@@ -1,0 +1,12 @@
+<!--pages/manage/partner/list/setCommissionRate.wxml-->
+<view class='list'>
+  <view class='item' wx:for="{{devices}}"  wx:key="{{item.id}}">
+    <view>{{item.id}}</view>
+    <input placeholder='请输入分成比例' data-id='{{item.id}}' type='digit' value='{{item.commissionRate}}'  bindinput='changCommissionRate'></input>
+    <view class='sync-btn' bindtap='syncCommissionHandle' data-id='{{item.id}}'>同步</view>
+  </view>
+</view>
+
+<view class='bottom-btn' bindtap='fetchAddDevices'>
+  <button  class="weui-btn" type="primary"> 确定 </button>
+</view>

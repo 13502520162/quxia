@@ -1,0 +1,36 @@
+<view class='header'>
+  <view class='location-name'>{{deviceInfo.locationName}}</view>
+  <view class='location-adress'>{{deviceInfo.province + deviceInfo.city + deviceInfo.district + deviceInfo.street }}</view>
+  <view class='device-id'>
+    <text>{{deviceInfo.deviceId}}</text>
+    <text wx:if="{{deviceInfo.active}}" class='card-status-success'>在线</text>
+    <text wx:else class='card-status-fail'>离线</text>
+  </view>
+  <view>{{deviceInfo.deviceName}}</view>
+</view>
+<view>
+  <checkbox-group bindchange="checkboxChange">
+    <label wx:for="{{deviceInfo.shelfs}}" wx:key="{{index}}">
+      <checkbox class="weui-check" value="{{index}}" checked="{{item.checked}}"/>
+        <view class='item-left'>
+          <view class='item-num'>{{item.number}}</view>
+          <view ><image  mode="aspectFill" src="{{item.image}}"></image></view>
+          <view>{{item.name}}</view>
+        </view>
+        <view class='item-right'>
+            <view></view>
+            <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{ !item.checked }}"></icon>
+                <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{ item.checked }}"></icon>
+                有货
+            </view>
+        </view>
+    </label>
+  </checkbox-group>
+</view>
+
+<view class='bottom-btn-group'>
+  <button  class="weui-btn" type="primary"  bindtap='openDoor'>一键开门</button>
+  <button  class="weui-btn" type="primary"  bindtap='confrim'>确定</button>
+</view>
+

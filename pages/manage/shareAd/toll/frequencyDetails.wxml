@@ -1,0 +1,36 @@
+<form bindsubmit='onSubmitHandle'>
+
+
+<view class="weui-panel">
+  <view class="weui-panel__bd">
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label">名称</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入名称" name="name" value='{{frequencyData.name}}'/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label">时长（秒）</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入时间" type='number' name="duration" value='{{frequencyData.duration}}'/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label">次数</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入次数" type='number' name="times" value='{{frequencyData.times}}'/>
+        </view>
+    </view>
+  </view>
+</view>
+
+<view class='bottom-btn'>
+  <button  class="weui-btn" type="primary" form-type='submit'>确定</button>
+</view>
+</form>

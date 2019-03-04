@@ -1,0 +1,28 @@
+<!--pages/manage/userManagement/userView/membershipLevel/membershipLevel.wxml-->
+
+<view class='membershipLevel'>
+
+  <view class="weui-cell weui-cell_access">
+    <view class="weui-cell__bd">会员级别</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0" bindtap='membershipLevel'>
+      <view style="display: inline-block;vertical-align:middle; font-size: 17px;">钻石会员</view>
+    </view>
+  </view>
+
+  <view class="weui-cell weui-cell_access">
+    <view class="weui-cell__bd">会员期限</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0" bindtap='durationofMembership'>
+      <view style="display: inline-block;vertical-align:middle; font-size: 17px;">无限期</view>
+    </view>
+  </view>
+
+  <view class="weui-cell weui-cell1">
+    <view class="weui-cell__bd" style='position:relative;top:-45rpx;'>调整备注</view>
+    <view class="">
+      <textarea></textarea>
+    </view>
+  </view>
+
+</view>
+
+<view class='preservation' bindtap='preservation'>确定</view>

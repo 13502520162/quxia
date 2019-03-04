@@ -1,0 +1,120 @@
+/* pages/index/analysis.wxss */
+.date {
+  display: flex;
+  background: #fff;
+  height: 100rpx;
+  line-height: 100rpx;
+  padding-left: 40rpx;
+}
+.date-item {
+   color: var(--prompt-color);
+   font-size: 32rpx;
+   font-weight: bold;
+   vertical-align: baseline;
+   margin:  0rpx 40rpx;
+}
+
+.date-range > view {
+  display: flex;
+}
+
+.date-range  picker:nth-of-type(1) {
+  margin-right: 10rpx;
+}
+
+.date-range  picker:nth-of-type(2) {
+  margin-left: 10rpx;
+}
+
+.date-item.active {
+  font-size: 40rpx;
+  color: var(--main-color);
+  border-bottom: 4rpx solid var(--main-color);
+}
+
+.analysis-date {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  padding: 20rpx 80rpx;
+  text-align: center;
+}
+
+.analysis-date image{
+  width: 22rpx;
+  height: 32rpx;
+  padding: 20rpx;
+}
+
+.analysis-date-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icome {
+  margin: 40rpx 0rpx;
+}
+
+.income-money {
+  color: var(--main-color);
+  font-size: 60rpx;
+  margin: 0rpx 40rpx;
+}
+
+.analysis-date-diff {
+  display: flex;
+  justify-content: space-around;
+}
+.analysis-date-diff-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+.analysis-date-diff-num {
+  color: var(--main-color);
+  font-size: 36rpx;
+  margin-bottom: 10rpx;
+}
+
+.list {
+  height: calc( 100vh - 500rpx )
+}
+
+.card {
+  background: #fff;
+
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.card-item {
+  width: 100%;
+}
+
+.report-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-left: 20rpx;
+  margin-bottom: 10rpx;
+}
+.list-item {
+  line-height: 72rpx;
+}
+
+.list-item image, .list-item text{
+  vertical-align: middle;
+}
+
+.item-num {
+  float: right;
+}
+
+.calendar-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.analysis-date-diff-img {
+  vertical-align: middle;
+}

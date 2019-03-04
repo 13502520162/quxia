@@ -1,0 +1,12 @@
+/* pages/manage/partner/list/setCommissionRate.wxss */
+.item {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  margin: 10rpx 0rpx;
+  padding: 20rpx;
+  line-height: 54rpx;
+}
+.sync-btn {
+  color: var(--main-color)
+}

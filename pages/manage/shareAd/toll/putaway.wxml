@@ -1,0 +1,36 @@
+<!--pages/manage/toll/putaway.wxml-->
+<view class='header'>
+  <text bindtap='onCancel'>取消</text>
+  <picker bindchange="onFilterPlaceChange" range="{{placesData}}" range-key="name" >
+      <text>添加场地</text>
+  </picker>
+</view>
+
+<scroll-view class='list' scroll-y="{{true}}" >
+  <view class='card'  wx:for="{{devices}}" wx:key="{{item.placeId}}" data-id='{{item.placeId}}' bindtap='showActionSheet'>
+      <view class="weui-cell weui-cell_select card-item">
+          <view class="weui-cell__bd">
+              <view class="weui-select weui-select_in-select-after">
+                  <view class='item-top'>
+                    <text class='place-name' wx:for="{{placesData}}" wx:key="{{place.id}}" wx:for-item="place">
+                        <text wx:if="{{item.placeId == place.id}}">{{ place.name }}</text>
+                    </text>
+                     <text wx:if="{{item.placeId == ''}}">未投放</text>
+                    <text class='place-num' >{{item.devices.length}}</text>
+                  </view>
+              </view>
+          </view>
+      </view>
+
+  </view>
+
+  <view class="weui-loadmore" style='{{ devices.length === 0 ? "display:block": "display:none"}}'>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">请选择场地添加设备</view>
+  </view>
+  
+
+</scroll-view>
+
+<view class='bottom-btn' bindtap='fetchPutaway'>
+  <button  class="weui-btn" type="primary">上架</button>
+</view>

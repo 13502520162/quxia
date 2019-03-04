@@ -1,0 +1,36 @@
+<!--pages/manage/userManagement/userView/balance/balance.wxml-->
+
+
+<view class='balance'>
+
+  <view class='balance-l'>
+    <view>余额</view>
+    <view>{{balance}}元</view>
+  </view>
+
+
+  <view class='balance-adjustment'>
+    <view>余额调整</view>
+    <view>
+      <view class='adjustment'>
+        <text class=' {{!adjustment?"noData" :""}}' bindtap='reduce'>-</text>
+        <input type='number' value='{{adjustment}}' bindinput='balanceIpt' />
+        <text bindtap='plus'>+</text>
+      </view>
+      <view class='adjustment-info'>
+        <text>调整后的余额：</text>
+        <text>{{adjustment}}</text>元</view>
+    </view>
+  </view>
+
+  <view class="weui-cell1">
+    <view class="weui-cell__bd">调整备注</view>
+    <view class="">
+      <textarea bindinput='adjustmentNote'></textarea>
+    </view>
+  </view>
+
+</view>
+
+
+<view class='preservation' bindtap='definiteAdjustment'>确定</view>

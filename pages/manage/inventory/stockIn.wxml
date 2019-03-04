@@ -1,0 +1,49 @@
+<!--pages/manage/inventory/stockIn.wxml-->
+<view class='weui-panel summary'>
+    <view class='card'>
+        <view class="weui-cell weui-cell_select card-item">
+            <view class="weui-cell__bd">
+                <view class="item-body">
+                    <view class='item-left'>
+                        <image class='img' src="{{summaryData.image}}"></image>
+                    </view>
+                    <view class='item-right'>
+                      <view>
+                        <text>{{ summaryData.name }}</text>
+                      </view>
+                      <view class='item-bottom'>
+                        <text>总库存{{summaryData.totalStock}}件</text>
+                        <text>可用库存{{summaryData.availableStock}}件</text>
+                      </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label">入库数量</view>
+        </view>
+        <view class="weui-cell__bd">
+          <view class='num-ctrol-group'>
+              <view class='num-ctrol-group-reduce-btn' bindtap='reduceBtn'>-</view>
+              <view class='num-ctrol-group-num'><input type='number' bindinput='onAmountChange' value='{{amount}}'/></view>
+              <view class='num-ctrol-group-add-btn' bindtap='addBtn'>+</view>
+          </view>
+        </view>
+    </view>
+</view>
+
+<view class="weui-panel input-desc">
+  <view class="weui-uploader__hd">
+      <view class="weui-uploader__title">备注</view>
+  </view>
+  <view class="weui-uploader__bd">
+    <textarea class="weui-textarea" placeholder="入库备注" style="height: 3.3em" value='{{note}}' maxlength='200' bindinput='onNoteChange' />
+    <view class="weui-textarea-counter">{{note ? note.length : 0 }}/200</view>
+  </view>
+</view>
+
+<view class='bottom-btn' bindtap='submit'>
+  <button  class="weui-btn" type="primary">确定</button>
+</view>

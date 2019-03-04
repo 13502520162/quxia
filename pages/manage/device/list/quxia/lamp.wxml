@@ -1,0 +1,9 @@
+<!--pages/manage/device/list/quxia/lamp.wxml-->
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_switch">
+    <view class="weui-cell__bd">睡眠灯</view>
+    <view class="weui-cell__ft">
+      <switch checked='{{lampInfo}}' bindchange='switchHandle' />
+    </view>
+  </view>
+</view>

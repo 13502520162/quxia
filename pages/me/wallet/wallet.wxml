@@ -1,0 +1,22 @@
+<!--pages/me/withDraw/withDraw.wxml-->
+<view>
+  <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{tips}}</view>
+  <view class='header'>
+    <view class='header-title'><text>账户余额(元)</text></view>
+    <view class='balance'><text>{{balance}}</text></view>
+  </view>
+  <view class='container'>
+    <view class="weui-cells weui-cells_after-title" bindtap='gotoTransation'>
+          <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+              <view class="weui-cell__bd">交易记录</view>
+              <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+          </view>
+    </view>
+    <view class="weui-cells weui-cells_after-title" bindtap='gotoWithdraw' wx:if="{{isCanWithdraw}}">
+          <view class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+              <view class="weui-cell__bd">提现</view>
+              <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+          </view>
+    </view>
+  </view>
+</view>

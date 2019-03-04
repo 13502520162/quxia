@@ -1,0 +1,7 @@
+<!--pages/authorization/authorization.wxml-->
+<view class="authorization">
+        <image class="icon" src="../../assets/images/home.png" />
+    <text class="title">微信授权页面</text>
+    <text  class="tip">此页面是微信授权页面,点击下方按钮弹出授权或者跳转页面</text>
+    <button class='btn'  open-type="getUserInfo" bindgetuserinfo="onAuthorization">点击微信授权</button>
+</view>

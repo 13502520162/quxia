@@ -1,0 +1,5 @@
+/* pages/me/alterPasswd/alterPasswd.wxss */
+.container {
+  margin: 20rpx 0rpx;
+  background: #fff;
+}

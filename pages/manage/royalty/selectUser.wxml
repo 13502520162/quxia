@@ -1,0 +1,27 @@
+<!--pages/manage/royalty/user.wxml-->
+  <view class="weui-panel">
+    <view class="weui-panel__bd">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">子账号</view>
+          </view>
+          <view class="weui-cell__bd">
+              <picker bindchange="bindUserChange" value="{{userIndex}}" range="{{usersData}}" range-key="name">
+                  <view class="weui-select weui-select_in-select-after">{{usersData[userIndex].name}}</view>
+              </picker>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+                <view class="weui-label">分成比例</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" type='number' bindinput='onRateChange' placeholder="请输入分成比例" name="name" value='{{rate}}'/>
+            </view>
+        </view>
+    </view>
+  </view>
+
+<view class='bottom-btn' bindtap='onConfirm'>
+  <button  class="weui-btn" type="primary">确定</button>
+</view>

@@ -1,0 +1,38 @@
+<!--pages/manage/partner/list/list.wxml-->
+
+<view>
+    <view>
+      <view wx:if="{{listData.length}}">
+          <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
+            <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' data-enbale="{{item.enable}}" bindtap='showActionSheet'>
+                <view class="weui-cell weui-cell_select card-item">
+                    <view class="weui-cell__bd">
+                        <view class="weui-select weui-select_in-select-after item-body">
+                            <view class='item-top'>
+                              <text>{{ item.name }}</text>
+                              <text>{{item.devices}}台设备</text>
+                              <text class="{{item.enable ? 'card-status-success':'card-status-fail'}}">{{item.enable ? "启用" : "禁用"}}</text>
+                            </view>
+                            <view class='location-name'>{{item.mobile}}</view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+                <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+            </view>
+            
+            <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+                <view class="weui-loading"></view>
+                <view class="weui-loadmore__tips">正在加载</view>
+            </view>
+          </scroll-view>
+      </view>
+      <view wx:else>
+        <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+      </view>
+    </view>
+    <view class='bottom-btn' bindtap='onAddPartner'>
+      <button  class="weui-btn" type="primary">新增合伙人</button>
+    </view>
+</view>

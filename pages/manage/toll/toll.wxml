@@ -1,0 +1,38 @@
+<!--pages/manage/toll/toll.wxml-->
+<view>
+    <view>
+      <view wx:if="{{listData.length}}">
+      <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" style='{{ disAdd ? "height: 100vh" : "height: calc(100vh - 100rpx)" }}' >
+          <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}'  bindtap='showActionSheet'>
+            <view class="weui-cell weui-cell_select card-item">
+                <view class="weui-cell__bd">
+                    <view class="weui-select weui-select_in-select-after item-body">
+                        <view class='item-top'>
+                          <text>{{item.name}}</text>
+                        </view>
+                        <view><text class='goods-num'>{{item.items}}个商品</text><text class='goods-devices-num'>{{item.devices ? item.devices: 0}}台设备</text></view>
+                    </view>
+                </view>
+            </view>
+          </view>
+
+          <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+              <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+          </view>
+          
+          <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+              <view class="weui-loading"></view>
+              <view class="weui-loadmore__tips">正在加载</view>
+          </view>
+        </scroll-view>
+      </view>
+      <view wx:else>
+          <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+              <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+          </view>
+      </view>
+    </view>
+    <view class='bottom-btn' bindtap='onAddToll'>
+      <button  class="weui-btn" type="primary">添加</button>
+    </view>
+</view>

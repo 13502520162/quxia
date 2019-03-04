@@ -1,0 +1,100 @@
+<!--pages/manage/device/list/list.wxml-->
+<view class='devices-header'>
+   <text>设备（缺货{{ devicesSummary.outOfStockDevices }}/共{{ devicesSummary.devices }}）</text>
+   <image src='../../../assets/images/filter.png' mode='widthFix' bindtap='toggleFilterMenue'></image>
+</view>
+
+<scroll-view class='device-list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
+  <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' data-planid='{{item.shelfPlanId}}' bindtap='showActionSheet'>
+      <view class="weui-cell weui-cell_select card-item">
+          <view class="weui-cell__bd">
+              <view class="weui-select weui-select_in-select-after item-body">
+                  <view>
+                    <text wx:for="{{item.shelfs}}" 
+                      wx:key="{{index}}" 
+                      wx:for-item="shelf" 
+                      class='{{ shelf.state==="NORMAL" ? "shelf-status" : "shelf-status-danger" }}'>{{shelf.number}}</text>
+                  </view>
+                  <view class='item-top'>
+                    <text>{{ item.id }}</text>
+                    <text wx:if="{{item.groupName}}">{{item.groupName}}</text>
+                    <text class="{{item.active ? 'card-status-success':'card-status-fail'}}">{{item.active ? "在线": "离线"}}</text>
+                  </view>
+                  <view class='location-name'> <text>{{item.name}}</text> <text style='margin-left: 40rpx;'> {{item.locationName}}</text></view>
+              </view>
+          </view>
+      </view>
+  </view>
+
+  <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+  </view>
+  
+  <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+  </view>
+</scroll-view>
+
+
+<!-- 弹框数据筛选 -->
+<popup
+  show="{{showFilterMenue}}"
+  position="right"
+  custom-class="popup"
+  bind:close="toggleFilterMenue"
+>
+ <view class='popup-content'>
+    <view class="popup-panel">
+      <view class='popup-device-status'>
+        <view class='popup-title'>设备状态</view>
+          <view>
+            <text 
+              wx:for="{{deviceStatus}}"
+              wx:key="{{index}}"
+              class='tag-item {{item.selected ? "tag-item-selected":"" }}'
+              data-status='{{item.status}}'
+              bindtap='onDeviceStatusChange'
+            >{{item.name}}</text>
+          </view>     
+      </view>
+
+      <view class='popup-device-id'>
+        <view class='popup-title'>设备编号</view>
+          <view>
+            <input placeholder='请输入设备编号' type='number'  bindinput="onDeviceIdChange" value='{{filterParams.query}}' ></input>
+          </view>     
+      </view>
+
+      <view class='popup-shelfs-status'>
+        <view class='popup-title'>货道状态</view>
+          <view>
+            <text 
+              wx:for="{{stockStatus}}"
+              wx:key="{{index}}"
+              class='tag-item {{item.selected ? "tag-item-selected":"" }}'
+              data-status='{{item.status}}'
+              bindtap='onstockStatusChange'
+            >{{item.name}}</text>
+          </view>     
+      </view>
+
+      <view class='popup-device-place'>
+        <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                <view class="weui-label popup-title" style='margin:0'>场地</view>
+            </view>
+            <view class="weui-cell__bd">
+                <picker bindchange="onFilterPlaceChange" range="{{placesData}}" value='全部' range-key="name" >
+                    <view class="weui-select">{{placesData[placesDataIndex].name}}</view>
+                </picker>
+            </view>
+        </view>
+      </view>
+    </view>
+    <view class='popup-bottom'>
+        <text bindtap='resetPopData'>重置</text>
+        <text bindtap='onSubmit'>确定</text>
+    </view>
+ </view>
+</popup>

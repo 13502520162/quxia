@@ -1,0 +1,27 @@
+/* pages/manage/account/accounts/details.wxss */
+form {
+  overflow: auto;
+   font-size: 17px;
+}
+.permission-list {
+  margin-top: 20rpx;
+  height: calc( 100vh - 220rpx );
+  overflow: auto;
+}
+.weui-panel__hd {
+  display: flex;
+  justify-content: space-between;
+}
+.permission-header-left {
+  font-size: 32rpx;
+  color: #000;
+}
+.weui-panel__hd > view {
+  display:inline-block;
+}
+.subpermission-name{
+   font-size: 28rpx;
+}
+.weui-cell {
+  margin: 0rpx 0rpx 0rpx 20rpx;
+}

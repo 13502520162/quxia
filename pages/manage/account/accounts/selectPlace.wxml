@@ -1,0 +1,33 @@
+
+<scroll-view class='place-list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
+  <view class='card'>
+      <view class="weui-cell weui-cell_select card-item">
+          <view class="weui-cell__bd">
+                <checkbox-group bindchange="checkboxChange">
+                    <label class="weui-cell weui-check__label" wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' wx:key="value">
+                        <checkbox class="weui-check" value="{{item.id}}" checked="{{item.checked}}"/>
+                        <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                            <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                            <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+                        </view>
+                        <view class="weui-cell__bd">{{item.name}}</view>
+                    </label>
+                </checkbox-group>
+          </view>
+      </view>
+
+  </view>
+
+  <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">请选添加场地</view>
+  </view>
+  
+  <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+  </view>
+</scroll-view>
+
+<view class='bottom-btn' bindtap='onConfirm'>
+  <button  class="weui-btn" type="primary">确定 （{{choosePlaces.length}}）</button>
+</view>

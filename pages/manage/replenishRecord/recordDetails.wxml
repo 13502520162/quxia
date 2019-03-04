@@ -1,0 +1,10 @@
+<view class='details-container'>
+  <view class='body'>
+      <view class="weui-cells">
+        <view class="weui-cell" wx:for="{{listData}}" wx:key="*this" >
+            <view class="weui-cell__bd">{{item.name}}</view>
+            <view class="weui-cell__ft">{{item.value}}</view>
+        </view>
+      </view>
+  </view>
+</view>

@@ -1,0 +1,108 @@
+<!--pages/manage/membershipCard/newMembershipCard/newMembershipCard.wxml-->
+
+<view class='newMembershipCard'>
+
+  <view class="weui-cell weui-cell_input weui-cell-reset">
+    <view class="weui-cell__hd">
+      <view class="weui-label">名称</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" disabled="{{isDisabled}}" class='coupon-name {{isDisabled?"disabledColor":""}}' value='{{name}}' bindinput='activityName' placeholder="请输入会员卡名称" />
+    </view>
+  </view>
+
+  <view class="weui-cells weui-cells_after-title  weui-cell-reset">
+    <view class="weui-cell weui-cell_switch" style='border:none;'>
+      <view class="weui-cell__bd weui-label">有效期</view>
+      <view class="weui-cell__ft">
+        <text class='weui-label'>永久有效</text>
+        <switch size="23" checked='{{isTermOfValidity}}' bindchange="termOfValidity" disabled="{{isDisabled}}" />
+      </view>
+    </view>
+    <view class='full-order full-order2  {{isDisabled?"disabledColor":""}}' hidden='{{isTermOfValidity}}'>
+      领卡后
+      <input type='number' value='{{frequency}}' disabled="{{isDisabled}}" bindinput='frequency' class="full-order-ipt" /> 内有效
+    </view>
+    <view class='after-expiry' hidden='{{isTermOfValidity}}'>
+      <text>卡过期后，消费者自动变更至</text>
+      <picker class='select' bindchange="bindPickerChange" value="{{index}}" range="{{objectArray}}" range-key='name'>
+        <view class="picker">
+          {{objectArray[tradeIndex].name}}
+        </view>
+        <text class="arrow"></text>
+      </picker>
+    </view>
+  </view>
+
+
+  <view class="receiving-setting weui-cell-reset">
+
+    <view class="weui-cell__hd">
+      <view class="weui-label">领取设置</view>
+    </view>
+    <view class="receivingSettings">
+      <radio-group bindchange="receivingSettings">
+        <label class=" weui-check__label" wx:for="{{receivingSettings}}" wx:key="value">
+          <checkbox class="weui-check" value="{{item.value}}" disabled="{{isDisabled}}" checked="{{item.checked}}" />
+
+          <view class="weui-cell__hd weui-check__hd_in-checkbox weui-cell__bd-reset">
+            <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+            <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+          </view>
+
+          <view class="weui-cell__bd weui-cell__bd-reset{{isDisabled?'disabledColor':''}}">{{item.name}}</view>
+        </label>
+      </radio-group>
+    </view>
+
+    <view class="meetingConditions" hidden='{{isDirect}}'>
+      <radio-group bindchange="meetingConditions">
+        <label class="weui-check__label" wx:for="{{meetingConditions}}" wx:key="value">
+          <checkbox class="weui-check" value="{{item.value}}" disabled="{{isDisabled}}" checked="{{item.checked}}" />
+
+          <view class="weui-cell__hd weui-check__hd_in-checkbox weui-cell__bd-reset">
+            <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+            <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+          </view>
+        </label>
+
+        <view class="weui-cell__bd weui-cell__bd-reset full-order {{isDisabled?'disabledColor':''}}">
+          <text>累计支付成功</text>
+          <input type='number' value='{{successfulPayment}}' bindinput='successfulPayment' class="full-order-ipt" />
+          <text>次</text>
+        </view>
+
+        <view class="weui-cell__bd weui-cell__bd-reset full-order {{isDisabled?'disabledColor':''}}">
+          <text>累计消费金额</text>
+          <input type='number' value='{{consumptionAmount}}' bindinput='consumptionAmount' class="full-order-ipt" />
+          <text>次</text>
+        </view>
+
+      </radio-group>
+    </view>
+
+  </view>
+
+
+  <view class="weui-cell weui-cell_textarea weui-cell-reset">
+    <view class="weui-label">使用需知</view>
+    <view class="weui-cell__bd">
+      <textarea placeholder='请输入使用需知' value='{{usageNeeds}}' bindinput='usageNeeds' class='textarea'></textarea>
+    </view>
+  </view>
+
+
+  <view class="weui-cells weui-cells_after-title  weui-cell-reset">
+    <view class="weui-cell weui-cell_switch" style='border:none;'>
+      <view class="weui-cell__bd weui-label">权益 </view>
+    </view>
+    <view class='full-order full-order2  {{isDisabled?"disabledColor":""}}' hidden='{{isUnlimited}}'>
+      消费折扣
+      <input type='number' value='{{equity}}' disabled="{{isDisabled}}" bindinput='equity' class="full-order-ipt" /> 折
+    </view>
+
+  </view>
+
+
+</view>
+<view class='preservation' wx:if="{{!isDisabled}}" bindtap='preservation'>确定</view>

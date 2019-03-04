@@ -1,0 +1,5 @@
+/* pages/manage/toll/goods.wxss */
+
+.img-upload {
+  padding: 15px;
+}

@@ -1,0 +1,59 @@
+<!--pages/index/analysis.wxml-->
+<view class='header'>
+    <view class='date'>
+      <view class='date-item {{dateItem.today? "active":""}}' data-item='today' bindtap='selectDateItem'>今天</view>
+      <view class='date-item {{dateItem.week? "active":""}}' data-item='week' bindtap='selectDateItem'>本周</view>
+      <view class='date-item {{dateItem.month? "active":""}}' data-item='month' bindtap='selectDateItem'>本月</view>
+    </view>
+</view>
+
+<view class='analysis-date'>
+  <view class='analysis-date-header'>
+    <view><image src='../../../../assets/images/leftBackBtn.png' bindtap='lastData'></image></view>
+      <view class='date-range'>
+        <view>
+          <picker mode="date" bindchange="onStartDateChange" >{{date.start}}</picker>
+            -  
+          <picker mode="date" bindchange='onEndDateChange'>{{date.end}}</picker>
+        </view>
+      </view>
+      <view><image src='../../../../assets/images/rightBackBtn.png' bindtap='nextData'></image></view> 
+  </view>
+
+  <view class='icome'>
+      <text>收入</text>
+      <text class='income-money'>￥{{income}}</text>
+      <text>￥{{diffIncome}}</text>
+      <image class='analysis-date-diff-img' src='{{diffIncome > 0 ?"../../../../assets/images/arrow-up.png":"../../../../assets/images/arrow-down.png"}}'></image>
+  </view>
+
+</view>
+
+<view class='report'>
+   <view class='report-title'>报表明细</view>
+   <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
+      <view class='card'  wx:for="{{listData}}" wx:key="{{item.date}}" data-date='{{item.day}}' bindtap='onShowOrder'>
+          <view class="weui-cell weui-cell_select card-item">
+              <view class="weui-cell__bd">
+                  <view class="weui-select">
+                      <view class='list-item'>
+                        <image src='../../../../assets/images/calendar.png' class='calendar-icon'></image>
+                        <text>{{item.day}}</text>
+                        <text class='item-num'>营业额：{{item.value}}</text>
+                      </view>
+                  </view>
+              </view>
+          </view>
+      </view>
+
+      <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+          <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+      </view>
+      
+      <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+          <view class="weui-loading"></view>
+          <view class="weui-loadmore__tips">正在加载</view>
+      </view>
+    </scroll-view>
+</view>
+

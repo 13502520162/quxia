@@ -1,0 +1,4 @@
+/* pages/login/register.wxss */
+.register-form {
+  margin: 20rpx 0rpx;
+}

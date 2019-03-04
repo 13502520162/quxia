@@ -1,0 +1,32 @@
+  <view class="weui-panel shelf-list">
+      <view class="weui-panel__bd">
+          <view class='card'  wx:for="{{shelfsData.shelfs}}" wx:key="{{index}}" data-index='{{index}}'  bindtap='showActionSheet'>
+                <view class="weui-cell weui-cell_select card-item">
+                    <view class="weui-cell__bd">
+                        <view class="weui-select weui-select_in-select-after item-body">
+                           <view wx:if="{{item.productId}}">
+                              <view class='item-left'>
+                                <image class='img' src="{{item.image}}"></image>
+                              </view>
+                              <view class='item-right'>
+                                <view>
+                                  <text>{{ item.name }}</text>
+                                </view>
+                                <view class='item-price-input'>
+                                    <view>价格：</view><input type='number' data-index='{{index}}' bindinput='onPriceChange' value='{{item.price}}'/>
+                                </view>                            
+                              </view>                           
+                           </view>
+                           <view wx:else class='empty'>
+                              <view>请选择商品</view>
+                           </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+      </view>
+    </view>
+
+    <view class='bottom-btn' bindtap='submit'>
+      <button  class="weui-btn" type="primary">确定</button>
+    </view>

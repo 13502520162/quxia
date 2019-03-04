@@ -1,0 +1,29 @@
+/* pages/manage/bigVendingMachineReplenish/replenishNum.wxss */
+.item {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  margin: 20rpx 0rpx;
+}
+
+.item-left image {
+  width: 160rpx;
+  height: 160rpx;
+}
+
+.item-left  {
+  display: flex;
+}
+.item-left .item-detail {
+  display: flex;
+  margin-left: 20rpx;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.item-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-right: 20rpx;
+}

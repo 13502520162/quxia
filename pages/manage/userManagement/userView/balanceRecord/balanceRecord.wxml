@@ -1,0 +1,66 @@
+<!--pages/manage/userManagement/userView/balanceRecord/balanceRecord.wxml-->
+<view class='balanceRecord'>
+  <view class='cumulative'>
+    <view class='cumulative-l'>
+      <view>累计充值</view>
+      <view>{{totalRecharge}}元</view>
+    </view>
+    <view class='cumulative-l'>
+      <view>累计支付</view>
+      <view>{{totalPaidBalance}}元</view>
+    </view>
+  </view>
+
+  <view class='content'>
+
+    <view class='content-screen'>
+      <view class="section">
+        <picker mode="date" value="{{date}}" fields="month" start="" end="" bindchange="bindDateChange">
+          <view class="picker">
+            {{date}}
+            <text class='icon'></text>
+          </view>
+        </picker>
+
+      </view>
+
+    </view>
+    <view class='content-info'>
+      <view>
+        充值
+        <text>{{totalRecharge1}}</text> 元
+      </view>
+      <view>
+        支付
+        <text>{{totalBalancePaid}}</text> 元
+      </view>
+    </view>
+
+    <view class='content-tab'>
+      <view wx:for="{{source}}" class='{{item.checked?"active":""}}' wx:key="{{idnex}}" data-checked='{{item.checked}}' data-value='{{item.value}}' bindtap='selSource'>{{item.name}}</view>
+    </view>
+  </view>
+
+</view>
+
+<scroll-view scroll-y='true' style='height: calc( 100vh - {{scrollHeight}} )' bindscrolltolower="banlanceScrollLIst">
+  <view class='list'>
+
+    <view class='list-content' wx:for="{{listData}}" wx:key="{{idnex}}" data-id='{{item.id}}'>
+      <view>
+        <view>
+          <text>{{item.info}}: </text>
+          <text>{{item.note}}</text>
+        </view>
+        <view class='date'>
+          {{item.createdDate}}
+        </view>
+      </view>
+      <view>
+        {{item.amount}}
+      </view>
+    </view>
+
+
+  </view>
+</scroll-view>

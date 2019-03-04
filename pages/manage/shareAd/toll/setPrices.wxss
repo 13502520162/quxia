@@ -1,0 +1,8 @@
+/* pages/manage/shareAd/toll/setPrices.wxss */
+.weui-cell {
+  padding: 0px 15px;
+}
+.list {
+  height: calc( 100vh - 100rpx );
+  overflow: auto;
+}

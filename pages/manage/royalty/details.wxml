@@ -1,0 +1,64 @@
+<!--pages/manage/royalty/details.wxml-->
+  <view class="weui-panel">
+    <view class="weui-panel__bd">
+        <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+                <view class="weui-label">名称</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" bindinput='onNameChange' placeholder="请输入分润方案名称" name="name" value='{{newOrUpdateParams.name}}'/>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">分润类型</view>
+          </view>
+          <view class="weui-cell__bd">
+              <picker bindchange="bindTypeChange" value="{{typeIndex}}" range="{{typesData}}" range-key="name">
+                  <view class="weui-select weui-select_in-select-after">{{typesData[typeIndex].name}}</view>
+              </picker>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_select" wx:if="{{typeIndex == 0}}" bindtap='goToSelectPlace'>
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">场地</view>
+          </view>
+          <view class="weui-cell__bd">
+                <view class="weui-select weui-select_in-select-after">{{newOrUpdateParams.objectIds.length}}个场地</view>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_select" wx:else bindtap='goToSelectDevices'>
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">设备</view>
+          </view>
+          <view class="weui-cell__bd">
+                <view class="weui-select weui-select_in-select-after">{{newOrUpdateParams.objectIds.length}}台设备</view>
+          </view>
+        </view>
+    </view>
+  </view>
+
+  <view class="weui-panel users">
+    <view class="weui-panel__hd" bindtap='gotoSelectUser'>
+      <text class='users-title'>分润对象</text> <text class='panel-header-more-btn'>添加</text>
+    </view>
+    <view class="weui-panel__bd">
+      <view class="weui-cell weui-cell_select" bindtap='onChangeUser' data-index='{{index}}' wx:for="{{ newOrUpdateParams.users}}" wx:key="id">
+        <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">{{item.name}}</view>
+        </view>
+        <view class="weui-cell__bd">
+              <view class="weui-select weui-select_in-select-after">{{item.rate}}%</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  
+<view class='bottom-btn' bindtap='onConfirm' wx:if="{{!enabled}}">
+  <button  class="weui-btn" type="primary">确定</button>
+</view>
+
+<view class='bottom-btn' bindtap='disableRoyalty' wx:else>
+  <button  class="weui-btn" type="warn">暂停</button>
+</view>

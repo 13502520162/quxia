@@ -1,0 +1,51 @@
+<!--pages/manage/bigVendingMachineShelfs/commotidyDetail.wxml-->
+<view class='card'>
+    <view class="weui-cell weui-cell_select card-item" bindtap='selectCommodity'>
+        <view class="weui-cell__bd">
+            <view class="weui-select weui-select_in-select-after item-body">
+                <view class='item-left' wx:if="{{commotidyData.image}}">
+                    <image class='img' src="{{commotidyData.image}}"></image>
+                </view>
+                <view class='item-right' wx:if="{{ commotidyData.name }}">
+                  <view>
+                    <text>{{ commotidyData.name }}</text>
+                  </view>
+                  <view>￥{{commotidyData.price}}</view>                            
+                </view>
+                <view wx:else style='display:flex; align-items:center'>
+                    请选择商品
+                </view>            
+            </view>
+        </view>
+    </view>
+</view>
+<view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label">货道号</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入货道号" value='{{ commotidyData.number }}' bindinput='shelfNumberChange'/>
+        </view>
+    </view>
+    <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+            <view class="weui-label">价格(￥)</view>
+        </view>
+        <view class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入价格"  type='digit' value='{{ commotidyData.price }}' bindinput='priceChange'/>
+        </view>
+    </view>
+</view>
+
+
+<view class='bottom-btn bottom-btn-warn' bindtap='delCommotidy'>
+  <button  class="weui-btn" type="warn">删除</button>
+</view>
+
+<view class='bottom-btn' bindtap='comfirmCommitidy'>
+  <button  class="weui-btn" type="primary">确定</button>
+</view>
+
+
+

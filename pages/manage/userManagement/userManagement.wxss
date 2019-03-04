@@ -1,0 +1,269 @@
+/* pages/index/analysis.wxss */
+
+.header {
+  background: #fff;
+}
+
+.place-info image {
+  width: 60rpx;
+  max-height: 60rpx;
+  float: right;
+}
+
+.place-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 40rpx;
+}
+
+.place-name {
+  font-weight: bold;
+}
+
+.place-device-num {
+  background: var(--main-color);
+  color: #fff;
+  padding: 5rpx 20rpx;
+  border-radius: 5rpx;
+}
+
+.date {
+  display: flex;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+
+.date-item {
+  color: var(--prompt-color);
+  font-size: 32rpx;
+  font-weight: bold;
+  vertical-align: baseline;
+  margin: 0rpx 30rpx;
+}
+
+.date  .date-item:nth-child(1) {
+  margin-left: 0;
+}
+
+.date-range > view {
+  display: flex;
+}
+
+.date-range  picker:nth-of-type(1) {
+  margin-right: 10rpx;
+}
+
+.date-range  picker:nth-of-type(2) {
+  margin-left: 10rpx;
+}
+
+.date-item.active {
+  font-size: 40rpx;
+  color: var(--main-color);
+  border-bottom: 4rpx solid var(--main-color);
+}
+
+.content {
+  margin-top: 20rpx;
+}
+
+.screen {
+  background: #fff;
+  display: flex;
+  height: 70rpx;
+  line-height: 70rpx;
+}
+
+.screen-item {
+  flex: 1;
+  color: var(--prompt-color);
+  font-size: 28rpx;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+}
+
+.screen-item  .iconfont {
+  color: var(--prompt-color);
+  font-size: 20rpx;
+  position: absolute;
+  top: -10rpx;
+  left: 135rpx;
+  font-weight: bold;
+}
+
+.screen-item  .iconfont:nth-child(2) {
+  position: absolute;
+  top: 8rpx;
+  left: 135rpx;
+}
+
+.screen-item  .iconActive {
+  color: #188ae2;
+}
+
+.screen-item.screenActive {
+  color: #188ae2;
+}
+
+.userNum {
+  padding-left: 40rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  color: #666;
+  background-color: rgba(238, 238, 238, 0.6);
+}
+
+.user {
+  background: #fff;
+}
+
+.level {
+  padding: 5rpx 10rpx;
+  font-size: 25rpx;
+  color: #fff;
+  background-color: rgb(0, 118, 255);
+  border-radius: 10rpx;
+  margin-right: 20rpx;
+}
+
+.popup {
+  background: var(--background-color) !important;
+}
+
+.popup-content {
+  width: 600rpx;
+  height: 100vh;
+  position: relative;
+}
+
+.popup-title {
+  font-weight: bold;
+  font-size: 28rpx;
+  margin-bottom: 30rpx;
+}
+
+.popup-device-place {
+  background: #fff;
+}
+
+.popup-device-status, .popup-device-group, .popup-device-id {
+  background: #fff;
+  padding: 20rpx;
+}
+
+.popup-device-group, .popup-device-place, .popup-device-id {
+  margin-top: 20rpx;
+}
+
+.popup-device-group-items {
+  height: 350rpx;
+  overflow: scroll;
+}
+
+.popup-bottom {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background: #fff;
+}
+
+.popup-bottom text {
+  padding: 20rpx 0rpx;
+  font-size: 32rpx;
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+}
+
+.popup-bottom text:nth-child(2) {
+  background: var(--main-color);
+  color: #fff;
+}
+
+.popup-panel {
+  padding: 20rpx;
+  background: #fff;
+}
+
+.popup-field {
+  margin-top: 20rpx;
+}
+
+.popup-panel .title {
+  width: 100rpx;
+  display: inline-block;
+  height: 50rpx;
+  line-height: 15rpx;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.popup-panel .screeb-ipt {
+  margin-left: 50rpx;
+  display: inline-block;
+  height: 50rpx;
+  padding-left: 15rpx;
+  border-radius: 10rpx;
+  border: 1px solid #ccc;
+}
+
+.popup-level {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background: #fff;
+}
+
+.popup-level>view:nth-child(1) {
+  font-weight: bold;
+}
+
+.level-list {
+  margin: 10rpx 0;
+}
+
+.level-list text {
+  display: inline-block;
+  padding: 15rpx 30rpx;
+  color: rgb(0, 118, 255);
+  margin: 15rpx 10rpx;
+  border-radius: 10rpx;
+  border: 1px solid rgb(0, 118, 255);
+  font-size: 25rpx;
+}
+
+.popup-date {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background: #fff;
+}
+
+.popup-date>view:nth-child(1) {
+  font-weight: bold;
+}
+
+.popup-date .date-screen {
+  display: flex;
+  margin-top: 20rpx;
+}
+
+.popup-date .date-ipt, .popup-date text {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-date .date-ipt {
+  flex: 3;
+  border: 1px solid #ccc;
+  border-radius: 10rpx;
+  font-weight: normal;
+  color: #ccc;
+}
+
+view .selectAc {
+  background: var(--content-color);
+  color: #fff;
+}

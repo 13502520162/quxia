@@ -1,0 +1,73 @@
+/* pages/coupon/coupon.wxss */
+
+.coupon {
+  margin-top: 20rpx;
+}
+
+.coupon-bg {
+  background: #fff;
+  height: 150rpx;
+  padding: 10rpx 15rpx;
+  border-bottom: 1rpx solid rgba(246, 246, 246, 1);
+  border-radius: 8rpx 8rpx 0rpx 0rpx;
+}
+/* view.coupon-bg:last-child{
+  margin-bottom: 90rpx;
+} */
+.coupon-left{
+  padding-top: 30rpx;
+}
+.coupon-title-name {
+  color: rgba(51, 51, 51, 1);
+  font-weight: bold;
+  font-size: 32rpx;
+
+}
+
+.preferential-form{
+    font-size: 20rpx;
+    margin-left: 10rpx;
+    background: #188ae2;
+    color: #fff;
+    padding: 2rpx 10rpx;
+    border-radius: 15rpx;
+}
+
+.coupon-date {
+  color: rgba(136, 136, 136, 1);
+}
+
+.coupon-left {
+  width: 80%;
+  float: left;
+  display: inline-block;
+  box-sizing: border-box;
+  padding-left: 15rpx;
+}
+
+.coupon-right {
+  float: left;
+  width: 20%;
+  line-height: 150rpx;
+  text-align: center;
+  display: inline-block;
+}
+
+.coupon-right image {
+  width: 35rpx;
+  height: 35rpx;
+}
+
+.new-coupons {
+  width: 100%;
+  font-weight: bold;
+  position: fixed;
+  left: 0;
+  bottom: 15rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  background: rgba(2, 149, 2, 1);
+  text-align: center;
+  color: rgba(255, 255, 255, 1);
+  font-family:PingFang SC;
+}

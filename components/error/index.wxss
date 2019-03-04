@@ -1,0 +1,22 @@
+/* components/error/error.wxss */
+.error-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.error-logo {
+  width: 300rpx;
+  margin-top: -150rpx;
+}
+
+.error-text {
+  color: var(--main-color);
+  margin: 20rpx 0rpx;
+}

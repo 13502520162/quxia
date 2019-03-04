@@ -1,0 +1,90 @@
+/* pages/manage/userManagement/userView/balance/balance.wxss */
+
+.balance {
+  background: #fff;
+}
+
+.balance-l view {
+  text-align: center;
+}
+
+.balance-l view:nth-child(2) {
+  text-align: center;
+  font-size: 40rpx;
+  color: #188ae2;
+}
+
+.balance-adjustment {
+  margin-top: 20rpx;
+  padding: 10px 15px;
+  display: flex;
+}
+
+.balance-adjustment>view {
+  flex: 1;
+}
+
+.balance-adjustment>view:nth-child(2) {
+  flex: 2;
+}
+
+.weui-cell1 {
+  padding: 10px 15px;
+  display: flex;
+}
+
+.weui-cell1>view {
+  flex: 1;
+}
+
+.weui-cell1>view:nth-child(2) {
+  flex: 4;
+}
+
+.weui-cell1  textarea {
+  border: 1px solid #d9d9d9;
+  height: 150rpx;
+  width: 100%;
+  border-radius: 10rpx;
+  margin-top: 15rpx;
+  padding-left: 15rpx;
+  box-sizing: border-box;
+}
+
+.adjustment {
+  width: 280rpx;
+  height: 50rpx;
+  display: flex;
+  border: 1px solid #d9d9d9;
+}
+
+.adjustment text {
+  flex: 1;
+  border-right: 1px solid #d9d9d9;
+  text-align: center;
+  font-size: 35rpx;
+  background-color: #f5f7fa;
+}
+
+.adjustment text.noData {
+  color: #ccc;
+}
+
+.adjustment text:nth-child(3) {
+  border: none;
+  border-left: 1px solid #d9d9d9;
+}
+
+.adjustment input {
+  flex: 3;
+  text-align: center;
+}
+
+.adjustment-info {
+  margin-top: 10rpx;
+  font-size: 25rpx;
+}
+
+.adjustment-info text:nth-child(2) {
+  color: #188ae2;
+}

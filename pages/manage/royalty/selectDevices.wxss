@@ -1,0 +1,22 @@
+
+.header {
+  background: #fff;
+}
+
+.header-container {
+  font-size: 32rpx;
+  padding-left: 40rpx;
+}
+
+.header-container text:nth-child(2) {
+  float: right;
+}
+
+.card {
+  background: #fff;
+}
+
+.device-list {
+  margin-top: 10px;
+  height: calc( 100vh - 220rpx );
+}

@@ -1,0 +1,43 @@
+/* pages/manage/shareAd/putting/selectResources.wxss */
+.list {
+  height: calc( 100vh - 100rpx );
+}
+
+.card {
+  width: 33.333%;
+  height: 200rpx;
+  display: inline-flex;
+  box-sizing: border-box;
+  border: 1rpx solid #fff;
+  justify-content: center;
+  align-items: center;
+  padding: 5rpx;
+  position: relative;
+  background: #fff;
+}
+
+.checked-btn {
+  position: absolute;
+  right: 4rpx;
+  top: 0rpx;
+}
+
+.card image {
+  max-width: 100%;
+  max-height: 100%;
+}
+.bottom {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+.bottom text {
+  padding: 20rpx 0rpx;
+  font-size: 32rpx;
+  display: inline-block;
+  background: #fff;
+  width: 50%;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1rpx solid var(--border-color)
+}

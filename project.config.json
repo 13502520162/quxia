@@ -1,0 +1,106 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": false,
+		"uglifyFileName": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.5.1",
+	"appid": "wx56a4557ca00a75a8",
+	"projectname": "newretail-merchant-miniprogram",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"scripts": {
+		"beforeCompile": "",
+		"beforePreview": "",
+		"beforeUpload": ""
+	},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "首页",
+					"pathName": "pages/index/index",
+					"query": ""
+				},
+				{
+					"id": 0,
+					"name": "管理",
+					"pathName": "pages/manage/manage",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "余额记录",
+					"pathName": "pages/manage/userManagement/userView/balanceRecord/balanceRecord",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "会员级别",
+					"pathName": "pages/manage/userManagement/userView/membershipLevel/membershipLevel",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "余额调整",
+					"pathName": "pages/manage/userManagement/userView/balance/balance",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "消费记录",
+					"pathName": "pages/manage/userManagement/userView/recordsOfConsumption/recordsOfConsumption",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 6,
+					"name": "用户管理",
+					"pathName": "pages/manage/userManagement/userManagement",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "会员卡",
+					"pathName": "pages/manage/membershipCard/membershipCard",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
+}

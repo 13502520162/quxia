@@ -1,0 +1,59 @@
+/* pages/manage/membershipCard/membershipCard.wxss */
+
+.membershipCard {
+  margin: 20rpx;
+}
+
+.membershipCard .list {
+  background: #fff;
+  border-radius: 10rpx;
+  box-shadow: 1rpx 10rpx 10rpx 0rpx rgba(0, 0, 0, 0.1);
+  padding: 40rpx 20rpx;
+  margin: 20rpx 0rpx;
+  box-sizing: border-box;
+}
+
+.list-t {
+  display: flex;
+}
+
+.list-t>view {
+  flex: 1;
+}
+
+.list-t>view:nth-child(1) {
+  flex: 2;
+}
+
+.card {
+  font-weight: bold;
+}
+
+.weui-badge {
+  background-color: rgb(0, 118, 255);
+  margin-left: 20rpx;
+}
+
+.list-b {
+  margin-top: 10rpx;
+  color: rgba(153, 148, 148, 1);
+  font-size: 25rpx;
+}
+
+.weui-cell__ft_in-access {
+  top: 20rpx;
+}
+
+.new-membershipCard {
+  width: 100%;
+  font-weight: bold;
+  position: fixed;
+  left: 0;
+  bottom: 15rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  background: rgba(2, 149, 2, 1);
+  text-align: center;
+  color: rgba(255, 255, 255, 1);
+  font-family: PingFang SC;
+}

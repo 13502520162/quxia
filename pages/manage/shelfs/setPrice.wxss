@@ -1,0 +1,57 @@
+.shelf-list {
+  max-height: calc( 100vh - 100rpx );
+  overflow: auto;
+}
+.shelf-list::after {
+  border-bottom: none;
+}
+
+.card {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.card-item {
+  width: 100%;
+}
+
+.item-body {
+  height: 140rpx;
+  margin-left: 20rpx;
+  display: flex;
+}
+
+.item-body > view {
+  display: flex;
+}
+
+.item-left {
+  display: flex;
+  align-items: center;
+}
+
+.item-right {
+  margin-left: 20rpx;
+}
+.img {
+  width: 120rpx;
+  height: 120rpx;
+  line-height: 140rpx;
+}
+
+.item-price-input {
+  display: flex;
+  line-height: 50rpx;
+}
+
+.item-price-input input {
+  background: #f2f2f2;
+  padding:  0rpx 20rpx;
+  width: 120rpx;
+}
+
+.empty {
+  line-height: 140rpx;
+}

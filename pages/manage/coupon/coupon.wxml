@@ -1,0 +1,32 @@
+<!--pages/coupon/coupon.wxml-->
+<scroll-view bindscrolltolower="loadMoreListData" scroll-y="{{true}}" style='{{ disAdd ? "height:calc(100vh - 100rpx)" : "height: calc(100vh - 200rpx)" }}'>
+  <view class='coupon'>
+    <view class='coupon-bg' bindtap='showActionSheet' wx:for="{{couponList}}" wx:key="{{item.id}}" data-enabled='{{item.enabled}}' data-id="{{item.id}}">
+      <view class='coupon-left'>
+        <view class='coupon-title'>
+          <text class='coupon-title-name'>{{item.name}}</text>
+          <text class='preferential-form'>{{item.type}}</text>
+        </view>
+        <view class='coupon-date'>
+          <text>有效期：</text>
+          <text wx:if='{{item.isDate}}'>{{item.nodate}}</text>
+          <text wx:else>{{item.date}}</text>
+        </view>
+      </view>
+      <view class='coupon-right'>
+        <image src='/assets/images/rightBackBtn.png'></image>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<view class="weui-loadmore" style='{{ couponList.length === 0 ? "display:block": "display:none"}}'>
+  <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+</view>
+
+<view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+  <view class="weui-loading"></view>
+  <view class="weui-loadmore__tips">正在加载</view>
+</view>
+
+<view class='new-coupons' bindtap='newCoupons'>新增优惠券</view>

@@ -1,0 +1,33 @@
+/* pages/authorization/authorization.wxss */
+.authorization {
+    height: 100%;
+    padding-top: 200rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.icon {
+    width: 100rpx;
+    height: 100rpx;
+    margin: 50rpx;
+}
+
+.tip {
+    margin-top: 50rpx;
+    color: #999;
+    width: 500rpx;
+    text-align: center;
+    font-size: 24rpx;
+}
+
+
+.btn {
+    margin-top: 80rpx;
+    width: 300rpx;
+    height: 80rpx;
+    color: #36A579;
+    line-height: 80rpx;
+    border: 4rpx solide #36A579;
+    font-size: 28rpx;
+}

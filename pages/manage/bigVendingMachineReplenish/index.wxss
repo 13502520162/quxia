@@ -1,0 +1,81 @@
+/* pages/manage/replenish/replenish.wxss */
+.header {
+  background: #fff;
+  padding: 20rpx;
+}
+
+.top-action {
+  margin-top: 20rpx;
+}
+
+.top-action  view {
+  display: inline-block;
+}
+
+.top-action span {
+  color: var(--main-color);
+  margin: 0rpx 30rpx;
+}
+
+.check-wrap {
+  float: right;
+}
+
+.check-btn {
+  margin: 0rpx 20rpx;
+}
+
+.location-name {
+  font-size: 40rpx;
+  font-weight: bold;
+}
+.device-id {
+  margin: 20rpx 0;
+}
+
+.card-status-success,.card-status-fail {
+  padding: 10rpx;
+  color: #fff;
+  border-radius: 10rpx;
+  margin-left: 20rpx;
+}
+.card-status-success {
+  background: var(--main-color);
+}
+.card-status-fail {
+  background: var(--error-color);
+}
+
+.weui-grid__icon {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.weui-grids {
+  height: calc( 100vh - 340rpx - 100rpx);
+  overflow: scroll
+}
+
+.weui-grid {
+  position: relative;
+}
+
+.shelf-number {
+  position: absolute;
+  left: 20rpx;
+  top: 20rpx;
+  color: #fff;
+  padding: 5rpx 10rpx;
+  border-radius: 4rpx;
+  background: rgb(24, 144, 255);
+}
+
+.danger {
+  background: red;
+}
+
+.replenish-record-btn {
+  font-size: 30rpx;
+  color: var(--main-color);
+  float: right;
+}

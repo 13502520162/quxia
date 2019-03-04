@@ -1,0 +1,63 @@
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title">{{statistics.name}}</view>
+    <view class="page__desc">
+      有效期：
+      <text>{{startDate}} 至 {{endDate}}</text>
+    </view>
+  </view>
+  <view class="page__bd page__bd_spacing">
+    <view class="weui-flex" style='height:100rpx;'>
+      <view class="weui-flex__item">
+        <view class="placeholder">
+          <view>已领取</view>
+          <view class='num'>{{statistics.acquired}}张</view>
+        </view>
+      </view>
+      <view class="weui-flex__item">
+        <view class="placeholder">
+          <view>领取人数</view>
+          <view class='num'>{{statistics.users}}人</view>
+        </view>
+      </view>
+      <view class="weui-flex__item">
+        <view class="placeholder">
+          <view>已使用</view>
+          <view class='num'>{{statistics.redeemed}}张</view>
+        </view>
+      </view>
+    </view>
+    <view class="weui-flex" style='height:100rpx;'>
+      <view class="weui-flex__item">
+        <view class="placeholder">
+          <view>累计消费</view>
+          <view class='num'>{{statistics.orderTotal}}元</view>
+        </view>
+      </view>
+      <view class="weui-flex__item">
+        <view class="placeholder">
+          <view>累计优惠</view>
+          <view class='num'>{{statistics.totalDiscount}}元</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<scroll-view bindscrolltolower='couponStatistics' class='scrollCoupon' scroll-y='true' style='height:calc( 100vh - {{pageHeight}});'>
+  <view class='coupon'>
+    <view class='coupon-bg' bindtap='showDetailsOfCouponData' wx:for="{{locations}}" wx:key="value" data-id='{{item.id}}'>
+      <view class='coupon-left'>
+        <view class='coupon-title'>
+          <text class='coupon-title-name'>{{item.name}}</text>
+        </view>
+        <view class='coupon-date'>
+          <text>领取{{item.acquired}}张，{{item.users}}人领取</text>
+        </view>
+      </view>
+      <view class='coupon-right'>
+        <image src='/assets/images/rightBackBtn.png'></image>
+      </view>
+    </view>
+  </view>
+</scroll-view>

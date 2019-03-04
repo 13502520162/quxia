@@ -1,0 +1,112 @@
+<!--pages/manage/device/list/list.wxml-->
+<view class='header'>
+   <text>库存记录（{{recordCount}}）</text>
+   <image src='../../../assets/images/filter.png' mode='widthFix' bindtap='toggleFilterMenue'></image>
+</view>
+<view class='weui-panel summary'>
+      <view class='card'>
+        <view class="weui-cell weui-cell_select card-item">
+            <view class="weui-cell__bd">
+                <view class="item-body">
+                    <view class='item-left'>
+                        <image class='img' src="{{summaryData.image}}"></image>
+                    </view>
+                    <view class='item-right'>
+                      <view>
+                        <text>{{ summaryData.name }}</text>
+                      </view>
+                      <view class='item-bottom'>
+                        <text>总库存{{summaryData.totalStock}}件</text>
+                        <text>可用库存{{summaryData.availableStock}}件</text>
+                      </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+  </view>
+<scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
+  <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='showActionSheet'>
+      <view class="weui-cell weui-cell_select card-item">
+          <view class="weui-cell__bd">
+              <view class="weui-select weui-select_in-select-after item-body">
+                <view>
+                   <view class='item-top'>
+                    <text>{{ item.type }}</text>
+                  </view>
+                  <view class='item-propmt'>操作人：{{item.userName}}</view>
+                  <view class='item-propmt'>{{item.createdDate}}</view>               
+                </view>
+                <view>
+                  <text class='item-num  {{ item.amount > 0 ? "item-up" : "item-down" }}'>{{item.amount > 0 ? ("+"+item.amount): item.amount}}</text>
+                </view>
+              </view>
+          </view>
+      </view>
+
+  </view>
+
+  <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+  </view>
+  
+  <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+  </view>
+</scroll-view>
+
+
+<!-- 弹框数据筛选 -->
+<popup
+  show="{{showFilterMenue}}"
+  position="right"
+  custom-class="popup"
+  bind:close="toggleFilterMenue"
+>
+ <view class='popup-content'>
+    <view class="popup-panel">
+      <view class='popup-device-type'>
+        <view class='popup-title'>时间</view>
+          <view class='date'>
+              <picker mode="date" data-type='start' bindchange="onDateChange">
+                <image src='../../../assets/images/leftBackBtn.png'></image>
+              </picker>
+              <text> {{filterParams.start ? filterParams.start :"选择开始时间"}} 至 {{filterParams.end ? filterParams.end :"选择结束时间" }} </text>
+              <picker mode="date" data-type='end' bindchange="onDateChange">
+                <image src='../../../assets/images/rightBackBtn.png'></image>
+              </picker>
+          </view>      
+      </view>
+      <view class='popup-device-type'>
+        <view class='popup-title'>类型</view>
+          <view>
+            <text 
+              wx:for="{{types}}"
+              wx:key="value"
+              class='tag-item {{item.selected ? "tag-item-selected":"" }}'
+              data-value='{{item.value}}'
+              bindtap='onTypesChange'
+            >{{item.name}}</text>
+          </view>     
+      </view>   
+      <view class='popup-device-place'>
+        <view class="weui-cell weui-cell_select">
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                <view class="weui-label popup-title" style='margin:0'>场地</view>
+            </view>
+            <view class="weui-cell__bd">
+                <picker bindchange="onFilterPlaceChange" range="{{placesData}}" value='全部' range-key="name" >
+                    <view class="weui-select">{{placesData[placesDataIndex].name}}</view>
+                </picker>
+            </view>
+        </view>
+      </view>
+
+    </view>
+    <view class='popup-bottom'>
+        <text bindtap='resetPopData'>重置</text>
+        <text bindtap='onSubmit'>确定</text>
+    </view>
+ </view>
+</popup>

@@ -1,0 +1,17 @@
+<!--pages/manage/device/list/quxia/bluetooth.wxml-->
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell weui-cell_switch">
+    <view class="weui-cell__bd">蓝牙</view>
+    <view class="weui-cell__ft">
+      <switch checked='{{bluetoothInfo.on}}' bindchange='switchHandle' />
+    </view>
+  </view>
+</view>
+<view class='bluetooth-des' wx:if="{{bluetoothInfo.on}}">
+  <view class='bluetooth-name'>
+    蓝牙名称:<text class='name-value'>{{bluetoothInfo.name}}</text>
+  </view>
+  <view class='bluetooth-key'>
+    配对密码:<text class='key-value'>{{bluetoothInfo.password}}</text>
+  </view>
+</view>

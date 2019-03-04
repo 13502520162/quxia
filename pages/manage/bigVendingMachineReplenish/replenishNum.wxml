@@ -1,0 +1,21 @@
+<!--pages/manage/bigVendingMachineReplenish/replenishNum.wxml-->
+<view wx:for="{{shelfs}}" wx:key="{{index}}" class='item' wx:if="{{item.replenishNum != item.stock }}">
+    <view class='item-left'>
+        <view>
+           <image src='{{item.image}}'></image>
+        </view>
+        <view class='item-detail'>
+            <view>{{item.number}}</view>
+            <view>{{item.name}}</view>
+            <view>￥{{item.price}}</view>
+        </view>
+    </view>
+    <view class='item-right'>
+        <view>{{ item.replenishNum - item.stock}}件</view>
+        <view>{{item.stock}}件 --> {{item.replenishNum}}件</view>
+    </view>
+</view>
+
+<view class='bottom-btn' bindtap='confirm'>
+  <button  class="weui-btn" type="primary">确定</button>
+</view>

@@ -1,0 +1,8 @@
+
+.card {
+  background: #fff;
+}
+
+.place-list {
+  height: calc( 100vh - 100rpx );
+}

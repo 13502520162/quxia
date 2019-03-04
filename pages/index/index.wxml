@@ -1,0 +1,65 @@
+<!--index.wxml-->
+<view wx:if="{{isShowSummary}}">
+  <view class='summary-data-change'>
+    <view class='left-btn' bindtap='lastDate'>
+      <image src='../../assets/images/leftBtn.png'></image>
+    </view>
+    <view>
+        <view class='income' bindtap='goToAnalysis'>
+          <view class='income-title'>
+            <text wx:if="{{dateItem.yesterday}}">昨天</text>
+            <text wx:elif="{{dateItem.today}}">今日</text>
+            <text wx:elif="{{dateItem.week}}">本周</text>
+            <text wx:else>本月</text>
+            <text>收益（元）</text>
+          </view>
+          <view>
+            <text class='income-money-icon'>￥</text><text class='income-momeny'>{{icomeSummaryData}}</text>
+          </view>
+        </view>
+    </view>
+    <view class='right-btn' bindtap='nextDate'>
+    <image src='../../assets/images/rightBtn.png'></image>
+    </view>
+  </view>
+
+  <view class='summary-data'>
+    <view class='summary-data-item'>
+      <view>营业额</view>
+      <view>{{summaryData.sales}}</view>
+    </view>
+    <view class='split-line'></view>
+    <view class='summary-data-item'>
+      <view>订单数</view>
+      <view>{{summaryData.orders}}</view>
+    </view>
+    <view class='split-line'></view>
+    <view class='summary-data-item'>
+      <view>用户数</view>
+      <view>{{summaryData.customers}}</view>
+    </view>
+  </view>
+</view>
+
+<view class='func-list-title'>常用功能</view>
+<view class="func-list">
+  <view class='func-item' wx:for="{{funcList}}" wx:key="title" data-url='{{item.pageUrl}}' bindtap='goToFunc' wx:if="{{!item.hide}}">
+    <view class='icon'>
+       <image src='{{item.icon}}'></image>
+    </view>
+    <view>
+      <view class='func-item-title'>{{item.title}}</view>
+      <view class='func-item-desc'>
+        <text wx:if="{{item.title=='设备列表'}}"> 在线{{deviceActiveInfo.activeDevices ? deviceActiveInfo.activeDevices : 0}}/{{deviceActiveInfo.devices ?deviceActiveInfo.devices: 0}}设备 </text>
+        <text wx:else>{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+
+
+
+
+

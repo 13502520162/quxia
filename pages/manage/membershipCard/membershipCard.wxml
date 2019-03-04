@@ -1,0 +1,20 @@
+<!--pages/manage/membershipCard/membershipCard.wxml-->
+<view class='membershipCard'>
+  <scroll-view scroll-y='true' style="height: calc( 100vh - 125rpx)" bindscrolltolower="listScroll">
+    <view class='list' wx:for="{{list}}" bindtap='listActionSheet' data-enabled='{{item.enabled}}' wx:key='{{index}}' data-id='{{item.id}}'>
+      <view class='list-t'>
+        <view>
+          <text class='card'>{{item.name}}</text>
+          <text class='weui-badge'>{{item.users}}用户</text>
+          <text class='weui-badge'>{{item.discountRate}}折</text>
+        </view>
+        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+      </view>
+      <view class='list-b'>
+        <text>{{item.Days}}</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<view class='new-membershipCard' bindtap='newMembershipCard'>新增会员卡</view>

@@ -1,0 +1,33 @@
+<!--pages/manage/shareAd/toll/details.wxml-->
+    <view class="weui-panel">
+      <view class="weui-panel__bd">
+          <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                  <view class="weui-label">名称</view>
+              </view>
+              <view class="weui-cell__bd">
+                  <input class="weui-input" placeholder="请输入套餐名称" name="name" value='{{tollData.name}}' bindinput='onChangeName'/>
+              </view>
+          </view>
+          <view class="weui-cell weui-cell_select"  bindtap='goToSelectFrequencies'>
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                <view class="weui-label">播放频率</view>
+            </view>
+            <view class="weui-cell__bd">
+                  <view class="weui-select weui-select_in-select-after">{{tollData.frequencies.length}}选项</view>
+            </view>
+          </view>
+          <view class="weui-cell weui-cell_select"  bindtap='goToSelectPeriods'>
+            <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                <view class="weui-label">播放周期</view>
+            </view>
+            <view class="weui-cell__bd">
+                  <view class="weui-select weui-select_in-select-after">{{tollData.periods.length}}选项</view>
+            </view>
+          </view>
+      </view>
+    </view>
+
+    <view class='bottom-btn' bindtap='goToSetPrice'>
+      <button  class="weui-btn" type="primary">设置价格</button>
+    </view>

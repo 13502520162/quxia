@@ -1,0 +1,148 @@
+/* pages/index/analysis.wxss */
+.date {
+  display: flex;
+  background: #fff;
+  height: 100rpx;
+  line-height: 100rpx;
+  padding-left: 40rpx;
+}
+.date-item {
+   color: var(--prompt-color);
+   font-size: 32rpx;
+   font-weight: bold;
+   vertical-align: baseline;
+   margin:  0rpx 40rpx;
+}
+
+.date-range > view {
+  display: flex;
+}
+
+.date-range  picker:nth-of-type(1) {
+  margin-right: 10rpx;
+}
+
+.date-range  picker:nth-of-type(2) {
+  margin-left: 10rpx;
+}
+
+.date-item.active {
+  font-size: 40rpx;
+  color: var(--main-color);
+  border-bottom: 4rpx solid var(--main-color);
+}
+
+.analysis-date {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  padding: 10rpx 80rpx;
+  text-align: center;
+}
+
+.left-btn, .right-btn {
+  line-height: 1;
+}
+
+.analysis-date image{
+  width: 22rpx;
+  height: 32rpx;
+  padding: 20rpx;
+}
+
+.analysis-date-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icome {
+  margin: 40rpx 0rpx;
+}
+
+.income-money {
+  color: var(--main-color);
+  font-size: 60rpx;
+  margin: 0rpx 40rpx;
+}
+
+.analysis-date-diff {
+  display: flex;
+  justify-content: space-around;
+}
+.analysis-date-diff-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+.analysis-date-diff-num {
+  color: var(--main-color);
+  font-size: 36rpx;
+  margin-bottom: 10rpx;
+}
+
+.list {
+  height: calc( 100vh - 240rpx )
+}
+
+.card {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  padding: 10rpx 0rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-left-top text:nth-of-type(2) {
+  background: var(--main-color);
+  color: #fff;
+  padding: 4rpx 10rpx;
+  border-radius: 4rpx;
+}
+
+.item-left-top text:nth-of-type(2), .item-left-bottom text:nth-of-type(2) {
+  margin-left: 20rpx;
+}
+
+.item-left-bottom {
+  font-size: 26rpx;
+  color: var(--prompt-color);
+}
+
+.card-item {
+  width: 100%;
+}
+
+.report-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-left: 20rpx;
+  margin-bottom: 10rpx;
+}
+
+.weui-select {
+  height: auto;
+  line-height: 2em;
+  
+}
+
+.list-item {
+  display: flex;  
+  align-items: center;
+}
+
+
+
+.list-item image, .list-item text{
+  vertical-align: middle;
+}
+
+.item-icon {
+  width: 100rpx;
+  height: 100rpx;
+  margin-right: 20rpx;
+}
+
+.analysis-date-diff-img {
+  vertical-align: middle;
+}

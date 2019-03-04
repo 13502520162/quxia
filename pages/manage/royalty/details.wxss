@@ -1,0 +1,7 @@
+/* pages/manage/royalty/details.wxss */
+.users {
+  margin-top: 20rpx;
+}
+.users-title {
+  color: #000;
+}

@@ -1,0 +1,5 @@
+/* pages/manage/device/list/controls.wxss */
+.bluetooth-info {
+  font-size: 16rpx;
+  color: var(--prompt-color);
+}

@@ -1,0 +1,80 @@
+page,
+.page,
+.page__bd{
+    height:  calc(100%);
+}
+.page__bd{
+    padding-bottom: 0;
+}
+.weui-tab__content{
+    /* padding-top: 60px; */
+    text-align: center;
+}
+
+.weui-navbar {
+  background: #fff;
+}
+
+.list {
+  height: calc( 100vh - 200rpx );
+}
+
+.card {
+  width: 33.333%;
+  height: 200rpx;
+  display: inline-flex;
+  box-sizing: border-box;
+  border: 1rpx solid #fff;
+  justify-content: center;
+  align-items: center;
+  padding: 5rpx;
+  position: relative;
+  background: #fff;
+}
+
+.checked-btn {
+  position: absolute;
+  right: 4rpx;
+  top: 0rpx;
+}
+
+.card image {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+
+.bottom {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+.bottom text {
+  padding: 20rpx 0rpx;
+  font-size: 32rpx;
+  display: inline-block;
+  background: #fff;
+  width: 50%;
+  text-align: center;
+  box-sizing: border-box;
+  border: 1rpx solid var(--border-color)
+}
+
+
+.video-container {
+  display: none;
+  position: absolute;
+  z-index: 99;
+  top:0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, .3);
+  align-items: center;
+  justify-content: center;
+}
+.video-container video {
+  display: block;
+}

@@ -1,0 +1,146 @@
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-tab">
+            <view class="weui-navbar">
+                <block wx:for="{{tabs}}" wx:key="*this">
+                    <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+                        <view class="weui-navbar__title">{{item}}</view>
+                    </view>
+                </block>
+                <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+            </view>
+            <view class="weui-tab__panel">
+                <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+                    <view class='container' wx:if="{{orderInfo}}">
+                        <view class='card'>
+                          <view class='card-header'>
+                              <view class="weui-loadmore weui-loadmore_line">
+                                  <view class="weui-loadmore__tips weui-loadmore__tips_in-line">费用明细</view>
+                              </view>
+                              <view class='card-container'>
+                                  <view class='fee'>
+                                    <text>{{orderInfo.totalPrice}}</text><text>元</text>
+                                  </view>
+                                  <view class='card-container-item'>
+                                    <text>商品总数: </text><text>{{ orderInfo.items.length }}</text>
+                                  </view>
+                                  <view class='card-container-item'>
+                                    <text>支付方式：</text><text>{{ orderInfo.paymentGatewayType == 'wx' ? "微信":"支付宝" }}</text>
+                                  </view>
+                                  <view class='card-container-item'>
+                                    <text>支付时间：</text><text>{{ orderInfo.createdDate}}</text>
+                                  </view>
+                              </view>
+                          </view>
+                        </view>
+
+                        <view class='card'>
+                          <view class='card-header'>
+                              <view class="weui-loadmore weui-loadmore_line">
+                                  <view class="weui-loadmore__tips weui-loadmore__tips_in-line">使用情况</view>
+                              </view>
+                              <view class='card-container'>
+                                  <view class='card-container-item'>
+                                    <text>订单编号： </text><text>{{orderInfo.id}}</text>
+                                  </view>
+                                  <view class='card-container-item'>
+                                    <text>设备编号： </text><text>{{orderInfo.deviceId}}</text>
+                                  </view>
+                                  <view class='card-container-item'>
+                                    <text>设备名称：</text><text>{{orderInfo.deviceName}}</text>
+                                  </view>
+                                  <view class='card-container-item'>
+                                    <text>使用地址：</text><text>{{ orderInfo.province + orderInfo.city + orderInfo.district + orderInfo.street }}</text>
+                                  </view>
+                                  <view class='card-container-item'>
+                                    <text>使用场地：</text><text>{{ orderInfo.locationName }}</text>
+                                  </view>
+                              </view>
+                          </view>
+                        </view>
+                        <view class='card'>
+                          <view class='card-header'>
+                              <view class="weui-loadmore weui-loadmore_line">
+                                  <view class="weui-loadmore__tips weui-loadmore__tips_in-line">商品数据</view>
+                              </view>
+                              <view class='card-container goods' wx:for="{{orderInfo.items}}" wx:key="*this" >
+                                  <view>
+                                    <view class='card-container-item'>
+                                      <image class='goods-img' src='{{item.image}}'></image>
+                                    </view>
+                                  </view>
+                                  <view class='goods-details'>
+                                    <view class='card-container-item'>
+                                      <text>商品名：</text><text>{{ item.name}}</text>
+                                    </view>
+                                    <view class='card-container-item'>
+                                      <text>价格：</text><text>{{ item.price}}</text>
+                                    </view>
+                                    <view class='card-container-item'>
+                                      <text>数量：</text><text>{{ item.quantity}}</text>
+                                    </view>
+                                    <view class='card-container-item'>
+                                      <text>总价：</text><text>{{ item.totalPrice}}</text>
+                                    </view>            
+                                  </view>
+
+                              </view>
+                          </view>
+                        </view>
+                    </view>
+                </view>
+                <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+                    <view class='container' wx:if="{{orderInfo}}">
+                        <view class='card'>
+                          <view class='card-header'>
+                              <view class="weui-loadmore weui-loadmore_line">
+                                  <view class="weui-loadmore__tips weui-loadmore__tips_in-line">收益</view>
+                              </view>
+                              <view class='card-container'>
+                                  <view class='fee'>
+                                    <text>{{orderInfo.royalty.amount}}</text><text>元</text>
+                                  </view>
+                              </view>
+                          </view>
+                        </view>
+
+                        <view class='card' wx:if="{{orderInfo.royalty.device}}">
+                          <view class='card-header'>
+                              <view class="weui-loadmore weui-loadmore_line">
+                                  <view class="weui-loadmore__tips weui-loadmore__tips_in-line">设备分润</view>
+                              </view>
+                              <view class='card-container goods'>
+                                  <view class='goods-details'>
+                                    <view class='card-container-item'  wx:for="{{orderInfo.royalty.device}}" wx:key="*this" style='{{ item.self ? "font-weight:bold": "" }}'>
+                                       <view class='income-item'><text>名称：{{ item.userName}}</text></view>
+                                       <view class='income-item'><text>收益：￥{{item.amount}}</text></view>
+                                    </view>
+                                  </view>
+                              </view>
+                          </view>
+                        </view>
+
+                        <view class='card' wx:if="{{orderInfo.royalty.location}}">
+                          <view class='card-header'>
+                              <view class="weui-loadmore weui-loadmore_line">
+                                  <view class="weui-loadmore__tips weui-loadmore__tips_in-line">场地分润</view>
+                              </view>
+                              <view class='card-container goods'>
+                                  <view class='goods-details'>
+                                    <view class='card-container-item'  wx:for="{{orderInfo.royalty.location}}" wx:key="*this" style='{{ item.self ? "font-weight:bold": "" }}'>
+                                       <view class='income-item'><text>名称：{{ item.userName }}</text></view>
+                                       <view class='income-item'><text>收益：￥{{item.amount}}</text></view>
+                                    </view>
+                                  </view>
+                              </view>
+                          </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+
+
+

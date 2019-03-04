@@ -1,0 +1,101 @@
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-tab">
+            <view class="weui-navbar">
+                <block wx:for="{{tabs}}" wx:key="*this">
+                    <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+                        <view class="weui-navbar__title">{{item}}</view>
+                    </view>
+                </block>
+                <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+            </view>
+            <view class="weui-tab__panel">
+                <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+                  <!-- 全部交易记录 -->
+                  <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
+                      <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='gotoOrderDetail'>
+                          <view class='card-top'><text>{{item.state =='SUCCEEDED'?'支付成功':'支付失败'}}</text><text>￥{{item.amount}}</text></view>
+                          <view class="weui-cell weui-cell_select card-item">
+                              <view class="weui-cell__bd">
+                                  <view class="weui-select weui-select_in-select-after item-body">
+                                      <view class='item-top'>
+                                        <text>{{ item.id }}</text>
+                                      </view>
+                                      <view class='location-name'>{{item.gatwayType}}</view>
+                                      <view class='location-name'>{{item.createdDate}}</view>
+                                      <view class='location-name'>{{item.locationName}}</view>
+                                  </view>
+                              </view>
+                          </view>
+                      </view>
+                      <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+                          <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+                      </view>
+                      <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+                          <view class="weui-loading"></view>
+                          <view class="weui-loadmore__tips">正在加载</view>
+                      </view>
+                    </scroll-view>
+                </view>
+                <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+                  <!-- 收入交易记录 -->
+                    <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
+                      <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='gotoOrderDetail'>
+                          <view class='card-top'><text>{{item.state =='SUCCEEDED'?'支付成功':'支付失败'}}</text><text>￥{{item.amount}}</text></view>
+                          <view class="weui-cell weui-cell_select card-item">
+                              <view class="weui-cell__bd">
+                                  <view class="weui-select weui-select_in-select-after item-body">
+                                      <view class='item-top'>
+                                        <text>{{ item.id }}</text>
+                                      </view>
+                                      <view class='location-name'>{{item.gatwayType}}</view>
+                                      <view class='location-name'>{{item.createdDate}}</view>
+                                      
+                                      <view class='location-name'>{{item.locationName}}</view>
+                                  </view>
+                              </view>
+                          </view>
+                      </view>
+                      <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+                          <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+                      </view>
+                      <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+                          <view class="weui-loading"></view>
+                          <view class="weui-loadmore__tips">正在加载</view>
+                      </view>
+                    </scroll-view>
+                
+                </view>
+                <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+                     <!-- 提现交易记录 -->
+                    <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
+                      <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='gotoOrderDetail'>
+                          <view class='card-top'><text>{{item.state =='SUCCEEDED'?'支付成功':'支付失败'}}</text><text>￥{{item.amount}}</text></view>
+                          <view class="weui-cell weui-cell_select card-item">
+                              <view class="weui-cell__bd">
+                                  <view class="weui-select weui-select_in-select-after item-body">
+                                      <view class='item-top'>
+                                        <text>{{ item.id }}</text>
+                                      </view>
+                                      <view class='location-name'>{{item.gatwayType}}</view>
+                                      <view class='location-name'>{{item.createdDate}}</view>
+                                      
+                                      <view class='location-name'>{{item.locationName}}</view>
+                                  </view>
+                              </view>
+                          </view>
+                      </view>
+                      <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+                          <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+                      </view>
+                      <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+                          <view class="weui-loading"></view>
+                          <view class="weui-loadmore__tips">正在加载</view>
+                      </view>
+                    </scroll-view>
+                
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,71 @@
+
+.summary .item-right{
+  line-height: 2rem;
+}
+.list {
+  height: calc( 100vh - 100rpx );
+}
+.card {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.card-item {
+  width: 100%;
+}
+
+.num-ctrol-group{
+  display: flex;
+  justify-content: space-around;
+  padding: 8rpx;
+  margin: 10rpx 0rpx;
+  border: 1rpx solid var(--prompt-color);
+  border-radius: 6rpx;
+}
+.num-ctrol-group-num, .num-ctrol-group-reduce-btn, .num-ctrol-group-add-btn {
+  flex: 1;
+  text-align: center;
+  padding: 5rpx;
+  line-height: 40rpx;
+}
+.num-ctrol-group-reduce-btn {
+  border-right: 1rpx solid var(--prompt-color);
+  text-align: center;
+  font-size: 40rpx;
+}
+.num-ctrol-group-add-btn {
+  border-left: 1rpx solid var(--prompt-color);
+  font-size: 40rpx;
+}
+
+.item-body {
+  height: 140rpx;
+  margin-left: 20rpx;
+  display: flex;
+}
+
+.item-left {
+  display: flex;
+  align-items: center;
+}
+
+.item-right {
+  margin-left: 20rpx;
+}
+
+.item-bottom text:nth-of-type(2) {
+  margin-left: 20rpx;
+}
+
+
+.img {
+  width: 120rpx;
+  height: 120rpx;
+  line-height: 140rpx;
+}
+
+.input-desc {
+  padding: 20rpx;
+}

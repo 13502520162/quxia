@@ -1,0 +1,55 @@
+<!--pages/manage/toll/goods.wxml-->
+<view class="weui-panel">
+  <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+          <view class="weui-label">商品名称</view>
+      </view>
+      <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入商品名称" value="{{goods.name}}" bindinput='onGoodsNameChange'/>
+      </view>
+  </view>
+  <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+          <view class="weui-label">价格</view>
+      </view>
+      <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入价格" type='digit' value="{{goods.price}}" bindinput="onGoodsPriceChange"/>
+      </view>
+  </view>
+  <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+          <view class="weui-label">派发币数</view>
+      </view>
+      <view class="weui-cell__bd">
+          <input class="weui-input" placeholder="请输入派发币数" type='digit' value="{{goods.amount}}" bindinput="onGoodsAmountChange"/>
+      </view>
+  </view>
+</view>
+
+<view class="weui-panel img-upload">
+  <view class="weui-uploader__hd">
+      <view class="weui-uploader__title">商品图片</view>
+  </view>
+  <view class="weui-uploader__bd">
+    <view class="weui-uploader__input-box" wx:if='{{!goods.image}}'>
+        <view class="weui-uploader__input" bindtap="choosePlaceImage"></view>
+    </view>
+     <view class="weui-uploader__file" wx:else>
+          <image class="weui-uploader__img" src="{{goods.image}}" mode="aspectFill" bindtap="choosePlaceImage" />
+     </view>
+  </view>
+</view>
+
+<view class="weui-panel img-upload">
+  <view class="weui-uploader__hd">
+      <view class="weui-uploader__title">商品描述</view>
+  </view>
+  <view class="weui-uploader__bd">
+    <textarea class="weui-textarea" placeholder="请输入商品描述" style="height: 3.3em" value='{{goods.description}}' maxlength='200' bindinput='onGoodsDescChange' />
+    <view class="weui-textarea-counter">0/200</view>
+  </view>
+</view>
+
+<view class='bottom-btn' bindtap='onAddGoods'>
+  <button  class="weui-btn" type="primary">添加</button>
+</view>

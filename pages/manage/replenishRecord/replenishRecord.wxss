@@ -1,0 +1,156 @@
+/* pages/manage/device/list/list.wxss */
+.header {
+  background: #fff;
+  line-height: 60rpx;
+  padding: 20rpx;
+  font-weight: bold;
+  font-size: 32rpx;
+}
+.header image {
+  width: 60rpx;
+  max-height: 60rpx;
+  float: right;
+}
+
+.tag-item {
+  padding: 10rpx 20rpx;
+  margin: 20rpx;
+  border: 1rpx solid var(--main-color);
+  border-radius: 10rpx;
+  color: var(--main-color);
+  display: inline-block;
+}
+
+.tag-item-selected  {
+  background: var(--main-color);
+  color: #fff;
+}
+
+
+.img {
+  width: 120rpx;
+  height: 120rpx;
+  line-height: 140rpx;
+}
+
+.list {
+  height: calc( 100vh - 100rpx );
+}
+.card {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.card-item {
+  width: 100%;
+}
+
+.item-body {
+  height: 220rpx;
+  margin-left: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.item-body  view {
+  line-height: 40rpx;
+}
+.item-top  text:not(:first-child) { 
+  margin-left: 20rpx;
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+}
+.item-top  text:nth-child(2) {
+  background: var(--main-color);
+  color: #fff;
+  border-radius: 10rpx;
+}
+.item-propmt {
+  color: var(--prompt-color);
+  margin-top: 10rpx;
+  line-height: 32rpx;
+}
+.card-status-success,.card-status-fail {
+  padding: 10rpx;
+  color: #fff;
+  border-radius: 10rpx;
+}
+
+.item-num {
+  font-size: 40rpx;
+}
+.item-down {
+  color: var(--main-color);
+}
+.item-up {
+  color: var(--error-color);
+}
+
+.popup {
+  background: var(--background-color) !important;
+}
+.popup-content {
+  width: 600rpx;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.popup-title {
+  font-weight: bold;
+  font-size: 28rpx;
+  margin-bottom: 30rpx;
+}
+
+.date {
+  text-align: center;
+}
+
+.date picker{
+  display: inline-block;
+}
+
+.date image{
+  width: 20rpx;
+  height: 20rpx;
+  padding: 0rpx 20rpx;
+}
+
+.popup-device-place {
+  background: #fff;
+}
+
+.popup-device-id {
+  background: #fff;
+  padding: 20rpx;
+
+}
+.popup-device-place, .popup-device-id {
+  margin-top: 20rpx;
+}
+
+
+
+.popup-bottom {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background: #fff;
+}
+.popup-bottom text {
+  padding: 20rpx 0rpx;
+  font-size: 32rpx;
+
+
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+}
+
+.popup-bottom text:nth-child(2){
+  background: var(--main-color);
+  color: #fff;
+}
+

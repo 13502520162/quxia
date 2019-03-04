@@ -1,0 +1,46 @@
+/* pages/manage/device/list/details.wxss */
+.details-header {
+  background: #fff;
+  height: 100rpx;
+  padding: 20rpx;
+}
+.card-status-success,.card-status-fail {
+  padding: 5rpx 10rpx;
+  color: #fff;
+  border-radius: 10rpx;
+  float: right;
+
+}
+.card-status-success {
+  background: var(--main-color);
+}
+.card-status-fail {
+  background: var(--error-color);
+}
+.location-name {
+  margin-top: 10rpx;
+}
+.details-body {
+  margin-top: 20rpx;
+  background: #fff;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+  color: #fff;
+  display: flex;
+  width: 100%;
+  background: var(--main-color);
+}
+.disbind {
+  background: var(--error-color);
+}
+.bottom text {
+  padding: 20rpx 0rpx;
+  font-size: 32rpx;
+  display: inline-block;
+  text-align: center;
+  flex: 1;
+}
+

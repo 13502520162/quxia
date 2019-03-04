@@ -1,0 +1,86 @@
+.num-ctrol-group{
+  display: flex;
+  justify-content: space-around;
+
+  margin: 10rpx 0rpx;
+  border: 1rpx solid var(--prompt-color);
+  border-radius: 10rpx;
+}
+.num-ctrol-group-num, .num-ctrol-group-reduce-btn, .num-ctrol-group-add-btn {
+  flex: 1;
+  text-align: center;
+  padding: 5rpx;
+}
+.num-ctrol-group-reduce-btn {
+  border-right: 1rpx solid var(--prompt-color);
+  text-align: center;
+}
+.num-ctrol-group-add-btn {
+   border-left: 1rpx solid var(--prompt-color);
+}
+
+.shelf-list {
+  max-height: calc( 100vh - 280rpx );
+  overflow: auto;
+}
+.shelf-list::after {
+  border-bottom: none;
+}
+
+.card {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.card-item {
+  width: 100%;
+}
+
+.item-body {
+  height: 120rpx;
+  margin-left: 20rpx;
+  display: flex;
+}
+
+.item-body > view {
+  display: flex;
+}
+
+.item-left {
+  display: flex;
+  align-items: center;
+}
+
+.item-right {
+  margin-left: 20rpx;
+}
+.img {
+  width: 100rpx;
+  height: 100rpx;
+  line-height: 120rpx;
+}
+
+.empty {
+  line-height: 120rpx;
+}
+
+.weui-grid__icon {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.weui-grid {
+  position: relative;
+}
+
+.shelf-number {
+  position: absolute;
+  left: 20rpx;
+  top: 20rpx;
+  color: #fff;
+  padding: 5rpx 10rpx;
+  border-radius: 4rpx;
+  background: rgb(24, 144, 255);
+}

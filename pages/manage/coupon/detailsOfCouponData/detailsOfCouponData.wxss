@@ -1,0 +1,42 @@
+/* pages/manage/coupon/detailsOfCouponData/detailsOfCouponData.wxss */
+
+.page {
+  padding: 30rpx 30rpx 0;
+  background: #fff;
+}
+
+.page__title {
+  font-weight: bold;
+}
+
+.page__desc {
+  font-size: 25rpx;
+  margin-top: 10rpx;
+  color: rgba(153, 148, 148, 1);
+}
+
+.page__bd_spacing {
+  margin-top: 30rpx;
+}
+
+.weui-flex {
+  margin-top: 30rpx;
+}
+
+.weui-media-box {
+  padding: 30rpx 0;
+}
+
+.list {
+  margin-top: 30rpx;
+  background: #fff;
+  padding: 0 30rpx;
+}
+
+.list .weui-cell {
+  padding: 10rpx 0;
+}
+
+.list .weui-cell::before {
+ border: none;
+}

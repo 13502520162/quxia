@@ -1,0 +1,211 @@
+/* pages/coupon/newCoupons/newCoupons.wxss */
+
+.newCoupons {
+  margin-top: 20rpx;
+  background: #fff;
+  color: #333;
+}
+
+.weui-cell:before {
+  border-top: none;
+}
+
+.weui-cell-reset {
+  border-bottom: 1rpx solid rgba(246, 246, 246, 1);
+}
+
+.weui-check__label {
+  display: inline-block;
+}
+
+.weui-cell__bd-reset {
+  display: inline-block;
+}
+view .weui-label{
+  font-size: 32rpx;
+
+}
+.weui-label-reset {
+  width: 130rpx;
+}
+
+.porelative {
+  position: relative;
+  top: 5rpx;
+}
+
+.coupon-name {
+  text-align: right;
+}
+
+.full-order {
+  position: relative;
+  top: 2rpx;
+  left: 15rpx;
+}
+
+.full-order, .full-order .full-order-ipt {
+  display: inline-block;
+}
+
+.full-order2 {
+  position: relative;
+  top: -15rpx;
+  left: 54rpx;
+  display: inline-block;
+}
+
+.full-order .full-order-ipt {
+  width: 80rpx;
+  border-bottom: 2rpx solid #ccc;
+  height: 20rpx;
+  position: relative;
+  top: 4rpx;
+  padding-left: 5rpx;
+}
+
+.weui-icon-checkbox_circle {
+  color: #4cc64e;
+}
+
+.termOfValidity {
+  position: relative;
+  top: 0rpx;
+  height: 65rpx;
+}
+
+.termOfValidity .weui-check__label:nth-child(1) {
+  margin-left: 40rpx;
+}
+
+.termOfValidity .weui-check__label:nth-child(2) {
+  margin-left: 260rpx;
+}
+
+.termOfValidity .full-order {
+  position: absolute;
+  top: -12rpx;
+  left: 120rpx;
+}
+
+.termOfValidity .full-order:nth-child(4) {
+  left: 450rpx;
+}
+
+.termOfValidityOp {
+  text-align: center;
+}
+
+.mode-date {
+  display: inline-block;
+}
+
+.info {
+  color: #b2b2b2;
+  font-size: 22rpx;
+}
+
+.weui-cell {
+  padding: 20rpx 22rpx;
+  border-bottom: 1px solid rgba(246, 246, 246, 1);
+  position: static;
+}
+
+.preservation {
+  width: 100%;
+  font-weight: bold;
+  position: fixed;
+  left: 0;
+  bottom: 15rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  background: rgba(2, 149, 2, 1);
+  text-align: center;
+  color: rgba(255, 255, 255, 1);
+  font-family: PingFang SC;
+}
+
+.weui-label-reset1 {
+  position: relative;
+  top: -12rpx;
+}
+
+.date-ipt {
+  text-align: center;
+  color: #b2b2b2;
+  /* width: 220rpx; */
+  border-bottom: 1rpx solid #b2b2b2;
+}
+
+.limitChange {
+  width: 80%;
+}
+
+.full-order1 {
+  padding-bottom: 20rpx;
+  margin-left: 165rpx;
+}
+
+.limitChange .weui-check__label:nth-child(1) {
+  margin-left: 40rpx;
+}
+
+.info1 {
+  display: inline-block;
+}
+
+.full-order5 {
+  position: relative;
+  left: 245rpx;
+}
+
+view .field {
+  position: relative;
+}
+
+.field-num {
+  position: absolute;
+  top: 24rpx;
+  right: 45rpx;
+}
+
+.field image {
+  width: 24rpx;
+  height: 24rpx;
+  position: absolute;
+  top: 11rpx;
+  right: -30rpx;
+}
+
+.borderNone {
+  border: none;
+}
+
+input {
+  text-align: center;
+}
+
+.disabledColor {
+  color: #ccc;
+}
+
+.weui-cells:after {
+  bottom: 0;
+  border-bottom: none;
+}
+
+.weui-cells:before {
+  top: 0;
+  border-top: none;
+}
+
+.weui-cell_switch {
+  border-bottom: none;
+}
+
+.weui-cell__ft .weui-label {
+  position: relative;
+  top: 5rpx;
+  right: 10rpx;
+  font-size: 25rpx;
+}

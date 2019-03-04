@@ -1,0 +1,25 @@
+<!--pages/manage/shareAd/putting/selectResources.wxml-->
+
+<scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
+  <view style="text-align:left">
+    <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' data-url='{{item.url}}' bindtap='toggleChecked'>
+          <image mode='aspectFit' src='{{ dataType == "VIDEO" ? item.thumb : item.url }}'></image>
+          <view class='checked-btn'>
+            <icon size='23' type='success' wx:if="{{item.checked}}"></icon>
+            <icon size='23' type='circle' wx:else></icon>
+          </view>
+    </view>
+  </view>
+  <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+  </view>
+  <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+  </view>
+</scroll-view>
+
+<view class='bottom'>
+    <text bindtap='onUploadResource'> {{ dataType == 'VIDEO' ?  '上传视频' : '上传图片' }}</text>
+    <text bindtap='onComfirm'>确定</text>
+</view>

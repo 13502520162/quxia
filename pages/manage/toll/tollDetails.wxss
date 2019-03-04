@@ -1,0 +1,30 @@
+/* pages/manage/toll/tollDetails.wxss */
+.toll-name {
+  background: #fff;
+}
+
+.item {
+  width: 100%;
+}
+.item-content {
+  text-align: left;
+  line-height: 1;
+  display: flex;
+}
+
+.item-content > view {
+  margin-left: 30rpx;
+  font-size: 28rpx;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.propmt-info {
+  font-size: 24rpx;
+  text-align: center;
+  display: block;
+  width: 100%;
+  margin:  40rpx 0;
+  color: var(--prompt-color);
+}

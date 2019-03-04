@@ -1,0 +1,49 @@
+<view class='header'>
+  <view class='location-name'>{{deviceInfo.locationName}} <span class="replenish-record-btn" bindtap="showReplenishRecord">补货记录</span></view>
+  <view class='location-adress'>{{deviceInfo.province + deviceInfo.city + deviceInfo.district + deviceInfo.street }}</view>
+  <view class='device-id'>
+    <text>{{deviceInfo.deviceId}}</text>
+    <text wx:if="{{deviceInfo.active}}" class='card-status-success'>在线</text>
+    <text wx:else class='card-status-fail'>离线</text>
+  </view>
+  <view>{{deviceInfo.deviceName}}</view>
+  <view class='top-action'>
+      <view>
+          <span bindtap="onResetReplenishNum">重置</span>
+          <span bindtap="onFillReplenishNum">一键补满</span>
+      </view>
+      <view class='check-wrap'>
+          <view class='check-btn' bindtap='toggleShelfs'>
+            <icon type="{{ !isFilterOutOfStock ? 'success' : 'circle' }}" size="20"></icon>全部
+          </view>
+          <view class='check-btn' bindtap='toggleShelfs'>
+            <icon type="{{ isFilterOutOfStock ? 'success' : 'circle' }}" size="20"></icon>缺货
+          </view>
+      </view>
+  </view>
+</view>
+<view>
+    <view class="weui-panel shelf-list">
+        <view class="page__bd">
+            <view class="weui-grids">
+                <block wx:for="{{shelfs}}" wx:key="{{index}}">
+                    <view  class="weui-grid" hover-class="weui-grid_active">
+                        <view class='{{ item.state != "NORMAL" ? "shelf-number danger": "shelf-number" }}' wx:if="{{item.number}}">{{item.number}}</view>
+                        <view>
+                            <image class="weui-grid__icon" src="{{ item.image}}"/>
+                            <view class="weui-grid__label">{{item.name}}</view>
+                             <view class="weui-grid__label">最大容量：{{item.maxStock}}</view>
+                            <view class="weui-grid__label">
+                              <Stepper size="small" value="{{item.replenishNum}}" min="0" max="{{item.maxStock}}"  data-index='{{index}}'  bind:change="handleStepperChange" ></Stepper>
+                            </view>
+                        </view>
+                    </view>
+                </block>
+            </view>
+        </view>
+    </view>
+</view>
+
+<view class='bottom-btn' bindtap='nextStep'>
+  <button  class="weui-btn" type="{{isCanNext ?'primary': '' }}" >下一步</button>
+</view>

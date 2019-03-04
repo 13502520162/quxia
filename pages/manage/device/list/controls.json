@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "dialog": "../../../../components/dialog/index",
+    "field": "../../../../components/field/index"
+  }
+}

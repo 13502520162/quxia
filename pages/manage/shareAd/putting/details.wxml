@@ -1,0 +1,89 @@
+<form bindsubmit='onConfirm' >
+  <view class="weui-panel">
+    <view class="weui-panel__bd">
+        <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+                <view class="weui-label">名称</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" bindinput='onNameChange'  placeholder="请输入名称" name="name" value='{{adData.name}}'/>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">广告类型</view>
+          </view>
+          <view class="weui-cell__bd">
+              <picker bindchange="bindTypeChange" value="{{typeIndex}}" range="{{typesData}}" range-key="name">
+                  <view class="weui-select weui-select_in-select-after">{{typesData[typeIndex].name}}</view>
+              </picker>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_select"  bindtap='goToSelectResource'>
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">素材</view>
+          </view>
+          <view class="weui-cell__bd">
+                <view class="weui-select weui-select_in-select-after">{{adData.resources.length}}个素材</view>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_select" bindtap='goToSelectDevices'>
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">设备</view>
+          </view>
+          <view class="weui-cell__bd">
+                <view class="weui-select weui-select_in-select-after">{{adData.deviceIds.length}}台设备</view>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+              <view class="weui-label">开始日期</view>
+          </view>
+          <view class="weui-cell__bd">
+              <picker mode="date" bindchange='onStartDateChange'>
+                <view class="weui-select weui-select_in-select-after">{{adData.startDate}}</view>
+              </picker>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+                <view class="weui-label">播放时长（秒）</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" placeholder="请输入播放时长" type='number' name="duration" value='{{adData.duration}}'/>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input" wx:if="{{typeIndex == 1}}">
+            <view class="weui-cell__hd">
+                <view class="weui-label">图片间隔时间</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input"  placeholder="请输入图片间隔时间" type='number' name="interval" value='{{adData.interval}}'/>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+            <view class="weui-cell__hd">
+                <view class="weui-label">单日播放次数</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" placeholder="请输入单日播放次数" type='number' name="frequency" value='{{adData.frequency}}'/>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+                <view class="weui-label">播放天数</view>
+            </view>
+            <view class="weui-cell__bd">
+                <input class="weui-input" placeholder="请输入播放天数" type='number' name="days" value='{{adData.days}}'/>
+            </view>
+        </view>
+    </view>
+  </view>
+
+
+  
+<view class='bottom-btn'>
+  <button  class="weui-btn" type="primary" form-type="submit">确定</button>
+</view>
+
+</form>

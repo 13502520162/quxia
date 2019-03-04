@@ -1,0 +1,205 @@
+/* pages/manage/membershipCard/newMembershipCard/newMembershipCard.wxss */
+
+.newMembershipCard {
+  margin-top: 20rpx;
+  background: #fff;
+  color: #333;
+}
+
+.weui-cell:before {
+  border-top: none;
+}
+
+.weui-cell-reset {
+  border-bottom: 1rpx solid rgba(246, 246, 246, 1);
+}
+
+view .weui-label {
+  font-size: 32rpx;
+}
+
+.weui-check__label {
+  display: inline-block;
+}
+
+.weui-cell__bd-reset {
+  display: inline-block;
+}
+
+.weui-label-reset {
+  width: 130rpx;
+}
+
+.porelative {
+  position: relative;
+  top: 5rpx;
+}
+
+.coupon-name {
+  text-align: right;
+}
+
+.full-order {
+  position: relative;
+  top: 2rpx;
+  left: 15rpx;
+}
+
+.full-order, .full-order .full-order-ipt {
+  display: inline-block;
+}
+
+.full-order2 {
+  position: relative;
+  top: -15rpx;
+  left: 54rpx;
+  display: inline-block;
+}
+
+.full-order .full-order-ipt {
+  width: 80rpx;
+  border-bottom: 2rpx solid #ccc;
+  height: 20rpx;
+  position: relative;
+  top: 4rpx;
+  padding-left: 5rpx;
+}
+
+.weui-icon-checkbox_circle {
+  color: #4cc64e;
+}
+
+.after-expiry {
+  margin: 30rpx 0 30rpx 54rpx;
+}
+
+.select {
+  position: relative;
+  display: inline-block;
+  width: 200rpx;
+  border-radius: 10rpx;
+  margin-left: 10rpx;
+  border: 1px solid #ccc;
+}
+
+.picker {
+  font-size: 30rpx;
+  padding-left: 10rpx;
+}
+
+.termOfValidity {
+  position: relative;
+  top: 0rpx;
+  height: 65rpx;
+}
+
+.weui-cell {
+  padding: 20rpx 22rpx;
+  border-bottom: 1px solid rgba(246, 246, 246, 1);
+  position: static;
+}
+
+.preservation {
+  width: 100%;
+  font-weight: bold;
+  position: fixed;
+  left: 0;
+  bottom: 15rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  background: rgba(2, 149, 2, 1);
+  text-align: center;
+  color: rgba(255, 255, 255, 1);
+  font-family: PingFang SC;
+}
+
+.borderNone {
+  border: none;
+}
+
+input {
+  text-align: center;
+}
+
+.disabledColor {
+  color: #ccc;
+}
+
+.weui-cells:after {
+  bottom: 0;
+  border-bottom: none;
+}
+
+.weui-cells:before {
+  top: 0;
+  border-top: none;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #9b9b9b transparent transparent transparent;
+  position: absolute;
+  top: 8px;
+  right: 20rpx;
+}
+
+.weui-cell__ft .weui-label {
+  position: relative;
+  top: 5rpx;
+  right: 10rpx;
+}
+
+.receiving-setting {
+  padding: 20rpx 22rpx;
+}
+
+.receiving-setting .weui-check__label {
+  display: block;
+  margin-top: 20rpx;
+}
+
+.meetingConditions {
+  position: relative;
+}
+
+.meetingConditions .weui-check__label {
+  position: relative;
+  left: 50rpx;
+}
+
+.meetingConditions .full-order {
+  position: absolute;
+  left: 140rpx;
+  top: -15rpx;
+}
+
+.meetingConditions .full-order:nth-child(4) {
+  position: absolute;
+  top: 50rpx;
+}
+
+.textarea {
+  width: 90%;
+  padding: 10rpx;
+  height: 150rpx;
+  border: 1rpx solid rgba(246, 246, 246, 1);
+  border-radius: 10rpx;
+}
+
+.weui-cell_textarea {
+  display: flex;
+}
+
+.weui-cell_textarea .weui-label {
+  width: 240rpx;
+  position: relative;
+  top: -60rpx;
+  flex: 1;
+}
+
+.weui-cell_textarea .weui-cell__bd {
+  flex: 3;
+}
