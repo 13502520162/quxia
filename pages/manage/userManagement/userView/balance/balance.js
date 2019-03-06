@@ -6,8 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    balance: 0,
+    balance: 10,
     adjustment: 0,
+    balanceIpt: 0,
     note: ''
   },
 
@@ -15,10 +16,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.setData({
-      balance: options.balance,
-      adjustment: options.balance
-    })
+    // this.setData({
+    //   balance: options.balance,
+    //   adjustment: options.balance
+    // })
   },
 
   /**
@@ -71,14 +72,18 @@ Page({
    * 减
    */
   reduce: function() {
+    let balanceIpt = this.data.balanceIpt
+    let balance = this.data.balance
     let adjustment = this.data.adjustment
 
-    if (adjustment) {
-      adjustment--
+
+    if ((balance + adjustment) != 0) {
+      balanceIpt--
     }
 
     this.setData({
-      adjustment: adjustment
+      adjustment: balanceIpt,
+      balanceIpt
     })
   },
 
@@ -87,12 +92,13 @@ Page({
    * 加
    */
   plus: function() {
-    let adjustment = this.data.adjustment
+    let balanceIpt = this.data.balanceIpt
 
-    adjustment++
+    balanceIpt++
 
     this.setData({
-      adjustment: adjustment
+      adjustment: balanceIpt,
+      balanceIpt
     })
   },
 
@@ -101,8 +107,10 @@ Page({
     if (e.detail.value == '') {
       e.detail.value = 0
     }
+
     this.setData({
-      adjustment: parseInt(e.detail.value)
+      adjustment: parseInt(e.detail.value),
+      balanceIpt: parseInt(e.detail.value)
     })
   }
 })

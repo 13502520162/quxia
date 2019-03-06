@@ -1,0 +1,60 @@
+/* pages/manage/rechargeManagement/newPackage/newPackage.wxss */
+
+.newPackage {
+  margin-top: 20rpx;
+  background: #fff;
+  color: #333;
+}
+
+.coupon-name {
+  text-align: right;
+}
+
+.weui-cell:before {
+  border-top: none;
+}
+
+.weui-cell-reset {
+  border-bottom: 1rpx solid rgba(246, 246, 246, 1);
+}
+
+.sel-checkbox {
+  display: flex;
+}
+
+.sel-checkbox>view {
+  flex: 1;
+}
+
+.coupons-sel {
+  display: flex;
+  padding: 10px 15px;
+}
+
+.coupons-sel>view {
+  flex: 1;
+}
+
+.coupons-sel .coupons-sel-t {
+  flex: 2;
+  height: 35rpx;
+  padding: 0rpx 5rpx 10rpx 8rpx;
+  line-height: 35rpx;
+  border: 1px solid #d9d9d9;
+  border-radius: 10rpx;
+}
+
+
+.coupons-sel .coupons-sel-t picker{
+  width: 100%;
+}
+
+.coupons-sel-t text {
+  font-size: 25rpx;
+}
+
+.coupons-sel-b {
+  font-weight: bold;
+  margin-left: 30rpx;
+  color: #188ae2;
+}

@@ -75,6 +75,8 @@
 .content-tab>view.active {
   color: #188ae2;
   border-bottom: 2px solid #188ae2;
+  font-size: 30rpx;
+  font-weight: bold;
 }
 
 .list {
@@ -100,6 +102,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  font-size: 35rpx;
 }
 
 .list-content .date {

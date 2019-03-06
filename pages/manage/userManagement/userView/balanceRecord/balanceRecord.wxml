@@ -49,8 +49,8 @@
     <view class='list-content' wx:for="{{listData}}" wx:key="{{idnex}}" data-id='{{item.id}}'>
       <view>
         <view>
-          <text>{{item.info}}: </text>
-          <text>{{item.note}}</text>
+          <text>{{item.info}}</text>
+          <text>:{{item.note}}</text>
         </view>
         <view class='date'>
           {{item.createdDate}}

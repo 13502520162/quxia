@@ -125,7 +125,15 @@
     "pages/manage/userManagement/userView/membershipLevel/membershipLevel",
     "pages/manage/userManagement/userView/balance/balance",
     "pages/manage/userManagement/userView/balanceRecord/balanceRecord",
-    "pages/manage/userManagement/userView/recordsOfConsumption/recordsOfConsumption"
+    "pages/manage/userManagement/userView/recordsOfConsumption/recordsOfConsumption",
+    "pages/manage/rechargeManagement/rechargeManagement",
+    "pages/manage/rechargeManagement/newPackage/newPackage",
+    "pages/manage/luckyFree/luckyFree",
+    "pages/manage/luckyFree/activity/activity",
+    "pages/manage/luckyDraw/luckyDraw",
+    "pages/manage/luckyDraw/activity/activity",
+    "pages/manage/luckyDraw/setAwards/setAwards",
+    "pages/manage/luckyDraw/newAwards/newAwards"
   ],
   "window": {
     "backgroundTextStyle": "light",

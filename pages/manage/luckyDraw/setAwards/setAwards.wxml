@@ -1,0 +1,62 @@
+<!--pages/manage/luckyFree/setAwards/setAwards.wxml-->
+<view class='setAwards'>
+  <view class='winning-settings'>
+    <text>中奖设置</text>
+    <text bindtap='addAwards'>添加奖项</text>
+  </view>
+  <scroll-view class='winning'>
+
+    <view class="weui-cell weui-cell_access">
+      <view class="weui-cell__bd">
+        <view style="display: inline-block; vertical-align: middle">一等奖：5折券</view>
+        <view>数量：
+          <text>50</text> 概率
+          <text>10%</text>
+        </view>
+      </view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </view>
+
+
+    <view class="weui-cell weui-cell_access">
+      <view class="weui-cell__bd">
+        <view style="display: inline-block; vertical-align: middle">二等奖：黄金会员</view>
+        <view>数量：
+          <text>50</text> 概率
+          <text>20%</text>
+        </view>
+      </view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </view>
+
+
+
+    <view class="weui-cell weui-cell_access">
+      <view class="weui-cell__bd">
+        <view style="display: inline-block; vertical-align: middle">三等奖：8折券</view>
+        <view>数量：
+          <text>50</text> 概率
+          <text>30%</text>
+        </view>
+      </view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </view>
+
+
+  </scroll-view>
+
+  <view class='unwinning-settings'>
+    <text>未中奖设置</text>
+    <view class='unwinning-settings-ele'>
+      <text>标题</text>
+      <input placeholder='请输入标题' />
+    </view>
+    <view class='unwinning-settings-ele'>
+      <text>提示语</text>
+      <input placeholder='请输入提示语' />
+    </view>
+  </view>
+</view>
+
+
+<view class='preservation' bindtap='preservation'>确定</view>

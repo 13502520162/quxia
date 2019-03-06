@@ -1,0 +1,98 @@
+<!--pages/manage/rechargeManagement/newPackage/newPackage.wxml-->
+<view class='newPackage'>
+
+  <view class="weui-cell  weui-cell-reset">
+    <view class="weui-cell__hd">
+      <view class="weui-label">名称</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" disabled="{{isDisabled}}" class='coupon-name {{isDisabled?"disabledColor":""}}' value='{{name}}' bindinput='packageName' placeholder="请输入名称" />
+    </view>
+  </view>
+
+
+
+  <view class="weui-cell  weui-cell-reset">
+    <view class="weui-cell__hd">
+      <view class="weui-label">价格</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input type='number' class="weui-input" disabled="{{isDisabled}}" class='coupon-name {{isDisabled?"disabledColor":""}}' value='{{price}}' bindinput='packagePrice' placeholder="请输入价格" />
+    </view>
+  </view>
+
+
+  <view class="weui-cell  weui-cell-reset">
+    <view class="weui-cell__hd">
+      <view class="weui-label">面值</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input type='number' class="weui-input" disabled="{{isDisabled}}" class='coupon-name {{isDisabled?"disabledColor":""}}' value='{{packageValue}}' bindinput='packageValue' placeholder="请输入面值" />
+    </view>
+  </view>
+
+
+  <view class='recharge-package weui-cell '>
+    <view class="weui-cell__hd">
+      <view class="weui-label" style='width:150px;'>充值礼包(可多选)</view>
+    </view>
+  </view>
+
+  <view class='sel-checkbox'>
+    <view>
+
+      <checkbox-group bindchange="checkboxConponChange">
+        <label class="weui-cell weui-check__label" wx:for="{{newPackageItem}}" wx:key="value">
+          <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+
+          <view class="weui-cell__hd weui-check__hd_in-checkbox">
+            <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+            <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+          </view>
+          <view class="weui-cell__bd">{{item.name}}</view>
+        </label>
+      </checkbox-group>
+
+    </view>
+    <view>
+
+      <view class='coupons-sel' bindtap='couponListSel' wx:for="{{couponList}}" wx:key="value" data-index='{{item.listIndex}}'>
+        <picker class='coupons-sel-t' style="display: inline-block;vertical-align:middle; font-size: 17px;" bindchange="onFilterChange" value="{{index}}" range="{{coupons}}" disabled="{{isPackage}}" data-index="{{index}}" data-id="{{coupons[couponList[index].index].id}}"
+          range-key='name'>
+          <text>{{couponList[index].index >=0 ? coupons[couponList[index].index].name :'选择优惠券'}}</text>
+        </picker>
+        <text class='coupons-sel-b' data-listIndex='{{item.listIndex}}' bindtap='{{item.listTap}}'>{{item.listTap=='listAdd'?'添加':'删除'}}</text>
+      </view>
+    </view>
+
+  </view>
+
+
+  <view class='sel-checkbox'>
+    <view>
+      <checkbox-group bindchange="checkboxVipChange">
+        <label class="weui-cell weui-check__label" wx:for="{{refillMembershipCard}}" wx:key="value">
+          <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+
+          <view class="weui-cell__hd weui-check__hd_in-checkbox">
+            <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+            <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+          </view>
+          <view class="weui-cell__bd">{{ item.name}}</view>
+        </label>
+      </checkbox-group>
+    </view>
+    <view>
+      <view class='coupons-sel'>
+        <picker class='coupons-sel-t' bindtap='cardSel' disabled="{{isCard}}" style="display: inline-block;vertical-align:middle; font-size: 17px;" bindchange="onFilterCardChange" value="{{index}}" range="{{vipCards}}" range-key='name'>
+          <text>{{isCard==true ? '请选择会员' : vipCards[selIndex].name}}</text>
+        </picker>
+        <text class='coupons-sel-b' style='visibility:hidden;'>添加</text>
+      </view>
+    </view>
+  </view>
+
+
+</view>
+
+<view class='preservation' wx:if="{{!isDisabled}}" bindtap='preservation'>确定</view>

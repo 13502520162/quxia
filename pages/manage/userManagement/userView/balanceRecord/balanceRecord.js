@@ -86,10 +86,16 @@ Page({
       }
     }).then(res => {
       let listData = res.data.map(item => {
-        if (item.source == 'pay') {
+        if (item.source == 'recharge') {
           item.info = '常规充值'
         } else {
           item.info = '余额调整'
+        }
+
+        if (item.amount > 0) {
+          item.amount = '+' + item.amount
+        } else {
+          item.amount = item.amount
         }
         item.createdDate = moment(item.createdDate).format('YYYY-MM-DD HH:MM:SS')
 

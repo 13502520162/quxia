@@ -160,6 +160,17 @@ Page({
               hide: false
             },
           ]
+        }, {
+          title: { name: "用户管理", permission: 19, hide: true },
+          items: [
+            {
+              name: "用户明细",
+              icon: "../../assets/images/tollIcon.png",
+              pageUrl: './userManagement/userManagement',
+              permission: 20,
+              hide: true
+            }
+          ]
         },
         {
           title: { name: "分润管理", permission: 37, hide: true },
@@ -296,7 +307,7 @@ Page({
               name: "支付有礼",
               icon: "../../assets/images/coupon.png",
               pageUrl: './paymentOfCourtesy/paymentOfCourtesy',
-              permission: 61,
+              permission: 60,
               hide: true
             }
           ]

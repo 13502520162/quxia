@@ -1,0 +1,108 @@
+<!--pages/coupon/newCoupons/newCoupons.wxml-->
+<view class='newCoupons'>
+
+  <view class="weui-cell weui-cell_input weui-cell-reset">
+    <view class="weui-cell__hd">
+      <view class="weui-label">活动名称</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" disabled="{{isDisabled}}" class='coupon-name {{isDisabled?"disabledColor":""}}' value='{{name}}' bindinput='activityName' placeholder="请输入活动名称" />
+    </view>
+  </view>
+
+
+  <view class="weui-cells weui-cells_after-title  {{isPermanent?'weui-cell-reset':''}}">
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd weui-label">活动时间</view>
+      <view class="weui-cell__ft">
+        <text class='weui-label'>永久有效</text>
+        <switch size="23" checked='{{isPermanent}}' bindchange="switch1Change" disabled="{{isDisabled}}" />
+      </view>
+    </view>
+  </view>
+
+
+
+  <view style='height:100rpx;' wx:if="{{!isPermanent}}">
+    <view class="weui-cell weui-cell__bd  termOfValidityOp">
+      <picker class='mode-date mode-date-start' disabled="{{isDisabled}}" mode="multiSelector" value="{{dateTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
+        <view class="date-ipt">{{startDate}} </view>
+      </picker>
+      <text style='padding:0  20rpx;'> 至 </text>
+      <picker class='mode-date' mode="multiSelector" value="{{dateTime1}}" disabled="{{isDisabled}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
+        <view class="date-ipt"> {{endDate}}</view>
+      </picker>
+    </view>
+  </view>
+
+
+  <view class="weui-cells weui-cells_after-title weui-cell-reset">
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd weui-label">活动规则</view>
+      <view class="weui-cell__ft">
+        <textarea class='activity-rules'></textarea>
+      </view>
+    </view>
+  </view>
+
+
+
+
+  <view class="weui-cells weui-cells_after-title  weui-cell-reset frequency-limit">
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd weui-label">次数限制</view>
+    </view>
+    <view class="dl">
+      每人每天可抽取
+      <input disabled="{{isDisabled}}" class='full-order-ipt' value='{{name}}' bindinput='activityName' /> 次， 共
+      <input disabled="{{isDisabled}}" class='full-order-ipt' value='{{name}}' bindinput='activityName' />次
+    </view>
+
+    <view class="dl">
+      每人每天可中奖
+      <input disabled="{{isDisabled}}" class='full-order-ipt' value='{{name}}' bindinput='activityName' /> 次， 共
+      <input disabled="{{isDisabled}}" class='full-order-ipt' value='{{name}}' bindinput='activityName' />次
+    </view>
+
+  </view>
+
+
+  <view class="weui-cells weui-cells_after-title  weui-cell-reset">
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd weui-label">漂浮显示</view>
+      <view class="weui-cell__ft">
+        <switch size="23" checked='{{isPermanent}}' bindchange="switch1Change" disabled="{{isDisabled}}" />
+      </view>
+    </view>
+  </view>
+
+  <view class="weui-cell field">
+    <view class="weui-cell__hd">
+      <view class="weui-label">适用方式</view>
+    </view>
+    <view class='field-num' bindtap='choiceOfVenue'>
+      <text>支付</text>
+      <image src='/assets/images/rightBackBtn.png'></image>
+    </view>
+  </view>
+
+
+
+
+  <view class="weui-cell field">
+    <view class="weui-cell__hd">
+      <view class="weui-label">适用场地</view>
+    </view>
+    <view class='field-num' bindtap='choiceOfVenue'>
+      <text wx:if="{{locationIds.length}}" class='{{isDisabled?"disabledColor":""}}'>{{locationIds.length}}个场地</text>
+      <text wx:else class="{{isDisabled?'disabledColor':''}}">全部场地</text>
+      <image src='/assets/images/rightBackBtn.png'></image>
+    </view>
+  </view>
+
+
+
+</view>
+
+
+<view class='preservation'  bindtap='preservation'>下一步，设置奖项</view>

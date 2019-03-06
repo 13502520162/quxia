@@ -1,0 +1,60 @@
+<!--pages/manage/place/list/list.wxml-->
+<view class='header'>
+  <view class='trade'>
+    <picker bindchange="onFilterTradeChange" value="{{index}}" range="{{trade}}" range-key='name'>
+      <text>{{trade[tradeIndex].name}}</text>
+      <text class='arrow'></text>
+    </picker>
+  </view>
+  <view class="weui-search-bar  search">
+    <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+        <input type="text" class="weui-search-bar__input" placeholder="搜索" confirm-type="search" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" bindconfirm="searchInputConfirm" />
+        <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+          <icon type="clear" size="14"></icon>
+        </view>
+      </view>
+      <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+        <icon class="weui-icon-search" type="search" size="14"></icon>
+        <view class="weui-search-bar__text">搜索</view>
+      </label>
+    </view>
+  </view>
+</view>
+
+<scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" style='{{ disAdd ? "height:calc(100vh - 100rpx)" : "height: calc(100vh - 200rpx)" }}'>
+  <view class='card' wx:for="{{listData}}" wx:key="{{item.id}}" data-enabled='{{item.enabled}}' data-id='{{item.id}}' bindtap='showActionSheet'>
+    <view class="weui-cell weui-cell_select card-item">
+      <view class="weui-cell__bd">
+        <view class="weui-select weui-select_in-select-after item-body">
+          <view class='item-top'>
+            <text>{{ item.name }}</text>
+
+            <text wx:if="{{item.state=='DISABLED'}}" class='state state1'>已失效</text>
+            <text wx:elif="{{item.state=='PENDING'}}" class='state state2'>未开始</text>
+            <text wx:elif="{{item.state=='ACTIVE'}}" class='state state3'>进行中</text>
+            <text wx:elif="{{item.state=='ENDED'}}" class='state state4'>已结束</text>
+          </view>
+          <view class='location-name'>
+            <text>{{ item.date }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+  </view>
+
+  <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在加载</view>
+  </view>
+</scroll-view>
+
+
+<view class='bottom-btn' bindtap='onAddPlace'>
+  <button class="weui-btn" type="primary">新建活动</button>
+</view>

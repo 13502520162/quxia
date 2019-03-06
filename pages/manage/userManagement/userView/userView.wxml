@@ -60,7 +60,7 @@
     <view class="weui-cell__bd">消费记录</view>
     <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0" bindtap='recordsOfConsumption'>
       <view style="display: inline-block;vertical-align:middle; font-size: 17px;">累计消费
-        <text>{{userInfo.totalExpense}}</text>元
+        <text>{{userInfo.totalExpense}}</text>元，支付
         <text>{{userInfo.totalOrders}}</text>笔
       </view>
 

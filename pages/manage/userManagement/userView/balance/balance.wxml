@@ -13,13 +13,13 @@
     <view>余额调整</view>
     <view>
       <view class='adjustment'>
-        <text class=' {{!adjustment?"noData" :""}}' bindtap='reduce'>-</text>
-        <input type='number' value='{{adjustment}}' bindinput='balanceIpt' />
+        <text class=' {{balance + adjustment?"" :"noData"}}' bindtap='reduce'>-</text>
+        <input type='number' value='{{balanceIpt}}' bindinput='balanceIpt' />
         <text bindtap='plus'>+</text>
       </view>
       <view class='adjustment-info'>
         <text>调整后的余额：</text>
-        <text>{{adjustment}}</text>元</view>
+        <text>{{balance + adjustment}}</text>元</view>
     </view>
   </view>
 

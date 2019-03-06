@@ -1,7 +1,9 @@
 // pages/index/analysis.js
 import moment from '../../../../../lib/moment.min.js';
 import fetch from '../../../../../lib/fetch.js';
-import { extendMoment } from '../../../../../lib/moment-range.js';
+import {
+  extendMoment
+} from '../../../../../lib/moment-range.js';
 
 const DateRange = extendMoment(moment);
 
@@ -13,11 +15,11 @@ Page({
   data: {
     listParams: {
       from: 0,
-      size: 20
+      size: 10
     },
     listLoading: false,
     listEnd: false,
-    listData: [], 
+    listData: [],
 
     dateItem: {
       yesterday: false,
@@ -28,26 +30,28 @@ Page({
     date: {
       start: null,
       end: null
-    }
+    },
+
+    orders: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.initDate();
   },
 
   /**
    * 初始化日期
    */
-  initDate:  function () {
+  initDate: function() {
     this.setData({
       date: {
         start: moment().format('YYYY/MM/DD'),
         end: moment().format('YYYY/MM/DD')
       }
-    },()=> {
+    }, () => {
       this.diffDurationData(1);
       this.fetchReportData();
     })
@@ -56,10 +60,10 @@ Page({
   /**
    * date选项更改
    */
-  selectDateItem: function (e) {
+  selectDateItem: function(e) {
     let item = e.currentTarget.dataset.item;
-    switch( item ){
-      case 'today': 
+    switch (item) {
+      case 'today':
         this.setData({
           dateItem: {
             today: true,
@@ -70,7 +74,7 @@ Page({
             start: moment().format('YYYY/MM/DD'),
             end: moment().format('YYYY/MM/DD')
           }
-        },() => {
+        }, () => {
           this.diffDurationData(1);
         });
         break;
@@ -85,7 +89,7 @@ Page({
             start: moment().subtract(1, 'week').format('YYYY/MM/DD'),
             end: moment().format('YYYY/MM/DD')
           }
-        },() => {
+        }, () => {
           this.diffDurationData(7);
         })
         break;
@@ -100,7 +104,7 @@ Page({
             start: moment().subtract(1, 'month').format('YYYY/MM/DD'),
             end: moment().format('YYYY/MM/DD')
           }
-        },()=> {
+        }, () => {
           this.diffDurationData(30);
         })
         break;
@@ -108,31 +112,31 @@ Page({
     this.setData({
       listParams: {
         from: 0,
-        size: 20
+        size: 10
       },
       listLoading: false,
       listEnd: false,
-      listData: [], 
+      listData: [],
     })
     this.fetchReportData();
   },
 
-  fetchSummaryData( start, end ) {
-    return new Promise((resolve, reject )=> {
+  fetchSummaryData(start, end) {
+    return new Promise((resolve, reject) => {
       fetch({
-        url: '/analytics/summary',
-        isShowLoading: true,
-        data: {
-          start: start,
-          end: end
-        }
-      })
-      .then(res => {
-        resolve(res.data);
-      })
-      .catch( err => {
-        console.error(err);
-      })
+          url: '/customers/expense/summary',
+          isShowLoading: true,
+          data: {
+            start: start,
+            end: end
+          }
+        })
+        .then(res => {
+          resolve(res.data);
+        })
+        .catch(err => {
+          console.error(err);
+        })
     })
 
   },
@@ -140,7 +144,7 @@ Page({
   /**
    * 获取两个时间段的差值数据
    */
-  diffDurationData: function ( diffDays ) {
+  diffDurationData: function(diffDays) {
     let startTime = moment(this.data.date.start.replace(/\//g, '-')).format('YYYY-MM-DD');
     let endTime = this.data.date.end.replace(/\//g, '-');
     this.fetchSummaryData(startTime, endTime).then(newData => {
@@ -148,12 +152,8 @@ Page({
       endTime = moment(endTime).subtract(diffDays, 'day').format('YYYY-MM-DD');
       this.fetchSummaryData(startTime, endTime).then(oldData => {
         this.setData({
-          sales: newData.sales,
-          diffSales: newData.sales - oldData.sales,
-          orders: newData.orders,
-          diffOrders: newData.orders - oldData.orders,
-          customers: newData.customers,
-          diffCustomers: newData.customers - oldData.customers
+          expense: newData.expense,
+          orders: newData.orders
         })
       })
     })
@@ -162,7 +162,7 @@ Page({
   /**
    * 获取报表数据
    */
-  fetchReportData: function(){
+  fetchReportData: function() {
     if (this.data.listLoading) {
       return;
     }
@@ -176,13 +176,13 @@ Page({
     })
 
     fetch({
-      url: '/analytics/list',
-      data: {
-        ...this.data.listParams,
-        start: this.data.date.start.replace(/\//g,'-'),
-        end: this.data.date.end.replace(/\//g, '-')
-      }
-    })
+        url: '/customers/expense/audits',
+        data: {
+          ...this.data.listParams,
+          start: this.data.date.start.replace(/\//g, '-'),
+          end: this.data.date.end.replace(/\//g, '-')
+        }
+      })
       .then(res => {
 
         if (res.data.length < this.data.listParams.size) {
@@ -190,7 +190,7 @@ Page({
             listEnd: true
           })
         }
-        res.data = res.data.map( item =>{
+        res.data = res.data.map(item => {
           item.day = moment(item.day).format('YYYY-MM-DD');
           return item;
         })
@@ -208,22 +208,23 @@ Page({
       })
   },
 
-  loadMoreListData: function () {
+  loadMoreListData: function() {
 
-    if (!this.data.listLoading) {
-      this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
-      })
-      this.fetchReportData();
-    }
+    this.setData({
+      listParams: { ...this.data.listParams,
+        from: this.data.listParams.from + this.data.listParams.size
+      }
+    })
+    this.fetchReportData();
+
   },
 
   /**
    * 选择上一个日期的数据
    */
 
-  lastData: function () {
-    if( this.data.dateItem.today ){
+  lastData: function() {
+    if (this.data.dateItem.today) {
       this.setData({
         date: {
           start: moment(this.data.date.start.replace(/\//g, '-')).subtract(1, 'days').format('YYYY/MM/DD'),
@@ -231,7 +232,7 @@ Page({
         }
       });
       this.diffDurationData(1);
-    } else if( this.data.dateItem.week ){
+    } else if (this.data.dateItem.week) {
       this.setData({
         date: {
           start: moment(this.data.date.start.replace(/\//g, '-')).subtract(1, 'week').format('YYYY/MM/DD'),
@@ -239,19 +240,19 @@ Page({
         }
       });
       this.diffDurationData(7);
-    } else if( this.data.dateItem.month ){
+    } else if (this.data.dateItem.month) {
       this.setData({
         date: {
           start: moment(this.data.date.start.replace(/\//g, '-')).subtract(1, 'month').format('YYYY/MM/DD'),
           end: moment(this.data.date.end.replace(/\//g, '-')).subtract(1, 'month').format('YYYY/MM/DD')
         }
       });
-      this.diffDurationData(30);  
+      this.diffDurationData(30);
     }
     this.setData({
       listParams: {
         from: 0,
-        size: 20
+        size: 10
       },
       listLoading: false,
       listEnd: false,
@@ -263,7 +264,7 @@ Page({
   /**
    * 选择下一个日期的数据
    */
-  nextData: function () {
+  nextData: function() {
     if (this.data.dateItem.today) {
       this.setData({
         date: {
@@ -292,7 +293,7 @@ Page({
     this.setData({
       listParams: {
         from: 0,
-        size: 20
+        size: 10
       },
       listLoading: false,
       listEnd: false,
@@ -306,22 +307,22 @@ Page({
    * 起始日期更改
    */
   onStartDateChange: function(e) {
-     this.setData({
-       dateItem: {
-         yesterday: false,
-         today: true,
-         week: false,
-         month: false
-       },
-       date: {
-         ...this.data.date,
-         start: e.detail.value.replace(/\-/g,'/')
-       }
-     });
+    this.setData({
+      dateItem: {
+        yesterday: false,
+        today: true,
+        week: false,
+        month: false
+      },
+      date: {
+        ...this.data.date,
+        start: e.detail.value.replace(/\-/g, '/')
+      }
+    });
 
-    let diffDay = DateRange.range(e.detail.value, this.data.date.end.replace(/\//g,'-')).diff('days');
+    let diffDay = DateRange.range(e.detail.value, this.data.date.end.replace(/\//g, '-')).diff('days');
     this.diffDurationData(diffDay);
-  
+
   },
 
   /**
@@ -341,20 +342,8 @@ Page({
       }
     });
 
-    let diffDay = DateRange.range(this.data.date.start.replace(/\//g, '-') ,e.detail.value).diff('days');
+    let diffDay = DateRange.range(this.data.date.start.replace(/\//g, '-'), e.detail.value).diff('days');
     this.diffDurationData(diffDay);
-  },
-
-
-  /**
-   * 跳转显示具体的订单列表
-   */
-
-  onShowOrder: function(e) {
-    let date = e.currentTarget.dataset.date;
-    wx.navigateTo({
-      url: './order/list?startDate='+date+"&endDate="+date,
-    })
   }
 
 })

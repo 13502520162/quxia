@@ -1,0 +1,56 @@
+/* pages/manage/luckyFree/newAwards/newAwards.wxss */
+
+.newAwards {
+  background: #fff;
+}
+
+.newAwards-ele {
+  display: flex;
+  margin-top: 15rpx;
+  padding: 20rpx;
+  border-bottom: 1rpx solid #d9d9d9;
+}
+
+.newAwards-ele>text {
+  flex: 1;
+  font-weight: normal;
+}
+
+.newAwards-ele input {
+  flex: 3;
+  text-align: right;
+  font-weight: normal;
+}
+
+.prize .weui-check__hd_in-checkbox {
+  margin-top: 30rpx;
+}
+
+.prize {
+  display: block;
+  padding: 0 20rpx 30rpx;
+  position: relative;
+}
+
+.prize-p  .prize-fl {
+  width: 100%;
+  position: absolute;
+  top: 78rpx;
+  left: 100rpx;
+  display: flex;
+}
+
+.prize-fl>text {
+  width: 100rpx;
+}
+
+.prize-fl picker {
+  padding-left: 10rpx;
+  width: 250rpx;
+  border: 1px solid #d9d9d9;
+  border-radius: 10rpx;
+}
+
+.prize-p  .prize-fl:nth-child(3) {
+  top: 152rpx;
+}

@@ -5,21 +5,46 @@
   <view class="weui-cell weui-cell_access">
     <view class="weui-cell__bd">会员级别</view>
     <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0" bindtap='membershipLevel'>
-      <view style="display: inline-block;vertical-align:middle; font-size: 17px;">钻石会员</view>
+
+
+
+      <picker style="display: inline-block;vertical-align:middle; font-size: 17px;" bindchange="onFilterChange" value="{{index}}" range="{{vipCards}}" range-key='name'>
+        <text>{{vipCards[selIndex].name}}</text>
+      </picker>
     </view>
   </view>
 
-  <view class="weui-cell weui-cell_access">
-    <view class="weui-cell__bd">会员期限</view>
-    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0" bindtap='durationofMembership'>
-      <view style="display: inline-block;vertical-align:middle; font-size: 17px;">无限期</view>
+
+  <view class="weui-cell weui-cells_after-title  {{isPermanent?'weui-cell-reset':''}}">
+    <view class="weui-cell weui-cell_switch" style='width:100%;padding:0'>
+      <view class="weui-cell__bd weui-label">有效期</view>
+      <view class="weui-cell__ft">
+        <text class='weui-label' style='maigin-right:10rpx;'>永久有效</text>
+        <switch size="23" checked='{{isPermanent}}' bindchange="switch1Change" disabled="{{isDisabled}}" />
+      </view>
     </view>
   </view>
+
+
+  <view class="weui-cell weui-cells_after-title" hidden='{{isPermanent}}'>
+    <view class="weui-cell weui-cell_switch" style='width:100%;padding:0'>
+      <view class="weui-cell__bd">过期时间</view>
+      <view class="weui-cell__ft" style='flex:3'>
+        <picker class='mode-date' mode="date" value="{{endDate}}" bindchange="changeDateTime">
+          <view class="date-ipt">{{endDate}} </view>
+        </picker>
+      </view>
+    </view>
+  </view>
+
+
+
+
 
   <view class="weui-cell weui-cell1">
     <view class="weui-cell__bd" style='position:relative;top:-45rpx;'>调整备注</view>
     <view class="">
-      <textarea></textarea>
+      <textarea value='{{note}}' bindinput='adjustmentNotes'></textarea>
     </view>
   </view>
 

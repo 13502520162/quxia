@@ -1,0 +1,94 @@
+/* pages/manage/place/list/list.wxss */
+
+.header {
+  display: flex;
+}
+
+.header > view {
+  display: inline-block;
+}
+
+.trade {
+  background: #fff;
+  line-height: 48px;
+  padding: 0rpx 10rpx;
+  width: 200rpx;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: 1rpx solid #d7d6dc;
+  border-top: 1rpx solid #d7d6dc;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #9b9b9b transparent transparent transparent;
+  position: relative;
+  top: 12px;
+  margin-left: 10rpx;
+}
+
+.search {
+  flex: 1;
+}
+
+.list {
+  padding: 20rpx 0rpx;
+  box-sizing: border-box;
+}
+
+.card {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-item {
+  width: 100%;
+}
+
+.item-body {
+  padding: 20rpx;
+  height: 140rpx;
+  margin-left: 20rpx;
+}
+
+.item-top  text {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.item-top .state {
+  margin-left: 20rpx;
+  padding: 5rpx 10rpx;
+  border-radius: 20rpx;
+  color: #fff;
+  font-size: 24rpx;
+  background: #d1d1d6;
+}
+
+.item-top .state2 {
+  background: #ff9500;
+}
+
+.item-top .state3 {
+  background: #1aad19;
+}
+
+.item-top .state4 {
+  background: #a5a2a2;
+}
+
+.weui-select {
+  height: auto;
+  line-height: normal;
+}
+.blue{
+  color: #188ae2;
+}

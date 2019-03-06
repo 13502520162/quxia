@@ -43,7 +43,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 7,
 			"list": [
 				{
 					"id": -1,
@@ -59,34 +59,6 @@
 					"scene": null
 				},
 				{
-					"id": 2,
-					"name": "余额记录",
-					"pathName": "pages/manage/userManagement/userView/balanceRecord/balanceRecord",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "会员级别",
-					"pathName": "pages/manage/userManagement/userView/membershipLevel/membershipLevel",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 4,
-					"name": "余额调整",
-					"pathName": "pages/manage/userManagement/userView/balance/balance",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "消费记录",
-					"pathName": "pages/manage/userManagement/userView/recordsOfConsumption/recordsOfConsumption",
-					"query": "",
-					"scene": null
-				},
-				{
 					"id": 6,
 					"name": "用户管理",
 					"pathName": "pages/manage/userManagement/userManagement",
@@ -95,9 +67,36 @@
 				},
 				{
 					"id": -1,
+					"name": "充值管理",
+					"pathName": "pages/manage/rechargeManagement/rechargeManagement",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
 					"name": "会员卡",
 					"pathName": "pages/manage/membershipCard/membershipCard",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "幸运免单",
+					"pathName": "pages/manage/luckyFree/luckyFree",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "抽取活动",
+					"pathName": "pages/manage/luckyDraw/luckyDraw",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "抽取活动--设置奖项",
+					"pathName": "pages/manage/luckyDraw/setAwards/setAwards",
 					"scene": null
 				}
 			]

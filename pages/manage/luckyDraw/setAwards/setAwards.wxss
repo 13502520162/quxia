@@ -1,0 +1,60 @@
+/* pages/manage/luckyFree/setAwards/setAwards.wxss */
+
+.setAwards {
+  background: #fff;
+}
+
+.winning {
+
+  border-bottom: 1rpx solid #d9d9d9;
+}
+
+.weui-cell:before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 1px;
+  border: none;
+  border-bottom: 1rpx solid #d9d9d9;
+  color: #d9d9d9;
+}
+
+.winning-settings {
+  display: flex;
+  padding: 15rpx 30rpx;
+}
+
+.winning-settings text {
+  flex: 1;
+  font-weight: bold;
+}
+
+.winning-settings text:nth-child(2) {
+  color: #188ae2;
+  text-align: right;
+}
+
+.unwinning-settings {
+  padding: 15rpx 30rpx;
+  font-weight: bold;
+}
+
+
+
+.unwinning-settings-ele {
+  display: flex;
+  margin-top: 15rpx;
+}
+
+.unwinning-settings-ele text {
+  flex: 1;
+  font-weight: normal;
+}
+
+.unwinning-settings-ele input {
+  flex: 3;
+  text-align: right;
+  font-weight: normal;
+}
