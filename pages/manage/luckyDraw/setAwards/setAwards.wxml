@@ -2,28 +2,16 @@
 <view class='setAwards'>
   <view class='winning-settings'>
     <text>中奖设置</text>
-    <text bindtap='addAwards'>添加奖项</text>
+    <text hidden='{{isDisabled}}' bindtap='addAwards'>添加奖项</text>
   </view>
   <scroll-view class='winning'>
 
-    <view class="weui-cell weui-cell_access">
+    <view class="weui-cell weui-cell_access" wx:for="{{winningSettings}}" data-data='{{item}}' wx:key="{{index}}" bindtap='winningPrizes'>
       <view class="weui-cell__bd">
-        <view style="display: inline-block; vertical-align: middle">一等奖：5折券</view>
-        <view>数量：
-          <text>50</text> 概率
-          <text>10%</text>
-        </view>
-      </view>
-      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-    </view>
-
-
-    <view class="weui-cell weui-cell_access">
-      <view class="weui-cell__bd">
-        <view style="display: inline-block; vertical-align: middle">二等奖：黄金会员</view>
-        <view>数量：
-          <text>50</text> 概率
-          <text>20%</text>
+        <view style="display: inline-block; vertical-align: middle">{{item.name}}</view>
+        <view>
+          <text>数量: {{item.stock}} </text>
+          <text>概率: {{item.probability}}%</text>
         </view>
       </view>
       <view class="weui-cell__ft weui-cell__ft_in-access"></view>
@@ -31,16 +19,6 @@
 
 
 
-    <view class="weui-cell weui-cell_access">
-      <view class="weui-cell__bd">
-        <view style="display: inline-block; vertical-align: middle">三等奖：8折券</view>
-        <view>数量：
-          <text>50</text> 概率
-          <text>30%</text>
-        </view>
-      </view>
-      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-    </view>
 
 
   </scroll-view>
@@ -49,14 +27,14 @@
     <text>未中奖设置</text>
     <view class='unwinning-settings-ele'>
       <text>标题</text>
-      <input placeholder='请输入标题' />
+      <input value='{{missTitle}}' disabled='{{isDisabled}}' class='{isDisabled?"disabledColor":""}}' bindinput='missTitle' placeholder='请输入标题' />
     </view>
     <view class='unwinning-settings-ele'>
       <text>提示语</text>
-      <input placeholder='请输入提示语' />
+      <input value='{{missDescription}}' disabled='{{isDisabled}}' class='{isDisabled?"disabledColor":""}}' bindinput='missDescription' placeholder='请输入提示语' />
     </view>
   </view>
 </view>
 
 
-<view class='preservation' bindtap='preservation'>确定</view>
+<view class='preservation' wx:if='{{!isDisabled}}' bindtap='preservation'>确定</view>

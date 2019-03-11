@@ -41,14 +41,14 @@ Page({
       }
     ],
     field: '',
-    isDisabled: false
+
+    isDisabled:false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
     this.setData({
       field: options.field,
       id: options.id
@@ -67,6 +67,12 @@ Page({
     if (field == 'view' || field == 'edit') {
       this.fetchDetial()
     }
+
+    if (field == 'view') {
+      this.setData({
+        isDisabled:true
+      })
+    }
   },
 
   /**
@@ -74,7 +80,9 @@ Page({
    */
   fetchSelect: function() {
     fetch({
-      url: '/vipCards/select'
+      url: '/vipCards/select',
+      isShowLoading: true,
+
     }).then(res => {
       this.setData({
         objectArray: res.data
@@ -89,11 +97,16 @@ Page({
   fetchDetial: function() {
     let id = this.data.id
     fetch({
-      url: '/vipCards/detail?id=' + id
+      url: '/vipCards/detail?id=' + id,
+      isShowLoading: true,
     }).then(res => {
       let item = res.data
+
+
       let receivingSettings = [],
-        isDirect = true;
+        meetingConditions = [],
+        isDirect = false,
+        isReceive = '';
       if (item.acquireType == 'DIRECT') {
         receivingSettings = [{
             name: '直接领取',
@@ -107,6 +120,7 @@ Page({
           }
         ]
         isDirect = true
+        isReceive = "DIRECT"
       } else {
         receivingSettings = [{
             name: '直接领取',
@@ -120,7 +134,32 @@ Page({
           }
         ]
         isDirect = false
+        isReceive = "RULE"
       }
+
+
+      if (item.orders && item.orders != null) {
+        meetingConditions = [{
+            value: 'payment',
+            checked: true
+          },
+          {
+            value: 'consumption',
+            checked: false
+          }
+        ]
+      } else {
+        meetingConditions = [{
+            value: 'payment',
+            checked: false
+          },
+          {
+            value: 'consumption',
+            checked: true
+          }
+        ]
+      }
+
       this.setData({
         id: item.id,
         name: item.name,
@@ -132,7 +171,9 @@ Page({
         usageNeeds: item.note,
         isTermOfValidity: item.permanent,
         receivingSettings,
-        isDirect
+        meetingConditions,
+        isDirect,
+        isReceive
       })
     })
   },
@@ -147,6 +188,7 @@ Page({
   },
 
   receivingSettings: function(e) {
+
 
 
     var radioItems = this.data.receivingSettings;
@@ -182,12 +224,18 @@ Page({
       radioItems[i].checked = radioItems[i].value == e.detail.value;
     }
 
-
     let isPayment = true;
     if (e.detail.value == 'payment') {
       isPayment = true;
+
+      this.setData({
+        consumptionAmount: ''
+      });
     } else {
       isPayment = false;
+      this.setData({
+        successfulPayment: ''
+      });
     }
 
     this.setData({
@@ -346,7 +394,7 @@ Page({
   sendRequest: function() {
     let id = this.data.id
     fetch({
-        url: '/vipCards',
+        url: '/vipCards?id=' + id,
         method: id ? 'put' : 'post',
         isShowLoading: true,
         data: {

@@ -181,7 +181,14 @@ Page({
               pageUrl: './royalty/list',
               permission: 38,
               hide: true
-            },
+            }, 
+            {
+              name: "设备分润",
+              icon: "../../assets/images/royaltyList.png",
+              pageUrl: './equipmentDistribution/equipmentDistribution',
+              permission: 38,
+              hide: true
+            }
           ]
         },
         {

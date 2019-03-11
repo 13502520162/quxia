@@ -133,7 +133,12 @@
     "pages/manage/luckyDraw/luckyDraw",
     "pages/manage/luckyDraw/activity/activity",
     "pages/manage/luckyDraw/setAwards/setAwards",
-    "pages/manage/luckyDraw/newAwards/newAwards"
+    "pages/manage/luckyDraw/newAwards/newAwards",
+    "pages/manage/messageReminder/messageReminder",
+    "pages/manage/equipmentDistribution/equipmentDistribution",
+    "pages/manage/commodity/commodityClassification/commodityClassification",
+    "pages/manage/commodity/commodityClassification/newProducts/newProducts",
+    "pages/manage/coupon/adjustingInventory/adjustingInventory"
   ],
   "window": {
     "backgroundTextStyle": "light",

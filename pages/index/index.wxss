@@ -15,9 +15,10 @@
   padding-right: 10rpx;
 }
 
-.income-title{
+.income-title {
   font-size: 30rpx;
 }
+
 .income-momeny {
   font-size: 60rpx;
   padding-right: 40rpx;
@@ -26,7 +27,6 @@
 .summary-data {
   display: flex;
   justify-content: space-around;
-
   text-align: center;
   color: var(--main-color);
   padding: 40rpx;
@@ -35,7 +35,7 @@
   top: -50rpx;
   margin: 0rpx 40rpx;
   border-radius: 10rpx;
-  box-shadow: 1rpx 10rpx 10rpx 0rpx  rgba(0, 0, 0, .1)
+  box-shadow: 1rpx 10rpx 10rpx 0rpx rgba(0, 0, 0, 0.1);
 }
 
 .left-btn, .right-btn {
@@ -45,8 +45,8 @@
   border-radius: 50%;
   margin-top: 40rpx;
   display: flex;
- justify-content: center;
- align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .left-btn image, .right-btn image {
@@ -78,9 +78,7 @@
   padding-left: 10rpx;
 }
 
-
-
-.coupon{
+.coupon {
   margin-top: 10rpx;
 }
 
@@ -89,12 +87,13 @@
   background: #fff;
   width: 300rpx;
   border-radius: 10rpx;
-  box-shadow: 1rpx 10rpx 10rpx 0rpx  rgba(0, 0, 0, .1);
+  box-shadow: 1rpx 10rpx 10rpx 0rpx rgba(0, 0, 0, 0.1);
   padding: 20rpx 10rpx;
   margin: 20rpx 0rpx;
   justify-content: space-between;
 }
-.func-item:nth-child(2n){
+
+.func-item:nth-child(2n) {
   margin-left: 20rpx;
 }
 
@@ -115,16 +114,23 @@
 }
 
 .func-item .icon {
-   width: 94rpx;
-   height: 94rpx;
-   background: var(--main-color);
-   border-radius: 50%;
+  width: 94rpx;
+  height: 94rpx;
+  background: var(--main-color);
+  border-radius: 50%;
   display: flex;
   margin-left: 10rpx;
   justify-content: center;
   align-items: center;
 }
+
 .func-item .icon image {
-   width: 40rpx;
-   height: 40rpx;
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.icon-gantanhao {
+  color: red;
+  font-size: 35rpx;
+  font-weight: bolder;
 }

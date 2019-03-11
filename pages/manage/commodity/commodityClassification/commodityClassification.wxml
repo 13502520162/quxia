@@ -1,4 +1,4 @@
-<!--pages/manage/place/list/list.wxml-->
+<!--pages/manage/commodity/commodityClassification/commodityClassification.wxml-->
 <view class='header'>
   <view class="weui-search-bar search">
     <view class="weui-search-bar__form">
@@ -26,11 +26,7 @@
             <text>{{ item.name }}</text>
           </view>
           <view class=''>
-            <text>价格 <text class='blue'>{{ item.price}}元</text>，面值<text class='blue'>{{ item.value }}</text> 元
-            </text>
-          </view>
-          <view class=''>
-            <text>累计充值{{ item.totalUsers==null?"0":item.totalUsers }}人/{{item.totalOrders==null?'0':item.totalOrders}}次</text>
+            <text>{{ item.price}}个商品</text>
           </view>
         </view>
       </view>
@@ -49,5 +45,5 @@
 
 
 <view class='bottom-btn' bindtap='onAddPlace'>
-  <button class="weui-btn" type="primary">新建充值套餐</button>
+  <button class="weui-btn" type="primary">新增商品</button>
 </view>

@@ -9,36 +9,29 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    id: '',
     name: '',
     field: '',
     startDate: '2019-01-01 10:00:00',
     endDate: '2019-01-03 10:00:00',
-    frequency: '',
-    iptpiece: '',
-    iptelement: '',
-    couponId: '',
-    chooseCoupons: [],
+    note: '',
+    maxTrys: '',
+    maxTrysDaily: '',
+    maxRewards: '',
+    maxRewardsDaily: '',
+    isFloat: false,
+    isPermanent: false,
     locationIds: [],
-    limitPerCustomer: '',
+    entryType: 'PAY',
+
+    setAwards: {},
+
+
     isBorder: true,
     discount: true,
     isDisabled: false,
-    isPermanent: false,
+
     isNoThreshold: false,
-    isUnlimited: false,
-    fullNumber: 'QUANTITY',
-    termOfValidityArr: [{
-        name: '件',
-        value: 'QUANTITY',
-        checked: true
-      },
-      {
-        name: '元',
-        value: 'TOTAL',
-        checked: false
-      }
-    ],
 
     dateTimeArray: null,
     dateTime: null,
@@ -57,10 +50,11 @@ Page({
     this.setData({
       startDate: TIME,
       endDate: TIME,
-      field: options.field
+      field: options.field,
+      id: options.id,
     });
 
-    this.fetchCouponsDetail(options.id)
+    this.fetchCouponsDetail()
 
     // 获取完整的年月日 时分秒，以及默认显示的数组
     var obj = dateTimePicker.dateTimePicker(this.data.startYear, this.data.endYear);
@@ -77,11 +71,6 @@ Page({
   },
   onShow: function() {
 
-    if (this.data.chooseCoupons.length) {
-      this.setData({
-        couponId: this.data.chooseCoupons.join('')
-      })
-    }
 
   },
 
@@ -137,7 +126,7 @@ Page({
     let endS = e.detail.value[5] < 10 ? '0' + e.detail.value[5] : e.detail.value[5]
 
 
-    let endAll = endY + '/' + endM + '/' + endD + ' ' + endH + ':' + endm + ':' + endS
+    let endAll = endY + '-' + endM + '-' + endD + ' ' + endH + ':' + endm + ':' + endS
 
 
     this.setData({
@@ -174,49 +163,14 @@ Page({
   /**
    * 表单填充
    */
-  fetchCouponsDetail: function(id) {
+  fetchCouponsDetail: function() {
+    let id = this.data.id
     if (this.data.field == 'view') {
       fetch({
-        url: '/payGiftOffers/detail?id=' + id,
+        url: '/lottery/detail?id=' + id,
         method: 'GET'
       }).then(res => {
-        let ress = res.data,
-          termOfValidityArr = [];
-        let isUnlimited = false;
-        if (ress.limitPerCustomer) {
-          isUnlimited = false
-        } else {
-          isUnlimited = true
-        }
-
-
-        if (ress.ruleType == 'QUANTITY') {
-          termOfValidityArr = [{
-              name: '件',
-              value: 'QUANTITY',
-              checked: true
-            },
-            {
-              name: '元',
-              value: 'TOTAL',
-              checked: false
-            }
-          ]
-        } else {
-          termOfValidityArr = [{
-              name: '件',
-              value: 'QUANTITY',
-              checked: false
-            },
-            {
-              name: '元',
-              value: 'TOTAL',
-              checked: true
-            }
-          ]
-        }
-
-
+        let ress = res.data
         this.setData({
           name: ress.name,
           couponId: ress.couponId,
@@ -224,13 +178,22 @@ Page({
           startDate: util.formatTime(ress.startDate),
           endDate: util.formatTime(ress.endDate),
           isPermanent: ress.permanent,
-          isNoThreshold: ress.applyRule,
-          frequency: ress.limitPerCustomer,
-          iptpiece: ress.minQuantity,
-          iptelement: ress.minAmount,
+          note: ress.note,
+          maxRewards: ress.maxRewards,
+          maxRewardsDaily: ress.maxRewardsDaily,
+          maxTrys: ress.maxTrys,
+          maxTrysDaily: ress.maxTrysDaily,
+          isFloat: ress.isFloat,
+          entryType: ress.entryType,
+          locationIds: ress.locationIds,
           isDisabled: true,
-          isUnlimited,
-          termOfValidityArr
+          setAwards: {
+            missDescription: ress.missDescription,
+            missTitle: ress.missTitle,
+            prizes: ress.prizes
+          }
+
+
         })
       })
     } else {
@@ -243,126 +206,98 @@ Page({
   },
 
 
-  /**
-   * 满 * 件 / 满 *元
-   */
-  termOfValidity: function(e) {
-
-    var radioItems = this.data.termOfValidityArr;
-    for (var i = 0, len = radioItems.length; i < len; ++i) {
-      radioItems[i].checked = radioItems[i].value == e.detail.value;
-    }
 
 
-    this.setData({
-      fullNumber: e.detail.value,
-      termOfValidityArr: radioItems
-    })
-  },
+
+
+
 
 
   /**
-   * 是否无门槛
+   * 活动名称
    */
-  noThreshold: function(e) {
-    let value = e.detail.value
-
-    let isNoThreshold
-
-    if (value) {
-      isNoThreshold = value
-
-    } else {
-      isNoThreshold = value
-    }
-
+  activityName: function(e) {
     this.setData({
-      isNoThreshold
+      name: e.detail.value
     })
   },
 
-
-  /**
-   * 是否无限制
-   */
-  Unlimited: function(e) {
-    let value = e.detail.value
-
-    let isUnlimited
-
-    if (value) {
-      isUnlimited = value
-
-    } else {
-      isUnlimited = value
-    }
-
-    this.setData({
-      isUnlimited
-    })
-  },
-
-
-  /**
-   * 每人参与 * 次
-   */
-  frequency: function(e) {
-    this.setData({
-      frequency: e.detail.value
-    })
-  },
 
 
   /**
    * 是否永久有效
    */
   switch1Change: function(e) {
+    this.setData({
+      isPermanent: e.detail.value
+    })
+  },
+
+
+
+  /**
+   * 活动规则
+   */
+  activityRules: function(e) {
     let value = e.detail.value
-    let isPermanent;
-    if (value) {
-      isPermanent = value
-
-    } else {
-      isPermanent = value
-    }
 
     this.setData({
-      isPermanent
+      note: e.detail.value
+    })
+  },
+
+
+
+  /**
+   * 每人每天抽取多少次
+   */
+  maxTrys: function(e) {
+    this.setData({
+      maxTrys: e.detail.value
     })
   },
 
 
   /**
-   * 满多少件
+   * 每人每天共抽取多少次
    */
-  iptQUANTITY: function(e) {
+  maxTrysDaily: function(e) {
     this.setData({
-      iptpiece: e.detail.value
+      maxTrysDaily: e.detail.value
     })
   },
 
 
   /**
-   * 满多少元
+   * 每人每天中奖多少次
    */
-  iptTOTAL: function(e) {
+  maxRewards: function(e) {
     this.setData({
-      iptelement: e.detail.value
+      maxRewards: e.detail.value
     })
   },
 
 
   /**
-   * 选择优惠券
+   * 每人每天共中奖多少次
    */
-  chooseCoupons: function() {
-    if (!this.data.isDisabled) {
-      wx.navigateTo({
-        url: '../../coupon/chooseCoupons/chooseCoupons?chooseCoupons=' + JSON.stringify(this.data.chooseCoupons),
-      })
-    }
-
+  maxRewardsDaily: function(e) {
+    this.setData({
+      maxRewardsDaily: e.detail.value
+    })
   },
+
+
+  /**
+   * 是否漂浮显示
+   */
+  switch2Change: function(e) {
+    this.setData({
+      isFloat: e.detail.value
+    })
+  },
+
+
 
 
   /**
@@ -377,20 +312,15 @@ Page({
   },
 
 
-  /**
-   * 活动名称
-   */
-  activityName: function(e) {
-    this.setData({
-      name: e.detail.value
-    })
-  },
 
 
   /**
    * 确定事件
    */
   preservation: function() {
+
+
+
 
     if (this.data.name == '') {
       wx.showToast({
@@ -400,47 +330,44 @@ Page({
       return;
     }
 
-
-    if (!this.data.isNoThreshold) {
-      if (this.data.fullNumber == "QUANTITY") {
-        if (this.data.iptpiece == '') {
-          wx.showToast({
-            title: '请填写满多少件',
-            icon: 'none'
-          })
-          return;
-        }
-      } else if (this.data.fullNumber == "TOTAL") {
-        if (this.data.iptelement == '') {
-          wx.showToast({
-            title: '请填写满多少元',
-            icon: 'none'
-          })
-          return;
-        }
-      } else if (this.data.fullNumber == "") {
-        wx.showToast({
-          title: '请选择无门槛形式',
-          icon: 'none'
-        })
-        return;
-      }
-    }
-
-    if (!this.data.isUnlimited) {
-      if (this.data.frequency == '') {
-        wx.showToast({
-          title: '请填写参与次数',
-          icon: 'none'
-        })
-        return;
-      }
-    }
-
-
-    if (this.data.couponId == '') {
+    if (this.data.note == '') {
       wx.showToast({
-        title: '请选择优惠券',
+        title: '请输入活动规则',
+        icon: 'none'
+      })
+      return;
+    }
+
+
+    if (this.data.maxTrys == '') {
+      wx.showToast({
+        title: '请输入每人每天可抽取多少次',
+        icon: 'none'
+      })
+      return;
+    }
+
+
+    if (this.data.maxTrysDaily == '') {
+      wx.showToast({
+        title: '请输入每人每天共可抽取多少次',
+        icon: 'none'
+      })
+      return;
+    }
+
+    if (this.data.maxRewards == '') {
+      wx.showToast({
+        title: '请输入每人每天可中奖多少次',
+        icon: 'none'
+      })
+      return;
+    }
+
+
+    if (this.data.maxRewardsDaily == '') {
+      wx.showToast({
+        title: '请输入每人每天共可中奖多少次',
         icon: 'none'
       })
       return;
@@ -465,8 +392,25 @@ Page({
    * 下一步 设置奖项
    */
   preservationFetch: function() {
+    let isDisabled = this.data.isDisabled;
+
+    let data = {
+      name: this.data.name,
+      startDate: new Date(this.data.startDate).getTime(),
+      endDate: new Date(this.data.endDate).getTime(),
+      note: this.data.note,
+      maxTrys: parseInt(this.data.maxTrys),
+      maxTrysDaily: parseInt(this.data.maxTrysDaily),
+      maxRewards: parseInt(this.data.maxRewards),
+      maxRewardsDaily: parseInt(this.data.maxRewardsDaily),
+      isFloat: this.data.isFloat,
+      permanent: this.data.isPermanent,
+      locationIds: this.data.locationIds,
+      entryType: 'PAY',
+    }
+
     wx.navigateTo({
-      url: '../setAwards/setAwards',
+      url: '../setAwards/setAwards?data=' + JSON.stringify(data) + '&setAwards=' + JSON.stringify(this.data.setAwards) + '&isDisabled=' + isDisabled,
     })
   }
 

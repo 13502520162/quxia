@@ -43,7 +43,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 11,
 			"list": [
 				{
 					"id": -1,
@@ -97,6 +97,35 @@
 					"id": -1,
 					"name": "抽取活动--设置奖项",
 					"pathName": "pages/manage/luckyDraw/setAwards/setAwards",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "设备分润",
+					"pathName": "pages/manage/equipmentDistribution/equipmentDistribution",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品分类管理",
+					"pathName": "pages/manage/commodity/commodityClassification/commodityClassification",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券",
+					"pathName": "pages/manage/coupon/coupon",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "支付有礼",
+					"pathName": "pages/manage/paymentOfCourtesy/paymentOfCourtesy",
+					"query": "",
 					"scene": null
 				}
 			]

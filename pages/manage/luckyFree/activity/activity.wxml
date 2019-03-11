@@ -40,7 +40,7 @@
     <view class="weui-cell weui-cell_switch">
       <view class="weui-cell__bd weui-label" style='padding-right:20rpx;'>活动规则</view>
       <view class="weui-cell__ft">
-        <textarea class='activity-rules'></textarea>
+        <textarea class='activity-rules' value='{{note}}' bindinput='activityRules'></textarea>
       </view>
     </view>
   </view>
@@ -48,53 +48,18 @@
 
 
 
-  <view class="weui-cells weui-cells_after-title  weui-cell-reset frequency-limit">
-    <view class="weui-cell weui-cell_switch">
-      <view class="weui-cell__bd weui-label">次数限制</view>
-    </view>
-    <view class="dl">
-      每人每天可抽取
-      <input disabled="{{isDisabled}}" type='number' class='full-order-ipt' value='{{name}}' bindinput='activityName' /> 次， 共
-      <input disabled="{{isDisabled}}" type='number' class='full-order-ipt' value='{{name}}' bindinput='activityName' />次
-    </view>
-
-    <view class="dl">
-      每人每天可中奖
-      <input disabled="{{isDisabled}}" type='number' class='full-order-ipt' value='{{name}}' bindinput='activityName' /> 次， 共
-      <input disabled="{{isDisabled}}" type='number' class='full-order-ipt' value='{{name}}' bindinput='activityName' />次
-    </view>
-
-  </view>
-
-
-
-
   <view class="weui-cells weui-cells_after-title  weui-cell-reset">
     <view class="weui-cell weui-cell_switch">
-      <view class="weui-cell__bd weui-label">参加门槛</view>
-      <view class="weui-cell__ft">
-        <text class='weui-label'>无门槛</text>
-        <switch size="23" checked='{{isUnlimited}}' bindchange="Unlimited" disabled="{{isDisabled}}" />
-      </view>
-    </view>
-    <view class='full-order full-order2  {{isDisabled?"disabledColor":""}}' hidden='{{isUnlimited}}'>
-      支付
-      <input type='number' value='{{frequency}}' disabled="{{isDisabled}}" bindinput='frequency' class="full-order-ipt" /> 元
-    </view>
-  </view>
-
-
-  <view class="weui-cells weui-cells_after-title  weui-cell-reset">
-    <view class="weui-cell weui-cell_switch">
-      <view class="weui-cell__bd weui-label">中奖浮动比例 <text bindtap='floatInfo' class='iconfont icon-wen'></text> </view>
+      <view class="weui-cell__bd weui-label">中奖浮动比例
+        <text bindtap='floatInfo' class='iconfont icon-wen'></text> </view>
       <view class="weui-cell__ft">
         <text class='weui-label'>不设置</text>
-        <switch size="23" checked='{{isUnlimited}}' bindchange="Unlimited" disabled="{{isDisabled}}" />
+        <switch size="23" checked='{{enableProbabilityAdjustment}}' bindchange="Unlimited" disabled="{{isDisabled}}" />
       </view>
     </view>
-    <view class='full-order full-order2  {{isDisabled?"disabledColor":""}}' hidden='{{isUnlimited}}'>
+    <view class='full-order full-order2  {{isDisabled?"disabledColor":""}}' hidden='{{enableProbabilityAdjustment}}'>
       中奖概率上浮
-      <input type='number' value='{{frequency}}' disabled="{{isDisabled}}" bindinput='frequency' class="full-order-ipt" /> %
+      <input type='number' value='{{probabilityAdjustment}}' disabled="{{isDisabled}}" bindinput='frequency' class="full-order-ipt" /> %
     </view>
   </view>
 

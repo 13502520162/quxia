@@ -5,7 +5,7 @@
       <view class='list-t'>
         <view>
           <text class='card'>{{item.name}}</text>
-          <text class='weui-badge'>{{item.users}}用户</text>
+          <text class='weui-badge'>{{item.users==null?'0':item.users}}用户</text>
           <text class='weui-badge'>{{item.discountRate}}折</text>
         </view>
         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
@@ -14,7 +14,15 @@
         <text>{{item.Days}}</text>
       </view>
     </view>
+    <view class="weui-loadmore" style='{{ list.length === 0 ? "display:block": "display:none"}}'>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+    </view>
   </scroll-view>
+
 </view>
+
+
+
+
 
 <view class='new-membershipCard' bindtap='newMembershipCard'>新增会员卡</view>

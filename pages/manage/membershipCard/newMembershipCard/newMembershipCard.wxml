@@ -25,8 +25,8 @@
     </view>
     <view class='after-expiry' hidden='{{isTermOfValidity}}'>
       <text>卡过期后，消费者自动变更至</text>
-      <picker class='select' bindchange="bindPickerChange" value="{{index}}" range="{{objectArray}}" range-key='name'>
-        <view class="picker">
+      <picker class='select' bindchange="bindPickerChange" disabled="{{isDisabled}}" value="{{index}}" range="{{objectArray}}" range-key='name'>
+        <view class='picker {{isDisabled?"disabledColor":""}}'>
           {{objectArray[tradeIndex].name}}
         </view>
         <text class="arrow"></text>
@@ -50,7 +50,7 @@
             <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
           </view>
 
-          <view class="weui-cell__bd weui-cell__bd-reset{{isDisabled?'disabledColor':''}}">{{item.name}}</view>
+          <view class="weui-cell__bd weui-cell__bd-reset {{isDisabled?'disabledColor':''}}">{{item.name}}</view>
         </label>
       </radio-group>
     </view>
@@ -66,15 +66,15 @@
           </view>
         </label>
 
-        <view class="weui-cell__bd weui-cell__bd-reset full-order {{isDisabled?'disabledColor':''}}">
+        <view class="weui-cell__bd weui-cell__bd-reset full-order">
           <text>累计支付成功</text>
-          <input type='number' value='{{successfulPayment}}' bindinput='successfulPayment' class="full-order-ipt" />
+          <input type='number' value='{{successfulPayment}}' disabled="{{isDisabled}}"  bindinput='successfulPayment' class="full-order-ipt  {{isDisabled?'disabledColor':''}}" />
           <text>次</text>
         </view>
 
-        <view class="weui-cell__bd weui-cell__bd-reset full-order {{isDisabled?'disabledColor':''}}">
+        <view class="weui-cell__bd weui-cell__bd-reset full-order">
           <text>累计消费金额</text>
-          <input type='number' value='{{consumptionAmount}}' bindinput='consumptionAmount' class="full-order-ipt" />
+          <input type='number' value='{{consumptionAmount}}' disabled="{{isDisabled}}"  bindinput='consumptionAmount' class="full-order-ipt  {{isDisabled?'disabledColor':''}}" />
           <text>次</text>
         </view>
 
@@ -87,7 +87,7 @@
   <view class="weui-cell weui-cell_textarea weui-cell-reset">
     <view class="weui-label">使用需知</view>
     <view class="weui-cell__bd">
-      <textarea placeholder='请输入使用需知' value='{{usageNeeds}}' bindinput='usageNeeds' class='textarea'></textarea>
+      <textarea placeholder='请输入使用需知' disabled="{{isDisabled}}"  value='{{usageNeeds}}' bindinput='usageNeeds' class="textarea  {{isDisabled?'disabledColor':''}}"></textarea>
     </view>
   </view>
 
@@ -96,9 +96,9 @@
     <view class="weui-cell weui-cell_switch" style='border:none;'>
       <view class="weui-cell__bd weui-label">权益 </view>
     </view>
-    <view class='full-order full-order2  {{isDisabled?"disabledColor":""}}' hidden='{{isUnlimited}}'>
+    <view class='full-order full-order2' hidden='{{isUnlimited}}'>
       消费折扣
-      <input type='number' value='{{equity}}' disabled="{{isDisabled}}" bindinput='equity' class="full-order-ipt" /> 折
+      <input type='number' value='{{equity}}' disabled="{{isDisabled}}" bindinput='equity' class="full-order-ipt  {{isDisabled?'disabledColor':''}}" /> 折
     </view>
 
   </view>

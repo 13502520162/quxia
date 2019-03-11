@@ -40,7 +40,7 @@
     <view class="weui-cell weui-cell_switch">
       <view class="weui-cell__bd weui-label">活动规则</view>
       <view class="weui-cell__ft">
-        <textarea class='activity-rules'></textarea>
+        <textarea value='{{note}}' bindinput='activityRules' disabled="{{isDisabled}}" class='activity-rules {{isDisabled?"disabledColor":""}}'></textarea>
       </view>
     </view>
   </view>
@@ -54,14 +54,14 @@
     </view>
     <view class="dl">
       每人每天可抽取
-      <input disabled="{{isDisabled}}" class='full-order-ipt' value='{{name}}' bindinput='activityName' /> 次， 共
-      <input disabled="{{isDisabled}}" class='full-order-ipt' value='{{name}}' bindinput='activityName' />次
+      <input disabled="{{isDisabled}}" class='full-order-ipt {{isDisabled?"disabledColor":""}}' value='{{maxTrys}}' bindinput='maxTrys' /> 次， 共
+      <input disabled="{{isDisabled}}" class='full-order-ipt {{isDisabled?"disabledColor":""}}' value='{{maxTrysDaily}}' bindinput='maxTrysDaily' />次
     </view>
 
     <view class="dl">
       每人每天可中奖
-      <input disabled="{{isDisabled}}" class='full-order-ipt' value='{{name}}' bindinput='activityName' /> 次， 共
-      <input disabled="{{isDisabled}}" class='full-order-ipt' value='{{name}}' bindinput='activityName' />次
+      <input disabled="{{isDisabled}}" class='full-order-ipt {{isDisabled?"disabledColor":""}}' value='{{maxRewards}}' bindinput='maxRewards' /> 次， 共
+      <input disabled="{{isDisabled}}" class='full-order-ipt {{isDisabled?"disabledColor":""}}' value='{{maxRewardsDaily}}' bindinput='maxRewardsDaily' />次
     </view>
 
   </view>
@@ -71,7 +71,7 @@
     <view class="weui-cell weui-cell_switch">
       <view class="weui-cell__bd weui-label">漂浮显示</view>
       <view class="weui-cell__ft">
-        <switch size="23" checked='{{isPermanent}}' bindchange="switch1Change" disabled="{{isDisabled}}" />
+        <switch size="23" checked='{{isFloat}}' bindchange="switch2Change" disabled="{{isDisabled}}" />
       </view>
     </view>
   </view>
@@ -80,7 +80,7 @@
     <view class="weui-cell__hd">
       <view class="weui-label">适用方式</view>
     </view>
-    <view class='field-num' bindtap='choiceOfVenue'>
+    <view class='field-num {{isDisabled?"disabledColor":""}}' bindtap='choiceOfVenue'>
       <text>支付</text>
       <image src='/assets/images/rightBackBtn.png'></image>
     </view>
@@ -105,4 +105,5 @@
 </view>
 
 
-<view class='preservation'  bindtap='preservation'>下一步，设置奖项</view>
+<view wx:if="{{!isDisabled}}" class='preservation' bindtap='preservation'>下一步，设置奖项</view>
+<view wx:else class='preservation' bindtap='preservation'>查看奖项</view>

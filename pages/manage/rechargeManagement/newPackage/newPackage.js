@@ -14,13 +14,13 @@ Page({
 
     newPackageItem: [{
       name: '充值送优惠券',
-      value: '0',
+      value: 1,
       checked: false
     }],
     isPackage: true,
     refillMembershipCard: [{
       name: '充值送会员',
-      value: '0',
+      value: 1,
       checked: false
     }],
     isCard: true,
@@ -42,28 +42,123 @@ Page({
   onLoad: function(options) {
     this.fetchCoupons()
     this.fetchCards()
-    console.log(options)
     this.setData({
       id: options.id,
       field: options.field
     })
 
-    if (options.field == 'view') {
+
+  },
+  onReady: function() {
+    if (this.data.field == 'view') {
       this.fetchDetail()
     }
   },
 
-
+  /**
+   * 获取套餐详情
+   */
   fetchDetail: function() {
+    let that  = this
     fetch({
-      url: '/rechargePlans/detail?id=' + this.data.id
+      url: '/rechargePlans/detail?id=' + this.data.id,
+      isShowLoading: true
     }).then(res => {
-      this.setData({
-        name: res.data.name,
-        price: res.data.price,
-        packageValue: res.data.value
-      })
-      console.log(res)
+
+      let item = res.data;
+      let coupons = this.data.coupons;
+      let vipCards = this.data.vipCards;
+
+      let couponList = [{
+          listIndex: 0,
+          listTap: 'listAdd',
+          index: 0
+        }],
+        newPackageItem = [],
+        refillMembershipCard = [],
+        selIndex = 0
+
+
+      for (let i = 0; i < coupons.length; i++) {
+        if (item.couponIds.includes(coupons[i].id)) {
+          let obj = {};
+          if (couponList.length == 1) {
+            obj = {
+              listIndex: couponList.length - 1,
+              listTap: 'listAdd',
+              index: i
+            }
+          } else {
+            obj = {
+              listIndex: couponList.length - 1,
+              listTap: 'listRemove',
+              index: i
+            }
+          }
+          couponList.push(obj);
+        }
+      }
+
+      couponList.splice(0, 1);
+
+
+      for (let j = 0; j < vipCards.length; j++) {
+        if (vipCards[j].id == item.cardId) {
+          selIndex = j
+        }
+      }
+
+
+
+      let isPackage = true,
+        isCard = true;
+      if (item.couponIds.length) {
+        newPackageItem = [{
+          name: '充值送优惠券',
+          value: 1,
+          checked: true
+        }]
+        isPackage = false
+      } else {
+        newPackageItem = [{
+          name: '充值送优惠券',
+          value: 1,
+          checked: false
+        }]
+        isPackage = true
+      }
+
+      if (item.cardId != null) {
+        refillMembershipCard = [{
+          name: '充值送会员',
+          value: 1,
+          checked: true
+        }]
+        isCard = false
+      } else {
+        refillMembershipCard = [{
+          name: '充值送会员',
+          value: 1,
+          checked: false
+        }]
+        isCard = true
+      }
+
+      setTimeout(function() {
+        that.setData({
+          name: item.name,
+          price: item.price,
+          packageValue: item.value,
+          refillMembershipCard,
+          newPackageItem,
+          isCard,
+          isPackage,
+          couponList,
+          selIndex
+        })
+      }, 10)
+
+
     })
   },
 
@@ -153,7 +248,8 @@ Page({
 
   checkboxConponChange: function(e) {
     var checkboxItems = this.data.newPackageItem,
-      values = e.detail.value;
+      values = e.detail.value,
+      isPackage;
     for (var i = 0, lenI = checkboxItems.length; i < lenI; ++i) {
       checkboxItems[i].checked = false;
 
@@ -165,16 +261,23 @@ Page({
       }
     }
 
+    if (values.length) {
+      isPackage = false
+    } else {
+      isPackage = true
+    }
+
     this.setData({
       newPackageItem: checkboxItems,
-      isPackage: !this.data.isPackage
+      isPackage
     });
   },
 
 
   checkboxVipChange: function(e) {
     var checkboxItems = this.data.refillMembershipCard,
-      values = e.detail.value;
+      values = e.detail.value,
+      isCard;
     for (var i = 0, lenI = checkboxItems.length; i < lenI; ++i) {
       checkboxItems[i].checked = false;
 
@@ -186,9 +289,16 @@ Page({
       }
     }
 
+
+    if (values.length) {
+      isCard = false
+    } else {
+      isCard = true
+    }
+
     this.setData({
       refillMembershipCard: checkboxItems,
-      isCard: !this.data.isCard
+      isCard
     });
   },
 
@@ -319,9 +429,13 @@ Page({
 
   },
   confirmRequest: function() {
+    let cardId = this.data.vipCards[this.data.selIndex].id
+    if (this.data.isCard) {
+      cardId = ''
+    }
     let id = this.data.id;
     fetch({
-      url: '/rechargePlans',
+      url: '/rechargePlans?id=' + id,
       method: id ? 'PUT' : "POST",
       data: {
         id: id,
@@ -329,12 +443,13 @@ Page({
         price: this.data.price,
         value: this.data.packageValue,
         couponIds: this.data.couponIds,
-        cardId: this.data.vipCards[this.data.selIndex].id
+        cardId
       }
     }).then(res => {
+      let info = id ? '更新成功' : '新建成功'
       wx.showToast({
-        title: '成功',
-        icon: 'none'
+        title: info,
+        icon: 'success'
       })
 
       setTimeout(res => {

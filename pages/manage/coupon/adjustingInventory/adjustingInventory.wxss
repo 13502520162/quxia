@@ -1,17 +1,20 @@
-/* pages/manage/userManagement/userView/balance/balance.wxss */
+/* pages/manage/coupon/adjustingInventory/adjustingInventory.wxss */
 
 .balance {
   background: #fff;
 }
 
-.balance-l view {
-  text-align: center;
+.balance-l {
+  padding: 10px 15px;
 }
 
 .balance-l view:nth-child(2) {
-  text-align: center;
-  font-size: 40rpx;
-  color: #188ae2;
+  color: rgba(153, 148, 148, 1);
+  font-size: 25rpx;
+}
+
+.balance-l view text {
+  color: rgb(0, 118, 255);
 }
 
 .balance-adjustment {

@@ -100,7 +100,7 @@ Page({
     })
 
     fetch({
-        url: '/payGiftOffers',
+        url: '/luckfree',
         data: {
           ...this.data.listParams,
           state: this.data.trade[this.data.tradeIndex].id,
@@ -178,7 +178,7 @@ Page({
 
               if (itemList[1] == '删除') {
                 wx.showModal({
-                  content: '是否删除该优惠券?',
+                  content: '是否删除该活动?',
                   success(res) {
                     if (res.confirm) {
                       that.delPlace(id);
@@ -190,9 +190,9 @@ Page({
               }
               break;
             case 2:
-              if (itemList[2] != '取消') { 
+              if (itemList[2] != '取消') {
                 wx.showModal({
-                  content: '是否删除该折扣券?',
+                  content: '是否删除该活动?',
                   success(res) {
                     if (res.confirm) {
                       that.delPlace(id);
@@ -203,7 +203,7 @@ Page({
                 })
 
               }
-            
+
 
               break;
             default:
@@ -219,7 +219,7 @@ Page({
    */
   delPlace: function(id) {
     fetch({
-        url: '/payGiftOffers?id=' + id,
+      url: '/luckfree?id=' + id,
         method: 'delete'
       })
       .then(res => {
@@ -244,8 +244,8 @@ Page({
    */
   disableActive: function(id) {
     fetch({
-        url: '/payGiftOffers/disable?id=' + id,
-        data:{
+      url: '/luckfree/disable?id=' + id,
+        data: {
           id
         },
         method: 'post'

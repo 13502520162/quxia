@@ -7,7 +7,8 @@ Page({
    */
   data: {
     list: [],
-    systemInfo: {}
+    systemInfo: {},
+    enabled:false
   },
 
   /**
@@ -22,7 +23,6 @@ Page({
       }
     })
     this.initData()
-    this.fetchCard()
   },
 
   /**
@@ -37,6 +37,10 @@ Page({
    */
   onShow: function() {
 
+    this.setData({
+      list: []
+    })
+    this.fetchCard()
   },
   initData: function() {
     this.setData({
@@ -48,18 +52,30 @@ Page({
   },
 
   fetchCard: function() {
+
+  
+
     fetch({
       url: '/vipCards',
+      isShowLoading: true,
       data: {
         ...this.data.listParams
       }
     }).then(res => {
+
+      if (res.data.length < this.data.listParams.size) {
+        //return 
+      }
 
       let list = res.data.map(item => {
         if (item.permanent) {
           item.Days = '永久有效'
         } else {
           item.Days = item.validDays + '天有效'
+        }
+
+        if(!item.enabled){
+          item.enabled = false;
         }
         return item
       })
@@ -92,7 +108,7 @@ Page({
       itemList = ['查看', '查看成员', '失效', '删除'];
     }
 
-    if (enabled) {
+    if (!enabled) {
       itemList.splice(2, 1)
     }
 
@@ -101,7 +117,7 @@ Page({
       success: res => {
         switch (res.tapIndex) {
           case 0:
-            if (enabled) {
+            if (!enabled) {
               field = 'view'
             } else {
               field = 'edit'
@@ -156,6 +172,7 @@ Page({
   cardInvalid: function(id) {
     fetch({
       url: '/vipCards/disable?id=' + id,
+      isShowLoading: true,
       data: {
         id
       },
@@ -163,7 +180,7 @@ Page({
     }).then(res => {
       let listData = this.data.list.map(item => {
         if (item.id == id) {
-          item.enabled = true
+          item.enabled = false
         }
         return item;
       })
@@ -180,6 +197,7 @@ Page({
   delPlace: function(id) {
     fetch({
         url: '/vipCards?id=' + id,
+        isShowLoading: true,
         method: 'delete'
       })
       .then(res => {

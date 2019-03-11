@@ -186,9 +186,6 @@ input {
   text-align: center;
 }
 
-.disabledColor {
-  color: #ccc;
-}
 
 .weui-cells:after {
   bottom: 0;

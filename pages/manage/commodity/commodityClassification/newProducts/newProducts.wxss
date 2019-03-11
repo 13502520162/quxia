@@ -1,0 +1,9 @@
+/* pages/manage/commodity/commodityClassification/newProducts/newProducts.wxss */
+
+.newProducts {
+  background: #fff;
+}
+
+.coupon-name {
+  text-align: right;
+}

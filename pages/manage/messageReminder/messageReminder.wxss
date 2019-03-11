@@ -1,0 +1,67 @@
+/* pages/manage/messageReminder/messageReminder.wxss */
+
+page, .page, .page__bd {
+  height: 100%;
+  background: #fff;
+}
+
+.page__bd {
+  padding-bottom: 0;
+}
+
+.weui-tab__content, scroll-view {
+  height: 100%;
+}
+
+.weui-navbar__title {
+  position: relative;
+  overflow: initial;
+}
+
+.weui-navbar__title .num {
+  position: absolute;
+  top: -15rpx;
+  right: -30rpx;
+  background: red;
+  width: 30rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  font-size: 20rpx;
+  color: #fff;
+  border-radius: 50%;
+}
+
+scroll-view {
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.news {
+  padding: 20rpx;
+  border: 1px solid #d9d9d9;
+  border-radius: 10rpx;
+  display: flex;
+}
+
+.news>view {
+  flex: 1;
+}
+
+.news>view:nth-child(1) {
+  flex: 3;
+}
+
+.news .date {
+  color: rgba(102, 102, 102, 1);
+}
+
+.news .state {
+  text-align: right;
+}
+
+.news .state text {
+  padding: 5rpx 10rpx;
+  background-color: rgb(0, 118, 255);
+  color: #fff;
+  border-radius: 5rpx;
+}

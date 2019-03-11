@@ -77,6 +77,7 @@ view .weui-label {
   position: relative;
   display: inline-block;
   width: 200rpx;
+  height: 40rpx;
   border-radius: 10rpx;
   margin-left: 10rpx;
   border: 1px solid #ccc;
@@ -85,6 +86,7 @@ view .weui-label {
 .picker {
   font-size: 30rpx;
   padding-left: 10rpx;
+  height: 40rpx;
 }
 
 .termOfValidity {

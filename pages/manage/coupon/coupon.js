@@ -132,9 +132,9 @@ Page({
     let enabled = e.currentTarget.dataset.enabled;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
-      itemList = ['查看', '开始投放', '数据统计', '删除', '取消'];
+      itemList = ['查看', '开始投放', '调整库存', '数据统计', '删除', '取消'];
     } else {
-      itemList = ['查看', '开始投放', '数据统计', '删除'];
+      itemList = ['查看', '开始投放', '调整库存', '数据统计', '删除'];
     }
 
     if (enabled) {
@@ -163,10 +163,15 @@ Page({
               break;
             case 2:
               wx.navigateTo({
-                url: 'couponStatistics/couponStatistics?couponId=' + id
+                url: 'adjustingInventory/adjustingInventory?couponId=' + id
               })
               break;
             case 3:
+              wx.navigateTo({
+                url: 'couponStatistics/couponStatistics?couponId=' + id
+              })
+              break;
+            case 4:
               wx.showModal({
                 content: '是否删除该优惠券',
                 success(res) {

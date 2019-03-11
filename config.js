@@ -4,7 +4,7 @@ const config = {
   client_secret:'test',
   // BASE_URL:'https://quxia.renqilai.com'
    BASE_URL: 'https://rapapi.renqilai.com/app/mock/35'
-  // BASE_URL:'http://192.168.0.252:8085'
+  // BASE_URL:'http://192.168.0.252:8080'
     //  BASE_URL: 'http://192.168.0.222:8080'
 }
 

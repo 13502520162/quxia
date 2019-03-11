@@ -19,6 +19,7 @@ Page({
     },
     funcList: [
       { title: '营收统计', icon:'../../assets/images/replenish.png', desc: "查看实时收益流水", pageUrl:'./analysis', premission:3, hide: true },
+      { title: '消息提醒', icon: '../../assets/images/list.png', desc: "条未读", pageUrl: '../manage/messageReminder/messageReminder', premission: 8, hide: true },
       { title: '设备列表', icon: '../../assets/images/list.png', desc: "在线设备", pageUrl: '../manage/device/list/list', premission: 8, hide: true },
       { title: '设备绑定', icon: '../../assets/images/device.png', desc: "扫描设备二维码", pageUrl: '', premission: 9, hide: true },
       { title: '商品套餐', icon: '../../assets/images/toll.png', desc: "管理商品信息", pageUrl: '../manage/toll/toll', premission: 19, hide: true },

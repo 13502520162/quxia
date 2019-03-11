@@ -1,0 +1,36 @@
+<!--pages/manage/coupon/adjustingInventory/adjustingInventory.wxml-->
+
+<view class='balance'>
+
+  <view class='balance-l'>
+    <view>全场5折券</view>
+    <view>有效期：2019-03-09至2019-03-10</view>
+    <view>剩余 <text>{{balance}}</text> 张</view>
+  </view>
+
+
+  <view class='balance-adjustment'>
+    <view>调整库存</view>
+    <view>
+      <view class='adjustment'>
+        <text class=' {{balance + adjustment?"" :"noData"}}' bindtap='reduce'>-</text>
+        <input type='number' value='{{balanceIpt}}' bindinput='balanceIpt' />
+        <text bindtap='plus'>+</text>
+      </view>
+      <view class='adjustment-info'>
+        <text>调整后：</text>
+        <text>{{balance + adjustment}}</text>张</view>
+    </view>
+  </view>
+
+  <view class="weui-cell1">
+    <view class="weui-cell__bd">修改原因</view>
+    <view class="">
+      <textarea bindinput='adjustmentNote'></textarea>
+    </view>
+  </view>
+
+</view>
+
+
+<view class='preservation' bindtap='definiteAdjustment'>确定</view>

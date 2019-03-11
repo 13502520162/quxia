@@ -1,6 +1,7 @@
-import fetch from '../../../lib/fetch.js'
-import util from '../../../utils/util.js'
-import getStorePermissions from '../../../utils/getStorePremissioin.js';
+// pages/manage/commodity/commodityClassification/commodityClassification.js
+import fetch from '../../../../lib/fetch.js'
+import util from '../../../../utils/util.js'
+
 Page({
 
   /**
@@ -89,18 +90,13 @@ Page({
     let that = this
     let id = e.currentTarget.dataset.id;
     let itemList;
-    let enabled = e.currentTarget.dataset.enabled;
     if (this.data.systemInfo.platform == 'android') {
-      itemList = ['查看', '启用', '删除', '取消'];
+      itemList = ['查看', '上移', '下移', '设置商品', '删除', '取消'];
     } else {
-      itemList = ['查看', '启用', '删除'];
+      itemList = ['查看', '上移', '下移', '设置商品', '删除'];
     }
 
-    if (enabled) {
-      itemList[1] = '暂停'
-    } else {
-      itemList[1] = '启用'
-    }
+
 
     wx.showActionSheet({
       itemList: itemList,
@@ -109,29 +105,31 @@ Page({
           switch (res.tapIndex) {
             case 0:
               wx.navigateTo({
-                url: './newPackage/newPackage?field=view&id=' + id,
+                url: './newProducts/newProducts?field=view&id=' + id,
               })
               break;
             case 1:
-              if (enabled) {
-                this.disableManagement(id)
-              } else {
-                this.enableManagement(id)
-              }
-
+                console.log('上移')
               break;
             case 2:
-
-              wx.showModal({
-                content: '是否删除套餐?',
-                success(res) {
-                  if (res.confirm) {
-                    that.delPlace(id);
-                  } else if (res.cancel) {
-                    console.log('用户点击取消')
-                  }
-                }
-              })
+              console.log('下移')
+            
+              break;
+            case 3:
+              console.log('设置商品')
+              break;
+            case 4:
+              console.log('删除')
+              // wx.showModal({
+              //   content: '是否删除套餐?',
+              //   success(res) {
+              //     if (res.confirm) {
+              //       that.delPlace(id);
+              //     } else if (res.cancel) {
+              //       console.log('用户点击取消')
+              //     }
+              //   }
+              // })
               break;
             default:
               break;
@@ -230,7 +228,8 @@ Page({
   loadMoreListData: function() {
 
     this.setData({
-      listParams: { ...this.data.listParams,
+      listParams: {
+        ...this.data.listParams,
         from: this.data.listParams.from + this.data.listParams.size
       }
     })
@@ -243,7 +242,7 @@ Page({
    */
   onAddPlace: function() {
     wx.navigateTo({
-      url: './newPackage/newPackage?field=add',
+      url: './newProducts/newProducts?field=add',
     })
   },
 

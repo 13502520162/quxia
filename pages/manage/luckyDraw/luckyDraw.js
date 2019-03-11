@@ -1,6 +1,5 @@
 import fetch from '../../../lib/fetch.js'
 import util from '../../../utils/util.js'
-import getStorePermissions from '../../../utils/getStorePremissioin.js';
 Page({
 
   /**
@@ -89,7 +88,7 @@ Page({
   },
 
   /**
-   * 获取幸运免单列表
+   * 获取抽取活动列表
    */
 
   fetchPlaceList: function() {
@@ -100,7 +99,7 @@ Page({
     })
 
     fetch({
-        url: '/payGiftOffers',
+        url: '/lottery',
         data: {
           ...this.data.listParams,
           state: this.data.trade[this.data.tradeIndex].id,
@@ -178,7 +177,7 @@ Page({
 
               if (itemList[1] == '删除') {
                 wx.showModal({
-                  content: '是否删除该优惠券?',
+                  content: '是否删除该抽奖活动?',
                   success(res) {
                     if (res.confirm) {
                       that.delPlace(id);
@@ -190,9 +189,9 @@ Page({
               }
               break;
             case 2:
-              if (itemList[2] != '取消') { 
+              if (itemList[2] != '取消') {
                 wx.showModal({
-                  content: '是否删除该折扣券?',
+                  content: '是否删除该抽奖活动?',
                   success(res) {
                     if (res.confirm) {
                       that.delPlace(id);
@@ -203,7 +202,7 @@ Page({
                 })
 
               }
-            
+
 
               break;
             default:
@@ -219,7 +218,7 @@ Page({
    */
   delPlace: function(id) {
     fetch({
-        url: '/payGiftOffers?id=' + id,
+        url: '/lottery?id=' + id,
         method: 'delete'
       })
       .then(res => {
@@ -244,8 +243,8 @@ Page({
    */
   disableActive: function(id) {
     fetch({
-        url: '/payGiftOffers/disable?id=' + id,
-        data:{
+        url: '/lottery/disable?id=' + id,
+        data: {
           id
         },
         method: 'post'
