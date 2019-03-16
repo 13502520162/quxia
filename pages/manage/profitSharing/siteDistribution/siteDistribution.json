@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "场地分润",
+  "usingComponents": {
+    "popup": "../../../../components/popup/index"
+  }
+}

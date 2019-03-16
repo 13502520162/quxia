@@ -5,35 +5,43 @@ Page({
    * 页面的初始数据
    */
   data: {
-     commotidyData: '',
-     commotidyDataIndex: '',
+    commotidyData: '',
+    commotidyDataIndex: '',
+
+    isAll: 'notAll'
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     let pages = getCurrentPages();
-    let prePage = pages[pages.length-2];
+    let prePage = pages[pages.length - 2];
     let index = options.index; //商品列表商品的下标索引，根据索引，获取该商品的数据
-  
+
+    if (index) {
+      this.setData({
+        commotidyDataIndex: index,
+        commotidyData: prePage.data.shelfs.shelfs[index],
+      })
+    }
+
     this.setData({
-      commotidyDataIndex:index,
-      commotidyData: prePage.data.shelfs.shelfs[index],
+      isAll: options.isAll
     })
   },
 
-  /**
-   * 货道更改
-   */
-  shelfNumberChange: function (e) {
-    this.setData({
-      commotidyData: {
-        ...this.data.commotidyData, 
-        number: e.detail.value
-      }
-    })
-  },
+  // /**
+  //  * 货道更改
+  //  */
+  // shelfNumberChange: function (e) {
+  //   this.setData({
+  //     commotidyData: {
+  //       ...this.data.commotidyData, 
+  //       number: e.detail.value
+  //     }
+  //   })
+  // },
 
   /**
    * 价格更改
@@ -50,7 +58,7 @@ Page({
   /**
    * 删除商品
    */
-  delCommotidy: function () {
+  delCommotidy: function() {
     wx.showModal({
       title: '删除',
       content: '是否删除商品？',
@@ -63,7 +71,10 @@ Page({
         let preShelfs = prePage.data.shelfs.shelfs;
         preShelfs.splice(this.data.commotidyDataIndex, 1);
         prePage.setData({
-          shelfs: { ...prePage.data.shelfs, shelfs: preShelfs, shelfCount: preShelfs.length }
+          shelfs: { ...prePage.data.shelfs,
+            shelfs: preShelfs,
+            shelfCount: preShelfs.length
+          }
         });
         wx.navigateBack({
           detal: 1
@@ -75,24 +86,24 @@ Page({
   /**
    * 选择商品
    */
-  selectCommodity: function (e) {
-        wx.navigateTo({
-          url: './commotidy?index=' + this.data.commotidyDataIndex,
-        })
+  selectCommodity: function(e) {
+    wx.navigateTo({
+      url: './commotidy?index=' + this.data.commotidyDataIndex,
+    })
   },
-  
+
   /**
    *  确定商品
    */
-  comfirmCommitidy: function () {
+  comfirmCommitidy: function() {
 
-    if(!this.data.commotidyData.number){
-      wx.showToast({
-        title: '请输入货道号',
-        icon: 'none'
-      })
-      return; 
-    }
+    // if(!this.data.commotidyData.number){
+    //   wx.showToast({
+    //     title: '请输入货道号',
+    //     icon: 'none'
+    //   })
+    //   return; 
+    // }
 
     if (!this.data.commotidyData.price) {
       wx.showToast({
@@ -104,25 +115,38 @@ Page({
 
     let pages = getCurrentPages();
     let prePage = pages[pages.length - 2];
-    for (let i = 0; i < prePage.data.shelfs.shelfs.length; i++ ){
-      if ( i != this.data.commotidyDataIndex && prePage.data.shelfs.shelfs[i].number == this.data.commotidyData.number ){
-        wx.showToast({
-          title: '货道号已存在,请重新输入',
-          icon: 'none'
-        })
-        return;
-      }
+    // for (let i = 0; i < prePage.data.shelfs.shelfs.length; i++ ){
+    //   if ( i != this.data.commotidyDataIndex && prePage.data.shelfs.shelfs[i].number == this.data.commotidyData.number ){
+    //     wx.showToast({
+    //       title: '货道号已存在,请重新输入',
+    //       icon: 'none'
+    //     })
+    //     return;
+    //   }
+    // }
+    let shelfs = prePage.data.shelfs.shelfs;
+    let isAll = this.data.isAll
+    if(isAll=='notAll'){
+      shelfs[this.data.commotidyDataIndex] = this.data.commotidyData;
+      prePage.setData({
+        shelfs: {
+          ...prePage.data.shelfs,
+          shelfs: shelfs
+        },
+        isAll
+      })
+    }else{
+      prePage.setData({
+        isAll,
+        commotidyData: this.data.commotidyData
+      })
     }
-   let shelfs = prePage.data.shelfs.shelfs;
-    shelfs[this.data.commotidyDataIndex] = this.data.commotidyData;
-    prePage.setData({
-      shelfs: { ...prePage.data.shelfs, shelfs:shelfs }
-    })
+
 
     wx.navigateBack({
       detal: 1
     })
-   
+
 
   }
 

@@ -67,6 +67,8 @@ Page({
           })
         }
 
+        console.log(res)
+
 
         this.setData({
           listData: [...this.data.listData, ...res.data]

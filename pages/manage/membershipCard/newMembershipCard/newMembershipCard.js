@@ -160,10 +160,18 @@ Page({
         ]
       }
 
+      let objectArray = this.data.objectArray, tradeIndex = 0
+
+      for (var index = 0; index < objectArray.length; index++) {
+        if (objectArray[index].id == item.fallbackCardId){
+          tradeIndex = index
+        }
+      }
+
       this.setData({
         id: item.id,
         name: item.name,
-        tradeIndex: item.fallbackCardId,
+        tradeIndex,
         frequency: item.validDays,
         successfulPayment: item.orders,
         consumptionAmount: item.total,
@@ -402,7 +410,7 @@ Page({
           name: this.data.name,
           permanent: this.data.isTermOfValidity,
           validDays: this.data.frequency,
-          fallbackCardId: parseInt(this.data.tradeIndex),
+          fallbackCardId: parseInt(this.data.objectArray[this.data.tradeIndex].id),
           acquireType: this.data.isReceive,
           orders: parseInt(this.data.successfulPayment),
           total: parseInt(this.data.consumptionAmount),

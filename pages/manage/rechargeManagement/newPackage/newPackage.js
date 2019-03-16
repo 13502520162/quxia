@@ -59,7 +59,7 @@ Page({
    * 获取套餐详情
    */
   fetchDetail: function() {
-    let that  = this
+    let that = this
     fetch({
       url: '/rechargePlans/detail?id=' + this.data.id,
       isShowLoading: true
@@ -438,10 +438,10 @@ Page({
       url: '/rechargePlans?id=' + id,
       method: id ? 'PUT' : "POST",
       data: {
-        id: id,
+        id: parseInt(id),
         name: this.data.name,
-        price: this.data.price,
-        value: this.data.packageValue,
+        price: parseInt(this.data.price),
+        value: parseInt(this.data.packageValue),
         couponIds: this.data.couponIds,
         cardId
       }

@@ -1,1 +1,193 @@
 /* pages/manage/equipmentDistribution/equipmentDistribution.wxss */
+
+.header  {
+  background: #fff;
+}
+
+.place-info {
+  padding: 20rpx;
+  display: flex;
+}
+
+.place-info view {
+  flex: 1;
+  line-height: 60rpx;
+}
+
+.place-info view text {
+  color: rgba(0, 118, 255, 1);
+}
+
+.place-info image {
+  width: 60rpx;
+  max-height: 60rpx;
+  float: right;
+}
+
+.cl {
+  color: rgb(102, 102, 102);
+}
+
+.user {
+  background: #fff;
+}
+
+.popup {
+  background: var(--background-color) !important;
+}
+
+.weui-cell_access {
+  background: #fff;
+}
+
+.weui-cell__bd>view {
+  font-weight: bold;
+}
+
+.weui-cell__bd>view.cl{
+  font-weight: normal;
+}
+
+.popup-content {
+  width: 600rpx;
+  height: calc(100vh - 20rpx);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.popup-title {
+  font-weight: bold;
+  font-size: 28rpx;
+  margin-bottom: 30rpx;
+}
+
+.popup-device-place {
+  background: #fff;
+}
+
+.popup-device-status, .popup-device-group, .popup-device-id {
+  background: #fff;
+  padding: 20rpx;
+}
+
+.popup-device-group, .popup-device-place, .popup-device-id {
+  margin-top: 20rpx;
+}
+
+.popup-device-group-items {
+  height: 350rpx;
+  overflow: scroll;
+}
+
+.popup-bottom {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background: #fff;
+}
+
+.popup-bottom text {
+  padding: 20rpx 0rpx;
+  font-size: 32rpx;
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+}
+
+.popup-bottom text:nth-child(2) {
+  background: var(--main-color);
+  color: #fff;
+}
+
+.popup-panel {
+  padding: 20rpx;
+  background: #fff;
+}
+
+.popup-field {
+  margin-top: 20rpx;
+}
+
+.popup-panel .title {
+  width: 100rpx;
+  display: inline-block;
+  height: 50rpx;
+  line-height: 15rpx;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.popup-panel .screeb-ipt {
+  margin-left: 50rpx;
+  display: inline-block;
+  height: 50rpx;
+  padding-left: 15rpx;
+  border-radius: 10rpx;
+  border: 1px solid #ccc;
+}
+
+.popup-level {
+  margin-top: 20rpx;
+  padding: 10px 15px;
+  background: #fff;
+}
+
+.popup-level>view:nth-child(1) {
+  font-weight: bold;
+}
+
+.level-list {
+  margin: 10rpx 0;
+}
+
+.level-list text {
+  display: inline-block;
+  padding: 15rpx 30rpx;
+  color: rgb(0, 118, 255);
+  margin: 15rpx 10rpx;
+  border-radius: 10rpx;
+  border: 1px solid rgb(0, 118, 255);
+  font-size: 25rpx;
+}
+
+.popup-date {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background: #fff;
+}
+
+.popup-date>view:nth-child(1) {
+  font-weight: bold;
+}
+
+.popup-date .date-screen {
+  display: flex;
+  margin-top: 20rpx;
+}
+
+.popup-date .date-ipt, .popup-date text {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-date .date-ipt {
+  flex: 3;
+  border: 1px solid #ccc;
+  border-radius: 10rpx;
+  font-weight: normal;
+  color: #ccc;
+}
+
+view .selectAc {
+  background: var(--content-color);
+  color: #fff;
+}
+
+.ipt{
+  border: 1px solid #d9d9d9;
+  border-radius: 10rpx;
+  padding-left: 14rpx;
+}

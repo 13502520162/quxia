@@ -3,9 +3,10 @@
 <view class='balance'>
 
   <view class='balance-l'>
-    <view>全场5折券</view>
-    <view>有效期：2019-03-09至2019-03-10</view>
-    <view>剩余 <text>{{balance}}</text> 张</view>
+    <view>{{data.name}}</view>
+    <view>有效期：{{data.date}}</view>
+    <view>剩余
+      <text>{{data.stock}}</text> 张</view>
   </view>
 
 
@@ -13,13 +14,13 @@
     <view>调整库存</view>
     <view>
       <view class='adjustment'>
-        <text class=' {{balance + adjustment?"" :"noData"}}' bindtap='reduce'>-</text>
+        <text class=' {{data.stock + adjustment?"" :"noData"}}' bindtap='reduce'>-</text>
         <input type='number' value='{{balanceIpt}}' bindinput='balanceIpt' />
         <text bindtap='plus'>+</text>
       </view>
       <view class='adjustment-info'>
         <text>调整后：</text>
-        <text>{{balance + adjustment}}</text>张</view>
+        <text>{{data.stock + adjustment}}</text>张</view>
     </view>
   </view>
 

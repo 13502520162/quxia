@@ -1,0 +1,26 @@
+<!--pages/manage/equipmentDistribution/setUp/setUp.wxml-->
+
+<!--pages/manage/royalty/details.wxml-->
+
+
+<view class="weui-panel users">
+  <view class="weui-panel__hd" bindtap='gotoSelectUser'>
+    <text class='users-title'>分润对象</text>
+    <text class='panel-header-more-btn'>添加</text>
+  </view>
+  <view class="weui-panel__bd">
+    <view class="weui-cell weui-cell_select" bindtap='showActionSheet' data-index='{{index}}' data-id='{{item.userId}}' wx:for="{{ newOrUpdateParams.users}}" wx:key="id">
+      <view class="weui-cell__hd weui-cell__hd_in-select-after">
+        <view class="weui-label">{{item.userName}}</view>
+      </view>
+      <view class="weui-cell__bd">
+        <view class="weui-select weui-select_in-select-after">{{item.rate}}%</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<view class='bottom-btn' bindtap='onConfirm'>
+  <button class="weui-btn" type="primary">确定</button>
+</view>

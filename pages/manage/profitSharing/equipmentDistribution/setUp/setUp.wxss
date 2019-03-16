@@ -1,0 +1,13 @@
+/* pages/manage/equipmentDistribution/setUp/setUp.wxss */
+
+
+.users {
+  margin-top: 20rpx;
+}
+.users-title {
+  color: #000;
+}
+
+.weui-cell__bd {
+  text-align: right;
+}

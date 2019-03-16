@@ -9,11 +9,12 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
+		"nodeModules": false,
 		"autoAudits": false,
 		"uglifyFileName": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.5.1",
+	"libVersion": "2.6.2",
 	"appid": "wx56a4557ca00a75a8",
 	"projectname": "newretail-merchant-miniprogram",
 	"debugOptions": {
@@ -43,7 +44,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 11,
+			"current": 14,
 			"list": [
 				{
 					"id": -1,
@@ -101,9 +102,9 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 8,
 					"name": "设备分润",
-					"pathName": "pages/manage/equipmentDistribution/equipmentDistribution",
+					"pathName": "pages/manage/profitSharing/equipmentDistribution/equipmentDistribution",
 					"query": "",
 					"scene": null
 				},
@@ -125,6 +126,27 @@
 					"id": -1,
 					"name": "支付有礼",
 					"pathName": "pages/manage/paymentOfCourtesy/paymentOfCourtesy",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "促销活动",
+					"pathName": "pages/manage/salesPromotion/salesPromotion",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "场地分润",
+					"pathName": "pages/manage/profitSharing/siteDistribution/siteDistribution",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 14,
+					"name": "配货",
+					"pathName": "pages/manage/shelfs/list",
 					"query": "",
 					"scene": null
 				}

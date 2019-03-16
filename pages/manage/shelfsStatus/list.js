@@ -10,13 +10,13 @@ Page({
     systemInfo: {},
   },
 
-  toggleFilterMenue: function () {
+  toggleFilterMenue: function() {
     this.setData({
       showFilterMenue: !this.data.showFilterMenue
     })
   },
 
-  onLoad: function () {
+  onLoad: function() {
     wx.getSystemInfo({
       success: res => {
         this.setData({
@@ -28,7 +28,7 @@ Page({
 
 
 
-  onShow: function () {
+  onShow: function() {
     this.initData();
     this.fetchDevices();
     this.fetchPlaces();
@@ -38,7 +38,7 @@ Page({
   /**
    * 初始化数据
    */
-  initData: function () {
+  initData: function() {
     this.setData({
       showFilterMenue: false,
       filterParams: {
@@ -62,16 +62,38 @@ Page({
       placesData: [],
       placesDataIndex: 0,
 
-      stockStatus: [
-        { name: "全部", status: "",  selected: true },
-        { name: "正常", status: "NORMAL", selected: false },
-        { name: "缺货", status: "OUT_OF_STOCK", selected: false  }
+      stockStatus: [{
+          name: "全部",
+          status: "",
+          selected: true
+        },
+        {
+          name: "正常",
+          status: "NORMAL",
+          selected: false
+        },
+        {
+          name: "缺货",
+          status: "OUT_OF_STOCK",
+          selected: false
+        }
       ],
 
-      deviceStatus: [
-        { name: '全部', status: '', selected: true },
-        { name: '在线', status: true, selected: false },
-        { name: '离线', status: false, selected: false }
+      deviceStatus: [{
+          name: '全部',
+          status: '',
+          selected: true
+        },
+        {
+          name: '在线',
+          status: true,
+          selected: false
+        },
+        {
+          name: '离线',
+          status: false,
+          selected: false
+        }
       ]
     })
   },
@@ -80,15 +102,17 @@ Page({
 
 
   /**
- * 货道状态更改
- */
-  onstockStatusChange: function (e) {
+   * 货道状态更改
+   */
+  onstockStatusChange: function(e) {
     let stockStatus = this.data.stockStatus.map(item => {
       item.selected = false;
       if (item.status === e.target.dataset.status) {
         item.selected = true;
         this.setData({
-          filterParams: { ...this.data.filterParams, stockState: e.target.dataset.status }
+          filterParams: { ...this.data.filterParams,
+            stockState: e.target.dataset.status
+          }
         })
       }
       return item;
@@ -102,13 +126,13 @@ Page({
    * 获取设备总数+缺货
    */
 
-  fetchDevicesSummary: function () {
+  fetchDevicesSummary: function() {
     fetch({
-      url: '/shelfs/devices/summary',
-      data: {
-        ...this.data.filterParams
-      }
-    })
+        url: '/shelfs/devices/summary',
+        data: {
+          ...this.data.filterParams
+        }
+      })
       .then(res => {
         this.setData({
           devicesSummary: res.data
@@ -120,7 +144,7 @@ Page({
    * 获取设备列表
    */
 
-  fetchDevices: function () {
+  fetchDevices: function() {
 
     if (this.data.listLoading) {
       return;
@@ -135,12 +159,12 @@ Page({
     })
 
     fetch({
-      url: '/shelfs/devices',
-      data: {
-        ...this.data.listParams,
-        ...this.data.filterParams
-      }
-    })
+        url: '/shelfs/devices',
+        data: {
+          ...this.data.listParams,
+          ...this.data.filterParams
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
@@ -164,12 +188,15 @@ Page({
   /**
    * 获取所有的场地
    */
-  fetchPlaces: function () {
+  fetchPlaces: function() {
     fetch({
-      url: '/locations/select'
-    })
+        url: '/locations/select'
+      })
       .then(res => {
-        res.data.unshift({ id: "", name: '全部' });
+        res.data.unshift({
+          id: "",
+          name: '全部'
+        });
         this.setData({
           placesData: res.data
         })
@@ -182,23 +209,27 @@ Page({
   /**
    * 场地更改
    */
-  onFilterPlaceChange: function (e) {
+  onFilterPlaceChange: function(e) {
     this.setData({
       placesDataIndex: e.detail.value,
-      filterParams: { ...this.data.filterParams, locationId: this.data.placesData[e.detail.value].id }
+      filterParams: { ...this.data.filterParams,
+        locationId: this.data.placesData[e.detail.value].id
+      }
     })
   },
 
   /**
    * 设备状态改变
    */
-  onDeviceStatusChange: function (e) {
+  onDeviceStatusChange: function(e) {
     let deviceStatus = this.data.deviceStatus.map(item => {
       item.selected = false;
       if (item.status === e.target.dataset.status) {
         item.selected = true;
         this.setData({
-          filterParams: { ...this.data.filterParams, active: e.target.dataset.status }
+          filterParams: { ...this.data.filterParams,
+            active: e.target.dataset.status
+          }
         })
       }
       return item;
@@ -212,13 +243,15 @@ Page({
    * 设备编号改变
    * query 对应设备编号
    */
-  onDeviceIdChange: function (e) {
+  onDeviceIdChange: function(e) {
     this.setData({
-      filterParams: { ...this.data.filterParams, query: e.detail.value }
+      filterParams: { ...this.data.filterParams,
+        query: e.detail.value
+      }
     })
   },
 
-  onSubmit: function () {
+  onSubmit: function() {
     this.setData({
       listEnd: false,
       showFilterMenue: false,
@@ -236,26 +269,42 @@ Page({
   /**
    * 重置弹框的数据
    */
-  resetPopData: function () {
+  resetPopData: function() {
     this.setData({
       filterParams: {
         active: '',
         query: ''
       }
     })
-    this.onstockStatusChange({ detail: { value: 0 } });
-    this.onDeviceStatusChange({ target: { dataset: { status: "" } } });
-    this.onFilterPlaceChange({ detail: { value: 0 } });
+    this.onstockStatusChange({
+      detail: {
+        value: 0
+      }
+    });
+    this.onDeviceStatusChange({
+      target: {
+        dataset: {
+          status: ""
+        }
+      }
+    });
+    this.onFilterPlaceChange({
+      detail: {
+        value: 0
+      }
+    });
     this.onSubmit();
   },
   /**
    * 列表触底加更多列表数据
    */
-  loadMoreListData: function () {
+  loadMoreListData: function() {
 
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchDevices();
     }
@@ -264,13 +313,16 @@ Page({
   /**
    * 列表每一项操作
    */
-  showActionSheet: function (e) {
-    let { id, planid } = e.currentTarget.dataset;
+  showActionSheet: function(e) {
+    let {
+      id,
+      planid
+    } = e.currentTarget.dataset;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
-      itemList = ['查看货道', '补货', '补货记录', '取消'];
+      itemList = ['查看货道', '补货', '补货记录', '同步', '取消'];
     } else {
-      itemList = ['查看货道', '补货', '补货记录'];
+      itemList = ['查看货道', '补货', '补货记录', '同步'];
     }
 
     wx.showActionSheet({
@@ -293,12 +345,31 @@ Page({
                 url: '/pages/manage/replenishRecord/replenishRecord?id=' + id
               })
               break;
+            case 3:
+              this.synchronization(id)
+              break;
             default:
               break;
           }
         }
       }
     })
+  },
+
+  synchronization: function(id) {
+    fetch({
+        url: '/quxia/vm/remote/sync?deviceId=' + id,
+        method: "POST",
+        data: {
+          id
+        }
+      })
+      .then(res => {
+        wx.showToast({
+          title: '同步成功',
+          icon: 'none'
+        })
+      })
   }
 
 })

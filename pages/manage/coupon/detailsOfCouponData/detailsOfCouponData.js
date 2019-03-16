@@ -52,8 +52,8 @@ Page({
     }).then(res => {
       this.setData({
         coupon: res.data.coupon,
-        startDate: util.formatTime(res.data.coupon.startDate),
-        endDate: util.formatTime(res.data.coupon.endDate),
+        startDate: util.formatDate(new Date(res.data.coupon.startDate)),
+        endDate: util.formatDate(new Date(res.data.coupon.endDate)),
         location: res.data.location,
         acquired: res.data.acquired,
         orderTotal: res.data.orderTotal,
@@ -61,7 +61,6 @@ Page({
         totalDiscount: res.data.totalDiscount,
         users: res.data.acquired
       })
-      console.log(res.data)
     })
   }
 })

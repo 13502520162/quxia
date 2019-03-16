@@ -1,4 +1,10 @@
 // pages/manage/equipmentDistribution/equipmentDistribution.js
+
+import fetch from '../../../lib/fetch.js';
+import moment from '../../../lib/moment.min.js';
+
+
+
 Page({
 
   /**
@@ -6,61 +12,265 @@ Page({
    */
   data: {
 
+
+    userScreenHeight: '',
+
+    showFilterMenue: false,
+    listLoading: false,
+    listEnd: false,
+    listData: [],
+
+    listParams: {
+      from: 0,
+      size: 10
+    },
+
+
+    number: '',
+    fieldData: [],
+    fieldIndex: 0,
+    typeData: [],
+    typeIndex: 0,
+    groupData: [],
+    groupIndex: 0,
+
+
+    locationId: '',
+    typeId: '',
+    groupId: '',
+
+
+    systemInfo: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
 
+    wx.getSystemInfo({
+      success: res => {
+        this.setData({
+          systemInfo: res
+        })
+      },
+    })
+
+    let query = wx.createSelectorQuery()
+    query.select('#userScreen').boundingClientRect(rect => {
+      this.setData({
+        userScreenHeight: rect.height + 'px'
+      })
+    }).exec();
+
+
+    this.fetchSel()
+
+    this.fetchDistribution()
+  },
+
+
+  /**
+   * 获取筛选的select 选择
+   */
+
+  fetchSel: function() {
+    fetch({
+      url: '/locations/select',
+      method: 'GET',
+    }).then(res => {
+      let fieldData = res.data.map(item => {
+        item.name = item.province + item.city + item.district + item.address
+        return item;
+      })
+      this.setData({
+        fieldData
+      })
+    })
+
+    fetch({
+      url: '/devices/types',
+      method: 'GET',
+    }).then(res => {
+      this.setData({
+        typeData: res.data
+      })
+    })
+
+
+    fetch({
+      url: '/deviceGroups/select',
+      method: 'GET',
+    }).then(res => {
+      this.setData({
+        groupData: res.data
+      })
+    })
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
+   *  获取列表数据 
    */
-  onReady: function () {
+  fetchDistribution: function() {
+    this.setData({
+      listLoading: true
+    })
+    fetch({
+      url: '/deviceRoyalties',
+      method: 'GET',
+      data: {
+        ...this.data.listParams,
+        locationId: this.data.locationId,
+        typeId: this.data.typeId,
+        groupId: this.data.groupId,
+        query: this.data.number
+      }
+    }).then(res => {
+      this.setData({
+        listData: [...this.data.listData, ...res.data],
+        listLoading: false
+      })
+    })
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
 
+
+
+
+
+  /**
+   * 设备编号
+   */
+  equipmentNumber: function(e) {
+    this.setData({
+      number: e.detail.value
+    })
   },
 
   /**
-   * 生命周期函数--监听页面隐藏
+   * 场地
    */
-  onHide: function () {
-
+  bindFieldChange: function(e) {
+    this.setData({
+      fieldIndex: e.detail.value
+    })
   },
 
   /**
-   * 生命周期函数--监听页面卸载
+   * 类型
    */
-  onUnload: function () {
+  bindTypeChange: function(e) {
+    this.setData({
+      typeIndex: e.detail.value
+    })
+  },
 
+
+  /**
+   * 分组
+   */
+  bindGroupChange: function(e) {
+    this.setData({
+      groupIndex: e.detail.value
+    })
   },
 
   /**
-   * 页面相关事件处理函数--监听用户下拉动作
+   * 筛选的切换
    */
-  onPullDownRefresh: function () {
+  toggleFilterMenue: function() {
+    this.setData({
+      showFilterMenue: !this.data.showFilterMenue
+    })
+  },
+
+
+  /**
+   * 列表每一项操作
+   */
+  showActionSheet: function(e) {
+    let that = this
+    let id = e.currentTarget.dataset.id;
+    let itemList;
+    let enabled = e.currentTarget.dataset.enabled;
+    if (this.data.systemInfo.platform == 'android') {
+      itemList = ['编辑', '生效', '取消'];
+    } else {
+      itemList = ['编辑', '生效'];
+    }
+
+    if (enabled) {
+      itemList[1] = '失效'
+    } else {
+      itemList[1] = '生效'
+    }
+
+    wx.showActionSheet({
+      itemList: itemList,
+      success: res => {
+        if (!res.cancel) {
+          switch (res.tapIndex) {
+            case 0:
+              wx.navigateTo({
+                url: './setUp/setUp?field=edit&id=' + id,
+              })
+              break;
+            case 1:
+
+              break;
+            default:
+              break;
+          }
+        }
+      }
+    })
+  },
+
+
+
+  /**
+   * 确定筛选
+   */
+  onSubmit: function() {
+
+    this.setData({
+      ...this.data.listParams,
+      locationId: this.data.fieldData[this.data.fieldIndex].id,
+      typeId: this.data.typeData[this.data.typeIndex].id,
+      groupId: this.data.groupData[this.data.groupIndex].id,
+      query: this.data.number
+    })
+    this.fetchDistribution();
+  },
+
+
+  /**
+   * 重置
+   */
+  resetPopData: function() {
+    this.setData({
+      fieldIndex: 0,
+      typeIndex: 0,
+      groupIndex: 0,
+      number: ''
+
+    })
+
 
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
 
-  },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
+
+  userScrollLIst: function() {
+    this.setData({
+      listParams: {
+        ...this.data.listParams,
+        from: this.data.listParams.from + this.data.listParams.size
+      }
+    })
+    this.fetchDistribution();
   }
 })

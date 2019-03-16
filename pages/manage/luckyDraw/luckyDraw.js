@@ -286,7 +286,7 @@ Page({
    */
   onAddPlace: function() {
     wx.navigateTo({
-      url: './activity/activity?field=add',
+      url: './activity/activity?field=add&id=""',
     })
   },
 

@@ -173,7 +173,6 @@ Page({
         let ress = res.data
         this.setData({
           name: ress.name,
-          couponId: ress.couponId,
           locationIds: ress.locationIds,
           startDate: util.formatTime(ress.startDate),
           endDate: util.formatTime(ress.endDate),
@@ -392,7 +391,14 @@ Page({
    * 下一步 设置奖项
    */
   preservationFetch: function() {
-    let isDisabled = this.data.isDisabled;
+    let isDisabled = this.data.isDisabled,
+      field = '';
+
+    if (isDisabled) {
+      field = 'view'
+    } else {
+      field = 'edit'
+    }
 
     let data = {
       name: this.data.name,
@@ -410,7 +416,7 @@ Page({
     }
 
     wx.navigateTo({
-      url: '../setAwards/setAwards?data=' + JSON.stringify(data) + '&setAwards=' + JSON.stringify(this.data.setAwards) + '&isDisabled=' + isDisabled,
+      url: '../setAwards/setAwards?data=' + JSON.stringify(data) + '&setAwards=' + JSON.stringify(this.data.setAwards) + '&field=' + field,
     })
   }
 

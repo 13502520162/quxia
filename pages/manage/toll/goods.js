@@ -58,6 +58,7 @@ Page({
         count: 1,
         success: res => {
           let filePath = res.tempFilePaths[0];
+          console.log(res)
           // 交给七牛上传
           let that = this;
           qiniuUploader.upload(filePath, (res) => {

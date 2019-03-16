@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    balance: 10,
+    data: {},
     adjustment: 0,
     balanceIpt: 0,
     note: ''
@@ -15,35 +15,39 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    // this.setData({
-    //   balance: options.balance,
-    //   adjustment: options.balance
-    // })
+  onLoad: function(options) {
+    if (options.data) {
+      this.setData({
+        data: JSON.parse(options.data)
+      })
+    }
+    console.log(JSON.parse(options.data))
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 确定调整
    */
-  definiteAdjustment: function () {
+  definiteAdjustment: function() {
+    let id = this.data.data.id;
     fetch({
-      url: '/customers/balance',
+      url: '/coupons/updateStock?id=' + id,
       method: "POST",
       data: {
+        id: parseInt(id),
         value: parseInt(this.data.adjustment),
         note: this.data.note
       }
@@ -63,7 +67,7 @@ Page({
     })
   },
 
-  adjustmentNote: function (e) {
+  adjustmentNote: function(e) {
     this.setData({
       note: e.detail.value
     })
@@ -71,9 +75,9 @@ Page({
   /** 
    * 减
    */
-  reduce: function () {
+  reduce: function() {
     let balanceIpt = this.data.balanceIpt
-    let balance = this.data.balance
+    let balance = this.data.data.stock
     let adjustment = this.data.adjustment
 
 
@@ -91,7 +95,7 @@ Page({
   /** 
    * 加
    */
-  plus: function () {
+  plus: function() {
     let balanceIpt = this.data.balanceIpt
 
     balanceIpt++
@@ -103,7 +107,7 @@ Page({
   },
 
 
-  balanceIpt: function (e) {
+  balanceIpt: function(e) {
     if (e.detail.value == '') {
       e.detail.value = 0
     }

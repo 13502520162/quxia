@@ -175,17 +175,24 @@ Page({
         {
           title: { name: "分润管理", permission: 37, hide: true },
           items: [
-            {
-              name: "分润列表",
-              icon: "../../assets/images/royaltyList.png",
-              pageUrl: './royalty/list',
-              permission: 38,
-              hide: true
-            }, 
+            // {
+            //   name: "分润列表",
+            //   icon: "../../assets/images/royaltyList.png",
+            //   pageUrl: './royalty/list',
+            //   permission: 38,
+            //   hide: true
+            // }, 
             {
               name: "设备分润",
               icon: "../../assets/images/royaltyList.png",
-              pageUrl: './equipmentDistribution/equipmentDistribution',
+              pageUrl: './profitSharing/equipmentDistribution/equipmentDistribution',
+              permission: 38,
+              hide: true
+            },
+            {
+              name: "场地分润",
+              icon: "../../assets/images/royaltyList.png",
+              pageUrl: './profitSharing/siteDistribution/siteDistribution',
               permission: 38,
               hide: true
             }
@@ -294,27 +301,55 @@ Page({
           ]
         },
         {
-          title: { name: "营销中心", permission: 58, hide: true },
+          title: { name: "营销中心", permission: 57, hide: true },
           items: [
             {
               name: "优惠券管理",
               icon: "../../assets/images/coupon.png",
               pageUrl: './coupon/coupon',
-              permission: 59,
+              permission: 57,
               hide: true
             },
             {
               name: "新手有礼",
               icon: "../../assets/images/coupon.png",
               pageUrl: './noviceCourtesy/noviceCourtesy',
-              permission: 60,
+              permission: 57,
               hide: true
             },
             {
               name: "支付有礼",
               icon: "../../assets/images/coupon.png",
               pageUrl: './paymentOfCourtesy/paymentOfCourtesy',
-              permission: 60,
+              permission: 57,
+              hide: true
+            },
+            {
+              name: "幸运免单",
+              icon: "../../assets/images/coupon.png",
+              pageUrl: './luckyFree/luckyFree',
+              permission: 57,
+              hide: true
+            },
+            {
+              name: "抽奖活动",
+              icon: "../../assets/images/coupon.png",
+              pageUrl: './luckyDraw/luckyDraw',
+              permission: 57,
+              hide: true
+            },
+            {
+              name: "促销活动",
+              icon: "../../assets/images/coupon.png",
+              pageUrl: './salesPromotion/salesPromotion',
+              permission: 57,
+              hide: true
+            },
+            {
+              name: "充值管理",
+              icon: "../../assets/images/coupon.png",
+              pageUrl: './rechargeManagement/rechargeManagement',
+              permission: 57,
               hide: true
             }
           ]

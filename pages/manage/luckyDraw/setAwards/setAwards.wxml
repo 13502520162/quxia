@@ -2,7 +2,7 @@
 <view class='setAwards'>
   <view class='winning-settings'>
     <text>中奖设置</text>
-    <text hidden='{{isDisabled}}' bindtap='addAwards'>添加奖项</text>
+    <text wx:if='{{!isDisabled}}' bindtap='addAwards'>添加奖项</text>
   </view>
   <scroll-view class='winning'>
 

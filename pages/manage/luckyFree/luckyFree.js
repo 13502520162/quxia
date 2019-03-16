@@ -219,7 +219,7 @@ Page({
    */
   delPlace: function(id) {
     fetch({
-      url: '/luckfree?id=' + id,
+        url: '/luckfree?id=' + id,
         method: 'delete'
       })
       .then(res => {
@@ -244,7 +244,7 @@ Page({
    */
   disableActive: function(id) {
     fetch({
-      url: '/luckfree/disable?id=' + id,
+        url: '/luckfree/disable?id=' + id,
         data: {
           id
         },

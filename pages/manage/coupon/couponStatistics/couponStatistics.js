@@ -88,8 +88,8 @@ Page({
     }).then(res => {
       this.setData({
         statistics: res.data,
-        startDate: util.formatTime(res.data.startDate),
-        endDate: util.formatTime(res.data.endDate),
+        startDate: util.formatDate(new Date(res.data.startDate)),
+        endDate: util.formatDate(new Date(res.data.endDate)),
       })
     })
   },

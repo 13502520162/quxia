@@ -135,10 +135,14 @@
     "pages/manage/luckyDraw/setAwards/setAwards",
     "pages/manage/luckyDraw/newAwards/newAwards",
     "pages/manage/messageReminder/messageReminder",
-    "pages/manage/equipmentDistribution/equipmentDistribution",
     "pages/manage/commodity/commodityClassification/commodityClassification",
     "pages/manage/commodity/commodityClassification/newProducts/newProducts",
-    "pages/manage/coupon/adjustingInventory/adjustingInventory"
+    "pages/manage/coupon/adjustingInventory/adjustingInventory",
+    "pages/manage/profitSharing/equipmentDistribution/equipmentDistribution",
+    "pages/manage/profitSharing/equipmentDistribution/setUp/setUp",
+    "pages/manage/profitSharing/siteDistribution/siteDistribution",
+    "pages/manage/profitSharing/siteDistribution/setUp/setUp",
+    "pages/manage/commodity/commodityClassification/setUpCommodity/setUpCommodity"
   ],
   "window": {
     "backgroundTextStyle": "light",

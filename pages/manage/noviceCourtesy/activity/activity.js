@@ -59,7 +59,6 @@ Page({
   },
   onShow: function() {
     if (this.data.chooseCoupons.length) {
-      console.log(this.data.chooseCoupons)
       this.setData({
         couponId: this.data.chooseCoupons.join('')
       })

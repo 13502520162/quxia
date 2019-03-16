@@ -25,8 +25,9 @@ Page({
 
     this.setData({
       activeData: JSON.parse(options.data),
-      isDisabled: options.isDisabled
+      field: options.field
     })
+
 
     if (JSON.stringify(setAwards) != "{}") {
       this.setData({
@@ -41,7 +42,13 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
+    let field = this.data.field
 
+    if (field == 'view') {
+      this.setData({
+        isDisabled: true
+      })
+    }
   },
 
   /**
@@ -49,7 +56,6 @@ Page({
    */
   updateWinningSettings: function(data) {
 
-    console.log(data)
     let newData = data.map(function(item, index) {
       item.index = index + 1;
       return item;
@@ -63,10 +69,16 @@ Page({
 
   winningPrizes: function(e) {
     let data = e.currentTarget.dataset.data
-    let isDisabled = this.data.isDisabled;
-    
+    let isDisabled = this.data.isDisabled,
+      field = '';
+
+    if (isDisabled) {
+      field = 'view'
+    } else {
+      field = 'edit'
+    }
     wx.navigateTo({
-      url: '../newAwards/newAwards?currData=' + JSON.stringify(data) + '&curr=curr&winningSettings=' + JSON.stringify(this.data.winningSettings) + '&isDisabled=' + isDisabled,
+      url: '../newAwards/newAwards?currData=' + JSON.stringify(data) + '&curr=curr&winningSettings=' + JSON.stringify(this.data.winningSettings) + '&field=' + field,
     })
   },
 
@@ -158,7 +170,7 @@ Page({
 
         setTimeout(() => {
           wx.navigateBack({
-            detal: 2
+            delta: 2
           })
         }, 1500)
 

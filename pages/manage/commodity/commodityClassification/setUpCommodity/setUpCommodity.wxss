@@ -1,0 +1,30 @@
+/* pages/manage/commodity/commodityClassification/setUpCommodity/setUpCommodity.wxss */
+
+.card {
+  background: #fff;
+}
+
+.place-list {
+  height: calc(100vh - 265rpx);
+}
+
+.weui-info {
+  background: #fff;
+  display: flex;
+  padding: 20rpx;
+  border-bottom: 1px solid #ccc;
+}
+
+.weui-info view {
+  flex: 1;
+}
+
+.weui-info view:nth-child(2) {
+  text-align: right;
+}
+
+image {
+  width: 120rpx;
+  height: 120rpx;
+  margin-right: 20rpx;
+}

@@ -37,6 +37,12 @@ Page({
   },
   onShow: function() {
     this.initData()
+
+    this.setData({
+      couponList: []
+    })
+
+
     this.fetchCoupon()
   },
   initData: function() {
@@ -54,7 +60,6 @@ Page({
    * 获取优惠券列表
    */
   fetchCoupon: function() {
-
     if (this.data.listLoading) {
       return;
     }
@@ -86,24 +91,19 @@ Page({
           }
 
           if (item.dateRule == 'AFTER_ACQUIRED') {
-            item.isDate = false;
             item.date = '领取后' + item.validDays + '天有效';
           } else {
-            item.isDate = true;
 
-            item.nodate = util.formatTimeTwo(item.startDate) + ' 至 ' + util.formatTimeTwo(item.endDate);
+            item.date = util.formatTimeTwo(item.startDate) + ' 至 ' + util.formatTimeTwo(item.endDate);
           }
 
 
           return item;
         })
-
         this.setData({
           couponList: [...this.data.couponList, ...newData]
         })
-        // this.setData({
-        //   couponList: newData
-        // })
+
       }).catch(err => {
         console.error(err);
       })
@@ -127,7 +127,10 @@ Page({
   showActionSheet: function(e) {
     let $this = this;
     let {
-      id
+      id,
+      name,
+      date,
+      stock
     } = e.currentTarget.dataset;
     let enabled = e.currentTarget.dataset.enabled;
     let itemList;
@@ -162,11 +165,18 @@ Page({
               }
               break;
             case 2:
+              let dataObj = {
+                id,
+                name,
+                date,
+                stock
+              }
               wx.navigateTo({
-                url: 'adjustingInventory/adjustingInventory?couponId=' + id
+                url: 'adjustingInventory/adjustingInventory?data=' + JSON.stringify(dataObj)
               })
               break;
             case 3:
+
               wx.navigateTo({
                 url: 'couponStatistics/couponStatistics?couponId=' + id
               })

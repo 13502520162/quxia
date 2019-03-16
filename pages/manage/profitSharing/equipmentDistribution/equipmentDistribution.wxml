@@ -1,0 +1,109 @@
+<!--pages/manage/equipmentDistribution/equipmentDistribution.wxml-->
+
+<view id='userScreen'>
+
+  <view class='header'>
+    <view class='place-info'>
+      <view>
+        <!-- 设备(分润
+        <text>1</text> 台/共
+        <text>100</text> 台） -->
+      </view>
+      <image src='../../../../assets/images/filter.png' mode='widthFix' bindtap='toggleFilterMenue'></image>
+    </view>
+  </view>
+
+</view>
+
+
+<scroll-view scroll-y='true' style='height: calc( 100vh - {{userScreenHeight}} )' bindscrolltolower="userScrollLIst">
+  <view class='user'>
+
+    <view class="weui-cell" wx:for="{{listData}}" wx:key='{{index}}' bindtap='userInfo' data-enabled='{{item.enabled}}' data-id='{{item.id}}' bindtap='showActionSheet'>
+      <view class="weui-cell__bd">
+        <view>{{item.id}}</view>
+        <view class='cl'>{{item.name}}</view>
+        <view class='cl'>{{item.locationName}}</view>
+        <view class='cl'>{{item.users?item.users:0}}人分润</view>
+      </view>
+      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+    </view>
+  </view>
+
+
+  <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+  </view>
+
+
+  <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在加载</view>
+  </view>
+</scroll-view>
+
+
+
+
+
+<!-- 弹框数据筛选 -->
+<popup show="{{showFilterMenue}}" position="right" custom-class="popup" bind:close="toggleFilterMenue">
+  <view class='popup-content'>
+    <!-- <view class='popup-level'>
+      <view>分润设置</view>
+      <view class='level-list'>
+        <text bindtap='settings' wx:for="{{settings}}" wx:key="{{index}}" class='{{item.checked?"selectAc":""}}' data-checked="{{item.checked}}" data-id='{{item.id}}'>{{item.name}}</text>
+      </view>
+    </view> -->
+
+    <view class="weui-cell weui-cell_access">
+      <view class="weui-cell__bd">
+        <view style="display: inline-block; vertical-align: middle">场地</view>
+      </view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">
+        <picker bindchange="bindFieldChange" value="{{fieldIndex}}" range="{{fieldData}}" range-key="name">
+          <view>{{fieldData[fieldIndex].name}}</view>
+        </picker>
+      </view>
+    </view>
+
+
+    <view class="weui-cell weui-cell_access">
+      <view class="weui-cell__bd">
+        <view style="display: inline-block; vertical-align: middle">设备类型</view>
+      </view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">
+        <picker bindchange="bindTypeChange" value="{{typeIndex}}" range="{{typeData}}" range-key="name">
+          <view>{{typeData[typeIndex].name}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="weui-cell weui-cell_access">
+      <view class="weui-cell__bd">
+        <view style="display: inline-block; vertical-align: middle">设备分组</view>
+      </view>
+      <view class="weui-cell__ft weui-cell__ft_in-access">
+        <picker bindchange="bindGroupChange" value="{{groupIndex}}" range="{{groupData}}" range-key="name">
+          <view>{{groupData[groupIndex].name}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class='popup-level weui-cell_access' style='margin:0; border-top:1px solid #d9d9d9;'>
+      <view>设备编号</view>
+      <view class='level-list'>
+        <input class='ipt' value='{{number}}' bindinput='equipmentNumber' />
+      </view>
+    </view>
+
+
+
+
+
+    <view class='popup-bottom'>
+      <text bindtap='resetPopData'>重置</text>
+      <text bindtap='onSubmit'>确定</text>
+    </view>
+  </view>
+</popup>

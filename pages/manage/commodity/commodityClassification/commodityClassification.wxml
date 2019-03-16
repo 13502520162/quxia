@@ -18,7 +18,7 @@
 </view>
 
 <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" style='{{ disAdd ? "height:calc(100vh - 100rpx)" : "height: calc(100vh - 200rpx)" }}'>
-  <view class='card' wx:for="{{listData}}" wx:key="{{item.id}}" data-enabled='{{item.enabled}}' data-id='{{item.id}}' bindtap='showActionSheet'>
+  <view class='card' wx:for="{{listData}}" wx:key="{{item.id}}" data-enabled='{{item.enabled}}' data-name='{{item.name}}' data-id='{{item.id}}' bindtap='showActionSheet'>
     <view class="weui-cell weui-cell_select card-item">
       <view class="weui-cell__bd">
         <view class="weui-select weui-select_in-select-after item-body">
@@ -26,7 +26,7 @@
             <text>{{ item.name }}</text>
           </view>
           <view class=''>
-            <text>{{ item.price}}个商品</text>
+            <text>{{ item.products}}个商品</text>
           </view>
         </view>
       </view>

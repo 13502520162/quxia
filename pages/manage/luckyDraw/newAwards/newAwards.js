@@ -8,7 +8,7 @@ Page({
   data: {
 
     isDisabled: false,
-
+    field: '',
 
     index: '',
     name: '',
@@ -57,14 +57,22 @@ Page({
     if (options.curr) { //判断是否是单个对象传进来的
       this.setData({
         curr: options.curr,
-        currData: JSON.parse(options.currData)
+        currData: JSON.parse(options.currData),
+        field: options.field
       })
 
-      this.currDataInit()
     }
 
+  },
+  onReady: function() {
+    if (this.data.field == 'view') {
 
+      this.currDataInit()
 
+      this.setData({
+        isDisabled: true
+      })
+    }
   },
 
 
@@ -73,14 +81,60 @@ Page({
    * 单个对象赋值
    */
   currDataInit: function() {
-    let currData = this.data.currData
+
+    let conpons = this.data.conpons,
+      vipCards = this.data.vipCards,
+      currData = this.data.currData;
+
+
+    let checkboxItems = [],
+      conponsIndex = 0,
+      vipCardsIndex = 0;
+
+    if (currData.type == 'COUPON') {
+      checkboxItems = [{
+          value: 2,
+          checked: true
+        },
+        {
+          value: 1,
+          checked: false
+        }
+      ]
+
+      for (var j = 0; j < conpons.length; j++) {
+        if (conpons[j].id == currData.itemId) {
+          conponsIndex = j
+        }
+      }
+    } else {
+      checkboxItems = [{
+          value: 2,
+          checked: false
+        },
+        {
+          value: 1,
+          checked: true
+        }
+      ]
+
+      for (let i = 0; i < vipCards.length; i++) {
+        if (vipCards[i].id == currData.itemId) {
+          vipCardsIndex = i
+        }
+      }
+    }
+
     this.setData({
-      index: currData.index,
+      // index: currData.index,
       name: currData.name,
       stock: currData.stock,
       probability: currData.probability,
       type: 'COUPON',
-      itemId: '',
+      checkboxItems,
+      itemId: currData.itemId,
+      conponsIndex,
+      vipCardsIndex
     })
   },
 
@@ -141,7 +195,6 @@ Page({
     fetch({
       url: '/coupons/select'
     }).then(res => {
-
       this.setData({
         conpons: res.data
       })

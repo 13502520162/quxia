@@ -115,7 +115,7 @@ Page({
     let endS = e.detail.value[5] < 10 ? '0' + e.detail.value[5] : e.detail.value[5]
 
 
-    let endAll = endY + '/' + endM + '/' + endD + ' ' + endH + ':' + endm + ':' + endS
+    let endAll = endY + '-' + endM + '-' + endD + ' ' + endH + ':' + endm + ':' + endS
 
 
     this.setData({
@@ -163,7 +163,6 @@ Page({
         console.log(ress)
 
         this.setData({
-          id: ress.id,
           name: ress.name,
           locationIds: ress.locationIds,
           startDate: util.formatTime(ress.startDate),
@@ -171,7 +170,8 @@ Page({
           isPermanent: ress.permanent,
           note: ress.note,
           probabilityAdjustment: ress.probabilityAdjustment,
-          enableProbabilityAdjustment: ress.enableProbabilityAdjustment,
+          isUnlimited: ress.enableProbabilityAdjustment,
+          isDisabled: true
         })
       })
     } else {
@@ -191,22 +191,12 @@ Page({
 
 
   /**
-   * 是否无限制
+   * 是否不设置中奖浮动比例
    */
   Unlimited: function(e) {
-    let value = e.detail.value
-
-    let isUnlimited
-
-    if (value) {
-      isUnlimited = value
-
-    } else {
-      isUnlimited = value
-    }
 
     this.setData({
-      isUnlimited
+      isUnlimited: e.detail.value
     })
   },
 
@@ -346,13 +336,11 @@ Page({
    * 发送确定请求
    */
   preservationFetch: function() {
-    let id = this.data.id
     fetch({
         url: '/luckfree',
-        method: id ? 'put' : 'post',
+        method: 'post',
         isShowLoading: true,
         data: {
-          id,
           name: this.data.name,
           startDate: new Date(this.data.startDate).getTime(),
           endDate: new Date(this.data.endDate).getTime(),

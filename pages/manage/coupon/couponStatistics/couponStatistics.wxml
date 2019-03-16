@@ -50,6 +50,7 @@
       <view class='coupon-left'>
         <view class='coupon-title'>
           <text class='coupon-title-name'>{{item.name}}</text>
+          <!-- <text class='coupon-title-name'>{{item.province + item.city + item.district + item.street + item.name}}</text> -->
         </view>
         <view class='coupon-date'>
           <text>领取{{item.acquired}}张，{{item.users}}人领取</text>

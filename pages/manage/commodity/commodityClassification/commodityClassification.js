@@ -18,7 +18,9 @@ Page({
     listLoading: false,
     listEnd: false,
     listData: [],
-    systemInfo: {}
+    systemInfo: {},
+
+    currId: ''
 
   },
 
@@ -37,16 +39,16 @@ Page({
     this.setData({
       listData: []
     })
-    this.fetchPlaceList()
+    this.fetchList()
   },
 
 
 
   /**
-   * 获取充值管理列表
+   * 获取商品分类管理列表
    */
 
-  fetchPlaceList: function() {
+  fetchList: function() {
 
 
     this.setData({
@@ -54,7 +56,7 @@ Page({
     })
 
     fetch({
-        url: '/rechargePlans',
+        url: '/categories',
         isShowLoading: true,
         data: {
           ...this.data.listParams,
@@ -89,6 +91,7 @@ Page({
   showActionSheet: function(e) {
     let that = this
     let id = e.currentTarget.dataset.id;
+    let name = e.currentTarget.dataset.name;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
       itemList = ['查看', '上移', '下移', '设置商品', '删除', '取消'];
@@ -105,31 +108,34 @@ Page({
           switch (res.tapIndex) {
             case 0:
               wx.navigateTo({
-                url: './newProducts/newProducts?field=view&id=' + id,
+                url: './newProducts/newProducts?field=view&id=' + id + '&name=' + name,
               })
               break;
             case 1:
-                console.log('上移')
+              that.moveUpward(id)
               break;
             case 2:
-              console.log('下移')
-            
+              that.moveDown(id)
               break;
             case 3:
-              console.log('设置商品')
+              this.setData({
+                currId: id
+              })
+              wx.navigateTo({
+                url: './setUpCommodity/setUpCommodity?field=view&id=' + id,
+              })
               break;
             case 4:
-              console.log('删除')
-              // wx.showModal({
-              //   content: '是否删除套餐?',
-              //   success(res) {
-              //     if (res.confirm) {
-              //       that.delPlace(id);
-              //     } else if (res.cancel) {
-              //       console.log('用户点击取消')
-              //     }
-              //   }
-              // })
+              wx.showModal({
+                content: '是否删除分类?',
+                success(res) {
+                  if (res.confirm) {
+                    that.delPlace(id);
+                  } else if (res.cancel) {
+                    console.log('用户点击取消')
+                  }
+                }
+              })
               break;
             default:
               break;
@@ -140,11 +146,60 @@ Page({
   },
 
   /**
+   * 上移
+   */
+
+  moveUpward: function(id) {
+    fetch({
+        url: '/categories/move?id=' + id + '&up=' + true,
+        method: 'POST',
+        data: {
+          id,
+          up: true
+        }
+      })
+      .then(res => {
+        this.setData({
+          listData: []
+        })
+         this.fetchList()
+      })
+      .catch(err => {
+        console.error(err);
+      })
+  },
+
+
+  /**
+   * 下移
+   */
+  moveDown: function(id) {
+    fetch({
+        url: '/categories/move?id=' + id + '&up=' + false,
+        method: 'POST',
+        data: {
+          id,
+          up: false
+        }
+      })
+      .then(res => {
+        this.setData({
+          listData: []
+        })
+        this.fetchList()
+      })
+      .catch(err => {
+        console.error(err);
+      })
+  },
+
+
+  /**
    * 删除
    */
   delPlace: function(id) {
     fetch({
-        url: '/rechargePlans?id=' + id,
+        url: '/categories?id=' + id,
         method: 'delete'
       })
       .then(res => {
@@ -167,62 +222,6 @@ Page({
 
 
   /**
-   * 启动
-   */
-  enableManagement: function(id) {
-    fetch({
-        url: '/rechargePlans/enable?id=' + id,
-        method: 'post',
-        data: {
-          id
-        }
-      })
-      .then(res => {
-        let listData = this.data.listData.map(item => {
-          if (item.id == id) {
-            item.enabled = true
-          }
-          return item;
-        })
-        this.setData({
-          listData: listData
-        });
-      })
-      .catch(err => {
-        console.error(err);
-      })
-  },
-
-
-
-  /**
-   * 暂停
-   */
-  disableManagement: function(id) {
-    fetch({
-        url: '/rechargePlans/disable?id=' + id,
-        data: {
-          id
-        },
-        method: 'post'
-      })
-      .then(res => {
-        let listData = this.data.listData.map(item => {
-          if (item.id == id) {
-            item.enabled = false
-          }
-          return item;
-        })
-        this.setData({
-          listData: listData
-        });
-      })
-      .catch(err => {
-        console.error(err);
-      })
-  },
-
-  /**
    * 加载更多
    */
   loadMoreListData: function() {
@@ -233,12 +232,12 @@ Page({
         from: this.data.listParams.from + this.data.listParams.size
       }
     })
-    this.fetchPlaceList();
+    this.fetchList();
 
   },
 
   /**
-   * 跳转到新建活动
+   * 跳转到新建商品
    */
   onAddPlace: function() {
     wx.navigateTo({
@@ -259,7 +258,7 @@ Page({
       listEnd: false,
       listData: [],
     }, () => {
-      this.fetchPlaceList();
+      this.fetchList();
     })
   },
 
@@ -283,6 +282,37 @@ Page({
     this.setData({
       inputVal: e.detail.value
     });
+  },
+
+
+
+
+  /**
+   * 设置商品
+   */
+  updateProducts: function(data) {
+
+    let products = data;
+    let id = this.data.currId;
+    fetch({
+      url: '/categories/products?id=' + id,
+      method: "POST",
+      data: {
+        products,
+        id: parseInt(id)
+      }
+    }).then(res => {
+      wx.showToast({
+        title: '新增成功',
+        icon: 'success'
+      })
+
+      setTimeout(res => {
+        wx.navigateBack({
+          detil: 1
+        })
+      }, 1500)
+    })
   }
 
 })

@@ -54,10 +54,10 @@
         <text bindtap='floatInfo' class='iconfont icon-wen'></text> </view>
       <view class="weui-cell__ft">
         <text class='weui-label'>不设置</text>
-        <switch size="23" checked='{{enableProbabilityAdjustment}}' bindchange="Unlimited" disabled="{{isDisabled}}" />
+        <switch size="23" checked='{{isUnlimited}}' bindchange="Unlimited" disabled="{{isDisabled}}" />
       </view>
     </view>
-    <view class='full-order full-order2  {{isDisabled?"disabledColor":""}}' hidden='{{enableProbabilityAdjustment}}'>
+    <view class='full-order full-order2  {{isDisabled?"disabledColor":""}}' hidden='{{isUnlimited}}'>
       中奖概率上浮
       <input type='number' value='{{probabilityAdjustment}}' disabled="{{isDisabled}}" bindinput='frequency' class="full-order-ipt" /> %
     </view>
