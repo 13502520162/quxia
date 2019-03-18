@@ -89,6 +89,8 @@
     "pages/manage/bigVendingMachineShelfs/commotidy",
     "pages/manage/bigVendingMachineShelfs/putaway",
     "pages/manage/bigVendingMachineShelfs/placeDevices",
+    "pages/manage/bigVendingMachineShelfsStatus/list",
+    "pages/manage/bigVendingMachineShelfsStatus/details",
     "pages/manage/device/list/controls",
     "pages/manage/adManage/resource/index",
     "pages/manage/adManage/plans/index",

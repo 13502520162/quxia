@@ -162,7 +162,7 @@ Page({
         this.setData({
           listData: []
         })
-         this.fetchList()
+        this.fetchList()
       })
       .catch(err => {
         console.error(err);
@@ -292,7 +292,8 @@ Page({
    */
   updateProducts: function(data) {
 
-    let products = data;
+    let products = data
+
     let id = this.data.currId;
     fetch({
       url: '/categories/products?id=' + id,

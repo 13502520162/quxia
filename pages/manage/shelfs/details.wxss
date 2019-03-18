@@ -118,3 +118,14 @@
   color: rgb(255, 255, 255);
   background-color: rgb(0, 118, 255);
 }
+
+.weui-check__hd_in-checkbox {
+  position: absolute;
+  right: 0rpx;
+  top: 10rpx;
+}
+
+.cargo-number {
+  border: 1px solid #d9d9d9;
+  border-radius: 10rpx;
+}

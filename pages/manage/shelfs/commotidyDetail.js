@@ -126,7 +126,7 @@ Page({
     // }
     let shelfs = prePage.data.shelfs.shelfs;
     let isAll = this.data.isAll
-    if(isAll=='notAll'){
+    if (isAll == 'notAll') {
       shelfs[this.data.commotidyDataIndex] = this.data.commotidyData;
       prePage.setData({
         shelfs: {
@@ -135,11 +135,8 @@ Page({
         },
         isAll
       })
-    }else{
-      prePage.setData({
-        isAll,
-        commotidyData: this.data.commotidyData
-      })
+    } else {
+      prePage.updateBatch(this.data.commotidyData, shelfs)
     }
 
 

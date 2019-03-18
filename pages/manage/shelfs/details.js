@@ -16,7 +16,8 @@ Page({
     systemInfo: {},
 
     isAll: 'notAll',
-    commotidyData: {}
+    commotidyData: {},
+    isBatch: false
   },
 
   /**
@@ -43,25 +44,46 @@ Page({
   onShow: function() {
     let isAll = this.data.isAll
     let shelfs = this.data.shelfs
-    let commotidyData = this.data.commotidyData
     if (isAll == 'notAll') {
       this.setData({
         shelfs
       })
-    } else {
-      let newShelfs = []
-      for (let i = 0; i < shelfs.shelfs.length; i++) {
-        newShelfs.push(commotidyData)
-      }
-      this.setData({
-        shelfs: {
-          ...this.data.shelfs,
-          shelfCount: newShelfs.length,
-          shelfs: newShelfs,
-          id: shelfs.id
-        }
-      })
     }
+  },
+
+
+
+  /**
+   * 批量更新商品
+   */
+  updateBatch: function(data, shelfs) {
+    let shelfAll = this.data.shelfs
+    for (var i = 0; i < shelfs.length; i++) {
+      if (shelfs[i].checked) {
+        shelfs[i].checked = false
+        shelfs[i].number = shelfs[i].number
+        shelfs[i].image = data.image
+        shelfs[i].name = data.name
+        shelfs[i].price = data.price
+        shelfs[i].productId = data.productId
+      } else {
+        shelfs[i].checked = false
+        shelfs[i].number = shelfs[i].number || ''
+        shelfs[i].image = shelfs[i].image || ''
+        shelfs[i].name = shelfs[i].name || ''
+        shelfs[i].price = shelfs[i].price || ''
+        shelfs[i].productId = shelfs[i].productId || ''
+      }
+    }
+    this.setData({
+      shelfs: {
+        ...this.data.shelfs,
+        shelfCount: shelfs.length,
+        shelfs: shelfs,
+        id: shelfAll.id
+      },
+      isBatch: false
+    })
   },
 
   /**
@@ -76,26 +98,6 @@ Page({
   },
 
 
-  /**
-   * iptNum
-   */
-  iptNum: function(e) {
-    let value = e.detail.value;
-    let shelfs = this.data.shelfs.shelfs;
-    shelfs = []
-    if (value < 100) {
-      for (let i = 0; i < value; i++) {
-        shelfs.push({});
-      }
-      this.setData({
-        shelfs: {
-          ...this.data.shelfs,
-          shelfCount: parseInt(e.detail.value),
-          shelfs: shelfs
-        }
-      })
-    }
-  },
 
   /**
    * 添加货道数量
@@ -104,9 +106,13 @@ Page({
   addBtn: function() {
     let num = this.data.shelfs.shelfCount;
     let shelfs = this.data.shelfs.shelfs;
-
     if (num < 100) {
-      shelfs.push({});
+      shelfs.push({
+        number: shelfs.length + 1,
+        checked: false,
+        value: shelfs.length
+      });
+
       this.setData({
         shelfs: { ...this.data.shelfs,
           shelfCount: num + 1,
@@ -210,14 +216,17 @@ Page({
       })
   },
 
-
+  /**
+   * 单个商品的选择
+   */
   showActionSheet: function(e) {
-    let index = e.currentTarget.dataset.index;
-    wx.navigateTo({
-      url: './commotidyDetail?index=' + index + '&isAll=notAll',
-    })
-
-
+    let isBatch = this.data.isBatch;
+    if (!isBatch) {
+      let index = e.currentTarget.dataset.index;
+      wx.navigateTo({
+        url: './commotidyDetail?index=' + index + '&isAll=notAll',
+      })
+    }
   },
 
   /**
@@ -239,11 +248,57 @@ Page({
   },
 
 
+
   /**
    * 批量设置
    */
   batchSetup: function(e) {
+
     let shelfs = this.data.shelfs.shelfs
+    if (!shelfs.length) {
+      wx.showToast({
+        title: '请添加货道数量',
+        icon: 'none'
+      });
+      return;
+    }
+
+    this.setData({
+      isBatch: !this.data.isBatch
+    })
+  },
+
+  /**
+   * 取消
+   */
+  cancel: function() {
+    this.setData({
+      isBatch: !this.data.isBatch
+    })
+  },
+
+
+
+  /**
+   * 批量设置
+   */
+  batchSetupTop: function(e) {
+    let shelfs = this.data.shelfs.shelfs
+    let count = 0
+    for (var j = 0, lenJ = shelfs.length; j < lenJ; ++j) {
+      if (shelfs[j].checked) {
+        count++
+      }
+    }
+    if (!count) {
+      wx.showToast({
+        title: '请选择要批量设置的货道',
+        icon: 'none'
+      });
+      return;
+    }
+
+
     if (shelfs.length) {
       wx.navigateTo({
         url: './commotidyDetail?isAll=all'
@@ -256,7 +311,34 @@ Page({
       return;
     }
 
+  },
 
+  /**
+   * 批量设置选中事件
+   */
+  checkboxChange: function(e) {
+    let isBatch = this.data.isBatch
+
+    if (!isBatch) return
+    var checkboxItems = this.data.shelfs.shelfs,
+      values = e.detail.value;
+    for (var i = 0, lenI = checkboxItems.length; i < lenI; ++i) {
+      checkboxItems[i].checked = false;
+
+      for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
+        if (checkboxItems[i].value == values[j]) {
+          checkboxItems[i].checked = true;
+          break;
+        }
+      }
+    }
+
+    this.setData({
+      shelfs: {
+        ...this.data.shelfs,
+        shelfs: checkboxItems
+      }
+    })
   },
 
   /**
@@ -270,6 +352,12 @@ Page({
         }
       })
       .then(res => {
+        let shelfs = res.data.shelfs.map((item, index) => {
+          item.checked = false
+          item.value = index
+          return item
+        })
+        res.data.shelfs = shelfs
         this.setData({
           shelfs: { ...this.data.shelfs,
             ...res.data

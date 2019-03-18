@@ -16,7 +16,7 @@
         <view class="weui-cell__bd">
           <view class='num-ctrol-group'>
             <view class='num-ctrol-group-reduce-btn' bindtap='reduceBtn'>-</view>
-            <input class='num-ctrol-group-num' bindinput='iptNum' type='number' value='{{shelfs.shelfCount}}'></input>
+            <input class='num-ctrol-group-num' readonly='readonly' disabled='disabled' type='number' value='{{shelfs.shelfCount}}'></input>
             <view class='num-ctrol-group-add-btn' bindtap='addBtn'>+</view>
           </view>
         </view>
@@ -27,26 +27,41 @@
   <view class="weui-panel shelf-list">
     <view class="page__bd">
       <view class="weui-grids">
-        <block wx:for="{{shelfs.shelfs}}" wx:key="{{index}}">
-          <view class="weui-grid" hover-class="weui-grid_active">
-            <!-- <view class='shelf-number' wx:if="{{item.number}}">{{item.number}}</view> -->
+
+        <checkbox-group bindchange="checkboxChange">
+          <label class=" weui-grid weui-check__label" hover-class="weui-grid_active" wx:for="{{shelfs.shelfs}}" wx:key="{{index}}">
+            <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+
+            <view wx:if="{{isBatch}}" class="weui-cell__hd weui-check__hd_in-checkbox">
+              <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+              <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+            </view>
+
             <view>
               <image class="weui-grid__icon" bindtap='showActionSheet' data-index='{{index}}' src="{{ item.image ? item.image : '../../../assets/images/plus.png' }}" />
               <view class="weui-grid__label">{{item.name ? item.name :'请选择商品'}}</view>
               <view class="weui-grid__label">{{ item.price ? '￥'+ item.price : '￥0' }}</view>
               <view class="weui-grid__label">
-                <input type='number' data-index='{{index}}' data-item='{{shelfs.shelfs}}' value='{{item.number}}'  bindinput='cargoNumber' placeholder='输入货道号'></input>
+                <input type='number' data-index='{{index}}' class='cargo-number' data-item='{{shelfs.shelfs}}' value='{{item.number}}' bindinput='cargoNumber' placeholder='输入货道号'></input>
               </view>
             </view>
-          </view>
-        </block>
+
+
+          </label>
+        </checkbox-group>
+
       </view>
     </view>
   </view>
 
-  <view class='bottom-btn'>
+  <view wx:if='{{!isBatch}}' class='bottom-btn'>
     <span class="" bindtap='batchSetup' type="primary">批量设置</span>
     <span class="" bindtap='submit' type="primary">确定</span>
+  </view>
+
+  <view wx:else class='bottom-btn'>
+    <span class="" bindtap='cancel' type="primary">取消</span>
+    <span class="" bindtap='batchSetupTop' type="primary">批量设置</span>
   </view>
 
 </view>

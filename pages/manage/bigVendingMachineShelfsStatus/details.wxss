@@ -1,0 +1,23 @@
+/* pages/manage/shelfsStatus/details.wxss */
+.weui-cell_select {
+  background: #fff;
+}
+
+.weui-grid__icon {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.weui-grid {
+  position: relative;
+}
+
+.shelf-number {
+  position: absolute;
+  left: 20rpx;
+  top: 20rpx;
+  color: #fff;
+  padding: 5rpx 10rpx;
+  border-radius: 4rpx;
+  background: rgb(24, 144, 255);
+}

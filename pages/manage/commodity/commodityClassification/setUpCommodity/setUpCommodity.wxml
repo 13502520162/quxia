@@ -21,7 +21,7 @@
 
   <view class='weui-info'>
     <view>总共：{{count}}</view>
-    <view>已选择：{{choosePlaces.length}}</view>
+    <view>已选择：{{selCount}}</view>
   </view>
 </view>
 

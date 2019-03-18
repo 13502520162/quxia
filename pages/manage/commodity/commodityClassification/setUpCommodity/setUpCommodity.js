@@ -8,6 +8,7 @@ Page({
   data: {
     categoryId: '',
     count: '',
+    selCount: '',
     inputVal: '',
     listParams: {
       from: 0,
@@ -68,10 +69,11 @@ Page({
             listEnd: true
           })
         }
-
+        let choosePlaces = []
         res.data.map(item => {
           if (this.data.categoryId == item.categoryId) {
             item.checked = true;
+            choosePlaces.push(item.id)
           } else {
             item.checked = false;
           }
@@ -79,7 +81,9 @@ Page({
         })
 
         this.setData({
-          listData: [...this.data.listData, ...res.data]
+          listData: [...this.data.listData, ...res.data],
+
+          choosePlaces
         })
       })
       .catch(err => {
@@ -140,11 +144,12 @@ Page({
         }
       }
     }
-
+    console.log(values)
 
     this.setData({
       choosePlaces: values,
-      listData: listData
+      listData: listData,
+      selCount: values.length
     });
   },
 
@@ -154,6 +159,7 @@ Page({
   onConfirm: function() {
     let pages = getCurrentPages();
     let prepage = pages[pages.length - 2];
+    console.log(this.data.choosePlaces)
     prepage.updateProducts(this.data.choosePlaces)
 
     wx.navigateBack({

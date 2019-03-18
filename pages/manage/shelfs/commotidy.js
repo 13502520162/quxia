@@ -147,11 +147,13 @@ Page({
     }
     prepage.setData({
       commotidyData: {
+        checked: shelfs.checked,
+        number: shelfs.number,
+        value: shelfs.value,
         productId: commodity.id,
         price: commodity.price,
         name: commodity.name,
-        image: commodity.image,
-        number: ''
+        image: commodity.image
       }
     })
 

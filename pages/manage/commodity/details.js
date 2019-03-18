@@ -11,14 +11,19 @@ Page({
     commodityId: null,
     commodityImage: null,
     commodityDetailImage: null,
-    commodityDetail: {}
+    commodityDetail: {},
+    trade: [],
+    tradeIndex: 0
   },
 
 
   /**初始化七牛云数据 */
-  initQiniu: function (baseURL) {
+  initQiniu: function(baseURL) {
     return new Promise((resolve, reject) => {
-      fetch({ url: '/api/qiniu/upToken', method: 'post' })
+      fetch({
+          url: '/api/qiniu/upToken',
+          method: 'post'
+        })
         .then(res => {
           if (res.data) {
             let options = {
@@ -39,43 +44,43 @@ Page({
   },
 
 
-  chooseCommodityImage: function () {
+  chooseCommodityImage: function() {
     this.initQiniu().then(options => {
-      wx.chooseImage({
-        count: 1,
-        success: res => {
-          let filePath = res.tempFilePaths[0];
-          // 交给七牛上传
-          let that = this;
-          qiniuUploader.upload(filePath, (res) => {
-            that.setData({
-              commodityImage: res.imageURL
+        wx.chooseImage({
+          count: 1,
+          success: res => {
+            let filePath = res.tempFilePaths[0];
+            // 交给七牛上传
+            let that = this;
+            qiniuUploader.upload(filePath, (res) => {
+              that.setData({
+                commodityImage: res.imageURL
+              });
             });
-          });
-        }
+          }
+        })
       })
-    })
       .catch(err => {
         console.error(err);
       })
   },
 
-  chooseCommodityDetailImage: function () {
+  chooseCommodityDetailImage: function() {
     this.initQiniu().then(options => {
-      wx.chooseImage({
-        count: 1,
-        success: res => {
-          let filePath = res.tempFilePaths[0];
-          // 交给七牛上传
-          let that = this;
-          qiniuUploader.upload(filePath, (res) => {
-            that.setData({
-              commodityDetailImage: res.imageURL
+        wx.chooseImage({
+          count: 1,
+          success: res => {
+            let filePath = res.tempFilePaths[0];
+            // 交给七牛上传
+            let that = this;
+            qiniuUploader.upload(filePath, (res) => {
+              that.setData({
+                commodityDetailImage: res.imageURL
+              });
             });
-          });
-        }
+          }
+        })
       })
-    })
       .catch(err => {
         console.error(err);
       })
@@ -86,22 +91,45 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     if (options.id) {
       this.setData({
         commodityId: options.id
       })
-      this.fetchCommodityDetail();
+      this.fetchselect()
     }
 
   },
-  
+  onShow: function() {
+
+  },
+  fetchselect: function() {
+    fetch({
+        url: '/categories/select'
+      })
+      .then(res => {
+        this.setData({
+          trade: res.data
+        })
+        this.fetchCommodityDetail();
+      })
+      .catch(err => {
+        console.error(err);
+      })
+  },
+
   /**
    * 表单提交
    */
-  submit: function( e ) {
-    let { name, price, costPrice, description } = e.detail.value
-    if( !name ){
+  submit: function(e) {
+    let categoryId = this.data.trade[this.data.tradeIndex].id
+    let {
+      name,
+      price,
+      costPrice,
+      description
+    } = e.detail.value
+    if (!name) {
       wx.showToast({
         title: '请输入商品名',
         icon: 'none'
@@ -130,6 +158,15 @@ Page({
       return
     }
 
+
+    if (!categoryId) {
+      wx.showToast({
+        title: '请选择商品分类',
+        icon: 'none'
+      })
+      return
+    }
+
     if (!this.data.commodityImage) {
       wx.showToast({
         title: '请添加商品图',
@@ -148,9 +185,13 @@ Page({
 
 
 
-    let commodityValues = { ...e.detail.value, image: this.data.commodityImage, detailImage: this.data.commodityDetailImage }
+    let commodityValues = { ...e.detail.value,
+      image: this.data.commodityImage,
+      categoryId,
+      detailImage: this.data.commodityDetailImage
+    }
 
-    if(this.data.commodityId){
+    if (this.data.commodityId) {
       this.fethcUpdateCommodity(commodityValues);
     } else {
       this.fetchAddCommodity(commodityValues);
@@ -158,70 +199,86 @@ Page({
 
   },
 
+  onFilterTradeChange: function(e) {
+    this.setData({
+      tradeIndex: e.detail.value
+    })
+  },
+
   /**
    * 添加商品
    */
 
-  fetchAddCommodity: function ( values ) {
+  fetchAddCommodity: function(values) {
     fetch({
-      url: '/products',
-      method: 'post',
-      data: {
-        ...values
-      },
-      isShowLoading: true
-    })
-    .then( res => {
-       wx.showToast({
-         title: '成功'
-       });
-       setTimeout( ()=> {
-         wx.navigateBack({
-           delta: 1
-         })
-       },1500)
-    })
-    .catch( err => {
-      console.error(err);
-    })
+        url: '/products',
+        method: 'post',
+        data: {
+          ...values
+        },
+        isShowLoading: true
+      })
+      .then(res => {
+        wx.showToast({
+          title: '成功'
+        });
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 1500)
+      })
+      .catch(err => {
+        console.error(err);
+      })
   },
 
   /**
    * 获取商品详情
    */
 
-  fetchCommodityDetail: function () {
+  fetchCommodityDetail: function() {
+    let trade = this.data.trade
+    console.log(trade)
     fetch({
-      url:'/products/detail',
-      data: {
-        id: this.data.commodityId
-      },
-      isShowLoading: true
-    })
-    .then( res => {
-      this.setData({
-        commodityImage: res.data.image,
-        commodityDetailImage: res.data.detailImage,
-        commodityDetail: res.data
+        url: '/products/detail',
+        data: {
+          id: this.data.commodityId
+        },
+        isShowLoading: true
       })
-    })
-    .catch( err => {
-      console.error(err);
-    })
+      .then(res => {
+        let index = ''
+        trade.map((item, idx) => {
+          if (item.id == res.data.categoryId) {
+            index = idx
+          }
+          return item;
+        })
+        this.setData({
+          commodityImage: res.data.image,
+          commodityDetailImage: res.data.detailImage,
+          commodityDetail: res.data,
+          tradeIndex: index
+        })
+      })
+      .catch(err => {
+        console.error(err);
+      })
   },
 
   /**
    * 更新商品
    */
-  fethcUpdateCommodity: function (values) {
+  fethcUpdateCommodity: function(values) {
     fetch({
-      url: '/products?id=' + this.data.commodityId,
-      method: 'PUT',
-      data: {
-        ...values
-      },
-      isShowLoading: true
-    })
+        url: '/products?id=' + this.data.commodityId,
+        method: 'PUT',
+        data: {
+          ...values
+        },
+        isShowLoading: true
+      })
       .then(res => {
         wx.showToast({
           title: '成功'
