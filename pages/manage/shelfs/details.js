@@ -271,9 +271,61 @@ Page({
   /**
    * 取消
    */
-  cancel: function() {
+  batchCancel: function() {
+    let shelfs = this.data.shelfs.shelfs
+    for (var j = 0, lenJ = shelfs.length; j < lenJ; ++j) {
+      shelfs[j].checked = false
+    }
     this.setData({
-      isBatch: !this.data.isBatch
+      isBatch: !this.data.isBatch,
+      shelfs: {
+        ...this.data.shelfs,
+        shelfs: shelfs
+      }
+    })
+  },
+
+
+
+  /**
+   * 删除
+   */
+  batchRemove: function () {
+    let shelfs = this.data.shelfs.shelfs
+    let count = 0
+    for (var j = 0, lenJ = shelfs.length; j < lenJ; ++j) {
+      if (shelfs[j].checked) {
+        count++
+      }
+    }
+    if (!count) {
+      wx.showToast({
+        title: '请选择要删除的货道',
+        icon: 'none'
+      });
+      return;
+    }
+
+
+    wx.showModal({
+      content: '确定删除选择的货道?',
+      success: (e) => {
+        if (e.confirm) {
+          let newShelfs = []
+          for (var j = 0, lenJ = shelfs.length; j < lenJ; ++j) {
+            if (!shelfs[j].checked) {
+              newShelfs.push(shelfs[j])
+            }
+          }
+          this.setData({
+            isBatch: !this.data.isBatch,
+            shelfs: {
+              ...this.data.shelfs,
+              shelfs: newShelfs
+            }
+          })
+        }
+      }
     })
   },
 

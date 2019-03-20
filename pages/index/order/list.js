@@ -11,7 +11,7 @@ Page({
     filterParams: {
       groupId: '',
       active: '',
-      start: moment().format('YYYY-MM-DD'),
+      start: '',
       end: moment().format('YYYY-MM-DD')
     },
 
@@ -29,9 +29,24 @@ Page({
     deviceTypesIndex: 0,
     groupsData: [],
 
+    cargoStateIndex: 0,
+    cargoState: [{
+        id: '1',
+        name: '销售订单'
+      },
+      {
+        id: '2',
+        name: '幸运免单'
+      }
+    ]
+
   },
 
-  toggleFilterMenue: function () {
+  setTab: function(e) {
+
+  },
+
+  toggleFilterMenue: function() {
     this.setData({
       showFilterMenue: !this.data.showFilterMenue
     })
@@ -43,24 +58,36 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-  
-    const { startDate, endDate, locationId, deviceId } = options;
-    if( startDate && endDate ){
+  onLoad: function(options) {
+
+    const {
+      startDate,
+      endDate,
+      locationId,
+      deviceId
+    } = options;
+    if (startDate && endDate) {
       this.setData({
-        filterParams: { ...this.data.filterParams, start: startDate, end: endDate }
+        filterParams: { ...this.data.filterParams,
+          start: startDate,
+          end: endDate
+        }
       })
     }
 
-    if ( locationId ){
+    if (locationId) {
       this.setData({
-        filterParams: { ...this.data.filterParams, locationId }
+        filterParams: { ...this.data.filterParams,
+          locationId
+        }
       })
     }
 
     if (deviceId) {
       this.setData({
-        filterParams: { ...this.data.filterParams, deviceId }
+        filterParams: { ...this.data.filterParams,
+          deviceId
+        }
       })
     }
     this.fetchOrders();
@@ -77,19 +104,19 @@ Page({
 
   fetchOrderCount: function() {
     fetch({
-      url: '/orders/count',
-      data: {
-        ...this.data.filterParams
-      }
-    })
-    .then( res => {
-      this.setData({
-        countData: res.data
+        url: '/orders/count',
+        data: {
+          ...this.data.filterParams
+        }
       })
-    })
-    .catch( err => {
-      console.error(err);
-    })
+      .then(res => {
+        this.setData({
+          countData: res.data
+        })
+      })
+      .catch(err => {
+        console.error(err);
+      })
   },
 
 
@@ -98,7 +125,7 @@ Page({
    * 获取订单列表
    */
 
-  fetchOrders: function () {
+  fetchOrders: function() {
     if (this.data.listLoading) {
       return;
     }
@@ -113,19 +140,19 @@ Page({
     })
 
     fetch({
-      url: '/orders',
-      data: {
-        ...this.data.listParams,
-        ...this.data.filterParams
-      }
-    })
+        url: '/orders',
+        data: {
+          ...this.data.listParams,
+          ...this.data.filterParams
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
             listEnd: true
           })
         }
-        res.data = res.data.map( item => {
+        res.data = res.data.map(item => {
           item.createdDate = moment(item.createdDate).format('YYYY-MM-DD HH:mm');
           return item;
         })
@@ -146,30 +173,36 @@ Page({
   /**
    * 获取所有的设备类型
    */
-  fetchDeviceTypes: function () {
+  fetchDeviceTypes: function() {
     fetch({
-      url:"/devices/types"
-    })
-    .then( res => {
-      res.data.unshift({ id: "", name: '全部' });
-      this.setData({
-        deviceTypes: res.data
+        url: "/devices/types"
       })
-    })
-    .catch( err => {
-      console.error(err);
-    })
+      .then(res => {
+        res.data.unshift({
+          id: "",
+          name: '全部'
+        });
+        this.setData({
+          deviceTypes: res.data
+        })
+      })
+      .catch(err => {
+        console.error(err);
+      })
   },
 
   /**
    * 获取所有的场地
    */
-  fetchPlaces: function () {
+  fetchPlaces: function() {
     fetch({
-      url: '/locations/select'
-    })
+        url: '/locations/select'
+      })
       .then(res => {
-        res.data.unshift({ id: "", name: '全部' });
+        res.data.unshift({
+          id: "",
+          name: '全部'
+        });
         this.setData({
           placesData: res.data
         })
@@ -179,12 +212,16 @@ Page({
   /**
    * 获取所有分组
    */
-  fetchGroups: function () {
+  fetchGroups: function() {
     fetch({
-      url: '/deviceGroups/select'
-    })
+        url: '/deviceGroups/select'
+      })
       .then(res => {
-        res.data.unshift({ id: "", name: "全部", selected: true })
+        res.data.unshift({
+          id: "",
+          name: "全部",
+          selected: true
+        })
         this.setData({
           groupsData: res.data
         })
@@ -194,13 +231,15 @@ Page({
   /**
    * 选项分组
    */
-  onselectGroup: function (e) {
+  onselectGroup: function(e) {
     let groupsData = this.data.groupsData.map(item => {
       item.selected = false;
       if (item.id == e.target.dataset.id) {
         item.selected = true;
         this.setData({
-          filterParams: { ...this.data.filterParams, groupId: item.id }
+          filterParams: { ...this.data.filterParams,
+            groupId: item.id
+          }
         })
       }
       return item;
@@ -213,10 +252,12 @@ Page({
   /**
    * 场地更改
    */
-  onFilterPlaceChange: function (e) {
+  onFilterPlaceChange: function(e) {
     this.setData({
       placesDataIndex: e.detail.value,
-      filterParams: { ...this.data.filterParams, locationId: this.data.placesData[e.detail.value].id }
+      filterParams: { ...this.data.filterParams,
+        locationId: this.data.placesData[e.detail.value].id
+      }
     })
   },
 
@@ -225,8 +266,10 @@ Page({
    */
   onFilterDeviceTypeChange: function(e) {
     this.setData({
-     deviceTypesIndex: e.detail.value,
-      filterParams: { ...this.data.filterParams, deviceTypeId: this.data.deviceTypes[e.detail.value].id }
+      deviceTypesIndex: e.detail.value,
+      filterParams: { ...this.data.filterParams,
+        deviceTypeId: this.data.deviceTypes[e.detail.value].id
+      }
     })
   },
 
@@ -236,13 +279,15 @@ Page({
    * 订单编号改变
    * query 对应订单编号
    */
-  onDeviceIdChange: function (e) {
+  onDeviceIdChange: function(e) {
     this.setData({
-      filterParams: { ...this.data.filterParams, query: e.detail.value }
+      filterParams: { ...this.data.filterParams,
+        query: e.detail.value
+      }
     })
   },
 
-  onSubmit: function () {
+  onSubmit: function() {
     this.setData({
       listEnd: false,
       showFilterMenue: false,
@@ -256,28 +301,46 @@ Page({
   /**
    * 重置弹框的数据
    */
-  resetPopData: function () {
+  resetPopData: function() {
     this.setData({
       filterParams: {
         groupId: '',
         query: '',
-        locationId:'',
-        deviceTypeId:''
+        locationId: '',
+        deviceTypeId: ''
       }
     })
-    this.onselectGroup({ target: { dataset: { id: "" } } });
-    this.onDeviceStatusChange({ target: { dataset: { status: "" } } });
-    this.onFilterPlaceChange({ detail: { value: 0 } })
+    this.onselectGroup({
+      target: {
+        dataset: {
+          id: ""
+        }
+      }
+    });
+    this.onDeviceStatusChange({
+      target: {
+        dataset: {
+          status: ""
+        }
+      }
+    });
+    this.onFilterPlaceChange({
+      detail: {
+        value: 0
+      }
+    })
   },
-  
+
   /**
    * 列表触底加更多列表数据
    */
-  loadMoreListData: function () {
+  loadMoreListData: function() {
 
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchOrders();
     }
@@ -286,7 +349,7 @@ Page({
   /**
    * 跳转到订单详情
    */
-  gotoOrderDetail: function (e) {
+  gotoOrderDetail: function(e) {
     wx.navigateTo({
       url: './detail?orderId=' + e.currentTarget.dataset.id + "&startDate=" + this.data.filterParams.start + "&endDate=" + this.data.filterParams.end,
     })
@@ -296,16 +359,20 @@ Page({
    * 日期选择
    */
 
-  onDateChange: function (e) {
+  onDateChange: function(e) {
     let type = e.currentTarget.dataset.type;
     let date = e.detail.value;
-    if (type == "start"){
+    if (type == "start") {
       this.setData({
-        filterParams: { ...this.data.filterParams, start: date}
+        filterParams: { ...this.data.filterParams,
+          start: date
+        }
       })
-    } else if( type == "end" ){
+    } else if (type == "end") {
       this.setData({
-        filterParams: { ...this.data.filterParams, end: date }
+        filterParams: { ...this.data.filterParams,
+          end: date
+        }
       })
     }
   }

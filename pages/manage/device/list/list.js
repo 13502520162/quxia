@@ -7,10 +7,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-    systemInfo:{},
+    systemInfo: {},
 
     disEdit: true,
     disList: true,
+  },
+
+  setTab: function(e) {
+    const edata = e.currentTarget.dataset;
+    this.setData({
+      deviceTypesIndex: edata.tabindex,
+      typeId: edata.id,
+      listData: []
+    })
+
+    this.fetchDevices()
   },
 
   toggleFilterMenue: function() {
@@ -19,7 +30,7 @@ Page({
     })
   },
 
-  onLoad: function () {
+  onLoad: function() {
     wx.getSystemInfo({
       success: res => {
         this.setData({
@@ -31,9 +42,9 @@ Page({
   },
 
   /**
- * 权限过滤
- */
-  permissionFilter: function () {
+   * 权限过滤
+   */
+  permissionFilter: function() {
     let permissions = getStorePermissions();
     //列表
     if (permissions.includes(8)) {
@@ -48,15 +59,17 @@ Page({
       })
     }
   },
-  
+
 
   onShow: function() {
     this.initData();
-    this.fetchDevices();
+    this.fetchDeviceTypes();
     this.fetchPlaces();
     this.fetchGroups();
-    this.fetchDeviceTypes();
     this.fetchDevicesSummary();
+  },
+  onReady: function() {
+
   },
 
   /**
@@ -88,12 +101,25 @@ Page({
       groupsData: [],
 
       deviceTypesIndex: 0,
-      deviceTypes:[],
+      deviceTypes: [],
+      typeId: '',
 
-      deviceStatus: [
-        { name: '全部', status: '', selected: true },
-        { name: '在线', status: true, selected: false },
-        { name: '离线', status: false, selected: false }
+
+      deviceStatus: [{
+          name: '全部',
+          status: '',
+          selected: true
+        },
+        {
+          name: '在线',
+          status: true,
+          selected: false
+        },
+        {
+          name: '离线',
+          status: false,
+          selected: false
+        }
       ]
     })
   },
@@ -103,100 +129,109 @@ Page({
    * 获取所有的设备类型
    */
   /**
- * 获取所有的设备类型
- */
-  fetchDeviceTypes: function () {
+   * 获取所有的设备类型
+   */
+  fetchDeviceTypes: function() {
     fetch({
-      url: "/devices/types"
-    })
+        url: "/devices/types"
+      })
       .then(res => {
-        res.data.unshift({ id: "", name: '全部' });
+        // res.data.unshift({
+        //   id: "",
+        //   name: '全部'
+        // });
         this.setData({
-          deviceTypes: res.data
+          deviceTypes: res.data,
+          typeId: res.data[0].id
         })
+        this.fetchDevices();
       })
       .catch(err => {
         console.error(err);
       })
   },
 
-  /**
- * 设备类型更改
- */
-  onFilterDeviceTypeChange: function (e) {
-    this.setData({
-      deviceTypesIndex: e.detail.value,
-      filterParams: { ...this.data.filterParams, typeId: this.data.deviceTypes[e.detail.value].id }
-    })
-  },
+  // /**
+  //  * 设备类型更改
+  //  */
+  // onFilterDeviceTypeChange: function(e) {
+  //   this.setData({
+  //     deviceTypesIndex: e.detail.value,
+  //     filterParams: { ...this.data.filterParams,
+  //       typeId: this.data.deviceTypes[e.detail.value].id
+  //     }
+  //   })
+  // },
 
   /**
    * 获取设备总数+在线数
    */
 
-  fetchDevicesSummary: function () {
+  fetchDevicesSummary: function() {
     fetch({
-      url: '/devices/summary',
-      data: {
-        ...this.data.filterParams
-      }
-    })
-    .then( res => {
-      console.log(res)
-       this.setData({
-         devicesSummary: res.data
-       })
-    })
+        url: '/devices/summary',
+        data: {
+          ...this.data.filterParams
+        }
+      })
+      .then(res => {
+        this.setData({
+          devicesSummary: res.data
+        })
+      })
   },
 
   /**
    * 获取设备列表
    */
 
-  fetchDevices: function () {
-    
-    if( this.data.disList ){
+  fetchDevices: function() {
+    let typeId = this.data.typeId
+    if (this.data.disList) {
       return
     }
 
-    if (this.data.listLoading){
+    if (this.data.listLoading) {
       return;
     }
 
 
-    if (this.data.listEnd) {
-      return;
-    }
+    // if (this.data.listEnd) {
+    //   return;
+    // }
 
     this.setData({
       listLoading: true
     })
 
+
+
     fetch({
-      url: '/devices',
-      data: {
-        ...this.data.listParams,
-        ...this.data.filterParams
-      }
-    })
-    .then ( res => {
-      if( res.data.length < this.data.listParams.size ){
+        url: '/devices',
+        data: {
+          ...this.data.listParams,
+          ...this.data.filterParams,
+          typeId
+        }
+      })
+      .then(res => {
+        if (res.data.length < this.data.listParams.size) {
+          this.setData({
+            listEnd: true
+          })
+        }
         this.setData({
-          listEnd: true
+          listData: [...this.data.listData, ...res.data]
         })
-      }
-      this.setData({
-        listData: [...this.data.listData, ...res.data]
       })
-    })
-    .catch( err => {
-      console.error( err );
-    })
-    .finally(()=> {
-      this.setData({
-        listLoading: false
+      .catch(err => {
+        console.error(err);
       })
-    }) 
+      .finally(() => {
+        this.setData({
+          listLoading: false
+        })
+      })
   },
 
   /**
@@ -204,70 +239,83 @@ Page({
    */
   fetchPlaces: function() {
     fetch({
-      url: '/locations/select'
-    })
-    .then( res => {
-      res.data.unshift({id:"",name:'全部'});
-      this.setData({
-        placesData: res.data
+        url: '/locations/select'
       })
-    })
+      .then(res => {
+        res.data.unshift({
+          id: "",
+          name: '全部'
+        });
+        this.setData({
+          placesData: res.data
+        })
+      })
   },
 
   /**
    * 获取所有分组
    */
-  fetchGroups: function () {
+  fetchGroups: function() {
     fetch({
-      url: '/deviceGroups/select'
-    })
-    .then( res => {
-      res.data.unshift({ id: "", name: "全部", selected: true })
-      this.setData({
-        groupsData: res.data
+        url: '/deviceGroups/select'
       })
-    })
+      .then(res => {
+        res.data.unshift({
+          id: "",
+          name: "全部",
+          selected: true
+        })
+        this.setData({
+          groupsData: res.data
+        })
+      })
   },
 
   /**
    * 选项分组
    */
-  onselectGroup:function( e ) {
-     let groupsData = this.data.groupsData.map( item => {
-        item.selected = false;
-        if( item.id == e.target.dataset.id ){
-          item.selected = true;
-          this.setData({
-            filterParams: { ...this.data.filterParams, groupId: item.id }
-          })
-        }
-        return item;
-     })
-     this.setData({
-       groupsData: groupsData
-     })
+  onselectGroup: function(e) {
+    let groupsData = this.data.groupsData.map(item => {
+      item.selected = false;
+      if (item.id == e.target.dataset.id) {
+        item.selected = true;
+        this.setData({
+          filterParams: { ...this.data.filterParams,
+            groupId: item.id
+          }
+        })
+      }
+      return item;
+    })
+    this.setData({
+      groupsData: groupsData
+    })
   },
 
   /**
    * 场地更改
    */
-  onFilterPlaceChange: function( e ) {
-     this.setData({
-       placesDataIndex: e.detail.value,
-       filterParams: { ...this.data.filterParams, locationId: this.data.placesData[e.detail.value].id }
-     })
+  onFilterPlaceChange: function(e) {
+    this.setData({
+      placesDataIndex: e.detail.value,
+      filterParams: { ...this.data.filterParams,
+        locationId: this.data.placesData[e.detail.value].id
+      }
+    })
   },
 
   /**
    * 设备状态改变
    */
-  onDeviceStatusChange: function (e) {
+  onDeviceStatusChange: function(e) {
     let deviceStatus = this.data.deviceStatus.map(item => {
       item.selected = false;
       if (item.status === e.target.dataset.status) {
         item.selected = true;
         this.setData({
-          filterParams: { ...this.data.filterParams, active: e.target.dataset.status }
+          filterParams: { ...this.data.filterParams,
+            active: e.target.dataset.status
+          }
         })
       }
       return item;
@@ -281,18 +329,20 @@ Page({
    * 设备编号改变
    * query 对应设备编号
    */
-  onDeviceIdChange: function( e ) {
-     this.setData({
-       filterParams: { ...this.data.filterParams, query: e.detail.value }
-     })
+  onDeviceIdChange: function(e) {
+    this.setData({
+      filterParams: { ...this.data.filterParams,
+        query: e.detail.value
+      }
+    })
   },
 
-  onSubmit: function () {
+  onSubmit: function() {
     this.setData({
       listEnd: false,
       showFilterMenue: false,
       listData: []
-    },()=> {
+    }, () => {
       this.fetchDevices();
       this.fetchDevicesSummary();
     })
@@ -301,27 +351,49 @@ Page({
   /**
    * 重置弹框的数据
    */
-  resetPopData: function () {
-     this.setData({
-       filterParams: {
-         groupId: '',
-         active: '',
-         query:''
-       }
-     })
-    this.onFilterDeviceTypeChange({ detail: { value: 0 } });
-    this.onselectGroup({ target: { dataset:{id:""}}});
-    this.onDeviceStatusChange({ target: { dataset: { status: "" } } });
-    this.onFilterPlaceChange({detail:{ value: 0 }} )
+  resetPopData: function() {
+    this.setData({
+      filterParams: {
+        groupId: '',
+        active: '',
+        query: ''
+      }
+    })
+    this.onFilterDeviceTypeChange({
+      detail: {
+        value: 0
+      }
+    });
+    this.onselectGroup({
+      target: {
+        dataset: {
+          id: ""
+        }
+      }
+    });
+    this.onDeviceStatusChange({
+      target: {
+        dataset: {
+          status: ""
+        }
+      }
+    });
+    this.onFilterPlaceChange({
+      detail: {
+        value: 0
+      }
+    })
   },
   /**
    * 列表触底加更多列表数据
    */
-  loadMoreListData: function () {
-    
-    if( !this.data.listLoading ) {
+  loadMoreListData: function() {
+
+    if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size  }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchDevices();
     }
@@ -331,16 +403,19 @@ Page({
    * 列表每一项操作
    */
   showActionSheet: function(e) {
-    let { id, typeid } = e.currentTarget.dataset ;
+    let {
+      id,
+      typeid
+    } = e.currentTarget.dataset;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
-      itemList = ['在线日志', '远程控制', '编辑设备','取消'];
+      itemList = ['在线日志', '远程控制', '编辑设备', '取消'];
     } else {
       itemList = ['在线日志', '远程控制', '编辑设备'];
     }
 
-    if( this.data.disEdit ){
-      itemList.splice(2,1);
+    if (this.data.disEdit) {
+      itemList.splice(2, 1);
     }
     wx.showActionSheet({
       itemList: itemList,
@@ -358,7 +433,7 @@ Page({
               })
               break;
             case 2:
-              if( !this.data.disEdit ){
+              if (!this.data.disEdit) {
                 wx.navigateTo({
                   url: './details?id=' + id,
                 })

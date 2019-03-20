@@ -1,38 +1,5 @@
-/* pages/manage/partner/list/list.wxss */
+/* components/slidingTab/index.wxss */
 
-.list {
-  height: calc(100vh - 200rpx);
-}
-
-.card {
-  background: #fff;
-  margin: 20rpx 0rpx;
-  font-size: 28rpx;
-  display: flex;
-  justify-content: space-between;
-}
-
-.card-item {
-  width: 100%;
-}
-
-.item-body {
-  height: 140rpx;
-  margin-left: 20rpx;
-  display: flex;
-}
-
-.item-right {
-  margin-left: 20rpx;
-}
-
-.item-bottom {
-  color: var(--prompt-color);
-}
-
-.item-bottom text:not(:first-child) {
-  padding-left: 20rpx;
-}
 
 .tab {
   display: flex;

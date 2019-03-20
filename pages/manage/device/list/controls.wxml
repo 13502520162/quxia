@@ -2,10 +2,55 @@
 <!-- 趣匣功能项 -->
 <view wx:if="{{ typeId == 'quxia'}}">
   <navigator style='background:#fff' class="weui-cell weui-cell_access" hover-class="weui-cell_active" wx:for="{{funcList}}" wx:key="{{index}}" url='{{item.url + "?deviceId=" +  deviceId }}'>
-      <view class="weui-cell__bd">{{item.name}}</view>
-      <view class="weui-cell__ft weui-cell__ft_in-access" ></view>
+    <view class="weui-cell__bd">{{item.name}}</view>
+    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
   </navigator>
 </view>
 
 
 
+
+<view wx:else class='page' style="height:calc( 100vh - 56px )">
+
+  <label class="weui-check__label">
+    <checkbox class="weui-check" value="{{isAll}}" checked="{{isAll}}" />
+    <view bindtap='allChecked' class="weui-cell__hd weui-check__hd_in-checkbox weui-check__hd_in-checkbox1">
+      <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!isAll}}"></icon>
+      <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{isAll}}"></icon>
+    </view>
+    <view class="page__hd">
+      <view class="page__desc" bindtap='allChecked'>全选</view>
+    </view>
+  </label>
+
+  <scroll-view scroll-y='true' style="height:calc( 100vh - 110px )">
+
+    <view class="weui-grids">
+      <checkbox-group bindchange="checkboxChange">
+        <label class=" weui-grid weui-check__label" hover-class="weui-grid_active" wx:for="{{shelfs.shelfs}}" wx:key="{{index}}">
+          <checkbox class="weui-check" value="{{item.value}}" checked="{{item.checked}}" />
+
+          <view class="weui-cell__hd weui-check__hd_in-checkbox">
+            <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+            <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+          </view>
+
+          <view>
+            <image class="weui-grid__icon" data-index='{{index}}' src="{{ item.image ? item.image : '../../../assets/images/plus.png' }}" />
+            <view class="weui-grid__label">{{item.name ? item.name :'请选择商品'}}</view>
+            <view class="weui-grid__label">{{ item.price ? '￥'+ item.price : '￥0' }}</view>
+            <view class="weui-grid__label">
+              <input type='number' data-index='{{index}}' class='cargo-number' data-item='{{shelfs.shelfs}}' value='{{item.number}}' disabled='true'></input>
+            </view>
+          </view>
+        </label>
+      </checkbox-group>
+    </view>
+
+  </scroll-view>
+
+</view>
+
+<view wx:if="{{ typeId == 'quxia-vm'}}" class='bottom-btn'>
+  <span class="" bindtap='shipment' type="primary">出货</span>
+</view>

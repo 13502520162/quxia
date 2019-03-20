@@ -144,6 +144,7 @@ Page({
     }
   },
 
+
   /**
    * 设置货到容量
    */
@@ -225,6 +226,85 @@ Page({
     //   })
   },
 
+
+
+  /**
+   * 提交
+   */
+
+  submit: function() {
+
+
+
+    if (!this.data.shelfs.name) {
+      wx.showToast({
+        title: '请输入方案名称',
+        icon: 'none'
+      });
+      return;
+    }
+
+    if (this.data.shelfs.shelfs.length === 0) {
+      wx.showToast({
+        title: '请添加货道',
+        icon: 'none'
+      });
+      return;
+    }
+
+    let shelfs = this.data.shelfs.shelfs
+
+    for (let i = 0; i < shelfs.length; i++) {
+      if (!shelfs[i].productId) {
+        wx.showToast({
+          title: '请选择商品',
+          icon: 'none'
+        });
+        return;
+      }
+
+
+      if (!shelfs[i].number) {
+        wx.showToast({
+          title: '请填写货道号',
+          icon: 'none'
+        });
+        return;
+      }
+
+      for (let j = i + 1; j < shelfs.length; j++) {
+        if (shelfs[j].number == shelfs[i].number) {
+          wx.showToast({
+            title: '货道号重复，请重新填写',
+            icon: 'none'
+          });
+          return;
+        }
+      }
+
+    }
+
+
+    let id = this.data.shelfs.id;
+    fetch({
+        url: id ? '/shelfs?id=' + id : '/shelfs',
+        method: id ? 'put' : 'post',
+        data: {
+          ...this.data.shelfs
+        }
+      })
+      .then(res => {
+        wx.showToast({
+          title: '操作成功',
+        })
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 1500)
+      })
+  },
+
   /**
    * 单个商品的选择
    */
@@ -280,9 +360,60 @@ Page({
   /**
    * 取消
    */
-  cancel: function() {
+  batchCancel: function() {
+    let shelfs = this.data.shelfs.shelfs
+    for (var j = 0, lenJ = shelfs.length; j < lenJ; ++j) {
+      shelfs[j].checked = false
+    }
     this.setData({
-      isBatch: !this.data.isBatch
+      isBatch: !this.data.isBatch,
+      shelfs: {
+        ...this.data.shelfs,
+        shelfs: shelfs
+      }
+    })
+  },
+
+
+  /**
+   * 删除
+   */
+  batchRemove: function() {
+    let shelfs = this.data.shelfs.shelfs
+    let count = 0
+    for (var j = 0, lenJ = shelfs.length; j < lenJ; ++j) {
+      if (shelfs[j].checked) {
+        count++
+      }
+    }
+    if (!count) {
+      wx.showToast({
+        title: '请选择要删除的货道',
+        icon: 'none'
+      });
+      return;
+    }
+
+
+    wx.showModal({
+      content: '确定删除选择的货道?',
+      success: (e) => {
+        if (e.confirm) {
+          let newShelfs = []
+          for (var j = 0, lenJ = shelfs.length; j < lenJ; ++j) {
+            if (!shelfs[j].checked) {
+              newShelfs.push(shelfs[j])
+            }
+          }
+          this.setData({
+            isBatch: !this.data.isBatch,
+            shelfs: {
+              ...this.data.shelfs,
+              shelfs: newShelfs
+            }
+          })
+        }
+      }
     })
   },
 

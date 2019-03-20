@@ -54,14 +54,18 @@
     </view>
   </view>
 
-  <view wx:if='{{!isBatch}}' class='bottom-btn'>
-    <span class="" bindtap='batchSetup' type="primary">批量设置</span>
+  <view hidden='{{isBatch}}' class='bottom-btn'>
+    <span class="" bindtap='batchSetup' type="primary">选择</span>
     <span class="" bindtap='submit' type="primary">确定</span>
   </view>
 
-  <view wx:else class='bottom-btn'>
-    <span class="" bindtap='cancel' type="primary">取消</span>
+  <view hidden='{{!isBatch}}' class='bottom-btn bottom-btn1'>
+    <span class="" bindtap='batchCancel' type="primary">取消</span>
     <span class="" bindtap='batchSetupTop' type="primary">批量设置</span>
+  </view>
+
+  <view hidden='{{!isBatch}}' class='bottom-btn'>
+    <span class="" bindtap='batchRemove' type="primary">删除</span>
   </view>
 
 </view>

@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
-    "popup": "../../../../components/popup/index"
+    "popup": "../../../../components/popup/index",
+    "sliding-tab": "/components/slidingTab/index"
   }
 }

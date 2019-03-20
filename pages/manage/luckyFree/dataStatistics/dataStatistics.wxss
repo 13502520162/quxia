@@ -1,0 +1,39 @@
+/* pages/manage/luckyFree/dataStatistics/dataStatistics.wxss */
+
+.page {
+  padding: 20rpx;
+  background: #fff;
+}
+
+.page__bd {
+  margin-top: 30rpx;
+}
+
+.weui-cell::before {
+  border: none;
+}
+
+.weui-grids {
+  border: none;
+  overflow: hidden;
+}
+
+.weui-grid {
+  border: none;
+}
+
+.weui-grid__label {
+  text-align: left;
+}
+
+.status {
+  margin-left: 15rpx;
+  padding: 5rpx 10rpx;
+  background-color: rgb(0, 118, 255);
+  color: #fff;
+  border-radius: 10rpx;
+}
+
+.num {
+  color: rgb(0, 118, 255);
+}

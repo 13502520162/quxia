@@ -1,5 +1,163 @@
 /* pages/manage/device/list/controls.wxss */
+
 .bluetooth-info {
   font-size: 16rpx;
   color: var(--prompt-color);
 }
+
+.page {
+  background: #fff;
+  margin-bottom: 105rpx;
+}
+
+.page__hd {
+  height: 50rpx;
+  line-height: 50rpx;
+  padding: 20rpx;
+  width: 100%;
+}
+
+.page__desc{
+  float: right;
+  width: 80rpx;
+  margin-right: 30rpx;
+}
+
+
+.num-ctrol-group {
+  display: flex;
+  justify-content: space-around;
+  margin: 10rpx 0rpx;
+  border: 1rpx solid var(--prompt-color);
+  border-radius: 10rpx;
+}
+
+.num-ctrol-group-num, .num-ctrol-group-reduce-btn, .num-ctrol-group-add-btn {
+  flex: 1;
+  text-align: center;
+  padding: 5rpx;
+}
+
+.num-ctrol-group-reduce-btn {
+  border-right: 1rpx solid var(--prompt-color);
+  text-align: center;
+}
+
+.num-ctrol-group-add-btn {
+  border-left: 1rpx solid var(--prompt-color);
+}
+
+.shelf-list {
+  max-height: calc(100vh - 280rpx);
+  overflow: auto;
+}
+
+.shelf-list::after {
+  border-bottom: none;
+}
+
+.card {
+  background: #fff;
+  margin: 20rpx 0rpx;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-item {
+  width: 100%;
+}
+
+.item-body {
+  height: 120rpx;
+  margin-left: 20rpx;
+  display: flex;
+}
+
+.item-body > view {
+  display: flex;
+}
+
+.item-left {
+  display: flex;
+  align-items: center;
+}
+
+.item-right {
+  margin-left: 20rpx;
+}
+
+.img {
+  width: 100rpx;
+  height: 100rpx;
+  line-height: 120rpx;
+}
+
+.empty {
+  line-height: 120rpx;
+}
+
+.weui-grid__icon {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.weui-grid {
+  position: relative;
+}
+
+.shelf-number {
+  position: absolute;
+  left: 20rpx;
+  top: 20rpx;
+  color: #fff;
+  padding: 5rpx 10rpx;
+  border-radius: 4rpx;
+  background: rgb(24, 144, 255);
+}
+
+.bottom-btn {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100rpx;
+  font-size: 32rpx;
+  text-align: center;
+  color: var(--main-color);
+  line-height: 100rpx;
+  background: #fff;
+  border-top: 2rpx solid #f6f6f6;
+}
+
+.bottom-btn span {
+  flex: 1;
+}
+
+.bottom-btn span:nth-child(1) {
+  color: rgb(255, 255, 255);
+  background-color: rgb(229, 28, 35);
+}
+
+.bottom-btn span:nth-child(2) {
+  color: rgb(255, 255, 255);
+  background-color: rgb(0, 118, 255);
+}
+
+.weui-check__hd_in-checkbox {
+  position: absolute;
+  right: 0rpx;
+  top: 10rpx;
+}
+
+.bottom-btn1 {
+  bottom: 105rpx;
+}
+
+.weui-check__hd_in-checkbox1 {
+  position: absolute;
+  right:90rpx;
+  top: 20rpx;
+}
+

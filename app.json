@@ -144,7 +144,9 @@
     "pages/manage/profitSharing/equipmentDistribution/setUp/setUp",
     "pages/manage/profitSharing/siteDistribution/siteDistribution",
     "pages/manage/profitSharing/siteDistribution/setUp/setUp",
-    "pages/manage/commodity/commodityClassification/setUpCommodity/setUpCommodity"
+    "pages/manage/commodity/commodityClassification/setUpCommodity/setUpCommodity",
+    "components/slidingTab/index",
+    "pages/manage/luckyFree/dataStatistics/dataStatistics"
   ],
   "window": {
     "backgroundTextStyle": "light",

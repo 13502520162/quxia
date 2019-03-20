@@ -3,8 +3,8 @@
   <view class="page__bd">
     <view class="weui-tab">
       <view class="weui-navbar">
-        <block wx:for="{{tabs}}" wx:key="*this">
-          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
+        <block wx:for="{{tabs}}" wx:key="{{index}}">
+          <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" data-type='{{item.type}}' bindtap="tabClick">
             <view class="weui-navbar__title">{{item.name}}
               <text class='num' wx:if="{{item.num!=0}}">{{item.num}}</text> </view>
           </view>
@@ -13,35 +13,45 @@
       </view>
       <view class="weui-tab__panel">
         <view class="weui-tab__content">
-          <scroll-view scroll-y="true">
-
-            <view class='news'>
+          <scroll-view scroll-y="true" bindscrolltolower="loadMoreListData">
+            <view class='news' wx:for='{{listData}}' wx:key='{{index}}' data-id='{{item.id}}'>
               <view>
                 <view>
                   <text>设备编号：</text>
-                  <text>10000000000000</text>
+                  <text>{{item.deviceId}}</text>
                 </view>
                 <view>
                   <text>设备名称：</text>
-                  <text>正佳广场南门门口</text> </view>
+                  <text>{{item.deviceName}}</text> </view>
                 <view>
                   <text>场地：</text>
-                  <text>正佳广场</text>
+                  <text>{{item.locationName}}</text>
                 </view>
                 <view>
                   <text>地址：</text>
-                  <text>广州市天河区天河北路100号</text>
+                  <text>{{item.province + item.city + item.district + item.street}}</text>
                 </view>
                 <view class='date'>
-                  <text>2019-03-07 11:06:18</text>
+                  <text>{{item.createdDate}}</text>
                 </view>
               </view>
               <view class='state'>
-                <text bindtap='markedRead'>标记已读</text>
+                <text wx:if='{{item.read}}' class='read' data-id='{{item.id}}' bindtap='markedRead'>标记已读</text>
+                <text wx:else>已读</text>
               </view>
             </view>
 
+            <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+              <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+            </view>
+
+            <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+              <view class="weui-loading"></view>
+              <view class="weui-loadmore__tips">正在加载</view>
+            </view>
+
           </scroll-view>
+
         </view>
       </view>
     </view>

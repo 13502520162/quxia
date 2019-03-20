@@ -152,9 +152,9 @@ Page({
     let itemList;
     let enabled = e.currentTarget.dataset.enabled;
     if (this.data.systemInfo.platform == 'android') {
-      itemList = ['查看', '失效', '删除', '取消'];
+      itemList = ['查看', '失效', '数据统计', '删除', '取消'];
     } else {
-      itemList = ['查看', '失效', '删除'];
+      itemList = ['查看', '失效', '数据统计', '删除'];
     }
 
     if (enabled) {
@@ -176,7 +176,21 @@ Page({
                 this.disableActive(id)
               }
 
-              if (itemList[1] == '删除') {
+              if (itemList[1] == '数据统计') {
+                wx.navigateTo({
+                  url: './dataStatistics/dataStatistics?field=view&id=' + id,
+                })
+              }
+              break;
+            case 2:
+
+              if (itemList[2] == '数据统计') {
+                wx.navigateTo({
+                  url: './dataStatistics/dataStatistics?field=view&id=' + id,
+                })
+              }
+        
+              if (itemList[2] == '删除') {
                 wx.showModal({
                   content: '是否删除该活动?',
                   success(res) {
@@ -189,7 +203,7 @@ Page({
                 })
               }
               break;
-            case 2:
+            case 3:
               if (itemList[2] != '取消') {
                 wx.showModal({
                   content: '是否删除该活动?',
@@ -201,11 +215,8 @@ Page({
                     }
                   }
                 })
-
               }
-
-
-              break;
+              break
             default:
               break;
           }

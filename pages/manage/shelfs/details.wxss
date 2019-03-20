@@ -129,3 +129,7 @@
   border: 1px solid #d9d9d9;
   border-radius: 10rpx;
 }
+
+.bottom-btn1 {
+  bottom: 105rpx;
+}

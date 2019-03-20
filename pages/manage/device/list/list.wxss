@@ -1,4 +1,5 @@
 /* pages/manage/device/list/list.wxss */
+
 .devices-header {
   background: #fff;
   line-height: 60rpx;
@@ -6,6 +7,7 @@
   font-weight: bold;
   font-size: 32rpx;
 }
+
 .devices-header image {
   width: 60rpx;
   max-height: 60rpx;
@@ -21,14 +23,15 @@
   display: inline-block;
 }
 
-.tag-item-selected  {
+.tag-item-selected {
   background: var(--main-color);
   color: #fff;
 }
 
 .device-list {
-  height: calc( 100vh - 100rpx );
+  height: calc(100vh - 100rpx);
 }
+
 .card {
   background: #fff;
   margin: 20rpx 0rpx;
@@ -36,6 +39,7 @@
   display: flex;
   justify-content: space-between;
 }
+
 .card-item {
   width: 100%;
 }
@@ -44,27 +48,33 @@
   height: 140rpx;
   margin-left: 20rpx;
 }
-.item-top  text:not(:first-child) { 
+
+.item-top  text:not(:first-child) {
   margin-left: 20rpx;
   padding: 10rpx 20rpx;
   font-size: 24rpx;
 }
+
 .item-top  text:nth-child(2) {
   background: var(--main-color);
   color: #fff;
   border-radius: 10rpx;
 }
+
 .location-name {
-  color: var(--prompt-color)
+  color: var(--prompt-color);
 }
-.card-status-success,.card-status-fail {
+
+.card-status-success, .card-status-fail {
   padding: 10rpx;
   color: #fff;
   border-radius: 10rpx;
 }
+
 .card-status-success {
   background: var(--main-color);
 }
+
 .card-status-fail {
   background: var(--error-color);
 }
@@ -72,6 +82,7 @@
 .popup {
   background: var(--background-color) !important;
 }
+
 .popup-content {
   width: 600rpx;
   height: 100vh;
@@ -92,6 +103,7 @@
   background: #fff;
   padding: 20rpx;
 }
+
 .popup-device-group, .popup-device-place, .popup-device-id {
   margin-top: 20rpx;
 }
@@ -107,6 +119,7 @@
   bottom: 0;
   background: #fff;
 }
+
 .popup-bottom text {
   padding: 20rpx 0rpx;
   font-size: 32rpx;
@@ -115,8 +128,50 @@
   text-align: center;
 }
 
-.popup-bottom text:nth-child(2){
+.popup-bottom text:nth-child(2) {
   background: var(--main-color);
   color: #fff;
 }
 
+.tab {
+  display: flex;
+  flex-direction: column;
+}
+
+.tab-nav {
+  height: 80rpx;
+  background: #fff;
+  display: flex;
+  line-height: 79rpx;
+  position: relative;
+  margin-left: 20rpx;
+}
+
+.tab-item {
+  min-width: 30%;
+  max-width: 30%;
+  text-align: center;
+  height: 80rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.tab-nav .active {
+  color: #188ae2;
+  font-size: 35rpx;
+}
+
+.tab-line {
+  position: absolute;
+  left: 0;
+  bottom: -1rpx;
+  height: 7rpx;
+  background: #188ae2;
+  transition: all 0.3s;
+}
+
+.tab-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

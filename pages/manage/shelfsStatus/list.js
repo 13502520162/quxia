@@ -8,6 +8,18 @@ Page({
    */
   data: {
     systemInfo: {},
+
+    cargoState: [{
+        id: '1',
+        name: '货道状态1'
+      },
+      {
+        id: '2',
+        name: '货道状态2'
+      }
+    ],
+
+    stateIndex: 0
   },
 
   toggleFilterMenue: function() {
@@ -99,6 +111,22 @@ Page({
   },
 
 
+  /**
+   * 组件事件
+   */
+  setTab: function(e) {
+    let item = e.detail.item
+    let index = e.detail.index
+    this.setData({
+      listData: [],
+      stateIndex: index,
+      listParams: {
+        from: 0,
+        size: 20
+      }
+    })
+    this.fetchDevices()
+  },
 
 
   /**
@@ -150,9 +178,9 @@ Page({
       return;
     }
 
-    if (this.data.listEnd) {
-      return;
-    }
+    // if (this.data.listEnd) {
+    //   return;
+    // }
 
     this.setData({
       listLoading: true
@@ -171,6 +199,18 @@ Page({
             listEnd: true
           })
         }
+
+        res.data.map((item) => {
+          if (item.stockState == 'NORMAL') {
+            item.info = '库存正常'
+          } else {
+            item.info = item.alertCount + '个货道正常' + item.soldoutCount + '个货道售罄'
+          }
+
+          return item
+        })
+
+
         this.setData({
           listData: [...this.data.listData, ...res.data]
         })

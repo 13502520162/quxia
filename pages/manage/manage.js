@@ -143,23 +143,10 @@ Page({
             hide: true
           },
           {
-            name: "货道配货2",
-            icon: "../../assets/images/shelfs.png",
-            pageUrl: './bigVendingMachineShelfs/list',
-            permission: 28,
-            hide: true
-          },
-          {
             name: "货道状态",
             icon: "../../assets/images/shelfs.png",
             pageUrl: './shelfsStatus/list',
             permission: 54,
-            hide: true
-          }, {
-            name: "货道状态2",
-            icon: "../../assets/images/shelfs.png",
-            pageUrl: './bigVendingMachineShelfsStatus/list',
-            permission: 28,
             hide: true
           }
         ]

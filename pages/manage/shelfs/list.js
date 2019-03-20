@@ -20,7 +20,19 @@ Page({
     disEdit: true,
     disAdd: true,
     disList: true,
-    systemInfo: {}
+    systemInfo: {},
+
+
+    cargoStateIndex: 0,
+    cargoState: [{
+        id: '1',
+        name: '货道配货1'
+      },
+      {
+        id: '2',
+        name: '货道配货2'
+      }
+    ]
   },
 
   /**
@@ -35,6 +47,10 @@ Page({
         })
       },
     });
+  },
+
+  onReady: function() {
+    this.slidingTab = this.selectComponent('#slidingTab')
   },
 
   /**
@@ -78,6 +94,25 @@ Page({
     this.fetchCommodityList();
   },
 
+
+  /**
+   * 组件中的点击事件
+   */
+  setTab: function(e) {
+    this.setData({
+      cargoStateIndex: e.detail.index,
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 20
+      }
+    })
+
+    this.fetchCommodityList()
+  },
+
+
+
   /**
    * 搜索框事件 
    */
@@ -105,6 +140,24 @@ Page({
 
 
   /**
+   * 确定搜索
+   */
+
+  fetchconfirmList: function(e) {
+
+    this.setData({
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 20
+      },
+    }, () => {
+      this.fetchCommodityList()
+    })
+  },
+
+
+  /**
    * 获取货道列表
    */
 
@@ -118,19 +171,21 @@ Page({
       return;
     }
 
-    if (this.data.listEnd) {
-      return;
-    }
+    // if (this.data.listEnd) {
+    //   return;
+    // }
 
     this.setData({
       listLoading: true
     })
 
+    let iptVal = this.data.inputVal
+
     fetch({
         url: '/shelfs',
         data: {
           ...this.data.listParams,
-          query: this.data.inputVal
+          query: iptVal
         }
       })
       .then(res => {
@@ -142,6 +197,7 @@ Page({
         this.setData({
           listData: [...this.data.listData, ...res.data]
         })
+
       })
       .catch(err => {
         console.error(err);
@@ -174,6 +230,7 @@ Page({
   showActionSheet: function(e) {
     let that = this
     let id = e.currentTarget.dataset.id;
+    let cargoStateIndex = this.data.cargoStateIndex;
     let enable = e.currentTarget.dataset.enbale;
     let itemList = [];
     if (this.data.systemInfo.platform == 'android') {
@@ -197,9 +254,15 @@ Page({
               break;
             case 1:
               if (!this.data.disEdit) {
-                wx.navigateTo({
-                  url: './details?type=edit&id=' + id,
-                })
+                if (cargoStateIndex === 0) {
+                  wx.navigateTo({
+                    url: './details?type=edit&id=' + id,
+                  })
+                } else if (cargoStateIndex === 1) {
+                  wx.navigateTo({
+                    url: '../bigVendingMachineShelfs/details?type=edit&id=' + id,
+                  })
+                }
               }
               break;
             case 2:

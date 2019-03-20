@@ -1,0 +1,10 @@
+<!--components/slidingTab/index.wxml-->
+<scroll-view scroll-x="true" style="width: 100%;white-space:nowrap;">
+  <!-- tab -->
+  <view class="tab">
+    <view class="tab-nav" style='font-size:12px'>
+      <view wx:for="{{items}}" wx:key="{{index}}" data-item='{{item}}' class='tab-item {{stateIndex == index?"active":""}}' bindtap="setTab" data-id='{{item.id}}' data-tabindex="{{index}}" style="">{{item.name}}</view>
+      <view class="tab-line" style="width:30%;transform:translateX({{100*stateIndex}}%);"></view>
+    </view>
+  </view>
+</scroll-view>

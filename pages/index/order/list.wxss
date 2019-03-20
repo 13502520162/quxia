@@ -27,7 +27,7 @@
 }
 
 .list {
-  height: calc( 100vh - 100rpx );
+  height: calc( 100vh - 180rpx );
 }
 .card {
   background: #fff;
