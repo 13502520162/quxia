@@ -1,12 +1,15 @@
 /* pages/manage/luckyFree/dataStatistics/dataStatistics.wxss */
 
 .page {
-  padding: 20rpx;
   background: #fff;
 }
 
+.page__hd {
+  padding: 20rpx;
+}
+
 .page__bd {
-  margin-top: 30rpx;
+  padding: 20rpx;
 }
 
 .weui-cell::before {
@@ -36,4 +39,29 @@
 
 .num {
   color: rgb(0, 118, 255);
+}
+
+.viewOrder {
+  border: 1px solid #d9d9d9;
+}
+
+.page__desc .state {
+  margin-left: 20rpx;
+  padding: 5rpx 10rpx;
+  border-radius: 20rpx;
+  color: #fff;
+  font-size: 24rpx;
+  background: #d1d1d6;
+}
+
+.page__desc  .state2 {
+  background: #ff9500;
+}
+
+.page__desc  .state3 {
+  background: #1aad19;
+}
+
+.page__desc  .state4 {
+  background: #a5a2a2;
 }

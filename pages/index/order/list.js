@@ -11,13 +11,13 @@ Page({
     filterParams: {
       groupId: '',
       active: '',
-      start: '',
+      start: moment().format('YYYY-MM-DD'),
       end: moment().format('YYYY-MM-DD')
     },
 
     listParams: {
       from: 0,
-      size: 20
+      size: 10
     },
     listLoading: false,
     listEnd: false,
@@ -43,6 +43,23 @@ Page({
   },
 
   setTab: function(e) {
+    let index = e.detail.index
+    this.setData({
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 10
+      },
+      cargoStateIndex: e.detail.index
+    })
+
+    if (index == 0) {
+      this.fetchSaleOrders();
+      this.fetchSaleOrderCount()
+    } else {
+      this.fetchLuckyOrders();
+      this.fetchLuckyOrderCount()
+    }
 
   },
 
@@ -90,19 +107,19 @@ Page({
         }
       })
     }
-    this.fetchOrders();
+    this.fetchSaleOrders();
     this.fetchDeviceTypes();
     this.fetchPlaces();
     this.fetchGroups();
-    this.fetchOrderCount();
+    this.fetchSaleOrderCount();
   },
 
 
   /**
-   * 获取订单总数
+   * 获取销售订单总数
    */
 
-  fetchOrderCount: function() {
+  fetchSaleOrderCount: function() {
     fetch({
         url: '/orders/count',
         data: {
@@ -122,18 +139,18 @@ Page({
 
 
   /**
-   * 获取订单列表
+   * 获取销售订单列表
    */
 
-  fetchOrders: function() {
+  fetchSaleOrders: function() {
     if (this.data.listLoading) {
       return;
     }
 
 
-    if (this.data.listEnd) {
-      return;
-    }
+    // if (this.data.listEnd) {
+    //   return;
+    // }
 
     this.setData({
       listLoading: true
@@ -169,6 +186,84 @@ Page({
         })
       })
   },
+
+
+
+
+
+  /**
+   * 获取幸运免单列表
+   */
+
+  fetchLuckyOrders: function() {
+    if (this.data.listLoading) {
+      return;
+    }
+
+
+    // if (this.data.listEnd) {
+    //   return;
+    // }
+
+    this.setData({
+      listLoading: true
+    })
+
+    fetch({
+        url: '/luckfree/orders',
+        data: {
+          ...this.data.listParams,
+          ...this.data.filterParams
+        }
+      })
+      .then(res => {
+        if (res.data.length < this.data.listParams.size) {
+          this.setData({
+            listEnd: true
+          })
+        }
+        res.data = res.data.map(item => {
+          item.createdDate = moment(item.createdDate).format('YYYY-MM-DD HH:mm');
+          return item;
+        })
+        this.setData({
+          listData: [...this.data.listData, ...res.data]
+        })
+      })
+      .catch(err => {
+        console.error(err);
+      })
+      .finally(() => {
+        this.setData({
+          listLoading: false
+        })
+      })
+  },
+
+
+
+
+  /**
+   * 获取幸运免单总数
+   */
+
+  fetchLuckyOrderCount: function() {
+    fetch({
+        url: '/luckfree/orders/count',
+        data: {
+          ...this.data.filterParams
+        }
+      })
+      .then(res => {
+        this.setData({
+          countData: res.data
+        })
+      })
+      .catch(err => {
+        console.error(err);
+      })
+  },
+
 
   /**
    * 获取所有的设备类型
@@ -287,14 +382,24 @@ Page({
     })
   },
 
+
+  /**
+   * 确定筛选
+   */
   onSubmit: function() {
     this.setData({
       listEnd: false,
       showFilterMenue: false,
       listData: []
     }, () => {
-      this.fetchOrders();
-      this.fetchOrderCount();
+      let index = this.data.cargoStateIndex;
+      if (index == 0) {
+        this.fetchSaleOrders();
+        this.fetchSaleOrderCount()
+      } else {
+        this.fetchLuckyOrders();
+        this.fetchLuckyOrderCount()
+      }
     })
   },
 
@@ -342,7 +447,7 @@ Page({
           from: this.data.listParams.from + this.data.listParams.size
         }
       })
-      this.fetchOrders();
+      this.fetchSaleOrders();
     }
   },
 
@@ -351,7 +456,7 @@ Page({
    */
   gotoOrderDetail: function(e) {
     wx.navigateTo({
-      url: './detail?orderId=' + e.currentTarget.dataset.id + "&startDate=" + this.data.filterParams.start + "&endDate=" + this.data.filterParams.end,
+      url: './detail?orderId=' + e.currentTarget.dataset.id + "&startDate=" + this.data.filterParams.start + "&endDate=" + this.data.filterParams.end + '&cargoStateIndex=' + this.data.cargoStateIndex,
     })
   },
 

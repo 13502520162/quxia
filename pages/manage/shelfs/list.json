@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "货道配货",
   "usingComponents": {
     "sliding-tab": "/components/slidingTab/index"
   }

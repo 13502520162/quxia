@@ -13,17 +13,31 @@ Page({
     isPermanent: false,
     selIndex: 0,
     vipCards: [],
-    note: ''
+    note: '',
+    id: '',
+
+    cardId: '',
+    cardExpiry: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    let isPermanent = false
+    if (options.cardExpiry == '永久有效') {
+      isPermanent = true
+    }
     this.setData({
-      endDate: moment().format('YYYY-MM-DD')
+      endDate: options.cardDate || moment().add(1, 'days').format('YYYY-MM-DD'),
+      id: options.id,
+      cardId: options.cardId,
+      isPermanent
     })
     this.fetchVipCardS()
+  },
+  onShow: function() {
+
   },
   changeDateTime: function(e) {
     this.setData({
@@ -39,9 +53,15 @@ Page({
     fetch({
       url: '/vipCards/select'
     }).then(res => {
-      this.setData({
-        vipCards: res.data
-      })
+      let cardId = this.data.cardId;
+      for (let i = 0; i < res.data.length; i++) {
+        if (cardId == res.data[i].id) {
+          this.setData({
+            vipCards: res.data,
+            selIndex: i
+          })
+        }
+      }
     })
   },
   onFilterChange: function(e) {
@@ -71,12 +91,13 @@ Page({
       url: '/customers/cards',
       method: 'POST',
       data: {
+        id: parseInt(this.data.id),
         cardId: this.data.vipCards[this.data.selIndex].id,
-        expiry: this.dataisPermanent || new Date(this.data.endDate).getTime(),
+        permanent: this.data.isPermanent,
+        expiry: new Date(this.data.endDate).getTime(),
         note: this.data.note
       }
     }).then(res => {
-      console.log(res)
       wx.showToast({
         title: '设置成功',
         icon: 'none'
@@ -86,6 +107,25 @@ Page({
         wx.navigateBack({
           detil: 1
         })
+
+        let pages = getCurrentPages()
+        let prepage = pages[pages.length - 2];
+        let permanent = this.data.isPermanent
+        let cardExpiry = ''
+        if (permanent) {
+          cardExpiry = '永久有效'
+        } else {
+          cardExpiry = this.data.endDate + '前有效'
+        }
+        prepage.setData({
+          userInfo: {
+            ...prepage.data.userInfo,
+            cardExpiry,
+            cardName: this.data.vipCards[this.data.selIndex].name
+          }
+        })
+
+
       }, 1500)
     })
   }

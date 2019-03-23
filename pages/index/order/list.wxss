@@ -1,4 +1,5 @@
 /* pages/manage/device/list/list.wxss */
+
 .devices-header {
   background: #fff;
   line-height: 60rpx;
@@ -6,6 +7,7 @@
   font-weight: bold;
   font-size: 32rpx;
 }
+
 .devices-header image {
   width: 60rpx;
   max-height: 60rpx;
@@ -21,24 +23,26 @@
   display: inline-block;
 }
 
-.tag-item-selected  {
+.tag-item-selected {
   background: var(--main-color);
   color: #fff;
 }
 
 .list {
-  height: calc( 100vh - 180rpx );
+  height: calc(100vh - 180rpx);
 }
+
 .card {
   background: #fff;
   margin: 20rpx 0rpx;
   font-size: 28rpx;
 }
+
 .card-top {
   padding: 10rpx 20rpx;
 }
 
-.card-top text:nth-child(2){
+.card-top text:nth-child(2) {
   float: right;
 }
 
@@ -46,6 +50,7 @@
   width: 100%;
   /* border-top: 1rpx solid #d9d9d9; */
 }
+
 .weui-select {
   border-right: 0;
 }
@@ -54,28 +59,52 @@
   height: 180rpx;
   margin-left: 20rpx;
 }
-.item-top  text:not(:first-child) { 
+
+.item-top  text:not(:first-child) {
   margin-left: 20rpx;
   padding: 10rpx 20rpx;
   font-size: 24rpx;
 }
+
 .item-top  text:nth-child(2) {
   background: var(--main-color);
   color: #fff;
   border-radius: 10rpx;
 }
+
+.item-top1 text:not(:first-child) {
+  margin-left: 20rpx;
+  padding: 10rpx 20rpx;
+  font-size: 24rpx;
+}
+
+.item-top1 text.win {
+  background: 188ae2;
+  color: #fff;
+  border-radius: 10rpx;
+}
+
+.item-top1 text.noWin {
+  background: var(--main-color);
+  color: #fff;
+  border-radius: 10rpx;
+}
+
 .location-name {
   line-height: 42rpx;
-  color: var(--prompt-color)
+  color: var(--prompt-color);
 }
-.card-status-success,.card-status-fail {
+
+.card-status-success, .card-status-fail {
   padding: 10rpx;
   color: #fff;
   border-radius: 10rpx;
 }
+
 .card-status-success {
   background: var(--main-color);
 }
+
 .card-status-fail {
   background: var(--error-color);
 }
@@ -83,15 +112,16 @@
 .popup {
   background: var(--background-color) !important;
 }
+
 .date {
   text-align: center;
 }
 
-.date picker{
+.date picker {
   display: inline-block;
 }
 
-.date image{
+.date image {
   width: 20rpx;
   height: 20rpx;
   padding: 0rpx 20rpx;
@@ -117,6 +147,7 @@
   background: #fff;
   padding: 20rpx;
 }
+
 .popup-device-group, .popup-device-place, .popup-device-id {
   margin-top: 20rpx;
 }
@@ -132,6 +163,7 @@
   bottom: 0;
   background: #fff;
 }
+
 .popup-bottom text {
   padding: 20rpx 0rpx;
   font-size: 32rpx;
@@ -140,8 +172,7 @@
   text-align: center;
 }
 
-.popup-bottom text:nth-child(2){
+.popup-bottom text:nth-child(2) {
   background: var(--main-color);
   color: #fff;
 }
-

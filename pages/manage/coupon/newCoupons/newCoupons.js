@@ -18,6 +18,7 @@ Page({
     isLimit: true,
     isFixed: true,
     discount: true,
+    isAllVenues: false,
     preferentialForm: 'AMOUNT_OFF',
     dateRule: 'FIXED',
     radioItems: [{
@@ -210,7 +211,8 @@ Page({
           startDate: util.formatTimeTwo(ress.startDate),
           endDate: util.formatTimeTwo(ress.endDate),
           maxStock: ress.maxStock,
-          isDisabled: true
+          isDisabled: true,
+          isAllVenues: ress.locationIds.length === 0
         })
       })
     } else {
@@ -401,6 +403,27 @@ Page({
       limitPerCustomer: e.detail.value
     })
   },
+
+
+  /**
+   * 活动场地
+   */
+  activityVenue: function(e) {
+    let value = e.detail.value
+    let isAllVenues;
+    if (value) {
+      isAllVenues = value
+
+    } else {
+      isAllVenues = value
+    }
+
+    this.setData({
+      isAllVenues
+    })
+  },
+
+
   /**
    * 保存事件
    */
@@ -478,6 +501,15 @@ Page({
         })
         return;
       }
+    }
+
+
+    if (!this.data.isAllVenues && !this.data.locationIds.length) {
+      wx.showToast({
+        title: '请选择适用场地',
+        icon: 'none'
+      })
+      return;
     }
 
     this.preservationFetch()

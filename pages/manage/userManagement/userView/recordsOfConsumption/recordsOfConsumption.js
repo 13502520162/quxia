@@ -31,7 +31,9 @@ Page({
       start: null,
       end: null
     },
-
+    id: '',
+    totalExpense: '',
+    totalOrders: '',
     orders: '',
   },
 
@@ -39,6 +41,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+
+    this.setData({
+      id: options.id,
+      totalExpense: options.totalExpense,
+      totalOrders: options.totalOrders
+    })
+
     this.initDate();
   },
 
@@ -128,7 +137,8 @@ Page({
           isShowLoading: true,
           data: {
             start: start,
-            end: end
+            end: end,
+            id: this.data.id
           }
         })
         .then(res => {
@@ -180,7 +190,8 @@ Page({
         data: {
           ...this.data.listParams,
           start: this.data.date.start.replace(/\//g, '-'),
-          end: this.data.date.end.replace(/\//g, '-')
+          end: this.data.date.end.replace(/\//g, '-'),
+          id: this.data.id
         }
       })
       .then(res => {

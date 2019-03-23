@@ -48,7 +48,19 @@
   </view>
 
 
-  <view class="weui-cell field">
+
+  <view class="weui-cells weui-cells_after-title  {{isAllVenues?'weui-cell-reset':''}}">
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd weui-label">活动场地</view>
+      <view class="weui-cell__ft">
+        <text class='weui-label'>全部场地</text>
+        <switch size="23" checked='{{isAllVenues}}' bindchange="activityVenue" disabled="{{isDisabled}}" />
+      </view>
+    </view>
+  </view>
+
+
+  <view class="weui-cell field" hidden='{{isAllVenues}}'>
     <view class="weui-cell__hd">
       <view class="weui-label">适用场地</view>
     </view>

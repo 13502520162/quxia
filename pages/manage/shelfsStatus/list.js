@@ -8,16 +8,8 @@ Page({
    */
   data: {
     systemInfo: {},
-
-    cargoState: [{
-        id: '1',
-        name: '货道状态1'
-      },
-      {
-        id: '2',
-        name: '货道状态2'
-      }
-    ],
+    typeId: '',
+    cargoState: [],
 
     stateIndex: 0
   },
@@ -42,7 +34,7 @@ Page({
 
   onShow: function() {
     this.initData();
-    this.fetchDevices();
+    this.fetchDevicesTpes()
     this.fetchPlaces();
     this.fetchDevicesSummary();
   },
@@ -120,12 +112,26 @@ Page({
     this.setData({
       listData: [],
       stateIndex: index,
+      typeId: e.detail.item.id,
       listParams: {
         from: 0,
         size: 20
       }
     })
     this.fetchDevices()
+  },
+
+  fetchDevicesTpes: function() {
+    fetch({
+      url: '/devices/types'
+    }).then(res => {
+      this.setData({
+        cargoState: res.data,
+        typeId: this.data.typeId || res.data[0].id
+      }, () => {
+        this.fetchDevices();
+      })
+    })
   },
 
 
@@ -190,7 +196,8 @@ Page({
         url: '/shelfs/devices',
         data: {
           ...this.data.listParams,
-          ...this.data.filterParams
+          ...this.data.filterParams,
+          typeId: this.data.typeId
         }
       })
       .then(res => {
@@ -204,7 +211,7 @@ Page({
           if (item.stockState == 'NORMAL') {
             item.info = '库存正常'
           } else {
-            item.info = item.alertCount + '个货道正常' + item.soldoutCount + '个货道售罄'
+            item.info = item.alertCount ? item.alertCount + '个货道缺货,' : "" + item.soldoutCount ? item.soldoutCount + '个货道售罄' : ""
           }
 
           return item
@@ -358,22 +365,31 @@ Page({
       id,
       planid
     } = e.currentTarget.dataset;
+    let deviceTypeId = this.data.cargoState[this.data.stateIndex].id
+    let index = this.data.stateIndex;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
       itemList = ['查看货道', '补货', '补货记录', '同步', '取消'];
     } else {
       itemList = ['查看货道', '补货', '补货记录', '同步'];
     }
-
+  
     wx.showActionSheet({
       itemList: itemList,
       success: res => {
         if (!res.cancel) {
           switch (res.tapIndex) {
             case 0:
-              wx.navigateTo({
-                url: './details?id=' + id + '&planid=' + planid,
-              })
+              if (index==0){
+                wx.navigateTo({
+                  url: './details?id=' + id + '&planid=' + planid + '&deviceTypeId=' + deviceTypeId,
+                })
+              }else{
+                wx.navigateTo({
+                  url: '../bigVendingMachineShelfsStatus/details?id=' + id + '&planid=' + planid + '&deviceTypeId=' + deviceTypeId,
+                })
+              }
+             
               break;
             case 1:
               wx.navigateTo({

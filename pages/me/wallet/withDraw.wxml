@@ -47,7 +47,7 @@
     </view>
 
     <view class="weui-btn-area">
-        <button class="weui-btn" type="primary" bindtap="showTopTips" bindtap='confirmWithDraw' loading='{{withDrawLoading}}' >确定</button>
+        <button class="weui-btn" type="primary" disabled='{{isDisabled}}' bindtap="showTopTips" bindtap='confirmWithDraw' loading='{{withDrawLoading}}' >确定</button>
     </view>
   </view>
 </view>

@@ -117,13 +117,6 @@
 				},
 				{
 					"id": -1,
-					"name": "优惠券",
-					"pathName": "pages/manage/coupon/coupon",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
 					"name": "支付有礼",
 					"pathName": "pages/manage/paymentOfCourtesy/paymentOfCourtesy",
 					"query": "",
@@ -161,6 +154,13 @@
 					"id": -1,
 					"name": "自助远程控制",
 					"pathName": "pages/manage/device/list/controls",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "货道状态",
+					"pathName": "pages/manage/shelfsStatus/list",
 					"query": "",
 					"scene": null
 				}

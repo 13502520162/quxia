@@ -45,5 +45,5 @@
 </view>
 
 <view class='bottom-btn' bindtap='submit'>
-  <button  class="weui-btn" type="primary">确定</button>
+  <button disabled='{{isDisabled}}' class="weui-btn" type="primary">确定</button>
 </view>

@@ -144,7 +144,7 @@ Page({
           },
           {
             name: "货道状态",
-            icon: "../../assets/images/shelfs.png",
+            icon: "../../assets/images/cargoState.png",
             pageUrl: './shelfsStatus/list',
             permission: 54,
             hide: true
@@ -159,7 +159,7 @@ Page({
         },
         items: [{
           name: "库存列表",
-          icon: "../../assets/images/inventory.png",
+          icon: "../../assets/images/inventoryList.png",
           pageUrl: './inventory/list',
           permission: 32,
           hide: true
@@ -193,7 +193,7 @@ Page({
           },
           {
             name: "充值管理",
-            icon: "../../assets/images/coupon.png",
+            icon: "../../assets/images/rechargeManagement.png",
             pageUrl: './rechargeManagement/rechargeManagement',
             permission: 57,
             hide: true
@@ -223,14 +223,14 @@ Page({
           // }, 
           {
             name: "设备分润",
-            icon: "../../assets/images/royaltyList.png",
+            icon: "../../assets/images/equipmentDistribution.png",
             pageUrl: './profitSharing/equipmentDistribution/equipmentDistribution',
             permission: 38,
             hide: true
           },
           {
             name: "场地分润",
-            icon: "../../assets/images/royaltyList.png",
+            icon: "../../assets/images/steDistribution.png",
             pageUrl: './profitSharing/siteDistribution/siteDistribution',
             permission: 38,
             hide: true
@@ -256,14 +256,15 @@ Page({
             pageUrl: './replenishRecord/replenishRecord',
             permission: 42,
             hide: true
-          },
-          {
-            name: "大售货机补货",
-            icon: "../../assets/images/replenishRecord.png",
-            pageUrl: './bigVendingMachineReplenish/index?sence=1',
-            permission: "",
-            hide: false
           }
+          // ,
+          // {
+          //   name: "大售货机补货",
+          //   icon: "../../assets/images/replenishRecord.png",
+          //   pageUrl: './bigVendingMachineReplenish/index?sence=1',
+          //   permission: "",
+          //   hide: false
+          // }
         ]
       },
       {
@@ -368,35 +369,35 @@ Page({
           },
           {
             name: "新手有礼",
-            icon: "../../assets/images/coupon.png",
+            icon: "../../assets/images/newManners.png",
             pageUrl: './noviceCourtesy/noviceCourtesy',
             permission: 57,
             hide: true
           },
           {
             name: "支付有礼",
-            icon: "../../assets/images/coupon.png",
+            icon: "../../assets/images/paymentOfCourtesy.png",
             pageUrl: './paymentOfCourtesy/paymentOfCourtesy',
             permission: 57,
             hide: true
           },
           {
             name: "幸运免单",
-            icon: "../../assets/images/coupon.png",
+            icon: "../../assets/images/luckyFree.png",
             pageUrl: './luckyFree/luckyFree',
             permission: 57,
             hide: true
           },
           {
             name: "抽奖活动",
-            icon: "../../assets/images/coupon.png",
+            icon: "../../assets/images/luckyDraw.png",
             pageUrl: './luckyDraw/luckyDraw',
             permission: 57,
             hide: true
           },
           {
             name: "促销活动",
-            icon: "../../assets/images/coupon.png",
+            icon: "../../assets/images/salesPromotion.png",
             pageUrl: './salesPromotion/salesPromotion',
             permission: 57,
             hide: true

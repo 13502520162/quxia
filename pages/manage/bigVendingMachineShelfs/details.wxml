@@ -42,6 +42,7 @@
               <view class="weui-grid__label">{{item.name ? item.name :'请选择商品'}}</view>
               <view class="weui-grid__label">{{ item.price ? '￥'+ item.price : '￥0' }}</view>
               <view class="weui-grid__label">
+                  <text class='huodaohao'>货道号：</text>
                 <input type='number' data-index='{{index}}' class='cargo-number' data-item='{{shelfs.shelfs}}' value='{{item.number}}' bindinput='cargoNumber' placeholder='输入货道号'></input>
               </view>
             </view>

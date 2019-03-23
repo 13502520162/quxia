@@ -63,8 +63,8 @@
 }
 
 .content-tab>view {
-  padding: 20rpx;
-  margin: 0 20rpx;
+  padding: 15rpx;
+  margin: 0 10rpx;
   text-align: center;
 }
 

@@ -122,7 +122,6 @@ Page({
    * 标记已读
    */
   markedRead: function(e) {
-    console.log(e)
     let id = e.currentTarget.dataset.id
     fetch({
       url: 'notifications/read',

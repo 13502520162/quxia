@@ -9,13 +9,14 @@ Page({
     productId: null,
     amount: 0,
     note: '',
+    isDisabled: false,
     summaryData: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     if (options.locationId && options.productId) {
       this.setData({
         locationId: options.locationId,
@@ -28,14 +29,14 @@ Page({
   /**
    * 获取汇总
    */
-  fetchSummary: function () {
+  fetchSummary: function() {
     fetch({
-      url: '/inventory/totalStock',
-      data: {
-        locationId: this.data.locationId,
-        productId: this.data.productId
-      }
-    })
+        url: '/inventory/totalStock',
+        data: {
+          locationId: this.data.locationId,
+          productId: this.data.productId
+        }
+      })
       .then(res => {
         this.setData({
           summaryData: res.data
@@ -51,9 +52,9 @@ Page({
    * 添加数量
    */
 
-  addBtn: function () {
+  addBtn: function() {
     let num = this.data.amount;
-    if (num >= this.data.summaryData.availableStock){
+    if (num >= this.data.summaryData.availableStock) {
       return;
     }
     this.setData({
@@ -65,7 +66,7 @@ Page({
    * 减少数量
    */
 
-  reduceBtn: function () {
+  reduceBtn: function() {
     let num = this.data.amount
     if (num > 0) {
       this.setData({
@@ -77,7 +78,7 @@ Page({
   /**
    * 退货原因改变
    */
-  onNoteChange: function (e) {
+  onNoteChange: function(e) {
     if (e.detail.value.length <= 200) {
       this.setData({
         note: e.detail.value
@@ -88,7 +89,7 @@ Page({
   /**
    * 退货数量更改
    */
-  onAmountChange: function (e) {
+  onAmountChange: function(e) {
     this.setData({
       amount: e.detail.value
     })
@@ -97,7 +98,7 @@ Page({
   /**
    * 提交数据
    */
-  submit: function () {
+  submit: function() {
     if (!this.data.amount) {
       wx.showToast({
         title: '请输入数量',
@@ -105,7 +106,9 @@ Page({
       })
       return;
     }
-
+    this.setData({
+      isDisabled: true
+    })
     if (this.data.summaryData.availableStock < this.data.amount) {
       wx.showToast({
         title: '请输入正确的退货数量',
@@ -122,15 +125,15 @@ Page({
       return;
     }
     fetch({
-      url: '/inventory/return',
-      method: 'post',
-      data: {
-        locationId: this.data.locationId,
-        productId: this.data.productId,
-        amount: this.data.amount,
-        note: this.data.note
-      }
-    })
+        url: '/inventory/return',
+        method: 'post',
+        data: {
+          locationId: this.data.locationId,
+          productId: this.data.productId,
+          amount: this.data.amount,
+          note: this.data.note
+        }
+      })
       .then(res => {
         wx.showToast({
           title: '操作成功',
@@ -142,6 +145,9 @@ Page({
         }, 1500)
       })
       .catch(err => {
+        this.setData({
+          isDisabled: false
+        })
         console.error(err);
       })
   }

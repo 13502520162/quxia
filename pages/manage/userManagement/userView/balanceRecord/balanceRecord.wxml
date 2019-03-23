@@ -50,7 +50,7 @@
       <view>
         <view>
           <text>{{item.info}}</text>
-          <text>:{{item.note}}</text>
+          <text>{{item.note?'  : '+item.note:''}}</text>
         </view>
         <view class='date'>
           {{item.createdDate}}
@@ -60,7 +60,9 @@
         {{item.amount}}
       </view>
     </view>
-
+    <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+    </view>
 
   </view>
 </scroll-view>

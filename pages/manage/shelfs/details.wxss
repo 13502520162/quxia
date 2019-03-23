@@ -124,10 +124,17 @@
   right: 0rpx;
   top: 10rpx;
 }
-
+.huodaohao{
+  position: relative;
+  top: -10rpx;
+}
 .cargo-number {
+  width: 100rpx;
+  display: inline-block;
   border: 1px solid #d9d9d9;
   border-radius: 10rpx;
+  position: relative;
+  top: 10rpx;
 }
 
 .bottom-btn1 {

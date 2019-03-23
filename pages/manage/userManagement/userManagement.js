@@ -18,7 +18,7 @@ Page({
     desc: true,
 
     showFilterMenue: false,
-    isTop: false,
+    isTop: true,
     isTop1: true,
     isTop2: true,
     isTop3: true,
@@ -34,7 +34,8 @@ Page({
     dateItem: {
       today: true,
       week: false,
-      month: false
+      month: false,
+      cumulative: false
     },
 
 
@@ -53,7 +54,7 @@ Page({
     cardId: '',
 
     sexArr: [{
-      id: null,
+      id: '',
       name: '全部',
       checked: true
     }, {
@@ -71,8 +72,8 @@ Page({
     }],
     sex: '',
     joinDate: {
-      joinDateStart: null,
-      joinDateEnd: null
+      joinDateStart: '',
+      joinDateEnd: ''
     },
 
     date: {
@@ -98,11 +99,7 @@ Page({
       date: {
         start: moment().format('YYYY-MM-DD'),
         end: moment().format('YYYY-MM-DD')
-      },
-      joinDate: {
-        joinDateStart: moment().format('YYYY-MM-DD'),
-        joinDateEnd: moment().format('YYYY-MM-DD')
-      },
+      }
     })
 
     this.fetchUserData()
@@ -113,14 +110,26 @@ Page({
    *  获取列表数据 
    */
   fetchUserData: function() {
+    let joinDateStart = this.data.joinDate.joinDateStart,
+      joinDateEnd = this.data.joinDate.joinDateEnd
+    if (joinDateStart == '开始时间') {
+      joinDateStart = ''
+    }
+
+    if (joinDateEnd == '结束时间') {
+      joinDateEnd = ''
+      if (joinDateStart != '开始时间') {
+        joinDateEnd = joinDateStart
+      }
+    }
     fetch({
       url: '/customers',
       method: 'GET',
       data: {
-        start: new Date(this.data.date.start).getTime(),
-        end: new Date(this.data.date.end).getTime(),
-        joinDateStart: new Date(this.data.joinDate.joinDateEnd).getTime(),
-        joinDateEnd: new Date(this.data.joinDate.joinDateEnd).getTime(),
+        start: this.data.date.start,
+        end: this.data.date.end,
+        joinDateStart,
+        joinDateEnd,
         ...this.data.listParams,
         field: this.data.field,
         desc: this.data.desc,
@@ -130,6 +139,21 @@ Page({
         sex: this.data.sex,
       }
     }).then(res => {
+      let screenItem = this.data.screenItem
+
+      res.data.map((item) => {
+        if (screenItem.consumption) {
+          item.info = '累计消费' + item.value + '元'
+        } else if (screenItem.balance) {
+          item.info = '余额' + item.value + '元'
+        } else if (screenItem.recharge) {
+          item.info = '累计充值' + item.value + '元'
+        } else {
+          item.info = '注册日期: ' + moment(item.value).format('YYYY-MM-DD')
+        }
+        return item;
+      })
+
       this.setData({
         listData: [...this.data.listData, ...res.data]
       })
@@ -213,7 +237,15 @@ Page({
    */
   toggleFilterMenue: function() {
     this.setData({
-      showFilterMenue: !this.data.showFilterMenue
+      showFilterMenue: !this.data.showFilterMenue,
+      joinDate: {
+        joinDateStart: this.data.joinDate.joinDateStart || '开始时间',
+        joinDateEnd: this.data.joinDate.joinDateEnd || '结束时间'
+      },
+      date: {
+        start: this.data.date.start,
+        end: this.data.date.end
+      }
     })
   },
 
@@ -243,7 +275,7 @@ Page({
     this.setData({
       date: {
         start: e.detail.value,
-        end: e.detail.value
+        end: this.data.date.end
       }
     })
   },
@@ -270,7 +302,7 @@ Page({
     this.setData({
       joinDate: {
         joinDateStart: e.detail.value,
-        joinDateEnd: e.detail.value
+        joinDateEnd: this.data.joinDate.joinDateEnd,
       }
     })
   },
@@ -282,7 +314,7 @@ Page({
   rigisterEndDateChange: function(e) {
     this.setData({
       joinDate: {
-        joinDateStart: this.data.joinDate.joinDateEnd,
+        joinDateStart: this.data.joinDate.joinDateStart,
         joinDateEnd: e.detail.value
       }
     })
@@ -292,10 +324,13 @@ Page({
    * 确定筛选
    */
   onSubmit: function() {
-
     this.setData({
       showFilterMenue: false,
-      listData: []
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 10
+      }
     })
     this.fetchUserData();
   },
@@ -336,13 +371,13 @@ Page({
         checked: false
       }],
       joinDate: {
-        joinDateStart: moment().format('YYYY-MM-DD'),
-        joinDateEnd: moment().format('YYYY-MM-DD')
+        joinDateStart: '开始时间',
+        joinDateEnd: '结束时间'
       },
 
       date: {
-        start: moment().format('YYYY-MM-DD'),
-        end: moment().format('YYYY-MM-DD')
+        start: this.data.date.start,
+        end: this.data.date.end
       }
     })
 
@@ -360,6 +395,10 @@ Page({
       case 'consumption':
         this.setData({
           listData: [],
+          listParams: {
+            from: 0,
+            size: 10
+          },
           screenItem: {
             consumption: true,
             balance: false,
@@ -375,6 +414,10 @@ Page({
       case 'balance':
         this.setData({
           listData: [],
+          listParams: {
+            from: 0,
+            size: 10
+          },
           screenItem: {
             consumption: false,
             balance: true,
@@ -390,6 +433,10 @@ Page({
       case 'recharge':
         this.setData({
           listData: [],
+          listParams: {
+            from: 0,
+            size: 10
+          },
           screenItem: {
             consumption: false,
             balance: false,
@@ -405,6 +452,10 @@ Page({
       case 'register':
         this.setData({
           listData: [],
+          listParams: {
+            from: 0,
+            size: 10
+          },
           screenItem: {
             consumption: false,
             balance: false,
@@ -419,6 +470,7 @@ Page({
         break;
     };
 
+
   },
 
   /**
@@ -430,14 +482,23 @@ Page({
       case 'today':
         this.setData({
           listData: [],
+          listParams: {
+            from: 0,
+            size: 10
+          },
+          joinDate: {
+            joinDateStart: '',
+            joinDateEnd: ''
+          },
           dateItem: {
             today: true,
             week: false,
-            month: false
+            month: false,
+            cumulative: false
           },
           date: {
-            start: new Date(moment().format('YYYY-MM-DD')).getTime(),
-            end: new Date(moment().format('YYYY-MM-DD')).getTime()
+            start: moment().format('YYYY-MM-DD'),
+            end: moment().format('YYYY-MM-DD')
           }
         });
 
@@ -446,14 +507,23 @@ Page({
       case 'week':
         this.setData({
           listData: [],
+          listParams: {
+            from: 0,
+            size: 10
+          },
+          joinDate: {
+            joinDateStart: '',
+            joinDateEnd: ''
+          },
           dateItem: {
             today: false,
             week: true,
-            month: false
+            month: false,
+            cumulative: false
           },
           date: {
-            start: new Date(moment().format('YYYY-MM-DD')).getTime(),
-            end: new Date(moment().add(1, 'week').format('YYYY-MM-DD')).getTime()
+            start: moment().format('YYYY-MM-DD'),
+            end: moment().add(1, 'week').format('YYYY-MM-DD')
           }
         });
 
@@ -462,14 +532,48 @@ Page({
       case 'month':
         this.setData({
           listData: [],
+          listParams: {
+            from: 0,
+            size: 10
+          },
+          joinDate: {
+            joinDateStart: '',
+            joinDateEnd: ''
+          },
           dateItem: {
             today: false,
             week: false,
-            month: true
+            month: true,
+            cumulative: false
           },
           date: {
-            start: new Date(moment().format('YYYY-MM-DD')).getTime(),
-            end: new Date(moment().add(1, 'month').format('YYYY-MM-DD')).getTime()
+            start: moment().format('YYYY-MM-DD'),
+            end: moment().add(1, 'month').format('YYYY-MM-DD')
+          }
+        });
+
+        this.fetchUserData()
+        break;
+      case 'cumulative':
+        this.setData({
+          listData: [],
+          listParams: {
+            from: 0,
+            size: 10
+          },
+          joinDate: {
+            joinDateStart: '',
+            joinDateEnd: ''
+          },
+          dateItem: {
+            today: false,
+            week: false,
+            month: false,
+            cumulative: true
+          },
+          date: {
+            start: '',
+            end: ''
           }
         });
 

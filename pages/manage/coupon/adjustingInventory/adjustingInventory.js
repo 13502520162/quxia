@@ -9,7 +9,8 @@ Page({
     data: {},
     adjustment: 0,
     balanceIpt: 0,
-    note: ''
+    note: '',
+    isDisabled: false
   },
 
   /**
@@ -42,6 +43,19 @@ Page({
    * 确定调整
    */
   definiteAdjustment: function() {
+
+    if (this.data.note == '') {
+      wx.showToast({
+        title: '请填写修改原因',
+        icon: 'none'
+      })
+      return;
+    }
+
+
+    this.setData({
+      isDisabled: true
+    })
     let id = this.data.data.id;
     fetch({
       url: '/coupons/updateStock?id=' + id,
@@ -64,6 +78,10 @@ Page({
         })
       }, 1500)
 
+    }).catch(err => {
+      this.setData({
+        isDisabled: false
+      })
     })
   },
 

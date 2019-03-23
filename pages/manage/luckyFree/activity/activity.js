@@ -23,6 +23,8 @@ Page({
     isDisabled: false,
     isUnlimited: false,
 
+    isAllVenues: false,
+
     dateTimeArray: null,
     dateTime: null,
     dateTimeArray1: null,
@@ -160,8 +162,6 @@ Page({
         method: 'GET'
       }).then(res => {
         let ress = res.data;
-        console.log(ress)
-
         this.setData({
           name: ress.name,
           locationIds: ress.locationIds,
@@ -171,7 +171,8 @@ Page({
           note: ress.note,
           probabilityAdjustment: ress.probabilityAdjustment,
           isUnlimited: ress.enableProbabilityAdjustment,
-          isDisabled: true
+          isDisabled: true,
+          isAllVenues: ress.locationIds.length === 0
         })
       })
     } else {
@@ -218,6 +219,26 @@ Page({
 
     this.setData({
       isPermanent
+    })
+  },
+
+
+
+  /**
+   * 活动场地
+   */
+  activityVenue: function(e) {
+    let value = e.detail.value
+    let isAllVenues;
+    if (value) {
+      isAllVenues = value
+
+    } else {
+      isAllVenues = value
+    }
+
+    this.setData({
+      isAllVenues
     })
   },
 
@@ -319,7 +340,7 @@ Page({
 
 
 
-    if (!this.data.locationIds.length) {
+    if (!this.data.isAllVenues && !this.data.locationIds.length) {
       wx.showToast({
         title: '请选择适用场地',
         icon: 'none'

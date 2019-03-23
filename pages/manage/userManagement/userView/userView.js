@@ -10,7 +10,8 @@ Page({
    */
   data: {
     id: '',
-    userInfo: {}
+    userInfo: {},
+    cardDate: ''
   },
 
   /**
@@ -20,7 +21,7 @@ Page({
     this.setData({
       id: options.id
     })
-    this.fetchUserInfo()
+
   },
 
   /**
@@ -34,15 +35,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    this.fetchUserInfo()
   },
   fetchUserInfo: function() {
     fetch({
       url: '/customers/detail?id=' + this.data.id
     }).then(res => {
-      res.data.cardExpiry = moment(res.data.cardExpiry).format('YYYY-MM-DD')
+      let cardPermanent = res.data.cardPermanent;
+      let cardDate = moment(res.data.cardExpiry).format('YYYY-MM-DD')
+      if (cardPermanent) {
+        res.data.cardExpiry = '永久有效'
+      } else {
+        res.data.cardExpiry = moment(res.data.cardExpiry).format('YYYY-MM-DD') + '前有效'
+      }
+
       this.setData({
-        userInfo: res.data
+        userInfo: res.data,
+        cardDate
       })
     })
 
@@ -52,7 +61,7 @@ Page({
    */
   membershipLevel: function() {
     wx.navigateTo({
-      url: 'membershipLevel/membershipLevel',
+      url: 'membershipLevel/membershipLevel?id=' + this.data.id + '&cardId=' + this.data.userInfo.cardId + '&cardExpiry=' + this.data.userInfo.cardExpiry + '&cardDate=' + this.data.cardDate
     })
   },
 
@@ -62,7 +71,7 @@ Page({
    */
   durationofMembership: function() {
     wx.navigateTo({
-      url: 'membershipLevel/membershipLevel',
+      url: 'membershipLevel/membershipLevel?id=' + this.data.id + '&cardId=' + this.data.userInfo.cardId + '&cardExpiry=' + this.data.userInfo.cardExpiry + '&cardDate=' + this.data.cardDate
     })
   },
 
@@ -73,7 +82,7 @@ Page({
    */
   balance: function() {
     wx.navigateTo({
-      url: 'balance/balance?balance=' + this.data.userInfo.balance,
+      url: 'balance/balance?balance=' + this.data.userInfo.balance + '&id=' + this.data.id,
     })
   },
 
@@ -83,7 +92,7 @@ Page({
    */
   balanceRecord: function() {
     wx.navigateTo({
-      url: 'balanceRecord/balanceRecord?totalRecharge=' + this.data.userInfo.totalRecharge + '&totalPaidBalance=' + this.data.userInfo.totalPaidBalance,
+      url: 'balanceRecord/balanceRecord?totalRecharge=' + this.data.userInfo.totalRecharge + '&totalPaidBalance=' + this.data.userInfo.totalPaidBalance + '&id=' + this.data.id,
     })
   },
 
@@ -93,7 +102,7 @@ Page({
    */
   recordsOfConsumption: function() {
     wx.navigateTo({
-      url: 'recordsOfConsumption/recordsOfConsumption',
+      url: 'recordsOfConsumption/recordsOfConsumption?totalExpense=' + this.data.userInfo.totalExpense + '&totalOrders=' + this.data.userInfo.totalOrders + '&id=' + this.data.id,
     })
   }
 

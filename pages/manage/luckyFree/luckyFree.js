@@ -148,9 +148,12 @@ Page({
    */
   showActionSheet: function(e) {
     let that = this
-    let id = e.currentTarget.dataset.id;
     let itemList;
-    let enabled = e.currentTarget.dataset.enabled;
+    let {
+      enabled,
+      id,
+      state
+    } = e.currentTarget.dataset;
     if (this.data.systemInfo.platform == 'android') {
       itemList = ['查看', '失效', '数据统计', '删除', '取消'];
     } else {
@@ -178,7 +181,7 @@ Page({
 
               if (itemList[1] == '数据统计') {
                 wx.navigateTo({
-                  url: './dataStatistics/dataStatistics?field=view&id=' + id,
+                  url: './dataStatistics/dataStatistics?field=view&id=' + id + '&state=' + state,
                 })
               }
               break;
@@ -186,10 +189,10 @@ Page({
 
               if (itemList[2] == '数据统计') {
                 wx.navigateTo({
-                  url: './dataStatistics/dataStatistics?field=view&id=' + id,
+                  url: './dataStatistics/dataStatistics?field=view&id=' + id + '&state=' + state,
                 })
               }
-        
+
               if (itemList[2] == '删除') {
                 wx.showModal({
                   content: '是否删除该活动?',

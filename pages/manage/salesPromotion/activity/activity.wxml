@@ -52,7 +52,7 @@
 
     </view>
 
-    <radio-group class='termOfValidity'  bindchange="preferentialWay">
+    <radio-group class='termOfValidity' bindchange="preferentialWay">
       <label class=" weui-check__label" wx:for="{{preferentialWay}}" wx:key="value">
         <checkbox class="weui-check" value="{{item.value}}" disabled="{{isDisabled}}" checked="{{item.checked}}" />
 
@@ -107,11 +107,11 @@
 
   <view style='height:100rpx;' wx:if="{{!isPermanent}}">
     <view class="weui-cell weui-cell__bd  termOfValidityOp">
-      <picker class='mode-date mode-date-start' disabled="{{isDisabled}}" mode="multiSelector" value="{{dateTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn"  range="{{dateTimeArray}}">
+      <picker class='mode-date mode-date-start' disabled="{{isDisabled}}" mode="multiSelector" value="{{dateTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
         <view class="date-ipt">{{startDate}} </view>
       </picker>
       <text style='padding:0  20rpx;'> 至 </text>
-      <picker class='mode-date' mode="multiSelector" value="{{dateTime1}}" disabled="{{isDisabled}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1"  range="{{dateTimeArray1}}">
+      <picker class='mode-date' mode="multiSelector" value="{{dateTime1}}" disabled="{{isDisabled}}" bindchange="changeDateTime1" bindcolumnchange="changeDateTimeColumn1" range="{{dateTimeArray1}}">
         <view class="date-ipt"> {{endDate}}</view>
       </picker>
     </view>
@@ -120,7 +120,18 @@
 
 
 
-  <view class="weui-cell field">
+  <view class="weui-cells weui-cells_after-title  {{isAllVenues?'weui-cell-reset':''}}">
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd weui-label">活动场地</view>
+      <view class="weui-cell__ft">
+        <text class='weui-label'>全部场地</text>
+        <switch size="23" checked='{{isAllVenues}}' bindchange="activityVenue" disabled="{{isDisabled}}" />
+      </view>
+    </view>
+  </view>
+
+
+  <view class="weui-cell field" hidden='{{isAllVenues}}'>
     <view class="weui-cell__hd">
       <view class="weui-label">适用场地</view>
     </view>

@@ -12,7 +12,7 @@
   <view class="weui-cell weui-cell_access">
     <view class="weui-cell__bd">会员ID</view>
     <view class="weui-cell__ft" style="font-size: 0">
-      <view style="display: inline-block;vertical-align:middle; font-size: 17px;">{{userInfo.name}}</view>
+      <view style="display: inline-block;vertical-align:middle; font-size: 17px;">{{userInfo.id}}</view>
     </view>
   </view>
 
@@ -34,7 +34,7 @@
   <view class="weui-cell weui-cell_access">
     <view class="weui-cell__bd">会员期限</view>
     <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0" bindtap='durationofMembership'>
-      <view style="display: inline-block;vertical-align:middle; font-size: 17px;">{{userInfo.cardExpiry}}前有效</view>
+      <view style="display: inline-block;vertical-align:middle; font-size: 17px;">{{userInfo.cardExpiry}}</view>
     </view>
   </view>
 

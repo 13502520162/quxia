@@ -146,7 +146,8 @@
     "pages/manage/profitSharing/siteDistribution/setUp/setUp",
     "pages/manage/commodity/commodityClassification/setUpCommodity/setUpCommodity",
     "components/slidingTab/index",
-    "pages/manage/luckyFree/dataStatistics/dataStatistics"
+    "pages/manage/luckyFree/dataStatistics/dataStatistics",
+    "pages/manage/bigVendingMachineShelfsStatus/setShelfs"
   ],
   "window": {
     "backgroundTextStyle": "light",

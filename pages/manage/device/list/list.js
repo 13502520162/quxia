@@ -8,7 +8,7 @@ Page({
    */
   data: {
     systemInfo: {},
-
+    typeId: '',
     disEdit: true,
     disList: true,
   },
@@ -142,7 +142,7 @@ Page({
         // });
         this.setData({
           deviceTypes: res.data,
-          typeId: res.data[0].id
+          typeId: this.data.typeId || res.data[0].id
         })
         this.fetchDevices();
       })

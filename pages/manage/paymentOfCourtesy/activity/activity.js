@@ -27,6 +27,7 @@ Page({
     isPermanent: false,
     isNoThreshold: false,
     isUnlimited: false,
+    isAllVenues: false,
     fullNumber: 'QUANTITY',
     termOfValidityArr: [{
         name: '件',
@@ -116,7 +117,7 @@ Page({
 
   },
 
- 
+
 
   /**
    * 结束时间
@@ -145,9 +146,10 @@ Page({
     });
   },
 
-  
-  changeDateTimeColumn: function (e) {
-    var arr = this.data.dateTime, dateArr = this.data.dateTimeArray;
+
+  changeDateTimeColumn: function(e) {
+    var arr = this.data.dateTime,
+      dateArr = this.data.dateTimeArray;
 
     arr[e.detail.column] = e.detail.value;
     dateArr[2] = dateTimePicker.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]]);
@@ -157,8 +159,9 @@ Page({
     });
   },
 
-  changeDateTimeColumn1: function (e) {
-    var arr = this.data.dateTime1, dateArr = this.data.dateTimeArray1;
+  changeDateTimeColumn1: function(e) {
+    var arr = this.data.dateTime1,
+      dateArr = this.data.dateTimeArray1;
 
     arr[e.detail.column] = e.detail.value;
     dateArr[2] = dateTimePicker.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]]);
@@ -228,7 +231,8 @@ Page({
           iptelement: ress.minAmount,
           isDisabled: true,
           isUnlimited,
-          termOfValidityArr
+          termOfValidityArr,
+          isAllVenues: ress.locationIds == null || ress.locationIds.length === 0
         })
       })
     } else {
@@ -362,6 +366,24 @@ Page({
 
   },
 
+  /**
+   * 活动场地
+   */
+  activityVenue: function(e) {
+    let value = e.detail.value
+    let isAllVenues;
+    if (value) {
+      isAllVenues = value
+
+    } else {
+      isAllVenues = value
+    }
+
+    this.setData({
+      isAllVenues
+    })
+  },
+
 
   /**
    * 适用场地
@@ -446,13 +468,14 @@ Page({
 
 
 
-    // if (!this.data.locationIds.length) {
-    //   wx.showToast({
-    //     title: '请选择适用场地',
-    //     icon: 'none'
-    //   })
-    //   return;
-    // }
+
+    if (!this.data.isAllVenues && !this.data.locationIds.length) {
+      wx.showToast({
+        title: '请选择适用场地',
+        icon: 'none'
+      })
+      return;
+    }
 
     this.preservationFetch()
 

@@ -18,6 +18,7 @@ Page({
     discount: true,
     isDisabled: false,
     isPermanent: false,
+    isAllVenues: false,
     limitPerCustomer: '',
     locationIds: [],
     chooseCoupons: [],
@@ -82,7 +83,8 @@ Page({
           startDate: util.formatTime(ress.startDate),
           endDate: util.formatTime(ress.endDate),
           isPermanent: ress.permanent,
-          isDisabled: true
+          isDisabled: true,
+          isAllVenues: ress.locationIds.length === 0
         })
       })
     } else {
@@ -97,8 +99,8 @@ Page({
 
 
   /**
- * 开始时间
- */
+   * 开始时间
+   */
   changeDateTime(e) {
 
     let startY = '20' + e.detail.value[0]
@@ -155,8 +157,9 @@ Page({
     });
   },
 
-  changeDateTimeColumn: function (e) {
-    var arr = this.data.dateTime, dateArr = this.data.dateTimeArray;
+  changeDateTimeColumn: function(e) {
+    var arr = this.data.dateTime,
+      dateArr = this.data.dateTimeArray;
 
     arr[e.detail.column] = e.detail.value;
     dateArr[2] = dateTimePicker.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]]);
@@ -166,8 +169,9 @@ Page({
     });
   },
 
-  changeDateTimeColumn1: function (e) {
-    var arr = this.data.dateTime1, dateArr = this.data.dateTimeArray1;
+  changeDateTimeColumn1: function(e) {
+    var arr = this.data.dateTime1,
+      dateArr = this.data.dateTimeArray1;
 
     arr[e.detail.column] = e.detail.value;
     dateArr[2] = dateTimePicker.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]]);
@@ -192,6 +196,24 @@ Page({
 
     this.setData({
       isPermanent
+    })
+  },
+
+  /**
+   * 活动场地
+   */
+  activityVenue: function(e) {
+    let value = e.detail.value
+    let isAllVenues;
+    if (value) {
+      isAllVenues = value
+
+    } else {
+      isAllVenues = value
+    }
+
+    this.setData({
+      isAllVenues
     })
   },
 
@@ -257,7 +279,7 @@ Page({
 
 
 
-    if (!this.data.locationIds.length) {
+    if (!this.data.isAllVenues && !this.data.locationIds.length) {
       wx.showToast({
         title: '请选择适用场地',
         icon: 'none'

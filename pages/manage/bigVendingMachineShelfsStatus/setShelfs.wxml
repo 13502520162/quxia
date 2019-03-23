@@ -1,0 +1,36 @@
+<!--pages/manage/bigVendingMachineShelfs/setShelfs.wxml-->
+  <view class="weui-panel shelf-list">
+      <view class="weui-panel__bd">
+          <view class='card'  wx:for="{{shelfsData.shelfs}}" wx:key="{{index}}" data-index='{{index}}'>
+                <view class="weui-cell weui-cell_select card-item">
+                    <view class="weui-cell__bd">
+                        <view class="item-body">
+                           <view wx:if="{{item.productId}}" style='width:100%'>
+                              <view class='item-right'>
+                                <view class='item-right-bottm'>
+                                  <view>{{ item.name }}</view>
+                                  <view class='sync-btn' bindtap='syncOpacity' data-index='{{index}}'> 一键同步 </view>
+                                </view>
+                                <view class='item-bottom'>
+                                  <view class='item-input'>
+                                      <view>容量：</view><input type='number' data-index='{{index}}' bindinput='onMaxStockChange' value='{{item.maxStock}}'/>
+                                  </view>   
+                                  <view class='item-input'>
+                                      <view>安全库存：</view><input type='number' data-index='{{index}}' bindinput='onSafeStockChange' value='{{item.safeStock}}'/>
+                                  </view>  
+                                </view>
+                              </view>                           
+                           </view>
+                           <view wx:else class='empty'>
+                              <view>请选择商品</view>
+                           </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+      </view>
+    </view>
+
+    <view class='bottom-btn' bindtap='submit'>
+      <button  class="weui-btn" type="primary">提交</button>
+    </view>

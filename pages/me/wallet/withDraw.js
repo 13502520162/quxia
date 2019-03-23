@@ -12,6 +12,7 @@ Page({
     getAuthCodeTimer: null,
     ways: ['微信钱包'],
     wayIndex: 0,
+    isDisabled: false,
     withDrawInfo: {
       balance: '0.00'
     },
@@ -34,84 +35,90 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.getWithDrawData();
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
 
-  getWithDrawData: function () {
+  getWithDrawData: function() {
     fetch({
-      url: '/profile'
-    })
+        url: '/profile'
+      })
       .then(res => {
         if (res.data) {
           this.setData({
-            withDrawInfo: { ...this.data.withDrawInfo, mobile: res.data.mobile},
-            withDrawParams: Object.assign({}, this.data.withDrawParams, { mobile: res.data.mobile })
+            withDrawInfo: { ...this.data.withDrawInfo,
+              mobile: res.data.mobile
+            },
+            withDrawParams: Object.assign({}, this.data.withDrawParams, {
+              mobile: res.data.mobile
+            })
           })
         }
       })
     fetch({
-      url: '/balance'
-    })
+        url: '/balance'
+      })
       .then(res => {
         if (res.data) {
           this.setData({
-            withDrawInfo: { ...this.data.withDrawInfo, balance: res.data },
+            withDrawInfo: { ...this.data.withDrawInfo,
+              balance: res.data
+            },
           })
         }
       })
   },
 
-  getOathcode: function () {
+  getOathcode: function() {
     if (!this.data.withDrawInfo.mobile) {
       this.setData({
         tips: '请输入手机号码'
@@ -137,15 +144,15 @@ Page({
       getAuthCodeTimer: timer
     });
     fetch({
-      url: `/withdrawCashCode`,
-      method: 'post',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      data: {
-        mobile: this.data.withDrawInfo.mobile
-      }
-    })
+        url: `/withdrawCashCode`,
+        method: 'post',
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: {
+          mobile: this.data.withDrawInfo.mobile
+        }
+      })
       .then(res => {
         wx.showToast({
           title: '验证码已发送',
@@ -156,22 +163,26 @@ Page({
       })
   },
 
-  withDrawAmountHandle: function (e) {
+  withDrawAmountHandle: function(e) {
     this.setData({
       showTopTips: false,
-      withDrawParams: Object.assign({}, this.data.withDrawParams, { amount: e.detail.value })
+      withDrawParams: Object.assign({}, this.data.withDrawParams, {
+        amount: e.detail.value
+      })
     })
   },
 
-  authCodeHandle: function (e) {
+  authCodeHandle: function(e) {
     this.setData({
       showTopTips: false,
-      withDrawParams: Object.assign({}, this.data.withDrawParams, { code: e.detail.value })
+      withDrawParams: Object.assign({}, this.data.withDrawParams, {
+        code: e.detail.value
+      })
     })
   },
 
 
-  confirmWithDraw: function () {
+  confirmWithDraw: function() {
     this.setData({
       withDrawLoading: true
     });
@@ -213,20 +224,24 @@ Page({
       return;
     }
 
+    this.setData({
+      isDisabled: true
+    })
+
     wx.login({
       success: res => {
 
         fetch({
-          url: `/withdrawCash`,
-          method: 'post',
-          header: {
-            'content-type': 'application/x-www-form-urlencoded'
-          },
-          data: {
-            wxcode: res.code,
-            ...this.data.withDrawParams
-          }
-        })
+            url: `/withdrawCash`,
+            method: 'post',
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            data: {
+              wxcode: res.code,
+              ...this.data.withDrawParams
+            }
+          })
           .then(res => {
             if (!res || res.code == 0) {
               wx.redirectTo({
@@ -237,21 +252,24 @@ Page({
                 icon: 'none',
                 title: '验证码错误',
               })
-            } else if( res && res.code != 0 && res.msg ){
-               wx.showToast({
-                 title: res.msg,
-                 icon:'none'
-               });
+            } else if (res && res.code != 0 && res.msg) {
+              wx.showToast({
+                title: res.msg,
+                icon: 'none'
+              });
             }
-
           })
           .finally(() => {
             this.setData({
-              withDrawLoading: false
+              withDrawLoading: false,
+              isDisabled: false
             })
           })
           .catch(err => {
             console.error(err);
+            this.setData({
+              isDisabled: false
+            })
             if (err.errtype == 1) {
               wx.showToast({
                 title: err.errstr.data.msg,

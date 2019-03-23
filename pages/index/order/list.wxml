@@ -4,108 +4,122 @@
 <sliding-tab id='slidingTab' items="{{cargoState}}" bind:onMyEvent="setTab"> </sliding-tab>
 
 <view class='devices-header'>
-   <text>订单记录（{{countData}}）</text>
-   <image src='../../../assets/images/filter.png' mode='widthFix' bindtap='toggleFilterMenue'></image>
+  <text>订单记录（{{countData}}）</text>
+  <image src='../../../assets/images/filter.png' mode='widthFix' bindtap='toggleFilterMenue'></image>
 </view>
 
-<scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
-  <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='gotoOrderDetail'>
-      <view class='card-top'><text>{{item.state =='COMPLETED'?'支付成功':'支付失败'}}</text><text>￥{{item.total}}</text></view>
-      <view class="weui-cell weui-cell_select card-item">
-          <view class="weui-cell__bd">
-              <view class="weui-select weui-select_in-select-after item-body">
-                  <view class='item-top'>
-                    <text>{{ item.id }}</text>
-                    <text>{{item.deviceName}}</text>
-                  </view>
-                  <view class='location-name'>{{item.createdDate}}</view>
-                  <view class='location-name'>{{item.locationName}}</view>
-              </view>
-          </view>
+<scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}">
+  <view wx:if='{{cargoStateIndex==0}}'>
+    <view class='card' wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='gotoOrderDetail'>
+      <view class='card-top'>
+        <text>{{item.state =='COMPLETED'?'支付成功':'支付失败'}}</text>
+        <text>￥{{item.total}}</text>
       </view>
+      <view class="weui-cell weui-cell_select card-item">
+        <view class="weui-cell__bd">
+          <view class="weui-select weui-select_in-select-after item-body">
+            <view class='item-top'>
+              <text>{{ item.id }}</text>
+              <text>{{item.deviceName}}</text>
+            </view>
+            <view class='location-name'>{{item.createdDate}}</view>
+            <view class='location-name'>{{item.locationName}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:else>
+    <view class='card' wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='gotoOrderDetail'>
+      <view class='card-top'>
+        <text>{{item.state =='COMPLETED'?'支付成功':'支付失败'}}</text>
+        <text>￥{{item.total}}</text>
+      </view>
+      <view class="weui-cell weui-cell_select card-item">
+        <view class="weui-cell__bd">
+          <view class="weui-select weui-select_in-select-after item-body">
+            <view class='item-top1'>
+              <text>{{ item.id }}</text>
+              <text class='{{item.win?"win":"noWin"}}'>{{item.win?'中奖':'未中奖'}}</text>
+            </view>
+            <view class='location-name'>{{item.createdDate}}</view>
+            <view class='location-name'>{{item.locationName}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
 
   </view>
 
   <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
-      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
   </view>
-  
+
   <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
-      <view class="weui-loading"></view>
-      <view class="weui-loadmore__tips">正在加载</view>
+    <view class="weui-loading"></view>
+    <view class="weui-loadmore__tips">正在加载</view>
   </view>
 </scroll-view>
 
 
 <!-- 弹框数据筛选 -->
-<popup
-  show="{{showFilterMenue}}"
-  position="right"
-  custom-class="popup"
-  bind:close="toggleFilterMenue"
->
- <view class='popup-content'>
+<popup show="{{showFilterMenue}}" position="right" custom-class="popup" bind:close="toggleFilterMenue">
+  <view class='popup-content'>
     <view class="popup-panel">
       <view class='popup-device-status'>
         <view class='popup-title'>时间</view>
-          <view class='date'>
-              <picker mode="date" data-type='start' bindchange="onDateChange">
-                <image src='../../../assets/images/leftBackBtn.png'></image>
-                {{filterParams.start}}
-              </picker>
-              <text>  至  </text>
-              <picker mode="date" data-type='end' bindchange="onDateChange">
-                {{filterParams.end}}
-                <image src='../../../assets/images/rightBackBtn.png'></image>
-              </picker>
-          </view>     
+        <view class='date'>
+          <picker mode="date" data-type='start' bindchange="onDateChange">
+            <image src='../../../assets/images/leftBackBtn.png'></image>
+            {{filterParams.start}}
+          </picker>
+          <text>  至  </text>
+          <picker mode="date" data-type='end' bindchange="onDateChange">
+            {{filterParams.end}}
+            <image src='../../../assets/images/rightBackBtn.png'></image>
+          </picker>
+        </view>
       </view>
       <view class='popup-device-id'>
         <view class='popup-title'>设备编号</view>
-          <view>
-            <input placeholder='请输入设备编号' bindinput="onDeviceIdChange" value='{{filterParams.query}}' ></input>
-          </view>     
-      </view>
-      <view class='popup-device-place'>
-        <view class="weui-cell weui-cell_select">
-            <view class="weui-cell__hd weui-cell__hd_in-select-after">
-                <view class="weui-label popup-title" style='margin:0'>场地</view>
-            </view>
-            <view class="weui-cell__bd">
-                <picker bindchange="onFilterPlaceChange" range="{{placesData}}" value='全部' range-key="name" >
-                    <view class="weui-select">{{placesData[placesDataIndex].name}}</view>
-                </picker>
-            </view>
+        <view>
+          <input placeholder='请输入设备编号' bindinput="onDeviceIdChange" value='{{filterParams.query}}'></input>
         </view>
       </view>
       <view class='popup-device-place'>
         <view class="weui-cell weui-cell_select">
-            <view class="weui-cell__hd weui-cell__hd_in-select-after">
-                <view class="weui-label popup-title" style='margin:0'>设备类型</view>
-            </view>
-            <view class="weui-cell__bd">
-                <picker bindchange="onFilterDeviceTypeChange" range="{{deviceTypes}}" value='全部' range-key="name" >
-                    <view class="weui-select">{{deviceTypes[deviceTypesIndex].name}}</view>
-                </picker>
-            </view>
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label popup-title" style='margin:0'>场地</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker bindchange="onFilterPlaceChange" range="{{placesData}}" value='全部' range-key="name">
+              <view class="weui-select">{{placesData[placesDataIndex].name}}</view>
+            </picker>
+          </view>
+        </view>
+      </view>
+      <view class='popup-device-place'>
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label popup-title" style='margin:0'>设备类型</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker bindchange="onFilterDeviceTypeChange" range="{{deviceTypes}}" value='全部' range-key="name">
+              <view class="weui-select">{{deviceTypes[deviceTypesIndex].name}}</view>
+            </picker>
+          </view>
         </view>
       </view>
       <view class='popup-device-group'>
         <view class='popup-title'>设备分组</view>
-          <view class='popup-device-group-items'>
-            <text 
-              wx:for="{{groupsData}}"
-              wx:key="id"
-              class='tag-item {{item.selected ? "tag-item-selected":"" }}' 
-              bindtap='onselectGroup'
-              data-id='{{item.id}}'
-            >{{ item.name }}</text>
-          </view>     
+        <view class='popup-device-group-items'>
+          <text wx:for="{{groupsData}}" wx:key="id" class='tag-item {{item.selected ? "tag-item-selected":"" }}' bindtap='onselectGroup' data-id='{{item.id}}'>{{ item.name }}</text>
+        </view>
       </view>
     </view>
     <view class='popup-bottom'>
-        <text bindtap='resetPopData'>重置</text>
-        <text bindtap='onSubmit'>确定</text>
+      <text bindtap='resetPopData'>重置</text>
+      <text bindtap='onSubmit'>确定</text>
     </view>
- </view>
+  </view>
 </popup>

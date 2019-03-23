@@ -21,6 +21,7 @@ Page({
     maxRewardsDaily: '',
     isFloat: false,
     isPermanent: false,
+    isAllVenues: false,
     locationIds: [],
     entryType: 'PAY',
 
@@ -186,6 +187,7 @@ Page({
           entryType: ress.entryType,
           locationIds: ress.locationIds,
           isDisabled: true,
+          isAllVenues: ress.locationIds.length === 0,
           setAwards: {
             missDescription: ress.missDescription,
             missTitle: ress.missTitle,
@@ -297,6 +299,24 @@ Page({
   },
 
 
+  /**
+   * 活动场地
+   */
+  activityVenue: function (e) {
+    let value = e.detail.value
+    let isAllVenues;
+    if (value) {
+      isAllVenues = value
+
+    } else {
+      isAllVenues = value
+    }
+
+    this.setData({
+      isAllVenues
+    })
+  },
+
 
 
   /**
@@ -374,13 +394,13 @@ Page({
 
 
 
-    // if (!this.data.locationIds.length) {
-    //   wx.showToast({
-    //     title: '请选择适用场地',
-    //     icon: 'none'
-    //   })
-    //   return;
-    // }
+    if (!this.data.isAllVenues && !this.data.locationIds.length) {
+      wx.showToast({
+        title: '请选择适用场地',
+        icon: 'none'
+      })
+      return;
+    }
 
     this.preservationFetch()
 

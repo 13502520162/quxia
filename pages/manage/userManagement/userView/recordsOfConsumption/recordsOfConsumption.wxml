@@ -4,11 +4,11 @@
 <view class='cumulative'>
   <view class='cumulative-l'>
     <view>累计充值</view>
-    <view>200元</view>
+    <view>{{totalExpense}}元</view>
   </view>
   <view class='cumulative-l'>
     <view>累计支付</view>
-    <view>200元</view>
+    <view>{{totalOrders}}笔</view>
   </view>
 </view>
 
@@ -57,7 +57,7 @@
             <view class='list-item'>
               <image src='../../../../../assets/images/calendar.png' class='calendar-icon'></image>
               <text>{{item.day}}</text>
-              <text class='item-num'>消费  <text class=''>{{item.expense}}</text> 元，订单 <text  class=''>{{item.orders}}</text> 笔</text>
+              <text class='item-num'>消费  <text class=''>{{item.expense}}</text> 元，订单<text class=''>{{item.orders}}</text> 笔</text>
             </view>
           </view>
         </view>

@@ -49,11 +49,12 @@
       <image src='{{item.icon}}'></image>
     </view>
     <view>
-      <view class='func-item-title' wx:if="{{item.title=='消息提醒'}}"><text class='iconfont icon-gantanhao'></text> {{item.title}} </view>
+      <view class='func-item-title' wx:if="{{item.title=='消息提醒'}}">
+        <text wx:if="{{messageNumber}}" class='iconfont icon-gantanhao'></text> {{item.title}} </view>
       <view class='func-item-title' wx:else>{{item.title}}</view>
       <view class='func-item-desc'>
         <text wx:if="{{item.title=='设备列表'}}"> 在线{{deviceActiveInfo.activeDevices ? deviceActiveInfo.activeDevices : 0}}/{{deviceActiveInfo.devices ?deviceActiveInfo.devices: 0}}设备 </text>
-        <text wx:elif="{{item.title=='消息提醒'}}"> 1{{item.desc}} </text>
+        <text wx:elif="{{item.title=='消息提醒'}}"> {{messageNumber + item.desc}} </text>
         <text wx:else>{{item.desc}}</text>
       </view>
     </view>

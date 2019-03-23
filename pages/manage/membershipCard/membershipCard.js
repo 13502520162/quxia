@@ -8,7 +8,7 @@ Page({
   data: {
     list: [],
     systemInfo: {},
-    enabled:false
+    enabled: false
   },
 
   /**
@@ -53,7 +53,7 @@ Page({
 
   fetchCard: function() {
 
-  
+
 
     fetch({
       url: '/vipCards',
@@ -74,7 +74,7 @@ Page({
           item.Days = item.validDays + '天有效'
         }
 
-        if(!item.enabled){
+        if (!item.enabled) {
           item.enabled = false;
         }
         return item
@@ -123,11 +123,13 @@ Page({
               field = 'edit'
             }
             wx.navigateTo({
-              url: 'newMembershipCard/newMembershipCard?id=' + id + '&field=' + field,
+              url: 'newMembershipCard/newMembershipCard?id=' + id + '&field=view',
             })
             break
           case 1:
-            console.log('查看成员')
+            wx.navigateTo({
+              url: '../userManagement/userManagement',
+            })
             break
           case 2:
             if (itemList[2] == '删除') {

@@ -24,6 +24,7 @@ Page({
     isPermanent: false,
     isUnlimited: false,
     isNoThreshold: false,
+    isAllVenues: false,
     fullNumber: 'QUANTITY',
     preferential: 'DISCOUNT_RATE',
     termOfValidityArr: [{
@@ -265,7 +266,8 @@ Page({
           iptpiece: ress.minQuantity,
           iptelement: ress.minAmount,
           isDisabled: true,
-          isUnlimited
+          isUnlimited,
+          isAllVenues: ress.locationIds.length === 0
         })
       })
     } else {
@@ -439,6 +441,25 @@ Page({
 
 
   /**
+   * 活动场地
+   */
+  activityVenue: function(e) {
+    let value = e.detail.value
+    let isAllVenues;
+    if (value) {
+      isAllVenues = value
+
+    } else {
+      isAllVenues = value
+    }
+
+    this.setData({
+      isAllVenues
+    })
+  },
+
+
+  /**
    * 适用场地
    */
   choiceOfVenue: function() {
@@ -532,6 +553,14 @@ Page({
         })
         return;
       }
+    }
+
+    if (!this.data.isAllVenues && !this.data.locationIds.length) {
+      wx.showToast({
+        title: '请选择适用场地',
+        icon: 'none'
+      })
+      return;
     }
 
 

@@ -21,18 +21,11 @@ Page({
     disAdd: true,
     disList: true,
     systemInfo: {},
+    typeId: '',
 
 
     cargoStateIndex: 0,
-    cargoState: [{
-        id: '1',
-        name: '货道配货1'
-      },
-      {
-        id: '2',
-        name: '货道配货2'
-      }
-    ]
+    cargoState: []
   },
 
   /**
@@ -91,7 +84,7 @@ Page({
       listEnd: false,
       listData: [],
     })
-    this.fetchCommodityList();
+    this.fetchDevicesTpes()
   },
 
 
@@ -101,6 +94,7 @@ Page({
   setTab: function(e) {
     this.setData({
       cargoStateIndex: e.detail.index,
+      typeId: e.detail.item.id,
       listData: [],
       listParams: {
         from: 0,
@@ -136,6 +130,20 @@ Page({
     this.setData({
       inputVal: e.detail.value
     });
+  },
+
+
+  fetchDevicesTpes: function() {
+    fetch({
+      url: '/devices/types'
+    }).then(res => {
+      this.setData({
+        cargoState: res.data,
+        typeId: this.data.typeId || res.data[0].id
+      }, () => {
+        this.fetchCommodityList();
+      })
+    })
   },
 
 
@@ -185,7 +193,8 @@ Page({
         url: '/shelfs',
         data: {
           ...this.data.listParams,
-          query: iptVal
+          query: iptVal,
+          typeId: this.data.typeId
         }
       })
       .then(res => {

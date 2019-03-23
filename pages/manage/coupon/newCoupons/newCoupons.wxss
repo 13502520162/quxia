@@ -32,7 +32,6 @@
 }
 
 .coupon-name {
-
   text-align: right;
 }
 
@@ -191,4 +190,15 @@ input {
 
 .disabledColor {
   color: #ccc;
+}
+
+.weui-cell_switch {
+  border: none;
+}
+
+.weui-cell__ft .weui-label {
+  position: relative;
+  top: 5rpx;
+  right: 10rpx;
+  font-size: 25rpx;
 }

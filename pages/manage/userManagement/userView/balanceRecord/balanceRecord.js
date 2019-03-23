@@ -14,23 +14,28 @@ Page({
     date: '2019-03-01',
     start: '',
     end: '',
-    type: null,
+    id: '',
+    type: '',
     listData: [],
 
     totalRecharge1: '',
     totalBalancePaid: '',
 
     source: [{
-      value: null,
+      value: '',
       name: '全部记录',
       checked: true
     }, {
-      value: 'recharge',
+      value: 'RECHARGE',
       name: '充值记录',
       checked: false
     }, {
-      value: 'pay',
+      value: 'EXPENSE',
       name: '支付记录',
+      checked: false
+    }, {
+      value: 'ADJUST',
+      name: '调整记录',
       checked: false
     }],
 
@@ -48,8 +53,9 @@ Page({
       totalRecharge: options.totalRecharge,
       totalPaidBalance: options.totalPaidBalance,
       date: moment().format("YYYY-MM"),
-      start: new Date(moment().startOf('month')).getTime(),
-      end: new Date(moment().endOf('month')).getTime()
+      start: moment().startOf('month').format("YYYY-MM-DD"),
+      end: moment().endOf('month').format("YYYY-MM-DD"),
+      id: options.id
     })
     this.fetchSummary()
     this.fetchList()
@@ -80,16 +86,18 @@ Page({
 
   fetchList: function() {
     fetch({
-      url: '/customers/balance/audits?start=' + this.data.start + '&end=' + this.data.end + '&type=' + this.data.type,
+      url: '/customers/balance/audits?start=' + this.data.start + '&end=' + this.data.end + '&type=' + this.data.type + '&id=' + this.data.id,
       data: {
-        ...this.data.listParams
+        ...this.data.listParams,
       }
     }).then(res => {
       let listData = res.data.map(item => {
-        if (item.source == 'recharge') {
+        if (item.type == 'RECHARGE') {
           item.info = '常规充值'
-        } else {
-          item.info = '余额调整'
+        } else if (item.type == 'EXPENSE') {
+          item.info = '支付余额'
+        } else if (item.type == "ADJUST") {
+          item.info = '调整记录'
         }
 
         if (item.amount > 0) {
@@ -115,17 +123,22 @@ Page({
     let start = moment(value + '-01').startOf('month').format("YYYY-MM-DD"),
       end = moment(value + '-01').endOf('month').format("YYYY-MM-DD");
     this.setData({
-      start: new Date(start).getTime(),
-      end: new Date(start).getTime(),
+      start,
+      end,
       date: value,
-      listData: []
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 10
+      }
     })
     this.fetchSummary()
     this.fetchList()
   },
+
   fetchSummary: function() {
     fetch({
-      url: '/customers/balance/summary?start=' + this.data.start + '&end=' + this.data.end,
+      url: '/customers/balance/summary?start=' + this.data.start + '&end=' + this.data.end + '&id=' + this.data.id,
     }).then(res => {
       this.setData({
         totalRecharge1: res.data.totalRecharge,
@@ -133,7 +146,9 @@ Page({
       })
     })
   },
-
+  /**
+   * tab 切换
+   */
   selSource: function(e) {
     let source = this.data.source;
     let value = e.currentTarget.dataset.value
@@ -149,7 +164,11 @@ Page({
     this.setData({
       source: select,
       type: value,
-      listData: []
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 10
+      }
     })
 
     this.fetchList()

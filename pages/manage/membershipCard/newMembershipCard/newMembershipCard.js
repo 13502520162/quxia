@@ -34,15 +34,16 @@ Page({
     meetingConditions: [{
         value: 'payment',
         checked: true
-      },
-      {
-        value: 'consumption',
-        checked: false
       }
+      // ,
+      // {
+      //   value: 'consumption',
+      //   checked: false
+      // }
     ],
     field: '',
 
-    isDisabled:false
+    isDisabled: false
   },
 
   /**
@@ -70,7 +71,7 @@ Page({
 
     if (field == 'view') {
       this.setData({
-        isDisabled:true
+        isDisabled: true
       })
     }
   },
@@ -138,32 +139,35 @@ Page({
       }
 
 
-      if (item.orders && item.orders != null) {
+      if (item.totalRecharge && item.totalRecharge != null) {
         meetingConditions = [{
             value: 'payment',
             checked: true
-          },
-          {
-            value: 'consumption',
-            checked: false
           }
+          // ,
+          // {
+          //   value: 'consumption',
+          //   checked: false
+          // }
         ]
       } else {
         meetingConditions = [{
             value: 'payment',
             checked: false
-          },
-          {
-            value: 'consumption',
-            checked: true
           }
+          // ,
+          // {
+          //   value: 'consumption',
+          //   checked: true
+          // }
         ]
       }
 
-      let objectArray = this.data.objectArray, tradeIndex = 0
+      let objectArray = this.data.objectArray,
+        tradeIndex = 0
 
       for (var index = 0; index < objectArray.length; index++) {
-        if (objectArray[index].id == item.fallbackCardId){
+        if (objectArray[index].id == item.fallbackCardId) {
           tradeIndex = index
         }
       }
@@ -173,8 +177,8 @@ Page({
         name: item.name,
         tradeIndex,
         frequency: item.validDays,
-        successfulPayment: item.orders,
-        consumptionAmount: item.total,
+        successfulPayment: item.totalRecharge,
+        //consumptionAmount: item.total,
         equity: item.discountRate,
         usageNeeds: item.note,
         isTermOfValidity: item.permanent,
@@ -279,7 +283,7 @@ Page({
   },
 
   /**
-   * 支付成功 ** 次
+   * 累计充值 ** 元
    */
   successfulPayment: function(e) {
     this.setData({
@@ -287,14 +291,14 @@ Page({
     })
   },
 
-  /**
-   * 消费金额 ** 次
-   */
-  consumptionAmount: function(e) {
-    this.setData({
-      consumptionAmount: e.detail.value
-    })
-  },
+  // /**
+  //  * 消费金额 ** 次
+  //  */
+  // consumptionAmount: function(e) {
+  //   this.setData({
+  //     consumptionAmount: e.detail.value
+  //   })
+  // },
 
   /**
    * 使用需知
@@ -410,10 +414,10 @@ Page({
           name: this.data.name,
           permanent: this.data.isTermOfValidity,
           validDays: this.data.frequency,
-          fallbackCardId: parseInt(this.data.objectArray[this.data.tradeIndex].id),
+          fallbackCardId: this.data.tradeIndex ? parseInt(this.data.objectArray[this.data.tradeIndex].id) : '',
           acquireType: this.data.isReceive,
-          orders: parseInt(this.data.successfulPayment),
-          total: parseInt(this.data.consumptionAmount),
+          totalRecharge: parseInt(this.data.successfulPayment),
+          //total: parseInt(this.data.consumptionAmount),
           note: this.data.usageNeeds,
           discountRate: parseInt(this.data.equity)
         }

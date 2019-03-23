@@ -5,8 +5,9 @@
       <view class='list-t'>
         <view>
           <text class='card'>{{item.name}}</text>
-          <text class='weui-badge'>{{item.users==null?'0':item.users}}用户</text>
-          <text class='weui-badge'>{{item.discountRate}}折</text>
+          <text class='weui-badge' wx:if='{{item.enabled}}'>{{item.users==null?'0':item.users}}用户</text>
+          <text class='weui-badge' wx:if='{{item.enabled}}'>{{item.discountRate}}折</text>
+          <text class='weui-badge' style='background:#ccc;' wx:else>已失效</text>
         </view>
         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
       </view>

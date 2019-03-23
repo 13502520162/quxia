@@ -34,4 +34,4 @@
 </view>
 
 
-<view class='preservation' bindtap='definiteAdjustment'>确定</view>
+<button disabled='{{isDisabled}}' class='preservation' bindtap='definiteAdjustment'>确定</button>

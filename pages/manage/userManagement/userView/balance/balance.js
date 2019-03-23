@@ -6,20 +6,22 @@ Page({
    * 页面的初始数据
    */
   data: {
-    balance: 10,
+    balance: 0,
     adjustment: 0,
     balanceIpt: 0,
-    note: ''
+    note: '',
+    id: '',
+    isDisabled: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    // this.setData({
-    //   balance: options.balance,
-    //   adjustment: options.balance
-    // })
+    this.setData({
+      balance: parseInt(options.balance),
+      id: options.id
+    })
   },
 
   /**
@@ -40,12 +42,26 @@ Page({
    * 确定调整
    */
   definiteAdjustment: function() {
+    if (this.data.note == '') {
+      wx.showToast({
+        icon: 'none',
+        title: '请输入调整备注',
+      })
+      return
+    }
+
+    this.setData({
+      isDisabled: true
+    })
+
     fetch({
       url: '/customers/balance',
       method: "POST",
+      isShowLoading: true,
       data: {
         value: parseInt(this.data.adjustment),
-        note: this.data.note
+        note: this.data.note,
+        id: parseInt(this.data.id)
       }
     }).then(res => {
 
@@ -58,8 +74,20 @@ Page({
         wx.navigateBack({
           delta: 1
         })
-      }, 1500)
+        let pages = getCurrentPages()
+        let prepage = pages[pages.length - 2];
+        prepage.setData({
+          userInfo: {
+            ...prepage.data.userInfo,
+            balance: this.data.adjustment + this.data.balance
+          }
+        })
+      }, 1000)
 
+    }).catch(err => {
+      this.setData({
+        isDisabled: false
+      })
     })
   },
 

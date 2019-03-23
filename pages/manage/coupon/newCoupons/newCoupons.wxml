@@ -65,7 +65,7 @@
       <input class="full-order-ipt {{isDisabled?'disabledColor':''}}" bindinput='amount' value='{{amount}}' disabled="{{isDisabled}}" type='number' />
       <text> 元</text>
     </view>
-     <view class='full-order full-order-quota' wx:else>
+    <view class='full-order full-order-quota' wx:else>
       <text>打 </text>
       <input class="full-order-ipt {{isDisabled?'disabledColor':''}}" bindinput='amount' value='{{amount}}' disabled="{{isDisabled}}" type='number' />
       <text> 折</text>
@@ -148,13 +148,24 @@
   </view>
 
 
+  <view class=" weui-cells_after-title  {{isAllVenues?'weui-cell-reset':''}}">
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd weui-label">活动场地</view>
+      <view class="weui-cell__ft">
+        <text class='weui-label'>全部场地</text>
+        <switch size="23" checked='{{isAllVenues}}' bindchange="activityVenue" disabled="{{isDisabled}}" />
+      </view>
+    </view>
+  </view>
 
-  <view class="weui-cell field">
+
+  <view class="weui-cell field" hidden='{{isAllVenues}}'>
     <view class="weui-cell__hd">
       <view class="weui-label">适用场地</view>
     </view>
     <view class='field-num' bindtap='choiceOfVenue'>
-      <text>{{locationIds.length}}</text>个场地
+      <text wx:if="{{locationIds.length}}" class='{{isDisabled?"disabledColor":""}}'>{{locationIds.length}}个场地</text>
+      <text wx:else class="{{isDisabled?'disabledColor':''}}">全部场地</text>
       <image src='/assets/images/rightBackBtn.png'></image>
     </view>
   </view>

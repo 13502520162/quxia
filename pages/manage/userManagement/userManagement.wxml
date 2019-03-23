@@ -11,6 +11,7 @@
         <view class='date-item {{dateItem.today? "active":""}}' data-item='today' bindtap='selectDateItem'>今天</view>
         <view class='date-item {{dateItem.week? "active":""}}' data-item='week' bindtap='selectDateItem'>本周</view>
         <view class='date-item {{dateItem.month? "active":""}}' data-item='month' bindtap='selectDateItem'>本月</view>
+        <view class='date-item {{dateItem.cumulative? "active":""}}' data-item='cumulative' bindtap='selectDateItem'>累计</view>
       </view>
       <image src='../../../assets/images/filter.png' mode='widthFix' bindtap='toggleFilterMenue'></image>
     </view>
@@ -42,7 +43,7 @@
         <text class='iconfont icon-shang {{!isTop3 && screenItem.register? "iconActive":""}}'></text>
       </view>
     </view>
-    <view class='userNum'>100个用户</view>
+    <!-- <view class='userNum'>100个用户</view> -->
   </view>
 </view>
 
@@ -56,13 +57,17 @@
       </view>
       <view class="weui-cell__bd">
         <view>{{item.name}}</view>
-        <view style="font-size: 13px;color: #888888;">累计消费{{item.value}}元</view>
+        <view style="font-size: 13px;color: #888888;">{{item.info}}</view>
       </view>
       <view class="weui-cell__ft weui-cell__ft_in-access">
-        <text class='level'>{{item.cardName}}</text>
+        <text class='level' wx:if='{{item.cardName}}'>{{item.cardName}}</text>
       </view>
     </view>
 
+  </view>
+
+  <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
   </view>
 </scroll-view>
 
@@ -100,13 +105,13 @@
     <view class='popup-date'>
       <view>筛选时间</view>
       <view class='date-screen'>
-        <picker class='date-ipt' mode="date" value="{{date.start}}" start="{{date.start}}" end="" bindchange="screenStartDateChange">
+        <picker class='date-ipt' mode="date" value="{{date.start}}" bindchange="screenStartDateChange">
           <view class="picker ">
             {{date.start}}
           </view>
         </picker>
         <text>至</text>
-        <picker class='date-ipt' mode="date" value="{{date.start}}" start="{{date.start}}" end="" bindchange="srceenEndDateChange">
+        <picker class='date-ipt' mode="date" value="{{date.start}}" bindchange="srceenEndDateChange">
           <view class="picker ">
             {{date.end}}
           </view>
@@ -117,13 +122,13 @@
     <view class='popup-date'>
       <view>注册时间</view>
       <view class='date-screen'>
-        <picker class='date-ipt' mode="date" value="{{joinDate.joinDateStart}}" start="{{joinDate.joinDateStart}}" end="" bindchange="rigisterStartDateChange">
+        <picker class='date-ipt' mode="date" value="{{joinDate.joinDateStart}}" bindchange="rigisterStartDateChange">
           <view class="picker ">
             {{joinDate.joinDateStart}}
           </view>
         </picker>
         <text>至</text>
-        <picker class='date-ipt' mode="date" value="{{joinDate.joinDateEnd}}" start="{{joinDate.joinDateStart}}" end="" bindchange="rigisterEndDateChange">
+        <picker class='date-ipt' mode="date" value="{{joinDate.joinDateEnd}}" bindchange="rigisterEndDateChange">
           <view class="picker ">
             {{joinDate.joinDateEnd}}
           </view>

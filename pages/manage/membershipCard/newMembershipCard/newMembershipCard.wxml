@@ -67,16 +67,16 @@
         </label>
 
         <view class="weui-cell__bd weui-cell__bd-reset full-order">
-          <text>累计支付成功</text>
-          <input type='number' value='{{successfulPayment}}' disabled="{{isDisabled}}"  bindinput='successfulPayment' class="full-order-ipt  {{isDisabled?'disabledColor':''}}" />
-          <text>次</text>
+          <text>累计充值</text>
+          <input type='number' value='{{successfulPayment}}' disabled="{{isDisabled}}" bindinput='successfulPayment' class="full-order-ipt  {{isDisabled?'disabledColor':''}}" />
+          <text>元</text>
         </view>
 
-        <view class="weui-cell__bd weui-cell__bd-reset full-order">
+        <!-- <view class="weui-cell__bd weui-cell__bd-reset full-order">
           <text>累计消费金额</text>
           <input type='number' value='{{consumptionAmount}}' disabled="{{isDisabled}}"  bindinput='consumptionAmount' class="full-order-ipt  {{isDisabled?'disabledColor':''}}" />
           <text>次</text>
-        </view>
+        </view> -->
 
       </radio-group>
     </view>
@@ -87,7 +87,7 @@
   <view class="weui-cell weui-cell_textarea weui-cell-reset">
     <view class="weui-label">使用需知</view>
     <view class="weui-cell__bd">
-      <textarea placeholder='请输入使用需知' disabled="{{isDisabled}}"  value='{{usageNeeds}}' bindinput='usageNeeds' class="textarea  {{isDisabled?'disabledColor':''}}"></textarea>
+      <textarea placeholder='请输入使用需知' disabled="{{isDisabled}}" value='{{usageNeeds}}' bindinput='usageNeeds' class="textarea  {{isDisabled?'disabledColor':''}}"></textarea>
     </view>
   </view>
 
