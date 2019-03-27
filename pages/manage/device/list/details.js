@@ -70,7 +70,7 @@ Page({
 permissionFilter: function () {
     let permissions = getStorePermissions();
     //列表
-  if (permissions.includes(9)) {
+  if (permissions.permissions.includes(9)) {
       this.setData({
         disBind: false
       })

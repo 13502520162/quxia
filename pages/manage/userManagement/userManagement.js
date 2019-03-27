@@ -99,11 +99,14 @@ Page({
       date: {
         start: moment().format('YYYY-MM-DD'),
         end: moment().format('YYYY-MM-DD')
-      }
+      },
+      cardId: options.vipCardId
+    }, () => {
+
+      this.fetchUserData()
+      this.fetchVipCards()
     })
 
-    this.fetchUserData()
-    this.fetchVipCards()
   },
 
   /**
@@ -169,7 +172,7 @@ Page({
     }).then(res => {
 
       let all = {
-        id: null,
+        id: '',
         name: '全部'
       }
       res.data.unshift(all);
@@ -178,6 +181,14 @@ Page({
           item.checked = true
         } else {
           item.checked = false;
+        }
+
+        if (this.data.cardId) {
+          if (this.data.cardId == item.id) {
+            item.checked = true;
+          } else {
+            item.checked = false
+          }
         }
 
         return item;

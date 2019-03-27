@@ -11,8 +11,8 @@ Page({
     filterParams: {
       groupId: '',
       active: '',
-      start: moment().format('YYYY-MM-DD'),
-      end: moment().format('YYYY-MM-DD')
+      start: '',
+      end: ''
     },
 
     listParams: {
@@ -42,6 +42,79 @@ Page({
 
   },
 
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function(options) {
+
+    const {
+      startDate,
+      endDate,
+      locationId,
+      deviceId,
+      cargoStateIndex
+    } = options;
+    if (startDate && endDate) {
+      this.setData({
+        filterParams: {
+          ...this.data.filterParams,
+          start: startDate,
+          end: endDate
+        }
+      })
+    }
+
+    if (locationId) {
+      this.setData({
+        filterParams: {
+          ...this.data.filterParams,
+          locationId
+        }
+      })
+    }
+
+    if (deviceId) {
+      this.setData({
+        filterParams: {
+          ...this.data.filterParams,
+          deviceId
+        }
+      })
+    }
+
+    if (cargoStateIndex) {
+      this.setData({
+        cargoStateIndex: options.cargoStateIndex
+      })
+    }
+
+
+    this.fetchDeviceTypes();
+    this.fetchPlaces();
+    this.fetchGroups();
+  },
+
+  onShow: function() {
+    this.setData({
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 10
+      }
+    })
+    let cargoStateIndex = this.data.cargoStateIndex
+    if (cargoStateIndex == 0) {
+      this.fetchSaleOrders();
+      this.fetchSaleOrderCount()
+    } else {
+      this.fetchLuckyOrders();
+      this.fetchLuckyOrderCount()
+    }
+  },
+
+
+
   setTab: function(e) {
     let index = e.detail.index
     this.setData({
@@ -65,54 +138,17 @@ Page({
 
   toggleFilterMenue: function() {
     this.setData({
-      showFilterMenue: !this.data.showFilterMenue
+      showFilterMenue: !this.data.showFilterMenue,
+      filterParams: {
+        ...this.data.filterParams,
+        start: this.data.filterParams.start || '开始时间',
+        end: this.data.filterParams.end || '结束时间',
+      },
     })
   },
 
 
 
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
-
-    const {
-      startDate,
-      endDate,
-      locationId,
-      deviceId
-    } = options;
-    if (startDate && endDate) {
-      this.setData({
-        filterParams: { ...this.data.filterParams,
-          start: startDate,
-          end: endDate
-        }
-      })
-    }
-
-    if (locationId) {
-      this.setData({
-        filterParams: { ...this.data.filterParams,
-          locationId
-        }
-      })
-    }
-
-    if (deviceId) {
-      this.setData({
-        filterParams: { ...this.data.filterParams,
-          deviceId
-        }
-      })
-    }
-    this.fetchSaleOrders();
-    this.fetchDeviceTypes();
-    this.fetchPlaces();
-    this.fetchGroups();
-    this.fetchSaleOrderCount();
-  },
 
 
   /**
@@ -390,7 +426,12 @@ Page({
     this.setData({
       listEnd: false,
       showFilterMenue: false,
-      listData: []
+      listData: [],
+      filterParams: {
+        ...this.data.filterParams,
+        start: this.data.filterParams.start == '开始时间' ? '' : this.data.filterParams.start,
+        end: this.data.filterParams.end == '结束时间' ? '' : this.data.filterParams.end
+      }
     }, () => {
       let index = this.data.cargoStateIndex;
       if (index == 0) {

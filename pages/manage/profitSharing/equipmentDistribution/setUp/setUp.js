@@ -91,7 +91,7 @@ Page({
    */
   showActionSheet: function(e) {
     let that = this
-    let id = e.currentTarget.dataset.userId;
+    let id = e.currentTarget.dataset.id;
     let index = e.currentTarget.dataset.index;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
@@ -100,7 +100,6 @@ Page({
       itemList = ['编辑', '删除'];
     }
 
-
     wx.showActionSheet({
       itemList: itemList,
       success: res => {
@@ -108,7 +107,7 @@ Page({
           switch (res.tapIndex) {
             case 0:
               wx.navigateTo({
-                url: '../../../royalty/selectUser?usersDataIndex=' + e.currentTarget.dataset.index,
+                url: '../../../royalty/selectUser?usersDataIndex=' + index,
               })
               break;
             case 1:
@@ -138,15 +137,16 @@ Page({
   delPlace: function(id) {
     let users = this.data.newOrUpdateParams.users
     let newUsers = [];
+    console.log(id)
 
     for (let i = 0; i < users.length; i++) {
-      if (users[i].userId == id) {
+      if (users[i].userId != id) {
+        console.log(users[i])
         newUsers.push(users[i])
       }
     }
 
     this.setData({
-      ...this.data.newOrUpdateParams,
       newOrUpdateParams: {
         users: newUsers
       }
@@ -160,7 +160,8 @@ Page({
    */
   onConfirm: function() {
     let newOrUpdateParams = this.data.newOrUpdateParams;
-    if (!newOrUpdateParams.users.length) {
+    console.log(newOrUpdateParams)
+    if (newOrUpdateParams.users == undefined || !newOrUpdateParams.users.length) {
       wx.showToast({
         title: '请选择分润对象',
         icon: 'none'

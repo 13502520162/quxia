@@ -10,7 +10,7 @@ Page({
     tabs: [{
       name: "缺货提醒",
       num: 0,
-      type: 'STOCK_ALERT '
+      type: 'STOCK_ALERT'
     }, {
       name: "订单通知",
       num: 0,
@@ -18,10 +18,13 @@ Page({
     }, {
       name: '收入通知',
       num: 0,
-      type: 'INCOME '
+      type: 'INCOME'
     }],
 
     type: 'STOCK_ALERT',
+    STOCK_ALERT: 0,
+    ORDER: 0,
+    INCOME: 0,
     listData: [],
     activeIndex: 0,
     sliderOffset: 0,
@@ -54,7 +57,11 @@ Page({
       sliderOffset: e.currentTarget.offsetLeft,
       activeIndex: e.currentTarget.id,
       type: e.currentTarget.dataset.type,
-      listData: []
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 10
+      }
     }, () => {
       this.fetchList()
     });
@@ -69,19 +76,9 @@ Page({
       url: '/notifications/summary'
     }).then(res => {
       this.setData({
-        tabs: [{
-          name: "缺货提醒",
-          num: res.data.stockAlert,
-          type: 'STOCK_ALERT '
-        }, {
-          name: "订单通知",
-          num: res.data.order,
-          type: 'ORDER'
-        }, {
-          name: '收入通知',
-          num: res.data.income,
-          type: 'INCOME'
-        }]
+        STOCK_ALERT: res.data.STOCK_ALERT || 0,
+        ORDER: res.data.ORDER || 0,
+        INCOME: res.data.INCOME || 0
       })
 
     })
@@ -123,8 +120,9 @@ Page({
    */
   markedRead: function(e) {
     let id = e.currentTarget.dataset.id
+    let type = this.data.type
     fetch({
-      url: 'notifications/read',
+      url: '/notifications/read?id=' + id,
       data: {
         id
       },
@@ -132,12 +130,27 @@ Page({
     }).then(res => {
       let listData = this.data.listData.map(item => {
         if (item.id == id) {
-          item.read = false
+          item.read = true
         }
         return item;
       })
+      let {
+        STOCK_ALERT,
+        ORDER,
+        INCOME
+      } = this.data
+      if (type == 'STOCK_ALERT') {
+        STOCK_ALERT--
+      } else if (type == 'ORDER') {
+        ORDER--
+      } else {
+        INCOME--
+      }
       this.setData({
-        listData: listData
+        listData: listData,
+        STOCK_ALERT,
+        ORDER,
+        INCOME
       });
     })
   },

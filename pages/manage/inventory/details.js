@@ -58,35 +58,35 @@ Page({
     let permissions = getStorePermissions();
     let actionSheetListItems = this.data.actionSheetListItems;
     //列表
-    if (permissions.includes(32)) {
+    if (permissions.permissions.includes(32)) {
       this.setData({
         disList: false
       })
 
     }
     //入库
-    if (!permissions.includes(33)) {
+    if (!permissions.permissions.includes(33)) {
       let itemIndex = actionSheetListItems.indexOf('入库');
       if (itemIndex > -1) {
         actionSheetListItems.splice(itemIndex, 1);
       }
     }
     //退货
-    if (!permissions.includes(34)) {
+    if (!permissions.permissions.includes(34)) {
       let itemIndex = actionSheetListItems.indexOf('退货');
       if (itemIndex > -1) {
         actionSheetListItems.splice(itemIndex, 1);
       }
     }
     //发货
-    if (!permissions.includes(35)){
+    if (!permissions.permissions.includes(35)){
       let itemIndex = actionSheetListItems.indexOf('发货');
       if (itemIndex > -1) {
         actionSheetListItems.splice(itemIndex, 1);
       }
     
     //库存记录
-    if (!permissions.includes(36)) {
+      if (!permissions.permissions.includes(36)) {
       let itemIndex = actionSheetListItems.indexOf('库存记录');
       if (itemIndex > -1) {
         actionSheetListItems.splice(itemIndex, 1);

@@ -40,7 +40,7 @@
                         <text>{{ item.name }}</text>
                       </view>
                       <view class='item-bottom'>
-                        <text>总库存{{item.totalStock}}件</text>
+                        <!-- <text>总库存{{item.totalStock}}件</text> -->
                         <text>可用库存{{item.availableStock}}件</text>
                       </view>
                     </view>

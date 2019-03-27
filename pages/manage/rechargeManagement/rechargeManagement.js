@@ -34,6 +34,10 @@ Page({
   },
   onShow: function() {
     this.setData({
+      listParams: {
+        from: 0,
+        size: 10
+      },
       listData: []
     })
     this.fetchPlaceList()

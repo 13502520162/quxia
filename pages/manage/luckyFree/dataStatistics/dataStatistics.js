@@ -7,7 +7,8 @@ Page({
    */
   data: {
     grids: [],
-    state: ''
+    state: '',
+    name: ''
   },
 
   /**
@@ -16,7 +17,8 @@ Page({
   onLoad: function(options) {
     this.fetchData(options.id)
     this.setData({
-      state: options.state
+      state: options.state,
+      name: options.name
     })
   },
 
@@ -54,7 +56,7 @@ Page({
    */
   viewOrder: function() {
     wx.navigateTo({
-      url: '../../../index/order/list',
+      url: '../../../index/order/list?cargoStateIndex=1',
     })
   }
 })

@@ -11,7 +11,7 @@
               <text>{{ summaryData.name }}</text>
             </view>
             <view class='item-bottom'>
-              <text>总库存{{summaryData.totalStock}}件</text>
+              <!-- <text>总库存{{summaryData.totalStock}}件</text> -->
               <text>可用库存{{summaryData.availableStock}}件</text>
             </view>
           </view>

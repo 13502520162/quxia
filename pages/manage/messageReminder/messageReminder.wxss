@@ -21,10 +21,11 @@ page, .page, .page__bd {
 .weui-navbar__title .num {
   position: absolute;
   top: -15rpx;
-  right: -30rpx;
+  right: -40rpx;
   background: red;
   width: 30rpx;
   height: 30rpx;
+  padding: 5rpx;
   line-height: 30rpx;
   font-size: 20rpx;
   color: #fff;

@@ -106,18 +106,22 @@ Page({
 
   onLoad: function() {
     permissions = getStorePermissions();
-    let funcList = this.data.funcList.map(item => {
-      if (permissions.includes(item.premission)) {
-        item.hide = false
-      }
-      return item;
-    });
-    let isShowSummary = permissions.includes(1);
+    if (permissions != '') {
+      let funcList = this.data.funcList.map(item => {
+        if (permissions.permissions.includes(item.premission)) {
+          item.hide = false
+        }
+        return item;
+      });
+      let isShowSummary = permissions.permissions.includes(1);
+      this.setData({
+        funcList: funcList,
+        isShowSummary: isShowSummary
+      })
+    }
 
-    this.setData({
-      funcList: funcList,
-      isShowSummary: isShowSummary
-    })
+
+
     this.fetchSummaryData();
     this.fetchDeviceActiveInfo();
     this.fetchMessageNumber()
@@ -200,8 +204,11 @@ Page({
         url: "/notifications/summary"
       })
       .then(res => {
+        let {
+          INCOME = 0, ORDER = 0, STOCK_ALERT = 0
+        } = res.data
         this.setData({
-          messageNumber: res.data.income + res.data.order + res.data.stockAlert
+          messageNumber: INCOME + ORDER + STOCK_ALERT
         })
       })
   },

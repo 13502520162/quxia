@@ -1,4 +1,5 @@
 // pages/authorization/authorization.js
+import fetch from '../../lib/fetch.js';
 const app = getApp();
 Page({
 
@@ -9,7 +10,7 @@ Page({
 
   },
 
-  onAuthorization: function ( event ) {
+  onAuthorization: function(event) {
     if (event.detail.errMsg === 'getUserInfo:ok') {
 
       /**
@@ -17,6 +18,7 @@ Page({
        */
       app.globalData.tokenIsReady = true;
       app.globalData.queuecb = [];
+
 
       wx.reLaunch({
         url: "/pages/index/index"

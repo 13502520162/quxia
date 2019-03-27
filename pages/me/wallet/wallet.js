@@ -14,7 +14,7 @@ Page({
 
   onLoad: function (options) {
     permissions = getStorePermissions();
-    if( permissions.includes(52) ){
+    if (permissions.permissions.includes(52) ){
       this.setData({
         isCanWithdraw: true
       })

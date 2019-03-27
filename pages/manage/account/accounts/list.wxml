@@ -27,7 +27,7 @@
     </view>
   </view>
   <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}"  style='{{ disAdd ? "height:calc(100vh - 100rpx)" : "height: calc(100vh - 200rpx)" }}'>
-    <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' data-enabled='{{item.enabled}}' bindtap='showActionSheet'>
+    <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-admin='{{item.admin}}' data-id='{{item.id}}' data-enabled='{{item.enabled}}' bindtap='showActionSheet'>
         <view class="weui-cell weui-cell_select card-item">
             <view class="weui-cell__bd">
                 <view class="weui-select weui-select_in-select-after item-body">

@@ -51,6 +51,7 @@ Page({
       .then(res => {
         if (res.data) {
           res.data.createdDate = moment(res.data.createdDate).format('YYYY-MM-DD HH:mm:ss');
+          res.data.paymentGateway = res.data.paymentGateway.toLowerCase()
           this.setData({
             orderInfo: res.data
           })

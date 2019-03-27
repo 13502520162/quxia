@@ -16,18 +16,18 @@ Page({
     listLoading: false,
     listEnd: false,
     listData: [],
-    systemInfo:{},
+    systemInfo: {},
 
     disEdit: true,
     disAdd: true,
-    disList: true 
-    
+    disList: true
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.permissionFilter();
     wx.getSystemInfo({
       success: res => {
@@ -41,29 +41,29 @@ Page({
   /**
    * 权限过滤
    */
-  permissionFilter: function () {
+  permissionFilter: function() {
     let permissions = getStorePermissions();
     //列表
-    if (permissions.includes(48)){
+    if (permissions.permissions.includes(48)) {
       this.setData({
         disList: false
       })
     }
     //添加
-    if (permissions.includes(49)) {
+    if (permissions.permissions.includes(49)) {
       this.setData({
         disAdd: false
       })
     }
     //编辑
-    if (permissions.includes(50)) {
+    if (permissions.permissions.includes(50)) {
       this.setData({
         disEdit: false
       })
     }
   },
 
-  onShow: function () {
+  onShow: function() {
     this.setData({
       inputShowed: false,
       inputVal: "",
@@ -82,23 +82,23 @@ Page({
   /**
    * 搜索框事件 
    */
-  showInput: function () {
+  showInput: function() {
     this.setData({
       inputShowed: true
     });
   },
-  hideInput: function () {
+  hideInput: function() {
     this.setData({
       inputVal: "",
       inputShowed: false
     });
   },
-  clearInput: function () {
+  clearInput: function() {
     this.setData({
       inputVal: ""
     });
   },
-  inputTyping: function (e) {
+  inputTyping: function(e) {
     this.setData({
       inputVal: e.detail.value
     });
@@ -107,7 +107,7 @@ Page({
   /**
    * 列表搜索
    */
-  searchHandle: function () {
+  searchHandle: function() {
     this.setData({
       listParams: {
         from: 0,
@@ -125,7 +125,7 @@ Page({
    * 获取列表
    */
 
-  fetchAccountList: function () {
+  fetchAccountList: function() {
     if (this.data.disList) {
       return;
     }
@@ -143,12 +143,12 @@ Page({
     })
 
     fetch({
-      url: '/accounts',
-      data: {
-        ...this.data.listParams,
-        query: this.data.inputVal
-      }
-    })
+        url: '/accounts',
+        data: {
+          ...this.data.listParams,
+          query: this.data.inputVal
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
@@ -170,13 +170,15 @@ Page({
   },
 
   /**
- * 列表触底加更多列表数据
- */
-  loadMoreListData: function () {
+   * 列表触底加更多列表数据
+   */
+  loadMoreListData: function() {
 
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchAccountList();
     }
@@ -186,14 +188,15 @@ Page({
   /**
    * 列表每一项操作
    */
-  showActionSheet: function (e) {
+  showActionSheet: function(e) {
     let id = e.currentTarget.dataset.id;
+    let admin = e.currentTarget.dataset.admin;
     let enabled = e.currentTarget.dataset.enabled;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
-      itemList = ['编辑','启用', '修改密码','删除','取消'];
+      itemList = ['编辑', '启用', '修改密码', '删除', '取消'];
     } else {
-      itemList = ['编辑','启用', '修改密码','删除'];
+      itemList = ['编辑', '启用', '修改密码', '删除'];
     }
 
     if (enabled) {
@@ -202,9 +205,9 @@ Page({
       itemList[1] = "启用"
     };
 
-    if(this.data.disEdit){
-        itemList.splice(0,1);
-        itemList.splice(2,1);
+    if (this.data.disEdit) {
+      itemList.splice(0, 1);
+      itemList.splice(2, 1);
     }
 
 
@@ -214,10 +217,10 @@ Page({
         if (!res.cancel) {
           let targetItem = itemList[res.tapIndex];
           switch (targetItem) {
-            case '编辑': 
+            case '编辑':
               if (!this.data.disEdit) {
                 wx.navigateTo({
-                  url: './details?type=edit&id=' + id,
+                  url: './details?type=edit&id=' + id + '&editAdmin=' + admin,
                 })
               }
               break;
@@ -229,10 +232,10 @@ Page({
               break;
             case '修改密码':
               wx.navigateTo({
-                  url: './alterPasswd?id=' + id,
-                })
+                url: './alterPasswd?id=' + id,
+              })
               break;
-            case '删除': 
+            case '删除':
               this.delAccount(id);
               break;
             default:
@@ -247,14 +250,14 @@ Page({
   /**
    * 启用
    */
-  enableAccount: function (id) {
+  enableAccount: function(id) {
     fetch({
-      url: '/accounts/enable?id=' + id,
-      method: 'post',
-      data: {
-        id: id
-      }
-    })
+        url: '/accounts/enable?id=' + id,
+        method: 'post',
+        data: {
+          id: id
+        }
+      })
       .then(res => {
         let listData = this.data.listData.map(item => {
           if (item.id == id) {
@@ -274,14 +277,14 @@ Page({
   /**
    * 暂停
    */
-  disableAccount: function (id) {
+  disableAccount: function(id) {
     fetch({
-      url: '/accounts/disable?id=' + id,
-      method: 'post',
-      data: {
-        id: id
-      }
-    })
+        url: '/accounts/disable?id=' + id,
+        method: 'post',
+        data: {
+          id: id
+        }
+      })
       .then(res => {
         let listData = this.data.listData.map(item => {
           if (item.id == id) {
@@ -301,11 +304,11 @@ Page({
   /**
    * 删除
    */
-  delAccount: function (id) {
+  delAccount: function(id) {
     fetch({
-      url: '/accounts?id='+id,
-      method: 'delete'
-    })
+        url: '/accounts?id=' + id,
+        method: 'delete'
+      })
       .then(res => {
         let listData = [];
         this.data.listData.map(item => {
@@ -325,7 +328,7 @@ Page({
   /**
    * 跳转新增分润方案
    */
-  onAddAccount: function () {
+  onAddAccount: function() {
     wx.navigateTo({
       url: './details?type=new',
     })

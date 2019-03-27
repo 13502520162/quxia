@@ -7,9 +7,11 @@
   padding: 10rpx 0rpx;
   height: 224rpx;
 }
+
 .header-left {
   margin: 0px 40rpx;
 }
+
 .avatar {
   display: block;
   width: 150rpx;
@@ -27,13 +29,27 @@
   padding: 10rpx;
   box-sizing: border-box;
 }
+
 .personInfo-item-title, .personInfo-item-info {
   display: block;
 }
+
 .personInfo-item-title {
   font-size: 20rpx;
 }
+
 .personInfo-item-info {
   font-weight: bold;
 }
 
+view .reset-btn {
+  background: #fff;
+  border: none;
+  text-align: left;
+  padding-left: 0;
+  line-height: inherit;
+}
+
+view .reset-btn::after {
+  border: none;
+}

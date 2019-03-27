@@ -7,30 +7,36 @@ Page({
    * 页面的初始数据
    */
   data: {
-      dataType:'',
-      listParams: {
-        from: 0,
-        size: 20
-      },
-      listLoading: false,
-      listEnd: false,
-      listData: [],
+    dataType: '',
+    listParams: {
+      from: 0,
+      size: 20
+    },
+    listLoading: false,
+    listEnd: false,
+    listData: [],
+    resources: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
+    let pages = getCurrentPages();
+    let prepage = pages[pages.length - 2];
     this.setData({
-      dataType: options.dataType
+      dataType: options.dataType,
+      resources: prepage.data.adData.resources
+    }, () => {
+      this.fetchResourcesList();
     })
-    this.fetchResourcesList();
+
   },
 
   /**
    * 获取资源列表数据
    */
-  fetchResourcesList: function(){
+  fetchResourcesList: function() {
     if (this.data.listLoading) {
       return;
     }
@@ -42,20 +48,28 @@ Page({
     this.setData({
       listLoading: true
     })
+    let resources = this.data.resources
 
     fetch({
-      url: '/adpub/resources',
-      data: {
-        ...this.data.listParams,
-        type: this.data.dataType
-      }
-    })
+        url: '/adpub/resources',
+        data: {
+          ...this.data.listParams,
+          type: this.data.dataType
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
             listEnd: true
           })
         }
+
+        res.data.map((item) => {
+          if (resources.includes(item.url)) {
+            item.checked = true
+          }
+          return item;
+        })
 
         this.setData({
           listData: [...this.data.listData, ...res.data]
@@ -72,9 +86,12 @@ Page({
   },
 
   /**初始化七牛云数据 */
-  initQiniu: function () {
+  initQiniu: function() {
     return new Promise((resolve, reject) => {
-      fetch({ url: '/api/qiniu/upToken', method: 'post' })
+      fetch({
+          url: '/api/qiniu/upToken',
+          method: 'post'
+        })
         .then(res => {
           if (res.data) {
             let options = {
@@ -98,7 +115,7 @@ Page({
   /**
    * 切换选择
    */
-  toggleChecked: function (e) {
+  toggleChecked: function(e) {
     let id = e.currentTarget.dataset.id;
     let listData = this.data.listData;
     for (let i = 0; i < listData.length; i++) {
@@ -117,15 +134,15 @@ Page({
   /**
    * 上传资源
    */
-  onUploadResource: function () {
+  onUploadResource: function() {
 
     this.initQiniu().then(options => {
-      if (this.data.dataType == 'IMAGE') {
-        this.uploadImage();
-      } else {
-        this.uploadVideo();
-      }
-    })
+        if (this.data.dataType == 'IMAGE') {
+          this.uploadImage();
+        } else {
+          this.uploadVideo();
+        }
+      })
       .catch(err => {
         console.error(err);
       })
@@ -134,7 +151,7 @@ Page({
   /**
    * 上传视频
    */
-  uploadVideo: function () {
+  uploadVideo: function() {
     let that = this;
     wx.chooseVideo({
       count: 1,
@@ -145,16 +162,16 @@ Page({
         qiniuUploader.upload(filePath, (videoRes) => {
           qiniuUploader.upload(res.thumbTempFilePath, (posterRes) => {
             fetch({
-              url: '/adpub/resources',
-              method: 'post',
-              data: {
-                url: videoRes.imageURL,
-                type: 'VIDEO',
-                size: videoRes.fsize,
-                key: videoRes.key,
-                thumb: posterRes.imageURL
-              }
-            })
+                url: '/adpub/resources',
+                method: 'post',
+                data: {
+                  url: videoRes.imageURL,
+                  type: 'VIDEO',
+                  size: videoRes.fsize,
+                  key: videoRes.key,
+                  thumb: posterRes.imageURL
+                }
+              })
               .then(res => {
                 wx.showToast({
                   title: '上传成功'
@@ -183,7 +200,7 @@ Page({
   /**
    * 上传图片
    */
-  uploadImage: function () {
+  uploadImage: function() {
     let that = this;
     wx.chooseImage({
       count: 1,
@@ -193,15 +210,15 @@ Page({
         let that = this;
         qiniuUploader.upload(filePath, (res) => {
           fetch({
-            url: '/adpub/resources',
-            method: 'post',
-            data: {
-              url: res.imageURL,
-              type: 'IMAGE',
-              size: res.fsize,
-              key: res.key,
-            }
-          })
+              url: '/adpub/resources',
+              method: 'post',
+              data: {
+                url: res.imageURL,
+                type: 'IMAGE',
+                size: res.fsize,
+                key: res.key,
+              }
+            })
             .then(() => {
               that.setData({
                 listParams: {
@@ -222,24 +239,26 @@ Page({
   /**
    * 确定
    */
-  onComfirm: function () {
+  onComfirm: function() {
     let pages = getCurrentPages();
-    let prePage = pages[pages.length -2 ];
+    let prePage = pages[pages.length - 2];
     let selectedUrls = [];
-    this.data.listData.forEach( item => {
-      if( item.checked ){
-        selectedUrls.push( item.url )
+    this.data.listData.forEach(item => {
+      if (item.checked) {
+        selectedUrls.push(item.url)
       }
     })
 
     prePage.setData({
-      adData: { ...prePage.data.adData, resources: selectedUrls }
+      adData: { ...prePage.data.adData,
+        resources: selectedUrls
+      }
     })
 
     wx.navigateBack({
-      detal:1
+      detal: 1
     })
-  
+
   }
 
 })

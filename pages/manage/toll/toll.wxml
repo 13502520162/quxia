@@ -10,7 +10,7 @@
                         <view class='item-top'>
                           <text>{{item.name}}</text>
                         </view>
-                        <view><text class='goods-num'>{{item.items}}个商品</text><text class='goods-devices-num'>{{item.devices ? item.devices: 0}}台设备</text></view>
+                        <view><text class='goods-num'>{{item.items.length}}个商品</text><text class='goods-devices-num'>{{item.devices ? item.devices: 0}}台设备</text></view>
                     </view>
                 </view>
             </view>

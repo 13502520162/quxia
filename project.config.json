@@ -44,7 +44,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 16,
+			"current": 17,
 			"list": [
 				{
 					"id": -1,
@@ -161,6 +161,13 @@
 					"id": -1,
 					"name": "货道状态",
 					"pathName": "pages/manage/shelfsStatus/list",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 17,
+					"name": "账户管理",
+					"pathName": "pages/manage/account/accounts/list",
 					"query": "",
 					"scene": null
 				}

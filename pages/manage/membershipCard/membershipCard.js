@@ -38,6 +38,10 @@ Page({
   onShow: function() {
 
     this.setData({
+      listParams: {
+        from: 0,
+        size: 10
+      },
       list: []
     })
     this.fetchCard()
@@ -128,7 +132,7 @@ Page({
             break
           case 1:
             wx.navigateTo({
-              url: '../userManagement/userManagement',
+              url: '../userManagement/userManagement?vipCardId=' + id
             })
             break
           case 2:

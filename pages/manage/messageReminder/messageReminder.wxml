@@ -6,7 +6,10 @@
         <block wx:for="{{tabs}}" wx:key="{{index}}">
           <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" data-type='{{item.type}}' bindtap="tabClick">
             <view class="weui-navbar__title">{{item.name}}
-              <text class='num' wx:if="{{item.num!=0}}">{{item.num}}</text> </view>
+              <text class='num' wx:if="{{item.name=='缺货提醒'}}" hidden='{{STOCK_ALERT == 0}}'>{{STOCK_ALERT}}</text>
+              <text class='num' wx:if="{{item.name=='订单通知'}}" hidden='{{ORDER == 0}}'>{{ORDER}}</text>
+              <text class='num' wx:if="{{item.name=='收入通知'}}" hidden='{{INCOME == 0}}'>{{INCOME}}</text>
+            </view>
           </view>
         </block>
         <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
@@ -18,25 +21,25 @@
               <view>
                 <view>
                   <text>设备编号：</text>
-                  <text>{{item.deviceId}}</text>
+                  <text>{{item.data.deviceId}}</text>
                 </view>
                 <view>
                   <text>设备名称：</text>
-                  <text>{{item.deviceName}}</text> </view>
+                  <text>{{item.data.deviceName}}</text> </view>
                 <view>
                   <text>场地：</text>
-                  <text>{{item.locationName}}</text>
+                  <text>{{item.data.locationName}}</text>
                 </view>
                 <view>
                   <text>地址：</text>
-                  <text>{{item.province + item.city + item.district + item.street}}</text>
+                  <text>{{item.data.province + item.data.city + item.data.district + item.data.street}}</text>
                 </view>
                 <view class='date'>
                   <text>{{item.createdDate}}</text>
                 </view>
               </view>
               <view class='state'>
-                <text wx:if='{{item.read}}' class='read' data-id='{{item.id}}' bindtap='markedRead'>标记已读</text>
+                <text wx:if='{{!item.read}}' class='read' data-id='{{item.id}}' bindtap='markedRead'>标记已读</text>
                 <text wx:else>已读</text>
               </view>
             </view>

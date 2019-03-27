@@ -91,7 +91,7 @@ Page({
    */
   showActionSheet: function(e) {
     let that = this
-    let id = e.currentTarget.dataset.userId;
+    let id = e.currentTarget.dataset.id;
     let index = e.currentTarget.dataset.index;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
@@ -140,13 +140,12 @@ Page({
     let newUsers = [];
 
     for (let i = 0; i < users.length; i++) {
-      if (users[i].userId == id) {
+      if (users[i].userId != id) {
         newUsers.push(users[i])
       }
     }
 
     this.setData({
-      ...this.data.newOrUpdateParams,
       newOrUpdateParams: {
         users: newUsers
       }
@@ -160,7 +159,7 @@ Page({
    */
   onConfirm: function() {
     let newOrUpdateParams = this.data.newOrUpdateParams;
-    if (!newOrUpdateParams.users.length) {
+    if (newOrUpdateParams.users == undefined || !newOrUpdateParams.users.length) {
       wx.showToast({
         title: '请选择分润对象',
         icon: 'none'

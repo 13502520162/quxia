@@ -79,13 +79,13 @@
 }
 
 .item-top1 text.win {
-  background: 188ae2;
+  background:  var(--main-color);
   color: #fff;
   border-radius: 10rpx;
 }
 
 .item-top1 text.noWin {
-  background: var(--main-color);
+  background: #ccc;
   color: #fff;
   border-radius: 10rpx;
 }

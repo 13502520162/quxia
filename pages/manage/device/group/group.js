@@ -43,19 +43,19 @@ Page({
   permissionFilter: function () {
     let permissions = getStorePermissions();
     //列表
-    if (permissions.includes(12)) {
+    if (permissions.permissions.includes(12)) {
       this.setData({
         disList: false
       })
     }
     //添加
-    if (permissions.includes(13)) {
+    if (permissions.permissions.includes(13)) {
       this.setData({
         disAdd: false
       })
     }
     //编辑
-    if (permissions.includes(14)) {
+    if (permissions.permissions.includes(14)) {
       this.setData({
         disEdit: false
       })

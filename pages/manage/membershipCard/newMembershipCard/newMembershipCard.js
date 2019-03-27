@@ -310,11 +310,20 @@ Page({
   },
 
   /**
-   * 使用需知
+   * 打折
    */
   equity: function(e) {
+    let value = e.detail.value
+    if (value >= 10) {
+      wx.showToast({
+        title: '打折额度不能超过10',
+        icon: 'none'
+      })
+      value = ''
+    }
+
     this.setData({
-      equity: e.detail.value
+      equity: value
     })
   },
 

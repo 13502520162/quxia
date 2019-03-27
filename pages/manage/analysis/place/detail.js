@@ -209,7 +209,7 @@ Page({
           })
         }
         res.data = res.data.map(item => {
-          item.date = moment(item.date).format('YYYY-MM-DD');
+          item.date = moment(item.day).format('YYYY-MM-DD');
           return item;
         })
         this.setData({

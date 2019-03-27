@@ -8,6 +8,9 @@ Component({
     items: {
       type: Array,
       value: []
+    },
+    stateIndex: {
+      type: Number
     }
   },
 

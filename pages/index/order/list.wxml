@@ -1,7 +1,7 @@
 <!--pages/index/order/list.wxml-->
 <!--pages/manage/device/list/list.wxml-->
 
-<sliding-tab id='slidingTab' items="{{cargoState}}" bind:onMyEvent="setTab"> </sliding-tab>
+<sliding-tab id='slidingTab' items="{{cargoState}}" stateIndex="{{cargoStateIndex}}" bind:onMyEvent="setTab"> </sliding-tab>
 
 <view class='devices-header'>
   <text>订单记录（{{countData}}）</text>

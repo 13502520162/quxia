@@ -152,7 +152,8 @@ Page({
     let {
       enabled,
       id,
-      state
+      state,
+      name
     } = e.currentTarget.dataset;
     if (this.data.systemInfo.platform == 'android') {
       itemList = ['查看', '失效', '数据统计', '删除', '取消'];
@@ -181,7 +182,7 @@ Page({
 
               if (itemList[1] == '数据统计') {
                 wx.navigateTo({
-                  url: './dataStatistics/dataStatistics?field=view&id=' + id + '&state=' + state,
+                  url: './dataStatistics/dataStatistics?field=view&id=' + id + '&state=' + state + '&name=' + name,
                 })
               }
               break;
@@ -189,7 +190,7 @@ Page({
 
               if (itemList[2] == '数据统计') {
                 wx.navigateTo({
-                  url: './dataStatistics/dataStatistics?field=view&id=' + id + '&state=' + state,
+                  url: './dataStatistics/dataStatistics?field=view&id=' + id + '&state=' + state + '&name=' + name,
                 })
               }
 

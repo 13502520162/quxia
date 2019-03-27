@@ -70,7 +70,11 @@ Page({
   },
   onShow: function() {
     this.setData({
-      listData: []
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 10
+      }
     })
     this.fetchDistribution()
   },

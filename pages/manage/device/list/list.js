@@ -18,7 +18,11 @@ Page({
     this.setData({
       deviceTypesIndex: edata.tabindex,
       typeId: edata.id,
-      listData: []
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 10
+      }
     })
 
     this.fetchDevices()
@@ -47,13 +51,13 @@ Page({
   permissionFilter: function() {
     let permissions = getStorePermissions();
     //列表
-    if (permissions.includes(8)) {
+    if (permissions.permissions.includes(8)) {
       this.setData({
         disList: false
       })
     }
     //编辑
-    if (permissions.includes(10)) {
+    if (permissions.permissions.includes(10)) {
       this.setData({
         disEdit: false
       })
@@ -90,7 +94,7 @@ Page({
 
       listParams: {
         from: 0,
-        size: 20
+        size: 10
       },
       listLoading: false,
       listEnd: false,

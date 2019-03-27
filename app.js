@@ -1,25 +1,26 @@
-
 //app.js
 
 import CusBase64 from './lib/base64'
 import config from './config.js'
 const BASE_URL = config.BASE_URL;
 
+
 //为Promise添加finally方法
-Promise.prototype.finally = function (callback) {
+Promise.prototype.finally = function(callback) {
   let P = this.constructor;
   return this.then(
     value => P.resolve(callback()).then(() => value),
-    reason => P.resolve(callback()).then(() => { throw reason })
+    reason => P.resolve(callback()).then(() => {
+      throw reason
+    })
   );
 };
 
 
 App({
-  onLaunch: function () {
-  },
-  
-  
+  onLaunch: function() {},
+
+
 
   getToken(cb) {
     let self = this
@@ -28,7 +29,7 @@ App({
       cb(this.globalData.token.access_token)
       return
     } else {
-   
+
       self.globalData.queuecb.push(cb)
       if (self.globalData.tokenIsReady === true) {
         self.globalData.tokenIsReady = false
@@ -38,17 +39,109 @@ App({
     }
 
     wx.getSetting({
-      success:  res => {
-        if( res.authSetting['scope.userInfo'] ){
-           wx.redirectTo({
-             url: '/pages/login/login',
-            //  url:'/pages/index/index'
-           })
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 登录
+          wx.login({
+            success: res => {
+              // ------ 获取凭证 ------
+              var code = res.code;
+              if (code) {
+                let p = new Promise(function(resolve, reject) {
+                  wx.request({
+                    url: BASE_URL + '/merchant/api/wx/openId?code=' + code,
+                    method: 'GET',
+                    header: {
+                      'content-type': 'application/json'
+                    },
+                    success: function(res) {
+                      resolve(res.data)
+                      self.fetchWxlogin(res.data)
+                    }
+                  })
+                })
+              }
+            }
+          })
         } else {
           wx.redirectTo({
             url: "/pages/authorization/authorization"
           })
         }
+      }
+    })
+  },
+
+
+  /**
+   * 微信快速登录
+   */
+  fetchWxlogin: function(res) {
+    let self = this
+    let Authorization = CusBase64.CusBASE64.encoder(`${config.client_id}:${config.client_secret}`);
+    wx.request({
+      url: BASE_URL + "/oauth/token",
+      method: "post",
+      data: {
+        username: '',
+        password: '',
+        grant_type: 'merchant_wxa',
+        openId: res.data,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Basic ${Authorization}`
+      },
+      success: res => {
+        if (res.data.access_token) {
+          let expireTime = new Date().valueOf() + res.data.expires_in * 1000;
+          res.data.expireTime = expireTime;
+          try {
+            self.globalData.token = res.data;
+            wx.setStorageSync('tokenInfo', res.data);
+            self.fetchPermissions(res.data)
+          } catch (err) {
+            console.error(err);
+          }
+
+        } else {
+          if (res.statusCode == 401) {
+            wx.reLaunch({
+              url: '/pages/login/login'
+            })
+          }
+
+        }
+
+      }
+    })
+  },
+
+
+
+  /**
+   * 获取用户权限
+   */
+  fetchPermissions: function(token) {
+    wx.request({
+      url: BASE_URL + "/merchant/api/wx/permissions",
+      data: {
+        access_token: token.access_token
+      },
+      success: res => {
+        if (res.data.code == 0) {
+          console.log(res.data)
+          wx.setStorageSync('permissions', res.data.data);
+        }
+        wx.reLaunch({
+          url: '/pages/index/index',
+          fail: err => {
+            console.error(err);
+          }
+        })
+      },
+      fail: error => {
+        console.error(error);
       }
     })
   },
@@ -89,7 +182,7 @@ App({
   removeAllListeners(type) {
     this.globalData._events[type] = null
   },
-  
+
   listeners(type) {
     return this.globalData._events[type]
   },

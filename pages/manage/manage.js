@@ -415,11 +415,11 @@ Page({
     //根据权限，进行功能过滤；
     permissions = getStorePermissions();
     let funcMenu = this.data.funcMenu.map(item => {
-      if (permissions.includes(item.title.permission)) {
+      if (permissions.permissions.includes(item.title.permission)) {
         item.title.hide = false;
       }
       item.items = item.items.map(subItem => {
-        if (permissions.includes(subItem.permission)) {
+        if (permissions.permissions.includes(subItem.permission)) {
           subItem.hide = false
         }
         return subItem;
