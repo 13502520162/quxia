@@ -29,6 +29,23 @@
   </view>
 
 
+  <view class="weui-cell weui-cell_input weui-cell-reset" style='height:85rpx;'>
+    <view class="weui-cell__hd">
+      <view class="weui-label">优惠额度</view>
+    </view>
+    <view class='full-order full-order-quota' wx:if="{{discount}}">
+      <text>减免 </text>
+      <input class="full-order-ipt {{isDisabled?'disabledColor':''}}" bindinput='amount' value='{{amount}}' disabled="{{isDisabled}}" type='number' />
+      <text> 元</text>
+    </view>
+    <view class='full-order full-order-quota' wx:else>
+      <text>打 </text>
+      <input class="full-order-ipt {{isDisabled?'disabledColor':''}}" bindinput='amount' value='{{amount}}' disabled="{{isDisabled}}" type='number' />
+      <text> 折</text>
+    </view>
+  </view>
+
+
 
 
   <view class="weui-cell" style='height:65rpx;'>
@@ -56,21 +73,6 @@
   </view>
 
 
-  <view class="weui-cell weui-cell_input weui-cell-reset" style='height:85rpx;'>
-    <view class="weui-cell__hd">
-      <view class="weui-label">优惠额度</view>
-    </view>
-    <view class='full-order full-order-quota' wx:if="{{discount}}">
-      <text>减免 </text>
-      <input class="full-order-ipt {{isDisabled?'disabledColor':''}}" bindinput='amount' value='{{amount}}' disabled="{{isDisabled}}" type='number' />
-      <text> 元</text>
-    </view>
-    <view class='full-order full-order-quota' wx:else>
-      <text>打 </text>
-      <input class="full-order-ipt {{isDisabled?'disabledColor':''}}" bindinput='amount' value='{{amount}}' disabled="{{isDisabled}}" type='number' />
-      <text> 折</text>
-    </view>
-  </view>
 
 
   <view class="weui-cell" style='border:none'>

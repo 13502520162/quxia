@@ -32,7 +32,10 @@
             <image src='{{item.image}}'></image>
           </view>
           <view class='item-top'>
-            <view>{{ item.name }}</view>
+            <view>{{ item.name }}
+              <text class='enabled' wx:if='{{item.enabled}}'>已启用</text>
+              <text class='unenabled' wx:if='{{!item.enabled}}'>未启用</text>
+            </view>
             <view>{{ item.province + item.city + item.district + item.street }}</view>
             <view class='cl'>{{item.users?item.users:0}}人分润</view>
           </view>

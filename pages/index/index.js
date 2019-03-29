@@ -107,23 +107,39 @@ Page({
   onLoad: function() {
     permissions = getStorePermissions();
     if (permissions != '') {
-      let funcList = this.data.funcList.map(item => {
-        if (permissions.permissions.includes(item.premission)) {
+      if (permissions.admin) {
+        let funcList = this.data.funcList.map(item => {
           item.hide = false
-        }
-        return item;
-      });
-      let isShowSummary = permissions.permissions.includes(1);
-      this.setData({
-        funcList: funcList,
-        isShowSummary: isShowSummary
-      })
+
+          return item;
+        });
+        let isShowSummary = true
+        this.setData({
+          funcList: funcList,
+          isShowSummary: isShowSummary
+        })
+      } else {
+        let funcList = this.data.funcList.map(item => {
+          if (permissions.permissions.includes(item.premission)) {
+            item.hide = false
+          }
+          return item;
+        });
+        let isShowSummary = permissions.permissions.includes(1);
+        this.setData({
+          funcList: funcList,
+          isShowSummary: isShowSummary
+        })
+      }
     }
 
 
 
     this.fetchSummaryData();
     this.fetchDeviceActiveInfo();
+  },
+
+  onShow: function() {
     this.fetchMessageNumber()
   },
 

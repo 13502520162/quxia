@@ -36,7 +36,6 @@ Page({
     this.initData();
     this.fetchDevicesTpes()
     this.fetchPlaces();
-    this.fetchDevicesSummary();
   },
 
   /**
@@ -119,6 +118,7 @@ Page({
       }
     })
     this.fetchDevices()
+    this.fetchDevicesSummary()
   },
 
   fetchDevicesTpes: function() {
@@ -130,6 +130,7 @@ Page({
         typeId: this.data.typeId || res.data[0].id
       }, () => {
         this.fetchDevices();
+        this.fetchDevicesSummary()
       })
     })
   },
@@ -164,7 +165,8 @@ Page({
     fetch({
         url: '/shelfs/devices/summary',
         data: {
-          ...this.data.filterParams
+          ...this.data.filterParams,
+          typeId: this.data.typeId
         }
       })
       .then(res => {
@@ -373,23 +375,23 @@ Page({
     } else {
       itemList = ['查看货道', '补货', '补货记录', '同步'];
     }
-  
+
     wx.showActionSheet({
       itemList: itemList,
       success: res => {
         if (!res.cancel) {
           switch (res.tapIndex) {
             case 0:
-              if (index==0){
+              if (index == 0) {
                 wx.navigateTo({
                   url: './details?id=' + id + '&planid=' + planid + '&deviceTypeId=' + deviceTypeId,
                 })
-              }else{
+              } else {
                 wx.navigateTo({
                   url: '../bigVendingMachineShelfsStatus/details?id=' + id + '&planid=' + planid + '&deviceTypeId=' + deviceTypeId,
                 })
               }
-             
+
               break;
             case 1:
               wx.navigateTo({

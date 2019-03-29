@@ -4,12 +4,10 @@
 
   <view class="weui-cell weui-cell_access">
     <view class="weui-cell__bd">会员级别</view>
-    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0" bindtap='membershipLevel'>
-
-
-
+    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
       <picker style="display: inline-block;vertical-align:middle; font-size: 17px;" bindchange="onFilterChange" value="{{index}}" range="{{vipCards}}" range-key='name'>
-        <text>{{vipCards[selIndex].name}}</text>
+        <text wx:if='{{cardId !="undefined"}}'>{{vipCards[selIndex].name}}</text>
+        <text wx:else>请选择会员级别</text>
       </picker>
     </view>
   </view>

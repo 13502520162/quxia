@@ -1,7 +1,9 @@
 // pages/index/analysis.js
 import moment from '../../../../lib/moment.min.js';
 import fetch from '../../../../lib/fetch.js';
-import { extendMoment } from '../../../../lib/moment-range.js';
+import {
+  extendMoment
+} from '../../../../lib/moment-range.js';
 
 const DateRange = extendMoment(moment);
 
@@ -34,14 +36,14 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.initDate();
   },
 
   /**
    * 初始化日期
    */
-  initDate: function () {
+  initDate: function() {
     this.setData({
       date: {
         start: moment().format('YYYY/MM/DD'),
@@ -56,7 +58,7 @@ Page({
   /**
    * date选项更改
    */
-  selectDateItem: function (e) {
+  selectDateItem: function(e) {
     let item = e.currentTarget.dataset.item;
     switch (item) {
       case 'today':
@@ -120,13 +122,13 @@ Page({
   fetchSummaryData(start, end) {
     return new Promise((resolve, reject) => {
       fetch({
-        url: '/incomeAnalytics/summary',
-        isShowLoading: true,
-        data: {
-          start: start,
-          end: end
-        }
-      })
+          url: '/incomeAnalytics/summary',
+          isShowLoading: true,
+          data: {
+            start: this.data.date.start.replace(/\//g, '-'),
+            end: this.data.date.end.replace(/\//g, '-')
+          }
+        })
         .then(res => {
           resolve(res.data);
         })
@@ -140,12 +142,14 @@ Page({
   /**
    * 获取两个时间段的差值数据
    */
-  diffDurationData: function (diffDays) {
+  diffDurationData: function(diffDays) {
     let startTime = moment().subtract(diffDays === 1 ? 0 : diffDays, 'day').format('YYYY-MM-DD');
     let endTime = moment().format('YYYY-MM-DD');
     this.fetchSummaryData(startTime, endTime).then(newData => {
+      console.log(startTime, endTime)
       startTime = moment().subtract(diffDays === 1 ? 1 : diffDays * 2, 'day').format('YYYY-MM-DD');
       endTime = moment().subtract(diffDays, 'day').format('YYYY-MM-DD');
+
       this.fetchSummaryData(startTime, endTime).then(oldData => {
         this.setData({
           income: newData,
@@ -158,7 +162,7 @@ Page({
   /**
    * 获取报表数据
    */
-  fetchReportData: function () {
+  fetchReportData: function() {
     if (this.data.listLoading) {
       return;
     }
@@ -172,13 +176,13 @@ Page({
     })
 
     fetch({
-      url: '/analytics/list',
-      data: {
-        ...this.data.listParams,
-        start: this.data.date.start.replace(/\//g, '-'),
-        end: this.data.date.end.replace(/\//g, '-')
-      }
-    })
+        url: '/analytics/list',
+        data: {
+          ...this.data.listParams,
+          start: this.data.date.start.replace(/\//g, '-'),
+          end: this.data.date.end.replace(/\//g, '-')
+        }
+      })
       .then(res => {
 
         if (res.data.length < this.data.listParams.size) {
@@ -204,11 +208,13 @@ Page({
       })
   },
 
-  loadMoreListData: function () {
+  loadMoreListData: function() {
 
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchReportData();
     }
@@ -218,7 +224,7 @@ Page({
    * 选择上一个日期的数据
    */
 
-  lastData: function () {
+  lastData: function() {
     if (this.data.dateItem.today) {
       this.setData({
         date: {
@@ -236,6 +242,7 @@ Page({
       });
       this.diffDurationData(7);
     } else if (this.data.dateItem.month) {
+      console.log('1236')
       this.setData({
         date: {
           start: moment(this.data.date.start.replace(/\//g, '-')).subtract(1, 'month').format('YYYY/MM/DD'),
@@ -259,7 +266,7 @@ Page({
   /**
    * 选择下一个日期的数据
    */
-  nextData: function () {
+  nextData: function() {
     if (this.data.dateItem.today) {
       this.setData({
         date: {
@@ -301,7 +308,7 @@ Page({
   /**
    * 起始日期更改
    */
-  onStartDateChange: function (e) {
+  onStartDateChange: function(e) {
     this.setData({
       dateItem: {
         yesterday: false,
@@ -323,7 +330,7 @@ Page({
   /**
    * 结束日期更改
    */
-  onEndDateChange: function (e) {
+  onEndDateChange: function(e) {
     this.setData({
       dateItem: {
         yesterday: false,
@@ -346,7 +353,7 @@ Page({
    * 跳转显示具体的订单列表
    */
 
-  onShowOrder: function (e) {
+  onShowOrder: function(e) {
     let date = e.currentTarget.dataset.date;
     wx.navigateTo({
       url: '/pages/index/order/list?startDate=' + date + "&endDate=" + date,

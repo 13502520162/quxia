@@ -92,15 +92,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    this.fetchselect()
     if (options.id) {
       this.setData({
         commodityId: options.id
+      }, () => {
+        this.fetchCommodityDetail();
       })
-      this.fetchselect()
     }
-
   },
   onShow: function() {
+
 
   },
   fetchselect: function() {
@@ -111,7 +113,6 @@ Page({
         this.setData({
           trade: res.data
         })
-        this.fetchCommodityDetail();
       })
       .catch(err => {
         console.error(err);
@@ -239,7 +240,6 @@ Page({
 
   fetchCommodityDetail: function() {
     let trade = this.data.trade
-    console.log(trade)
     fetch({
         url: '/products/detail',
         data: {

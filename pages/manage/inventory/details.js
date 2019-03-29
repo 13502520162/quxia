@@ -1,5 +1,6 @@
 import fetch from '../../../lib/fetch.js'
 import getStorePermissions from '../../../utils/getStorePremissioin.js';
+const app = getApp()
 Page({
 
   /**
@@ -7,7 +8,7 @@ Page({
    */
   data: {
     inventoryId: null,
-    
+
     summaryData: {},
 
     inputShowed: false,
@@ -26,14 +27,14 @@ Page({
     disList: true,
 
     actionSheetListItems: ['库存记录', '入库', '发货', '退货']
-    
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    if(options.id){
+  onLoad: function(options) {
+    if (options.id) {
       this.setData({
         inventoryId: options.id
       });
@@ -54,52 +55,68 @@ Page({
   /**
    * 权限过滤
    */
-  permissionFilter: function () {
+  permissionFilter: function() {
     let permissions = getStorePermissions();
     let actionSheetListItems = this.data.actionSheetListItems;
-    //列表
-    if (permissions.permissions.includes(32)) {
+
+    if (app.hasPermission()) {
       this.setData({
         disList: false
       })
+      let itemIndex = actionSheetListItems.indexOf('入库') || actionSheetListItems.indexOf('退货') || ctionSheetListItems.indexOf('发货') || actionSheetListItems.indexOf('库存记录');
+      if (itemIndex > -1) {
+        actionSheetListItems.splice(itemIndex, 1);
+      }
+    } else {
+
+      //列表
+      if (permissions.permissions.includes(32)) {
+        this.setData({
+          disList: false
+        })
+
+      }
+      //入库
+      if (!permissions.permissions.includes(33)) {
+        let itemIndex = actionSheetListItems.indexOf('入库');
+        if (itemIndex > -1) {
+          actionSheetListItems.splice(itemIndex, 1);
+        }
+      }
+      //退货
+      if (!permissions.permissions.includes(34)) {
+        let itemIndex = actionSheetListItems.indexOf('退货');
+        if (itemIndex > -1) {
+          actionSheetListItems.splice(itemIndex, 1);
+        }
+      }
+      //发货
+      if (!permissions.permissions.includes(35)) {
+        let itemIndex = actionSheetListItems.indexOf('发货');
+        if (itemIndex > -1) {
+          actionSheetListItems.splice(itemIndex, 1);
+        }
+
+        //库存记录
+        if (!permissions.permissions.includes(36)) {
+          let itemIndex = actionSheetListItems.indexOf('库存记录');
+          if (itemIndex > -1) {
+            actionSheetListItems.splice(itemIndex, 1);
+          }
+        }
+      }
+
+      this.setData({
+        actionSheetListItems: actionSheetListItems
+      })
 
     }
-    //入库
-    if (!permissions.permissions.includes(33)) {
-      let itemIndex = actionSheetListItems.indexOf('入库');
-      if (itemIndex > -1) {
-        actionSheetListItems.splice(itemIndex, 1);
-      }
-    }
-    //退货
-    if (!permissions.permissions.includes(34)) {
-      let itemIndex = actionSheetListItems.indexOf('退货');
-      if (itemIndex > -1) {
-        actionSheetListItems.splice(itemIndex, 1);
-      }
-    }
-    //发货
-    if (!permissions.permissions.includes(35)){
-      let itemIndex = actionSheetListItems.indexOf('发货');
-      if (itemIndex > -1) {
-        actionSheetListItems.splice(itemIndex, 1);
-      }
-    
-    //库存记录
-      if (!permissions.permissions.includes(36)) {
-      let itemIndex = actionSheetListItems.indexOf('库存记录');
-      if (itemIndex > -1) {
-        actionSheetListItems.splice(itemIndex, 1);
-      }
-    }}
 
-    this.setData({
-      actionSheetListItems: actionSheetListItems 
-    })
+
 
   },
 
-  onShow: function () {
+  onShow: function() {
     this.setData({
       inputShowed: false,
       inputVal: "",
@@ -119,24 +136,24 @@ Page({
   /**
    * 搜索框事件 
    */
-  showInput: function () {
+  showInput: function() {
     this.setData({
       inputShowed: true
     });
   },
-  hideInput: function () {
+  hideInput: function() {
     this.setData({
       inputVal: "",
       inputShowed: false
     });
     this.onSearchHandle();
   },
-  clearInput: function () {
+  clearInput: function() {
     this.setData({
       inputVal: ""
     });
   },
-  inputTyping: function (e) {
+  inputTyping: function(e) {
     this.setData({
       inputVal: e.detail.value
     });
@@ -147,9 +164,9 @@ Page({
    * 获取列表
    */
 
-  fetchInventoryList: function () {
+  fetchInventoryList: function() {
 
-    if(this.data.disList){
+    if (this.data.disList) {
       return;
     }
 
@@ -157,7 +174,7 @@ Page({
       return;
     }
 
-    if (this.data.listEnd){
+    if (this.data.listEnd) {
       return;
     }
 
@@ -166,12 +183,12 @@ Page({
     })
 
     fetch({
-      url: '/inventory/stockLocations?id=' + this.data.inventoryId,
-      data: {
-        ...this.data.listParams,
-        query: this.data.inputVal
-      }
-    })
+        url: '/inventory/stockLocations?id=' + this.data.inventoryId,
+        data: {
+          ...this.data.listParams,
+          query: this.data.inputVal
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
@@ -193,13 +210,15 @@ Page({
   },
 
   /**
- * 列表触底加更多列表数据
- */
-  loadMoreListData: function () {
+   * 列表触底加更多列表数据
+   */
+  loadMoreListData: function() {
 
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchInventoryList();
     }
@@ -209,12 +228,12 @@ Page({
   /**
    * 列表每一项操作
    */
-  showActionSheet: function (e) {
+  showActionSheet: function(e) {
     let id = e.currentTarget.dataset.id;
     let itemList = this.data.actionSheetListItems;
     if (this.data.systemInfo.platform == 'android') {
       itemList.push('取消')
-    } 
+    }
 
 
     wx.showActionSheet({
@@ -229,20 +248,20 @@ Page({
               })
               break;
             case '入库':
-               wx.navigateTo({
-                 url: './stockIn?locationId=' + id + '&productId=' + this.data.inventoryId,
-               })
-            break;
+              wx.navigateTo({
+                url: './stockIn?locationId=' + id + '&productId=' + this.data.inventoryId,
+              })
+              break;
             case '发货':
               wx.navigateTo({
                 url: './transfer?locationId=' + id + '&productId=' + this.data.inventoryId,
               })
-            break;
+              break;
             case '退货':
               wx.navigateTo({
                 url: './return?locationId=' + id + '&productId=' + this.data.inventoryId,
               })
-            break;
+              break;
             default:
               break;
           }
@@ -255,7 +274,7 @@ Page({
   /**
    * 跳转到详情
    */
-  onAddCommodity: function () {
+  onAddCommodity: function() {
     wx.navigateTo({
       url: './details',
     })
@@ -266,22 +285,22 @@ Page({
    */
   fetchInventorySummary: function() {
     fetch({
-      url: '/inventory/totalStock',
-      data: {
-        productId: this.data.inventoryId
-      }
-    })
-    .then( res => {
-      this.setData({
-        summaryData: res.data
+        url: '/inventory/totalStock',
+        data: {
+          productId: this.data.inventoryId
+        }
       })
-    })
-    .catch( err => {
-      console.error( err );
-    })
+      .then(res => {
+        this.setData({
+          summaryData: res.data
+        })
+      })
+      .catch(err => {
+        console.error(err);
+      })
   },
 
-  onSearchHandle: function () {
+  onSearchHandle: function() {
     this.setData({
       listParams: {
         from: 0,

@@ -54,6 +54,7 @@ Page({
         permission: { name: '商品资料管理', value: '23' },
         subpermissions: [
           { name: '商品列表', value: '24' },
+          { name: "商品分类管理" , value: '91' },
           { name: '新建商品', value: '25' },
           { name: '编辑商品', value: '26' }
         ]
@@ -61,7 +62,8 @@ Page({
       {
         permission: { name: '货道管理', value: '27' },
         subpermissions: [
-          { name: '货道方案列表', value: '28' },
+          // { name: '货道方案列表', value: '28' },
+          { name: "货道配货", value: '28' },
           { name: '新建货道方案', value: '29' },
           { name: '编辑货道方案', value: '30' },
           { name: '货道状态', value: '54' }
@@ -77,10 +79,25 @@ Page({
           { name: '库存记录', value: '36' }
         ]
       },
+      // {
+      //   permission: { name: '合伙人管理', value: '60' },
+      //   subpermissions: [
+      //     { name: "合伙人列表", value: '61' }
+      //   ]
+      // },
+      {
+        permission: { name: '用户管理', value: '81' },
+        subpermissions: [
+          { name: "用户列表", value: '82' },
+          { name: "充值管理", value: '83' },
+          { name: "会员卡管理", value: '84' }
+        ]
+      },
       {
         permission: { name: '分润管理', value: '37' },
         subpermissions: [
-          { name: '分润方案列表', value: '38' },
+          { name: '设备分润', value: '38' },
+          { name: '场地分润', value: '38' },
           { name: '新建分润方案', value: '39' },
           { name: '编辑分润方案', value: '40' }
         ]
@@ -108,6 +125,17 @@ Page({
           { name: '子账号列表', value: '48' },
           { name: '新建子账号', value: '49' },
           { name: '编辑子账号', value: '50' }
+        ]
+      },
+      {
+        permission: { name: '营销中心', value: '71' },
+        subpermissions: [
+          { name: '优惠券管理', value: '72' },
+          { name: '新手有礼', value: '73' },
+          { name: '促销活动', value: '74' },
+          { name: '支付有礼', value: '75' },
+          { name: '幸运免单', value: '76' },
+          { name: '抽奖活动', value: '77' }
         ]
       },
       {

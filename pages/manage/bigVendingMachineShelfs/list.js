@@ -1,5 +1,6 @@
 import fetch from '../../../lib/fetch.js'
 import getStorePermissions from '../../../utils/getStorePremissioin.js';
+const app = getApp()
 Page({
 
   /**
@@ -20,13 +21,13 @@ Page({
     disEdit: true,
     disAdd: true,
     disList: true,
-    systemInfo:{}
+    systemInfo: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.permissionFilter();
     wx.getSystemInfo({
       success: res => {
@@ -38,31 +39,41 @@ Page({
   },
 
   /**
- * 权限过滤
- */
-  permissionFilter: function () {
+   * 权限过滤
+   */
+  permissionFilter: function() {
     let permissions = getStorePermissions();
     //列表
-    if (permissions.includes(28)) {
+
+    if (app.hasPermission()) {
       this.setData({
-        disList: false
-      })
-    }
-    //添加
-    if (permissions.includes(29)) {
-      this.setData({
-        disAdd: false
-      })
-    }
-    //编辑
-    if (permissions.includes(30)) {
-      this.setData({
+        disList: false,
+        disAdd: false,
         disEdit: false
       })
+    } else {
+      if (permissions.permissions.includes(28)) {
+        this.setData({
+          disList: false
+        })
+      }
+      //添加
+      if (permissions.permissions.includes(29)) {
+        this.setData({
+          disAdd: false
+        })
+      }
+      //编辑
+      if (permissions.permissions.includes(30)) {
+        this.setData({
+          disEdit: false
+        })
+      }
     }
+
   },
 
-  onShow: function (){
+  onShow: function() {
     this.setData({
       inputShowed: false,
       inputVal: "",
@@ -81,23 +92,23 @@ Page({
   /**
    * 搜索框事件 
    */
-  showInput: function () {
+  showInput: function() {
     this.setData({
       inputShowed: true
     });
   },
-  hideInput: function () {
+  hideInput: function() {
     this.setData({
       inputVal: "",
       inputShowed: false
     });
   },
-  clearInput: function () {
+  clearInput: function() {
     this.setData({
       inputVal: ""
     });
   },
-  inputTyping: function (e) {
+  inputTyping: function(e) {
     this.setData({
       inputVal: e.detail.value
     });
@@ -108,17 +119,17 @@ Page({
    * 获取货道列表
    */
 
-  fetchCommodityList: function () {
+  fetchCommodityList: function() {
 
-    if(this.data.disList){
+    if (this.data.disList) {
       return;
     }
 
-    if (this.data.listLoading ) {
+    if (this.data.listLoading) {
       return;
     }
 
-    if (this.data.listEnd){
+    if (this.data.listEnd) {
       return;
     }
 
@@ -127,12 +138,12 @@ Page({
     })
 
     fetch({
-      url: '/shelfs',
-      data: {
-        ...this.data.listParams,
-        query: this.data.inputVal
-      }
-    })
+        url: '/shelfs',
+        data: {
+          ...this.data.listParams,
+          query: this.data.inputVal
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
@@ -154,12 +165,14 @@ Page({
   },
 
   /**
- * 列表触底加更多列表数据
- */
-  loadMoreListData: function () {
+   * 列表触底加更多列表数据
+   */
+  loadMoreListData: function() {
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchCommodityList();
     }
@@ -169,7 +182,7 @@ Page({
   /**
    * 列表每一项操作
    */
-  showActionSheet: function (e) {
+  showActionSheet: function(e) {
     let id = e.currentTarget.dataset.id;
     let enable = e.currentTarget.dataset.enbale;
     let itemList = [];
@@ -178,8 +191,8 @@ Page({
     } else {
       itemList = ['方案上架', '编辑方案', '删除'];
     }
-    if(this.data.disEdit){
-      itemList.splice(1,2);
+    if (this.data.disEdit) {
+      itemList.splice(1, 2);
     }
 
     wx.showActionSheet({
@@ -193,14 +206,14 @@ Page({
               })
               break;
             case 1:
-              if(!this.data.disEdit){
+              if (!this.data.disEdit) {
                 wx.navigateTo({
                   url: './details?type=edit&id=' + id,
                 })
               }
               break;
             case 2:
-              if( !this.data.disEdit ){
+              if (!this.data.disEdit) {
                 this.delShelfs(id);
               }
               break;
@@ -215,14 +228,14 @@ Page({
   /**
    * 启用账号
    */
-  enableAccount: function (id) {
+  enableAccount: function(id) {
     fetch({
-      url: '/partners/enable',
-      method: 'post',
-      data: {
-        id: id
-      }
-    })
+        url: '/partners/enable',
+        method: 'post',
+        data: {
+          id: id
+        }
+      })
       .then(res => {
         let listData = this.data.listData.map(item => {
           if (item.id == id) {
@@ -242,14 +255,14 @@ Page({
   /**
    * 禁用账号
    */
-  disableAccount: function (id) {
+  disableAccount: function(id) {
     fetch({
-      url: '/partners/disable',
-      method: 'post',
-      data: {
-        id: id
-      }
-    })
+        url: '/partners/disable',
+        method: 'post',
+        data: {
+          id: id
+        }
+      })
       .then(res => {
         let listData = this.data.listData.map(item => {
           if (item.id == id) {
@@ -269,11 +282,11 @@ Page({
   /**
    * 删除
    */
-  delShelfs: function (id) {
+  delShelfs: function(id) {
     fetch({
-      url: '/shelfs?id='+id,
-      method: 'delete'
-    })
+        url: '/shelfs?id=' + id,
+        method: 'delete'
+      })
       .then(res => {
         let listData = [];
         this.data.listData.map(item => {
@@ -293,7 +306,7 @@ Page({
   /**
    * 跳转到方案详情
    */
-  onAddShelfs: function () {
+  onAddShelfs: function() {
     wx.navigateTo({
       url: './details',
     })

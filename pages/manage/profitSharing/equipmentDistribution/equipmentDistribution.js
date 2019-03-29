@@ -89,8 +89,16 @@ Page({
       url: '/locations/select',
       method: 'GET',
     }).then(res => {
+      res.data.unshift({
+        id: "",
+        province:'',
+        city:'',
+        district:'',
+        name: '全部',
+      });
+
       let fieldData = res.data.map(item => {
-        item.name = item.province + item.city + item.district
+        item.name = item.province + item.city + item.district + item.name
         return item;
       })
       this.setData({
@@ -102,6 +110,10 @@ Page({
       url: '/devices/types',
       method: 'GET',
     }).then(res => {
+      res.data.unshift({
+        id: "",
+        name: '全部'
+      });
       this.setData({
         typeData: res.data
       })
@@ -112,6 +124,11 @@ Page({
       url: '/deviceGroups/select',
       method: 'GET',
     }).then(res => {
+      res.data.unshift({
+        id: "",
+        name: '全部'
+      });
+
       this.setData({
         groupData: res.data
       })

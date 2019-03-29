@@ -6,22 +6,24 @@ Page({
    * 页面的初始数据
    */
   data: {
-    lampInfo:'',
-    deviceId:''
+    lampInfo: '',
+    deviceId: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     if (options.deviceId) {
       this.setData({
         deviceId: options.deviceId
+      }, () => {
+        this.fetchLamp()
       })
     }
   },
 
-  switchHandle: function (e) {
+  switchHandle: function(e) {
     if (e.detail.value) {
       this.turnOnLamp();
     } else {
@@ -30,19 +32,19 @@ Page({
   },
 
   /**
- * 获取睡眠灯信息
- */
-  fetchLamp: function () {
+   * 获取睡眠灯信息
+   */
+  fetchLamp: function() {
     fetch({
-      url: '/quxia/remote/light',
-      data: {
-        deviceId: this.data.deviceId
-      },
-      isShowLoading: true
-    })
+        url: '/quxia/remote/light',
+        data: {
+          deviceId: this.data.deviceId
+        },
+        isShowLoading: true
+      })
       .then(res => {
         this.setData({
-          lampInfo: res.data 
+          lampInfo: res.data
         })
       })
       .catch(err => {
@@ -55,12 +57,12 @@ Page({
   /**
    * 开睡眠灯
    */
-  turnOnLamp: function () {
+  turnOnLamp: function() {
     fetch({
-      url: '/quxia/remote/openLight?deviceId=' + this.data.deviceId,
-      method: 'post',
-      isShowLoading: true
-    })
+        url: '/quxia/remote/openLight?deviceId=' + this.data.deviceId,
+        method: 'post',
+        isShowLoading: true
+      })
       .then(res => {
         this.fetchLamp();
       })
@@ -72,17 +74,17 @@ Page({
   /**
    * 关睡眠灯
    */
-  turnOffLamp: function () {
+  turnOffLamp: function() {
     fetch({
-      url: '/quxia/remote/closeLight?deviceId=' + this.data.deviceId,
-      method: 'post',
-      isShowLoading: true
-    })
+        url: '/quxia/remote/closeLight?deviceId=' + this.data.deviceId,
+        method: 'post',
+        isShowLoading: true
+      })
       .then(res => {
         this.fetchLamp();
       })
       .catch(err => {
         console.error(err);
       })
-  }  
+  }
 })

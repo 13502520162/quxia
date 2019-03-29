@@ -147,7 +147,9 @@
     "pages/manage/commodity/commodityClassification/setUpCommodity/setUpCommodity",
     "components/slidingTab/index",
     "pages/manage/luckyFree/dataStatistics/dataStatistics",
-    "pages/manage/bigVendingMachineShelfsStatus/setShelfs"
+    "pages/manage/bigVendingMachineShelfsStatus/setShelfs",
+    "pages/manage/device/list/authorizationManagement",
+    "pages/manage/device/list/roleSelection"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -185,5 +187,8 @@
     "scope.userLocation": {
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
-  }
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wx247b749513f26a07"
+  ]
 }

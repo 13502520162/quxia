@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    deviceTypeId: ''
   },
 
   /**
@@ -14,6 +14,9 @@ Page({
    */
   onLoad: function(options) {
 
+    this.setData({
+      deviceTypeId: options.deviceTypeId
+    })
     this.initData();
   },
 
@@ -72,7 +75,8 @@ Page({
     fetch({
         url: id ? '/shelfs?id=' + id : '/shelfs',
         method: id ? 'put' : 'post',
-        data: { ...this.data.shelfsData
+        data: { ...this.data.shelfsData,
+          deviceTypeId: this.data.deviceTypeId
         }
       })
       .then(res => {

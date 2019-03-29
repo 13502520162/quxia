@@ -225,7 +225,7 @@ Page({
           startDate: util.formatTime(ress.startDate),
           endDate: util.formatTime(ress.endDate),
           isPermanent: ress.permanent,
-          isNoThreshold: ress.applyRule,
+          isNoThreshold: !ress.applyRule,
           frequency: ress.limitPerCustomer,
           iptpiece: ress.minQuantity,
           iptelement: ress.minAmount,
@@ -502,7 +502,7 @@ Page({
           minQuantity: this.data.iptpiece,
           ruleType: this.data.fullNumber,
           limitPerCustomer: parseInt(this.data.frequency) || 0,
-          applyRule: this.data.isNoThreshold
+          applyRule: !this.data.isNoThreshold
         }
       })
       .then(res => {

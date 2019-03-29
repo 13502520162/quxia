@@ -7,14 +7,13 @@ Page({
   data: {
 
     shelfs: {
-      id: null,
       name: "",
       shelfCount: 0,
       shelfs: [],
       number: 0
     },
     systemInfo: {},
-
+    deviceTypeId: '',
     isAll: 'notAll',
     commotidyData: {},
     isBatch: false
@@ -33,6 +32,9 @@ Page({
       })
       this.fetchShelfDetials(options.id)
     };
+    this.setData({
+      deviceTypeId: options.deviceTypeId
+    })
     wx.getSystemInfo({
       success: res => {
         this.setData({
@@ -202,7 +204,7 @@ Page({
     }
 
     wx.navigateTo({
-      url: './setShelfs',
+      url: './setShelfs?deviceTypeId=' + this.data.deviceTypeId,
     })
 
 

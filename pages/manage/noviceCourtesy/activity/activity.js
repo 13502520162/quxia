@@ -84,7 +84,7 @@ Page({
           endDate: util.formatTime(ress.endDate),
           isPermanent: ress.permanent,
           isDisabled: true,
-          isAllVenues: ress.locationIds.length === 0
+          isAllVenues: ress.locationIds === null || ress.locationIds.length === 0
         })
       })
     } else {

@@ -1,16 +1,25 @@
 import fetch from '../../../../lib/fetch.js'
 import getStorePermissions from '../../../../utils/getStorePremissioin.js';
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    types: [
-      { name: '全部', value: '' }, 
-      { name: '图片', value: 'IMAGE'},
-      { name: '视频', value: 'VIDEO'}
-      ],
+    types: [{
+        name: '全部',
+        value: ''
+      },
+      {
+        name: '图片',
+        value: 'IMAGE'
+      },
+      {
+        name: '视频',
+        value: 'VIDEO'
+      }
+    ],
     typesIndex: 0,
     inputShowed: false,
     inputVal: "",
@@ -29,8 +38,8 @@ Page({
     disList: true
   },
 
-  onLoad: function () {
-   
+  onLoad: function() {
+
     wx.getSystemInfo({
       success: res => {
         this.setData({
@@ -44,39 +53,48 @@ Page({
   /**
    * 权限过滤
    */
-  permissionFilter: function () {
+  permissionFilter: function() {
     let permissions = getStorePermissions();
     //列表
-    if (permissions.permissions.includes(16)) {
+    if (app.hasPermission()) {
       this.setData({
-        disList: false
-      })
-    }
-    //添加
-    if (permissions.permissions.includes(17)) {
-      this.setData({
-        disAdd: false
-      })
-    }
-    //编辑
-    if (permissions.permissions.includes(18)) {
-      this.setData({
+        disList: false,
+        disAdd: false,
         disEdit: false
       })
+    } else {
+      if (permissions.permissions.includes(16)) {
+        this.setData({
+          disList: false
+        })
+      }
+      //添加
+      if (permissions.permissions.includes(17)) {
+        this.setData({
+          disAdd: false
+        })
+      }
+      //编辑
+      if (permissions.permissions.includes(18)) {
+        this.setData({
+          disEdit: false
+        })
+      }
     }
+
   },
 
-  onShow: function () {
-      this.setData({
-        listParams: {
-          from: 0,
-          size: 20
-        },
-        listLoading: false,
-        listEnd: false,
-        listData: [],
-      })
-      this.fetchPlanList();
+  onShow: function() {
+    this.setData({
+      listParams: {
+        from: 0,
+        size: 20
+      },
+      listLoading: false,
+      listEnd: false,
+      listData: [],
+    })
+    this.fetchPlanList();
   },
 
 
@@ -84,7 +102,7 @@ Page({
   /**
    * 类型选项改变
    */
-  onFilterTypesChange: function (e) {
+  onFilterTypesChange: function(e) {
     this.setData({
       typesIndex: e.detail.value
     })
@@ -104,7 +122,7 @@ Page({
    * 获取计划列表
    */
 
-  fetchPlanList: function () {
+  fetchPlanList: function() {
 
     if (this.data.disList) {
       return;
@@ -123,13 +141,13 @@ Page({
     })
 
     fetch({
-      url: '/ad/plans',
-      data: {
-        ...this.data.listParams,
-        type: this.data.types[this.data.typesIndex].value,
-        query: this.data.inputVal
-      }
-    })
+        url: '/ad/plans',
+        data: {
+          ...this.data.listParams,
+          type: this.data.types[this.data.typesIndex].value,
+          query: this.data.inputVal
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
@@ -151,10 +169,13 @@ Page({
   },
 
   /**
- * 列表每一项操作
- */
-  showActionSheet: function (e) {
-    let { id, state } = e.currentTarget.dataset;
+   * 列表每一项操作
+   */
+  showActionSheet: function(e) {
+    let {
+      id,
+      state
+    } = e.currentTarget.dataset;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
       itemList = ['发布', '查看', '删除', '取消'];
@@ -162,7 +183,7 @@ Page({
       itemList = ['发布', '查看', '删除'];
     }
 
-    if (state == 'PENDING' || state == 'PAUSED' ) {
+    if (state == 'PENDING' || state == 'PAUSED') {
       itemList[0] = "发布";
     } else if (state == 'PUBLISHED') {
       itemList[0] = "暂停"
@@ -177,16 +198,16 @@ Page({
         if (!res.cancel) {
           switch (res.tapIndex) {
             case 0:
-              if (state == 'PENDING' || state == 'PAUSED'){
+              if (state == 'PENDING' || state == 'PAUSED') {
                 this.fetchPublishPlan(id);
-              } else if (state == 'PUBLISHED'){
+              } else if (state == 'PUBLISHED') {
                 this.fetchUnPublishPlan(id);
               }
               break;
             case 1:
               if (!this.data.disEdit) {
                 wx.navigateTo({
-                  url: './details?id=' + id + '&state='+ state,
+                  url: './details?id=' + id + '&state=' + state,
                 })
               }
               break;
@@ -206,12 +227,12 @@ Page({
   /**
    * 发布计划
    */
-  fetchPublishPlan: function (id) {
-      fetch({
-        url:"/ad/plans/publish?id="+id,
+  fetchPublishPlan: function(id) {
+    fetch({
+        url: "/ad/plans/publish?id=" + id,
         method: 'post'
       })
-      .then( res => {
+      .then(res => {
         let listData = [];
         listData = this.data.listData.map(item => {
           if (item.id == id) {
@@ -223,7 +244,7 @@ Page({
           listData: listData
         })
       })
-      .catch(err =>{
+      .catch(err => {
         console.error(err);
       })
   },
@@ -232,11 +253,11 @@ Page({
    * 暂停计划
    */
 
-  fetchUnPublishPlan: function (id) {
+  fetchUnPublishPlan: function(id) {
     fetch({
-      url: "/ad/plans/pause?id=" + id,
-      method: 'post'
-    })
+        url: "/ad/plans/pause?id=" + id,
+        method: 'post'
+      })
       .then(res => {
         let listData = [];
         listData = this.data.listData.map(item => {
@@ -257,11 +278,11 @@ Page({
   /**
    * 删除计划
    */
-  delPlan: function (id) {
+  delPlan: function(id) {
     fetch({
-      url: '/ad/plans?id=' + id,
-      method: 'delete'
-    })
+        url: '/ad/plans?id=' + id,
+        method: 'delete'
+      })
       .then(res => {
         let listData = [];
         this.data.listData.map(item => {
@@ -282,10 +303,12 @@ Page({
   /**
    * 加载更多
    */
-  loadMoreListData: function () {
+  loadMoreListData: function() {
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchPlanList();
     }
@@ -294,7 +317,7 @@ Page({
   /**
    * 跳转到添加计划
    */
-  onAddPlan: function () {
+  onAddPlan: function() {
     wx.navigateTo({
       url: './details',
     })
@@ -303,7 +326,7 @@ Page({
   /**
    * 搜索
    */
-  searchInputConfirm: function () {
+  searchInputConfirm: function() {
     this.setData({
       listParams: {
         from: 0,
@@ -317,23 +340,23 @@ Page({
     })
   },
 
-  showInput: function () {
+  showInput: function() {
     this.setData({
       inputShowed: true
     });
   },
-  hideInput: function () {
+  hideInput: function() {
     this.setData({
       inputVal: "",
       inputShowed: false
     });
   },
-  clearInput: function () {
+  clearInput: function() {
     this.setData({
       inputVal: ""
     });
   },
-  inputTyping: function (e) {
+  inputTyping: function(e) {
     this.setData({
       inputVal: e.detail.value
     });

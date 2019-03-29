@@ -29,7 +29,7 @@
 }
 
 .device-list {
-  height: calc(100vh - 100rpx);
+  height: calc(100vh - 185rpx);
 }
 
 .card {

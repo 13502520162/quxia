@@ -1,5 +1,6 @@
 import fetch from '../../../../lib/fetch.js'
 import getStorePermissions from '../../../../utils/getStorePremissioin.js';
+const app = getApp()
 Page({
 
   /**
@@ -16,17 +17,17 @@ Page({
     listLoading: false,
     listEnd: false,
     listData: [],
-    systemInfo:{},
+    systemInfo: {},
 
     disEdit: true,
     disAdd: true,
-    disList: true 
+    disList: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     wx.getSystemInfo({
       success: res => {
         this.setData({
@@ -38,31 +39,40 @@ Page({
   },
 
   /**
- * 权限过滤
- */
-  permissionFilter: function () {
+   * 权限过滤
+   */
+  permissionFilter: function() {
     let permissions = getStorePermissions();
-    //列表
-    if (permissions.permissions.includes(45)) {
+    if (app.hasPermission()) {
       this.setData({
-        disList: false
-      })
-    }
-    //添加
-    if (permissions.permissions.includes(46)) {
-      this.setData({
-        disAdd: false
-      })
-    }
-    //编辑
-    if (permissions.permissions.includes(47)) {
-      this.setData({
+        disList: false,
+        disAdd: false,
         disEdit: false
       })
+    } else {
+      //列表
+      if (permissions.permissions.includes(45)) {
+        this.setData({
+          disList: false
+        })
+      }
+      //添加
+      if (permissions.permissions.includes(46)) {
+        this.setData({
+          disAdd: false
+        })
+      }
+      //编辑
+      if (permissions.permissions.includes(47)) {
+        this.setData({
+          disEdit: false
+        })
+      }
     }
+
   },
 
-  onShow: function () {
+  onShow: function() {
     this.setData({
       inputShowed: false,
       inputVal: "",
@@ -81,23 +91,23 @@ Page({
   /**
    * 搜索框事件 
    */
-  showInput: function () {
+  showInput: function() {
     this.setData({
       inputShowed: true
     });
   },
-  hideInput: function () {
+  hideInput: function() {
     this.setData({
       inputVal: "",
       inputShowed: false
     });
   },
-  clearInput: function () {
+  clearInput: function() {
     this.setData({
       inputVal: ""
     });
   },
-  inputTyping: function (e) {
+  inputTyping: function(e) {
     this.setData({
       inputVal: e.detail.value
     });
@@ -106,7 +116,7 @@ Page({
   /**
    * 列表搜索
    */
-  searchHandle: function () {
+  searchHandle: function() {
     this.setData({
       listParams: {
         from: 0,
@@ -124,7 +134,7 @@ Page({
    * 获取列表
    */
 
-  fetchRoleList: function () {
+  fetchRoleList: function() {
     if (this.data.disList) {
       return;
     }
@@ -141,12 +151,12 @@ Page({
     })
 
     fetch({
-      url: '/roles',
-      data: {
-        ...this.data.listParams,
-        query: this.data.inputVal
-      }
-    })
+        url: '/roles',
+        data: {
+          ...this.data.listParams,
+          query: this.data.inputVal
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
@@ -168,13 +178,15 @@ Page({
   },
 
   /**
- * 列表触底加更多列表数据
- */
-  loadMoreListData: function () {
+   * 列表触底加更多列表数据
+   */
+  loadMoreListData: function() {
 
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchRoleList();
     }
@@ -184,8 +196,8 @@ Page({
   /**
    * 列表每一项操作
    */
-  showActionSheet: function (e) {
-    if(this.data.disEdit){
+  showActionSheet: function(e) {
+    if (this.data.disEdit) {
       return;
     }
     let id = e.currentTarget.dataset.id;
@@ -222,14 +234,14 @@ Page({
   /**
    * 启用
    */
-  enableRole: function (id) {
+  enableRole: function(id) {
     fetch({
-      url: '/roles/enable',
-      method: 'post',
-      data: {
-        id: id
-      }
-    })
+        url: '/roles/enable',
+        method: 'post',
+        data: {
+          id: id
+        }
+      })
       .then(res => {
         let listData = this.data.listData.map(item => {
           if (item.id == id) {
@@ -249,14 +261,14 @@ Page({
   /**
    * 暂停
    */
-  disableRole: function (id) {
+  disableRole: function(id) {
     fetch({
-      url: '/roles/disable',
-      method: 'post',
-      data: {
-        id: id
-      }
-    })
+        url: '/roles/disable',
+        method: 'post',
+        data: {
+          id: id
+        }
+      })
       .then(res => {
         let listData = this.data.listData.map(item => {
           if (item.id == id) {
@@ -276,11 +288,11 @@ Page({
   /**
    * 删除
    */
-  delRole: function (id) {
+  delRole: function(id) {
     fetch({
-      url: '/roles?id='+id,
-      method: 'delete'
-    })
+        url: '/roles?id=' + id,
+        method: 'delete'
+      })
       .then(res => {
         let listData = [];
         this.data.listData.map(item => {
@@ -300,7 +312,7 @@ Page({
   /**
    * 跳转新增分润方案
    */
-  onAddRoles: function () {
+  onAddRoles: function() {
     wx.navigateTo({
       url: './details?type=new',
     })

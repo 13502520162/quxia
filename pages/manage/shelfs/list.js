@@ -1,5 +1,6 @@
 import fetch from '../../../lib/fetch.js'
 import getStorePermissions from '../../../utils/getStorePremissioin.js';
+const app = getApp()
 Page({
 
   /**
@@ -21,7 +22,7 @@ Page({
     disAdd: true,
     disList: true,
     systemInfo: {},
-    typeId: '',
+    deviceTypeId: '',
 
 
     cargoStateIndex: 0,
@@ -51,24 +52,34 @@ Page({
    */
   permissionFilter: function() {
     let permissions = getStorePermissions();
-    //列表
-    if (permissions.permissions.includes(28)) {
+
+    if (app.hasPermission()) {
       this.setData({
-        disList: false
-      })
-    }
-    //添加
-    if (permissions.permissions.includes(29)) {
-      this.setData({
-        disAdd: false
-      })
-    }
-    //编辑
-    if (permissions.permissions.includes(30)) {
-      this.setData({
+        disList: false,
+        disAdd: false,
         disEdit: false
       })
+    } else {
+      //列表
+      if (permissions.permissions.includes(28)) {
+        this.setData({
+          disList: false
+        })
+      }
+      //添加
+      if (permissions.permissions.includes(29)) {
+        this.setData({
+          disAdd: false
+        })
+      }
+      //编辑
+      if (permissions.permissions.includes(30)) {
+        this.setData({
+          disEdit: false
+        })
+      }
     }
+
   },
 
   onShow: function() {
@@ -94,7 +105,7 @@ Page({
   setTab: function(e) {
     this.setData({
       cargoStateIndex: e.detail.index,
-      typeId: e.detail.item.id,
+      deviceTypeId: e.detail.item.id,
       listData: [],
       listParams: {
         from: 0,
@@ -139,7 +150,7 @@ Page({
     }).then(res => {
       this.setData({
         cargoState: res.data,
-        typeId: this.data.typeId || res.data[0].id
+        deviceTypeId: this.data.deviceTypeId || res.data[0].id
       }, () => {
         this.fetchCommodityList();
       })
@@ -194,7 +205,7 @@ Page({
         data: {
           ...this.data.listParams,
           query: iptVal,
-          typeId: this.data.typeId
+          deviceTypeId: this.data.deviceTypeId
         }
       })
       .then(res => {
@@ -241,6 +252,7 @@ Page({
     let id = e.currentTarget.dataset.id;
     let cargoStateIndex = this.data.cargoStateIndex;
     let enable = e.currentTarget.dataset.enbale;
+    let deviceTypeId = this.data.deviceTypeId
     let itemList = [];
     if (this.data.systemInfo.platform == 'android') {
       itemList = ['方案上架', '编辑方案', '删除', '取消'];
@@ -265,11 +277,11 @@ Page({
               if (!this.data.disEdit) {
                 if (cargoStateIndex === 0) {
                   wx.navigateTo({
-                    url: './details?type=edit&id=' + id,
+                    url: './details?type=edit&id=' + id + '&deviceTypeId=' + deviceTypeId,
                   })
                 } else if (cargoStateIndex === 1) {
                   wx.navigateTo({
-                    url: '../bigVendingMachineShelfs/details?type=edit&id=' + id,
+                    url: '../bigVendingMachineShelfs/details?type=edit&id=' + id + '&deviceTypeId=' + deviceTypeId,
                   })
                 }
               }
@@ -380,9 +392,18 @@ Page({
    * 跳转到方案详情
    */
   onAddShelfs: function() {
-    wx.navigateTo({
-      url: './details',
-    })
+    let deviceTypeId = this.data.deviceTypeId
+    let cargoStateIndex = this.data.cargoStateIndex
+
+    if (cargoStateIndex === 0) {
+      wx.navigateTo({
+        url: './details?&deviceTypeId=' + deviceTypeId,
+      })
+    } else if (cargoStateIndex === 1) {
+      wx.navigateTo({
+        url: '../bigVendingMachineShelfs/details?deviceTypeId=' + deviceTypeId,
+      })
+    }
   },
 
 

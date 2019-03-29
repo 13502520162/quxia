@@ -1,6 +1,7 @@
 // pages/manage/toll/toll.js
 import fetch from '../../../lib/fetch.js'
 import getStorePermissions from '../../../utils/getStorePremissioin.js';
+const app = getApp()
 Page({
 
   /**
@@ -14,14 +15,14 @@ Page({
     listLoading: false,
     listEnd: false,
     listData: [],
-    systemInfo:{},
+    systemInfo: {},
 
     disEdit: true,
     disAdd: true,
     disList: true
   },
 
-  onLoad: function () {
+  onLoad: function() {
     this.permissionFilter();
     wx.getSystemInfo({
       success: res => {
@@ -35,29 +36,38 @@ Page({
   /**
    * 权限过滤
    */
-  permissionFilter: function () {
+  permissionFilter: function() {
     let permissions = getStorePermissions();
-    //列表
-    if (permissions.permissions.includes(20)) {
+    if (app.hasPermission()) {
       this.setData({
-        disList: false
-      })
-    }
-    //添加
-    if (permissions.permissions.includes(21)) {
-      this.setData({
-        disAdd: false
-      })
-    }
-    //编辑
-    if (permissions.permissions.includes(22)) {
-      this.setData({
+        disList: false,
+        disAdd: false,
         disEdit: false
       })
+    } else {
+      //列表
+      if (permissions.permissions.includes(20)) {
+        this.setData({
+          disList: false
+        })
+      }
+      //添加
+      if (permissions.permissions.includes(21)) {
+        this.setData({
+          disAdd: false
+        })
+      }
+      //编辑
+      if (permissions.permissions.includes(22)) {
+        this.setData({
+          disEdit: false
+        })
+      }
     }
+
   },
 
-  onShow: function (){
+  onShow: function() {
     this.setData({
       listParams: {
         from: 0,
@@ -73,7 +83,7 @@ Page({
   /**
    * 添加收费套餐
    */
-  onAddToll: function () {
+  onAddToll: function() {
     wx.navigateTo({
       url: './tollDetails',
     })
@@ -84,7 +94,7 @@ Page({
    */
   fetchListData: function() {
 
-    if(this.data.disList){
+    if (this.data.disList) {
       return;
     }
 
@@ -92,7 +102,7 @@ Page({
       return;
     }
 
-    if (this.data.listEnd ) {
+    if (this.data.listEnd) {
       return;
     }
 
@@ -101,11 +111,11 @@ Page({
     })
 
     fetch({
-      url: '/plans',
-      data: {
-        ...this.data.listParams
-      }
-    })
+        url: '/plans',
+        data: {
+          ...this.data.listParams
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
@@ -129,16 +139,18 @@ Page({
   /**
    * 列表触底加更多列表数据
    */
-  loadMoreListData: function () {
+  loadMoreListData: function() {
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchListData();
     }
   },
 
-  showActionSheet: function (e) {
+  showActionSheet: function(e) {
     let id = e.currentTarget.dataset.id;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
@@ -147,10 +159,10 @@ Page({
       itemList = ['套餐上架', '编辑套餐', '删除套餐'];
     }
 
-    if( this.data.disEdit ){
-      itemList.splice(1,2);
+    if (this.data.disEdit) {
+      itemList.splice(1, 2);
     }
-    
+
     wx.showActionSheet({
       itemList: itemList,
       success: res => {
@@ -162,14 +174,14 @@ Page({
               })
               break;
             case 1:
-              if(!this.data.disEdit){
+              if (!this.data.disEdit) {
                 wx.navigateTo({
                   url: './tollDetails?id=' + id,
                 })
               }
               break;
             case 2:
-              if( !this.data.disEdit){
+              if (!this.data.disEdit) {
                 this.delToll(id);
               }
               break;
@@ -181,33 +193,33 @@ Page({
     })
   },
 
-  delToll: function (id) {
+  delToll: function(id) {
     wx.showModal({
       title: '删除套餐',
       content: "确定删除?",
       cancelColor: 'red',
       showCancel: true,
       success: (e) => {
-        if (e.confirm ){
-           fetch({
-             url: '/plans?id='+id,
-             isShowLoading: true,
-             method:'delete'
-           })
-           .then( res => {
-             this.setData({
-               listData:[],
-               listEnd: false,
-               listParams: {
-                 from: 0,
-                 size: 20
-               },
-             })
-             this.fetchListData();
-           })
-           .catch( err => {
-             console.error(err);
-           })
+        if (e.confirm) {
+          fetch({
+              url: '/plans?id=' + id,
+              isShowLoading: true,
+              method: 'delete'
+            })
+            .then(res => {
+              this.setData({
+                listData: [],
+                listEnd: false,
+                listParams: {
+                  from: 0,
+                  size: 20
+                },
+              })
+              this.fetchListData();
+            })
+            .catch(err => {
+              console.error(err);
+            })
         }
       }
     })

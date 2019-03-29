@@ -21,8 +21,13 @@
 
     <view class="weui-cell" wx:for="{{listData}}" wx:key='{{index}}' bindtap='userInfo' data-enabled='{{item.enabled}}' data-id='{{item.id}}' bindtap='showActionSheet'>
       <view class="weui-cell__bd">
-        <view>{{item.id}}</view>
-        <view class='cl'>{{item.name}}</view>
+        <view>{{item.id}}
+          <text class='enabled' wx:if='{{item.enabled}}'>已启用</text>
+          <text  class='unenabled' wx:if='{{!item.enabled}}'>未启用</text>
+        </view>
+        <view class='cl'>{{item.name}}
+
+        </view>
         <view class='cl'>{{item.locationName}}</view>
         <view class='cl'>{{item.users?item.users:0}}人分润</view>
       </view>

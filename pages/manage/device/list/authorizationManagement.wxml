@@ -1,0 +1,33 @@
+<!--pages/manage/device/list/authorizationManagement.wxml-->
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title">设备名</view>
+    <view class="page__desc">{{name}}</view>
+  </view>
+
+  <scroll-view scroll-y='true' class='srolle-view'>
+    <view>
+      <view class="weui-cell weui-cell_access" wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='showActionSheet'>
+        <view class="weui-cell__bd">
+          <view>{{item.name}}</view>
+          <view>{{item.username}}</view>
+        </view>
+        <view class="weui-cell__ft weui-cell__ft_in-access">
+          <text wx:if="{{item.roleName}}">{{item.roleName}}</text>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+    </view>
+
+    <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+    </view>
+  </scroll-view>
+
+  <view class='preservation' wx:if="{{!isDisabled}}" bindtap='preservation'>添加授权账号</view>
+</view>

@@ -33,8 +33,10 @@ Page({
       id: options.id,
       cardId: options.cardId,
       isPermanent
+    }, () => {
+      this.fetchVipCardS()
     })
-    this.fetchVipCardS()
+
   },
   onShow: function() {
 
@@ -54,19 +56,26 @@ Page({
       url: '/vipCards/select'
     }).then(res => {
       let cardId = this.data.cardId;
-      for (let i = 0; i < res.data.length; i++) {
-        if (cardId == res.data[i].id) {
-          this.setData({
-            vipCards: res.data,
-            selIndex: i
-          })
+      console.log(cardId)
+      if (cardId) {
+        for (let i = 0; i < res.data.length; i++) {
+          if (cardId == res.data[i].id) {
+            this.setData({
+              vipCards: res.data,
+              selIndex: i
+            })
+          }
         }
       }
+      this.setData({
+        vipCards: res.data
+      })
     })
   },
   onFilterChange: function(e) {
     this.setData({
-      selIndex: e.detail.value
+      selIndex: e.detail.value,
+      cardId: ''
     })
   },
 
@@ -85,6 +94,13 @@ Page({
 
       return;
     }
+    let isPermanent = this.data.isPermanent,
+      expiry;
+    if (isPermanent) {
+      expiry = ''
+    }else{
+      expiry = new Date(this.data.endDate).getTime()
+    }
 
 
     fetch({
@@ -94,7 +110,7 @@ Page({
         id: parseInt(this.data.id),
         cardId: this.data.vipCards[this.data.selIndex].id,
         permanent: this.data.isPermanent,
-        expiry: new Date(this.data.endDate).getTime(),
+        expiry: expiry,
         note: this.data.note
       }
     }).then(res => {

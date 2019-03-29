@@ -79,3 +79,11 @@
   min-height: 0;
   line-height: normal;
 }
+
+.preferential-form1 {
+  background: #1aad19;
+}
+
+.preferential-form2 {
+  background: #d1d1d6;
+}

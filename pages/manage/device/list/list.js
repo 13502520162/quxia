@@ -1,6 +1,7 @@
 // pages/manage/device/list/list.js
 import fetch from '../../../../lib/fetch.js'
 import getStorePermissions from '../../../../utils/getStorePremissioin.js';
+const app = getApp()
 Page({
 
   /**
@@ -9,6 +10,7 @@ Page({
   data: {
     systemInfo: {},
     typeId: '',
+    wxaIndex: '',
     disEdit: true,
     disList: true,
   },
@@ -18,6 +20,7 @@ Page({
     this.setData({
       deviceTypesIndex: edata.tabindex,
       typeId: edata.id,
+      wxaIndex: edata.wxaindex,
       listData: [],
       listParams: {
         from: 0,
@@ -26,6 +29,7 @@ Page({
     })
 
     this.fetchDevices()
+    this.fetchDevicesSummary()
   },
 
   toggleFilterMenue: function() {
@@ -42,7 +46,9 @@ Page({
         })
       },
     });
+    this.initData();
     this.permissionFilter();
+    this.fetchDeviceTypes()
   },
 
   /**
@@ -50,27 +56,33 @@ Page({
    */
   permissionFilter: function() {
     let permissions = getStorePermissions();
-    //列表
-    if (permissions.permissions.includes(8)) {
+    if (app.hasPermission()) {
       this.setData({
-        disList: false
-      })
-    }
-    //编辑
-    if (permissions.permissions.includes(10)) {
-      this.setData({
+        disList: false,
         disEdit: false
       })
+    } else {
+      //列表
+      if (permissions.permissions.includes(8)) {
+        this.setData({
+          disList: false
+        })
+      }
+      //编辑
+      if (permissions.permissions.includes(10)) {
+        this.setData({
+          disEdit: false
+        })
+      }
     }
+
   },
 
 
   onShow: function() {
-    this.initData();
-    this.fetchDeviceTypes();
+
     this.fetchPlaces();
     this.fetchGroups();
-    this.fetchDevicesSummary();
   },
   onReady: function() {
 
@@ -129,9 +141,7 @@ Page({
   },
 
 
-  /**
-   * 获取所有的设备类型
-   */
+
   /**
    * 获取所有的设备类型
    */
@@ -146,9 +156,11 @@ Page({
         // });
         this.setData({
           deviceTypes: res.data,
-          typeId: this.data.typeId || res.data[0].id
+          typeId: this.data.typeId || res.data[0].id,
+          wxaIndex: res.data[0].wxaIndex
         })
         this.fetchDevices();
+        this.fetchDevicesSummary();
       })
       .catch(err => {
         console.error(err);
@@ -175,7 +187,8 @@ Page({
     fetch({
         url: '/devices/summary',
         data: {
-          ...this.data.filterParams
+          ...this.data.filterParams,
+          typeId: this.data.typeId
         }
       })
       .then(res => {
@@ -409,13 +422,15 @@ Page({
   showActionSheet: function(e) {
     let {
       id,
-      typeid
+      typeid,
+      name
     } = e.currentTarget.dataset;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
-      itemList = ['在线日志', '远程控制', '编辑设备', '取消'];
+      // itemList = ['在线日志', '远程控制', '编辑设备', '取消'];
+      itemList = ['查看', '远程控制', '授权管理', '在线日志', '取消'];
     } else {
-      itemList = ['在线日志', '远程控制', '编辑设备'];
+      itemList = ['查看', '远程控制', '授权管理', '在线日志'];
     }
 
     if (this.data.disEdit) {
@@ -427,9 +442,11 @@ Page({
         if (!res.cancel) {
           switch (res.tapIndex) {
             case 0:
-              wx.navigateTo({
-                url: './log?id=' + id,
-              })
+              if (!this.data.disEdit) {
+                wx.navigateTo({
+                  url: './details?id=' + id + '&typeId=' + typeid + '&wxaIndex=' + this.data.wxaIndex,
+                })
+              }
               break;
             case 1:
               wx.navigateTo({
@@ -437,12 +454,15 @@ Page({
               })
               break;
             case 2:
-              if (!this.data.disEdit) {
-                wx.navigateTo({
-                  url: './details?id=' + id,
-                })
-              }
+              wx.navigateTo({
+                url: './authorizationManagement?id=' + id + '&name=' + name,
+              })
               break;
+            case 3:
+              wx.navigateTo({
+                url: './log?id=' + id,
+              })
+              break
             default:
               break;
           }

@@ -191,3 +191,21 @@ view .selectAc {
   border-radius: 10rpx;
   padding-left: 14rpx;
 }
+
+.enabled {
+  margin-left: 20rpx;
+  padding: 5rpx 10rpx;
+  border-radius: 20rpx;
+  color: #fff;
+  font-size: 24rpx;
+  background: #ff9500;
+}
+
+.unenabled {
+  margin-left: 20rpx;
+  padding: 5rpx 10rpx;
+  border-radius: 20rpx;
+  color: #fff;
+  font-size: 24rpx;
+  background: #d1d1d6;
+}

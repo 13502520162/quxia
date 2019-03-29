@@ -142,9 +142,19 @@ Page({
       filterParams: {
         ...this.data.filterParams,
         start: this.data.filterParams.start || '开始时间',
-        end: this.data.filterParams.end || '结束时间',
+        end: this.data.filterParams.end || '结束时间'
       },
     })
+
+    if (!this.data.showFilterMenue) {
+      this.setData({
+        filterParams: {
+          ...this.data.filterParams,
+          start: this.data.filterParams.start == '开始时间' ? '' : this.data.filterParams.start,
+          end: this.data.filterParams.end == '结束时间' ? '' : this.data.filterParams.end,
+        }
+      })
+    }
   },
 
 

@@ -15,9 +15,9 @@ Page({
     showTopTips: false,
     tips: '',
 
-    userInfo:{},
+    userInfo: {},
 
-    username:'',
+    username: '',
     password: '',
 
 
@@ -27,7 +27,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.getWXuserinfo();
   },
 
@@ -35,55 +35,55 @@ Page({
    * 获取微信用户信息
    */
   getWXuserinfo: function() {
-      wx.getUserInfo({
-        success: res => {
-          this.setData({
-            userInfo: res.userInfo
-          })
-        } 
-      })
+    wx.getUserInfo({
+      success: res => {
+        this.setData({
+          userInfo: res.userInfo
+        })
+      }
+    })
   },
 
 
-  rolesChangeHandle: function (e) {
+  rolesChangeHandle: function(e) {
     this.setData({
       rolesIndex: e.detail.value
     })
-    if (e.detail.value == 0 ){
+    if (e.detail.value == 0) {
       this.setData({
         isCanRegister: true
       })
     } else {
       this.setData({
         isCanRegister: false
-      })  
+      })
     }
-    
+
   },
 
-  userNameChangeHandle: function (e) {
+  userNameChangeHandle: function(e) {
     this.setData({
       showTopTips: false,
       username: e.detail.value.trim()
     });
   },
 
-  passwordChangehandle: function (e) {
+  passwordChangehandle: function(e) {
     this.setData({
       showTopTips: false,
       password: e.detail.value.trim()
     })
   },
 
-  gotoRegister: function(){
+  gotoRegister: function() {
     wx.navigateTo({
       url: './register',
     });
   },
-  
-  loginHandle: function () {
 
-    if( !this.data.username || !this.data.username.trim() ) {
+  loginHandle: function() {
+
+    if (!this.data.username || !this.data.username.trim()) {
       this.setData({
         showTopTips: true,
         tips: '请输入用户名'
@@ -103,7 +103,7 @@ Page({
     wx.request({
       url: BASE_URL + "/oauth/token",
       method: "post",
-      data : {
+      data: {
         username: this.data.username,
         password: this.data.password,
         grant_type: config.grant_type
@@ -112,7 +112,7 @@ Page({
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization': `Basic ${Authorization}`
       },
-      success:  res => {
+      success: res => {
         if (res.data.access_token) {
           let expireTime = new Date().valueOf() + res.data.expires_in * 1000;
           res.data.expireTime = expireTime;
@@ -131,7 +131,7 @@ Page({
           })
         }
       },
-      fail:  error => {
+      fail: error => {
         console.error(error);
         this.setData({
           showTopTips: true,
@@ -142,16 +142,19 @@ Page({
   },
 
   /**
-  * 获取用户权限
-  */
-  fetchPermissions: function (token) {
+   * 获取用户权限
+   */
+  fetchPermissions: function(token) {
     wx.request({
       url: BASE_URL + "/merchant/api/wx/permissions",
-      data:{
+      data: {
         access_token: token.access_token
       },
       success: res => {
-        if( res.data.code == 0){
+        if (res.data.code == 0) {
+          if (!res.data.data.permissions) {
+            res.data.data.permissions = []
+          }
           wx.setStorageSync('permissions', res.data.data);
         }
         wx.reLaunch({
@@ -164,6 +167,6 @@ Page({
       fail: error => {
         console.error(error);
       }
-    }) 
+    })
   },
 })

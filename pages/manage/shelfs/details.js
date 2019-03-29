@@ -7,14 +7,13 @@ Page({
   data: {
 
     shelfs: {
-      id: null,
       name: "",
       shelfCount: 0,
       shelfs: [],
       number: 0
     },
     systemInfo: {},
-
+    deviceTypeId: '',
     isAll: 'notAll',
     commotidyData: {},
     isBatch: false
@@ -32,6 +31,10 @@ Page({
       })
       this.fetchShelfDetials(options.id)
     };
+
+    this.setData({
+      deviceTypeId: options.deviceTypeId
+    })
     wx.getSystemInfo({
       success: res => {
         this.setData({
@@ -201,7 +204,8 @@ Page({
     fetch({
         url: id ? '/shelfs?id=' + id : '/shelfs',
         method: id ? 'put' : 'post',
-        data: { ...this.data.shelfs
+        data: { ...this.data.shelfs,
+          deviceTypeId: this.data.deviceTypeId
         }
       })
       .then(res => {
@@ -290,7 +294,7 @@ Page({
   /**
    * 删除
    */
-  batchRemove: function () {
+  batchRemove: function() {
     let shelfs = this.data.shelfs.shelfs
     let count = 0
     for (var j = 0, lenJ = shelfs.length; j < lenJ; ++j) {

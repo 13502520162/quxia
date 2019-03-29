@@ -1,0 +1,26 @@
+/* pages/manage/device/list/authorizationManagement.wxss */
+
+.page {
+  background: #fff;
+}
+
+.page__hd {
+  padding: 20rpx;
+  border-bottom: 1px solid #d9d9d9;
+}  
+.srolle-view{
+  height: calc( 100vh - 230rpx );
+}
+.weui-cell__bd view:nth-child(2) {
+  font-size: 25rpx;
+  color: rgba(153, 148, 148, 1);
+}
+
+.weui-cell__ft_in-access  text {
+  padding: 5rpx 10rpx;
+  background-color: rgb(0, 118, 255);
+  color: #fff;
+  border-radius: 15rpx;
+  margin-right: 15rpx;
+  font-size: 25rpx;
+}

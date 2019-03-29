@@ -256,7 +256,7 @@ Page({
           startDate: util.formatTime(ress.startDate),
           endDate: util.formatTime(ress.endDate),
           isPermanent: ress.permanent,
-          isNoThreshold: ress.applyRule,
+          isNoThreshold: !ress.applyRule,
           frequency: ress.limitPerCustomer,
           preferential: ress.discountType,
           discount,
@@ -595,7 +595,7 @@ Page({
           minAmount: this.data.iptelement,
           minQuantity: this.data.iptpiece,
           ruleType: this.data.fullNumber,
-          applyRule: this.data.isNoThreshold,
+          applyRule: !this.data.isNoThreshold,
           limitPerCustomer: parseInt(this.data.frequency) || 0,
           discountType: this.data.preferential,
           discount: this.data.discount || this.data.reduceMoney

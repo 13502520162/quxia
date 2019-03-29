@@ -7,6 +7,10 @@
         <view class='coupon-title'>
           <text class='coupon-title-name'>{{item.name}}</text>
           <text class='preferential-form'>{{item.type}}</text>
+
+          <text wx:if='{{item.enabled}}' class='preferential-form preferential-form1'>投放中</text>
+          <text wx:else class='preferential-form preferential-form2'>暂停中</text>
+
         </view>
         <view class='coupon-date'>
           <text>有效期：</text>

@@ -1,5 +1,6 @@
 import fetch from '../../../../lib/fetch.js'
 import getStorePermissions from '../../../../utils/getStorePremissioin.js';
+const app = getApp()
 Page({
 
   /**
@@ -42,24 +43,33 @@ Page({
    */
   permissionFilter: function() {
     let permissions = getStorePermissions();
-    //列表
-    if (permissions.permissions.includes(16)) {
+    if (app.hasPermission()) {
       this.setData({
-        disList: false
-      })
-    }
-    //添加
-    if (permissions.permissions.includes(17)) {
-      this.setData({
-        disAdd: false
-      })
-    }
-    //编辑
-    if (permissions.permissions.includes(18)) {
-      this.setData({
+        disList: false,
+        disAdd: false,
         disEdit: false
       })
+    } else {
+      //列表
+      if (permissions.permissions.includes(16)) {
+        this.setData({
+          disList: false
+        })
+      }
+      //添加
+      if (permissions.permissions.includes(17)) {
+        this.setData({
+          disAdd: false
+        })
+      }
+      //编辑
+      if (permissions.permissions.includes(18)) {
+        this.setData({
+          disEdit: false
+        })
+      }
     }
+
   },
 
   onShow: function() {

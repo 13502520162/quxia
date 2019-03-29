@@ -70,9 +70,13 @@ Page({
     this.setData({
       startDate: TIME,
       endDate: TIME,
-      field: options.field,
-      couponId: options.id
+      field: options.field
     });
+    if (options.couponId) {
+      this.setData({
+        couponId: options.id
+      });
+    }
 
     this.fetchCouponsDetail(options.id)
   },

@@ -73,7 +73,7 @@ Page({
    * 分润管理
    */
   onRateChange: function(e) {
-    let rate = e.detail.value;
+    let rate = e.detail.value ;
     if (rate > 100) {
       wx.showToast({
         title: '分成不能大于100',

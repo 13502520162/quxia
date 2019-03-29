@@ -73,6 +73,18 @@ App({
   },
 
 
+  hasPermission: function() {
+    try {
+      let permissionss = wx.getStorageSync('permissions');
+      if (permissionss != '') {
+        return permissionss.admin
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  },
+
+
   /**
    * 微信快速登录
    */
@@ -130,7 +142,9 @@ App({
       },
       success: res => {
         if (res.data.code == 0) {
-          console.log(res.data)
+          if (!res.data.data.permissions) {
+            res.data.data.permissions = []
+          }
           wx.setStorageSync('permissions', res.data.data);
         }
         wx.reLaunch({

@@ -108,12 +108,20 @@ Page({
           hide: true
         },
         items: [{
-          name: "商品列表",
-          icon: "../../assets/images/commodity.png",
-          pageUrl: './commodity/list',
-          permission: 24,
-          hide: true
-        }]
+            name: "商品列表",
+            icon: "../../assets/images/commodity.png",
+            pageUrl: './commodity/list',
+            permission: 24,
+            hide: true
+          },
+          {
+            name: "商品分类管理",
+            icon: "../../assets/images/commodity.png",
+            pageUrl: './commodity/commodityClassification/commodityClassification',
+            permission: 91,
+            hide: true
+          }
+        ]
       },
       {
         title: {
@@ -165,44 +173,45 @@ Page({
           hide: true
         }]
       },
+      // {
+      //   title: {
+      //     name: "合伙人管理",
+      //     permission: 60,
+      //     hide: true
+      //   },
+      //   items: [{
+      //     name: "合伙人列表",
+      //     icon: "../../assets/images/partnerList.png",
+      //     pageUrl: './partner/list/list',
+      //     permission: 61,
+      //     hide: false
+      //   }, ]
+      // }, 
       {
         title: {
-          name: "合伙人管理",
-          permission: 60,
-          hide: true
-        },
-        items: [{
-          name: "合伙人列表",
-          icon: "../../assets/images/partnerList.png",
-          pageUrl: './partner/list/list',
-          permission: 61,
-          hide: false
-        }, ]
-      }, {
-        title: {
           name: "用户管理",
-          permission: 19,
+          permission: 81,
           hide: true
         },
         items: [{
             name: "用户列表",
             icon: "../../assets/images/tollIcon.png",
             pageUrl: './userManagement/userManagement',
-            permission: 20,
+            permission: 82,
             hide: true
           },
           {
             name: "充值管理",
             icon: "../../assets/images/rechargeManagement.png",
             pageUrl: './rechargeManagement/rechargeManagement',
-            permission: 57,
+            permission: 83,
             hide: true
           },
           {
             name: "会员卡管理",
             icon: "../../assets/images/coupon.png",
             pageUrl: './membershipCard/membershipCard',
-            permission: 57,
+            permission: 84,
             hide: true
           }
         ]
@@ -289,49 +298,49 @@ Page({
           }
         ]
       },
-      {
-        title: {
-          name: "自动售货机货道管理",
-          permission: "",
-          hide: true
-        },
-        items: [{
-          name: "货道配货",
-          icon: "../../assets/images/shelfs.png",
-          pageUrl: './bigVendingMachineShelfs/list',
-          permission: '',
-          hide: true
-        }]
-      },
-      {
-        title: {
-          name: "共享广告机",
-          permission: "",
-          hide: true
-        },
-        items: [{
-            name: "素材管理",
-            icon: "../../assets/images/resources.png",
-            pageUrl: './shareAd/resource/index',
-            permission: "",
-            hide: true
-          },
-          {
-            name: "投放广告",
-            icon: "../../assets/images/ads.png",
-            pageUrl: './shareAd/putting/index',
-            permission: "",
-            hide: true
-          },
-          {
-            name: "套餐管理",
-            icon: "../../assets/images/tolls.png",
-            pageUrl: './shareAd/toll/index',
-            permission: "",
-            hide: true
-          }
-        ]
-      },
+      // {
+      //   title: {
+      //     name: "自动售货机货道管理",
+      //     permission: "",
+      //     hide: true
+      //   },
+      //   items: [{
+      //     name: "货道配货",
+      //     icon: "../../assets/images/shelfs.png",
+      //     pageUrl: './bigVendingMachineShelfs/list',
+      //     permission: '',
+      //     hide: true
+      //   }]
+      // },
+      // {
+      //   title: {
+      //     name: "共享广告机",
+      //     permission: "",
+      //     hide: true
+      //   },
+      //   items: [{
+      //       name: "素材管理",
+      //       icon: "../../assets/images/resources.png",
+      //       pageUrl: './shareAd/resource/index',
+      //       permission: "",
+      //       hide: true
+      //     },
+      //     {
+      //       name: "投放广告",
+      //       icon: "../../assets/images/ads.png",
+      //       pageUrl: './shareAd/putting/index',
+      //       permission: "",
+      //       hide: true
+      //     },
+      //     {
+      //       name: "套餐管理",
+      //       icon: "../../assets/images/tolls.png",
+      //       pageUrl: './shareAd/toll/index',
+      //       permission: "",
+      //       hide: true
+      //     }
+      //   ]
+      // },
       {
         title: {
           name: "广告管理",
@@ -357,49 +366,50 @@ Page({
       {
         title: {
           name: "营销中心",
-          permission: 57,
+          permission: 71,
           hide: true
         },
         items: [{
             name: "优惠券管理",
             icon: "../../assets/images/coupon.png",
             pageUrl: './coupon/coupon',
-            permission: 57,
+            permission: 72,
             hide: true
           },
           {
             name: "新手有礼",
             icon: "../../assets/images/newManners.png",
             pageUrl: './noviceCourtesy/noviceCourtesy',
-            permission: 57,
+            permission: 73,
+            hide: true
+          },
+
+          {
+            name: "促销活动",
+            icon: "../../assets/images/salesPromotion.png",
+            pageUrl: './salesPromotion/salesPromotion',
+            permission: 74,
             hide: true
           },
           {
             name: "支付有礼",
             icon: "../../assets/images/paymentOfCourtesy.png",
             pageUrl: './paymentOfCourtesy/paymentOfCourtesy',
-            permission: 57,
+            permission: 75,
             hide: true
           },
           {
             name: "幸运免单",
             icon: "../../assets/images/luckyFree.png",
             pageUrl: './luckyFree/luckyFree',
-            permission: 57,
+            permission: 76,
             hide: true
           },
           {
             name: "抽奖活动",
             icon: "../../assets/images/luckyDraw.png",
             pageUrl: './luckyDraw/luckyDraw',
-            permission: 57,
-            hide: true
-          },
-          {
-            name: "促销活动",
-            icon: "../../assets/images/salesPromotion.png",
-            pageUrl: './salesPromotion/salesPromotion',
-            permission: 57,
+            permission: 77,
             hide: true
           }
         ]
@@ -414,23 +424,38 @@ Page({
   onLoad: function(options) {
     //根据权限，进行功能过滤；
     permissions = getStorePermissions();
-    let funcMenu = this.data.funcMenu.map(item => {
-      if (permissions.permissions.includes(item.title.permission)) {
-        item.title.hide = false;
+    if (permissions != '') {
+      if (permissions.admin) {
+        let funcMenu = this.data.funcMenu.map(item => {
+          item.title.hide = false;
+          item.items = item.items.map(subItem => {
+            subItem.hide = false
+            return subItem;
+          })
+          return item;
+        });
+
+        this.setData({
+          funcMenu: funcMenu
+        })
+      } else {
+        let funcMenu = this.data.funcMenu.map(item => {
+          if (permissions.permissions.includes(item.title.permission)) {
+            item.title.hide = false;
+          }
+          item.items = item.items.map(subItem => {
+            if (permissions.permissions.includes(subItem.permission)) {
+              subItem.hide = false
+            }
+            return subItem;
+          })
+          return item;
+        });
+        this.setData({
+          funcMenu: funcMenu
+        })
       }
-      item.items = item.items.map(subItem => {
-        if (permissions.permissions.includes(subItem.permission)) {
-          subItem.hide = false
-        }
-        return subItem;
-      })
-      return item;
-    });
-
-    this.setData({
-      funcMenu: funcMenu
-    })
-
+    }
   },
 
   /**

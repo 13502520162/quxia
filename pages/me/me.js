@@ -2,6 +2,7 @@
 import fetch from '../../lib/fetch.js';
 import getStorePermissions from '../../utils/getStorePremissioin.js';
 let permissions = [];
+const app = getApp()
 Page({
 
   /**
@@ -19,12 +20,12 @@ Page({
         hide: true
       },
       {
-        icon: '../../assets/images/withDraw.png',
+        icon: '../../assets/images/wxbing.png',
         name: '绑定微信',
         url: '',
         tapEvent: 'weChatBinding',
-        permission: 51,
-        hide: true
+        permission: '',
+        hide: false
       },
       {
         icon: '../../assets/images/alterPasswd.png',
@@ -57,10 +58,16 @@ Page({
    */
   onLoad: function(options) {
     let permissions = getStorePermissions();
+
     let menuList = this.data.menuList.map(item => {
-      if (permissions.permissions.includes(item.permission)) {
+      if (app.hasPermission()) {
         item.hide = false;
+      } else {
+        if (permissions.permissions.includes(item.permission)) {
+          item.hide = false;
+        }
       }
+
       return item;
     });
 

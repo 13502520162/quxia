@@ -193,7 +193,15 @@ Page({
                         id: id
                       }
                     }).then(res => {
-                      $this.fetchCoupon()
+                      let couponList = [];
+                      $this.data.couponList.map(item => {
+                        if (item.id != id) {
+                          couponList.push(item)
+                        }
+                      });
+                      $this.setData({
+                        couponList
+                      })
                     })
                   } else if (res.cancel) {
                     console.log('用户点击取消')

@@ -1,5 +1,6 @@
 import fetch from '../../../lib/fetch.js'
 import getStorePermissions from '../../../utils/getStorePremissioin.js';
+const app = getApp()
 Page({
 
   /**
@@ -16,17 +17,17 @@ Page({
     listLoading: false,
     listEnd: false,
     listData: [],
-    systemInfo:{},
+    systemInfo: {},
 
     disEdit: true,
     disAdd: true,
-    disList: true 
+    disList: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     wx.getSystemInfo({
       success: res => {
         this.setData({
@@ -37,32 +38,41 @@ Page({
     this.permissionFilter();
   },
 
-/**
-* 权限过滤
-*/
-  permissionFilter: function () {
+  /**
+   * 权限过滤
+   */
+  permissionFilter: function() {
     let permissions = getStorePermissions();
-    //列表
-    if (permissions.permissions.includes(38)) {
+    if (app.hasPermission()) {
       this.setData({
-        disList: false
-      })
-    }
-    //添加
-    if (permissions.permissions.includes(39)) {
-      this.setData({
-        disAdd: false
-      })
-    }
-    //查看
-    if (permissions.permissions.includes(40)) {
-      this.setData({
+        disList: false,
+        disAdd: false,
         disEdit: false
       })
+    } else {
+      //列表
+      if (permissions.permissions.includes(38)) {
+        this.setData({
+          disList: false
+        })
+      }
+      //添加
+      if (permissions.permissions.includes(39)) {
+        this.setData({
+          disAdd: false
+        })
+      }
+      //查看
+      if (permissions.permissions.includes(40)) {
+        this.setData({
+          disEdit: false
+        })
+      }
     }
+
   },
 
-  onShow: function () {
+  onShow: function() {
     this.setData({
       inputShowed: false,
       inputVal: "",
@@ -81,24 +91,24 @@ Page({
   /**
    * 搜索框事件 
    */
-  showInput: function () {
+  showInput: function() {
     this.setData({
       inputShowed: true
     });
   },
-  hideInput: function () {
+  hideInput: function() {
     this.setData({
       inputVal: "",
       inputShowed: false
     });
     this.searchHandle();
   },
-  clearInput: function () {
+  clearInput: function() {
     this.setData({
       inputVal: ""
     });
   },
-  inputTyping: function (e) {
+  inputTyping: function(e) {
     this.setData({
       inputVal: e.detail.value
     });
@@ -108,24 +118,24 @@ Page({
    * 列表搜索
    */
   searchHandle: function() {
-      this.setData({
-        listParams: {
-          from: 0,
-          size: 20
-        },
-        listLoading: false,
-        listEnd: false,
-        listData: [],
-      }, () => {
-        this.fetchRoyaltyList();
-      })
+    this.setData({
+      listParams: {
+        from: 0,
+        size: 20
+      },
+      listLoading: false,
+      listEnd: false,
+      listData: [],
+    }, () => {
+      this.fetchRoyaltyList();
+    })
   },
 
   /**
    * 获取列表
    */
 
-  fetchRoyaltyList: function () {
+  fetchRoyaltyList: function() {
     if (this.data.disList) {
       return;
     }
@@ -133,7 +143,7 @@ Page({
       return;
     }
 
-    if (this.data.listEnd){
+    if (this.data.listEnd) {
       return;
     }
 
@@ -142,12 +152,12 @@ Page({
     })
 
     fetch({
-      url: '/royaltyPlans',
-      data: {
-        ...this.data.listParams,
-        query: this.data.inputVal
-      }
-    })
+        url: '/royaltyPlans',
+        data: {
+          ...this.data.listParams,
+          query: this.data.inputVal
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
@@ -169,13 +179,15 @@ Page({
   },
 
   /**
- * 列表触底加更多列表数据
- */
-  loadMoreListData: function () {
+   * 列表触底加更多列表数据
+   */
+  loadMoreListData: function() {
 
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchRoyaltyList();
     }
@@ -185,12 +197,12 @@ Page({
   /**
    * 列表每一项操作
    */
-  showActionSheet: function (e) {
+  showActionSheet: function(e) {
     let id = e.currentTarget.dataset.id;
     let enabled = e.currentTarget.dataset.enabled;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
-      itemList = ['启用', '查看', '删除','取消'];
+      itemList = ['启用', '查看', '删除', '取消'];
     } else {
       itemList = ['启用', '查看', '删除'];
     }
@@ -217,14 +229,14 @@ Page({
               }
               break;
             case 1:
-              if(!this.data.disEdit) {
+              if (!this.data.disEdit) {
                 wx.navigateTo({
-                  url: './details?type=edit&id=' + id + "&enabled="+enabled,
+                  url: './details?type=edit&id=' + id + "&enabled=" + enabled,
                 })
               }
               break;
             case 2:
-              if(!this.data.disEdit){
+              if (!this.data.disEdit) {
                 this.delRoyalty(id);
               }
               break;
@@ -240,11 +252,11 @@ Page({
   /**
    * 启用
    */
-  enableRoyalty: function (id) {
+  enableRoyalty: function(id) {
     fetch({
-      url: '/royaltyPlans/enable?id='+id,
-      method: 'post',
-    })
+        url: '/royaltyPlans/enable?id=' + id,
+        method: 'post',
+      })
       .then(res => {
         let listData = this.data.listData.map(item => {
           if (item.id == id) {
@@ -264,11 +276,11 @@ Page({
   /**
    * 暂停
    */
-  disableRoyalty: function (id) {
+  disableRoyalty: function(id) {
     fetch({
-      url: '/royaltyPlans/disable?id='+id,
-      method: 'post'
-    })
+        url: '/royaltyPlans/disable?id=' + id,
+        method: 'post'
+      })
       .then(res => {
         let listData = this.data.listData.map(item => {
           if (item.id == id) {
@@ -288,11 +300,11 @@ Page({
   /**
    * 删除
    */
-  delRoyalty: function (id) {
+  delRoyalty: function(id) {
     fetch({
-      url: '/royaltyPlans?id='+id,
-      method: 'delete'
-    })
+        url: '/royaltyPlans?id=' + id,
+        method: 'delete'
+      })
       .then(res => {
         let listData = [];
         this.data.listData.map(item => {
@@ -312,7 +324,7 @@ Page({
   /**
    * 跳转新增分润方案
    */
-  onAddRoyalty: function () {
+  onAddRoyalty: function() {
     wx.navigateTo({
       url: './details?type=new',
     })

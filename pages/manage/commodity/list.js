@@ -1,5 +1,6 @@
 import fetch from '../../../lib/fetch.js'
 import getStorePermissions from '../../../utils/getStorePremissioin.js';
+const app = getApp()
 Page({
 
   /**
@@ -16,25 +17,25 @@ Page({
     listLoading: false,
     listEnd: false,
     listData: [],
-    systemInfo:{},
+    systemInfo: {},
 
     disEdit: true,
     disAdd: true,
-    disList: true 
+    disList: true
 
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-      wx.getSystemInfo({
-        success: res => {
-          this.setData({
-            systemInfo: res
-          })
-        },
-      });
+  onLoad: function(options) {
+    wx.getSystemInfo({
+      success: res => {
+        this.setData({
+          systemInfo: res
+        })
+      },
+    });
 
     this.permissionFilter()
   },
@@ -42,29 +43,39 @@ Page({
   /**
    * 权限过滤
    */
-  permissionFilter: function () {
+  permissionFilter: function() {
     let permissions = getStorePermissions();
-    //列表
-    if (permissions.permissions.includes(24)) {
+
+    if (app.hasPermission()) {
       this.setData({
-        disList: false
-      })
-    }
-    //添加
-    if (permissions.permissions.includes(25)) {
-      this.setData({
-        disAdd: false
-      })
-    }
-    //编辑
-    if (permissions.permissions.includes(26)) {
-      this.setData({
+        disList: false,
+        disAdd: false,
         disEdit: false
       })
+    } else {
+      //列表
+      if (permissions.permissions.includes(24)) {
+        this.setData({
+          disList: false
+        })
+      }
+      //添加
+      if (permissions.permissions.includes(25)) {
+        this.setData({
+          disAdd: false
+        })
+      }
+      //编辑
+      if (permissions.permissions.includes(26)) {
+        this.setData({
+          disEdit: false
+        })
+      }
     }
+
   },
 
-  onShow: function (){
+  onShow: function() {
     this.setData({
       inputShowed: false,
       inputVal: "",
@@ -84,12 +95,12 @@ Page({
   /**
    * 搜索框事件 
    */
-  showInput: function () {
+  showInput: function() {
     this.setData({
       inputShowed: true
     });
   },
-  hideInput: function () {
+  hideInput: function() {
     this.setData({
       inputVal: "",
       inputShowed: false,
@@ -104,7 +115,7 @@ Page({
 
     this.fetchCommodityList();
   },
-  clearInput: function () {
+  clearInput: function() {
     this.setData({
       inputVal: "",
       listParams: {
@@ -117,12 +128,12 @@ Page({
     });
     this.fetchCommodityList();
   },
-  inputTyping: function (e) {
+  inputTyping: function(e) {
     this.setData({
       inputVal: e.detail.value
     });
   },
-  
+
 
   /**
    * 回车搜索
@@ -147,9 +158,9 @@ Page({
    * 获取商品列表
    */
 
-  fetchCommodityList: function () {
+  fetchCommodityList: function() {
 
-    if( this.data.disList){
+    if (this.data.disList) {
       return;
     }
 
@@ -157,7 +168,7 @@ Page({
       return;
     }
 
-    if (this.data.listEnd ){
+    if (this.data.listEnd) {
       return;
     }
 
@@ -166,12 +177,12 @@ Page({
     })
 
     fetch({
-      url: '/products',
-      data: {
-        ...this.data.listParams,
-        query: this.data.inputVal
-      }
-    })
+        url: '/products',
+        data: {
+          ...this.data.listParams,
+          query: this.data.inputVal
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
@@ -193,13 +204,15 @@ Page({
   },
 
   /**
- * 列表触底加更多列表数据
- */
-  loadMoreListData: function () {
+   * 列表触底加更多列表数据
+   */
+  loadMoreListData: function() {
 
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchCommodityList();
     }
@@ -209,7 +222,7 @@ Page({
   /**
    * 列表每一项操作
    */
-  showActionSheet: function (e) {
+  showActionSheet: function(e) {
     let id = e.currentTarget.dataset.id;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
@@ -218,10 +231,10 @@ Page({
       itemList = ['编辑商品', '删除'];
     }
 
-    if(this.data.disEdit){
+    if (this.data.disEdit) {
       return;
     }
-  
+
     wx.showActionSheet({
       itemList: itemList,
       success: res => {
@@ -246,14 +259,14 @@ Page({
   /**
    * 启用账号
    */
-  enableAccount: function (id) {
+  enableAccount: function(id) {
     fetch({
-      url: '/partners/enable',
-      method: 'post',
-      data: {
-        id: id
-      }
-    })
+        url: '/partners/enable',
+        method: 'post',
+        data: {
+          id: id
+        }
+      })
       .then(res => {
         let listData = this.data.listData.map(item => {
           if (item.id == id) {
@@ -273,14 +286,14 @@ Page({
   /**
    * 禁用账号
    */
-  disableAccount: function (id) {
+  disableAccount: function(id) {
     fetch({
-      url: '/partners/disable',
-      method: 'post',
-      data: {
-        id: id
-      }
-    })
+        url: '/partners/disable',
+        method: 'post',
+        data: {
+          id: id
+        }
+      })
       .then(res => {
         let listData = this.data.listData.map(item => {
           if (item.id == id) {
@@ -300,11 +313,11 @@ Page({
   /**
    * 删除
    */
-  delCommodity: function (id) {
+  delCommodity: function(id) {
     fetch({
-      url: '/products?id='+id,
-      method: 'delete'
-    })
+        url: '/products?id=' + id,
+        method: 'delete'
+      })
       .then(res => {
         let listData = [];
         this.data.listData.map(item => {
@@ -324,7 +337,7 @@ Page({
   /**
    * 跳转到详情
    */
-  onAddCommodity: function () {
+  onAddCommodity: function() {
     wx.navigateTo({
       url: './details',
     })

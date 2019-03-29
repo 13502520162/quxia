@@ -93,14 +93,17 @@ Page({
         userScreenHeight: rect.height + 'px'
       })
     }).exec();
-
+    if (options.vipCardId) {
+      this.setData({
+        cardId: options.vipCardId
+      })
+    }
 
     this.setData({
       date: {
         start: moment().format('YYYY-MM-DD'),
         end: moment().format('YYYY-MM-DD')
-      },
-      cardId: options.vipCardId
+      }
     }, () => {
 
       this.fetchUserData()

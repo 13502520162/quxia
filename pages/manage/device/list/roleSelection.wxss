@@ -1,0 +1,26 @@
+.card {
+  background: #fff;
+}
+
+.place-list {
+  height: calc(100vh - 100rpx);
+}
+
+.userInfo {
+  font-size: 25rpx;
+  color: rgba(153, 148, 148, 1);
+}
+
+.weui-cell__ft_in-access {
+  position: absolute;
+  right: 20rpx;
+}
+
+.weui-cell__ft_in-access  text {
+  padding: 5rpx 10rpx;
+  background-color: rgb(0, 118, 255);
+  color: #fff;
+  border-radius: 15rpx;
+  margin-right: 15rpx;
+  font-size: 25rpx;
+}

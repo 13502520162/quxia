@@ -1,4 +1,3 @@
-<!--pages/manage/place/list/list.wxml-->
 <view class='header'>
   <view class="weui-search-bar search">
     <view class="weui-search-bar__form">
@@ -17,25 +16,35 @@
   </view>
 </view>
 
-<scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" style='{{ disAdd ? "height:calc(100vh - 100rpx)" : "height: calc(100vh - 200rpx)" }}'>
-  <view class='card' wx:for="{{listData}}" wx:key="{{item.id}}" data-enabled='{{item.enabled}}' data-id='{{item.id}}' bindtap='showActionSheet'>
+
+
+<scroll-view class='place-list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}">
+  <view class='card'>
     <view class="weui-cell weui-cell_select card-item">
       <view class="weui-cell__bd">
-        <view class="weui-select weui-select_in-select-after item-body">
-          <view class='item-top'>
-            <text>{{ item.name }}</text>
-          </view>
-          <view class=''>
-            <text>价格 <text class='blue'>{{ item.price}}元</text>，面值<text class='blue'>{{ item.value }}</text> 元
-            </text>
-          </view>
-          <view class=''>
-            <text>累计充值{{ item.totalOrders==null?"0":item.totalOrders }}次,共{{item.totalPaid}}元</text>
-          </view>
-        </view>
+        <checkbox-group bindchange="checkboxChange">
+          <label class="weui-cell weui-check__label" wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' wx:key="value">
+            <checkbox class="weui-check" value="{{item.id}}" checked="{{item.checked}}" />
+            <view class="weui-cell__hd weui-check__hd_in-checkbox">
+              <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+              <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+            </view>
+            <view>
+              <view class="">{{item.name}}</view>
+              <view class="userInfo">{{item.username}}
+                <text wx:if='{{item.mobile}}'>{{item.mobile}}</text> </view>
+            </view>
+            <view class="weui-cell__ft weui-cell__ft_in-access">
+              <text wx:if="{{item.roleName}}">{{item.roleName}}</text>
+            </view>
+          </label>
+        </checkbox-group>
       </view>
     </view>
+
   </view>
+
+
 
   <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
     <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
@@ -47,7 +56,6 @@
   </view>
 </scroll-view>
 
-
-<view class='bottom-btn' bindtap='onAddPlace'>
-  <button class="weui-btn" type="primary">新建充值套餐</button>
+<view class='bottom-btn' bindtap='onConfirm'>
+  <button class="weui-btn" type="primary">确定 （{{choosePlaces.length}}）</button>
 </view>

@@ -4,7 +4,7 @@
   <!-- tab -->
   <view class="tab">
     <view class="tab-nav" style='font-size:12px'>
-      <view wx:for="{{deviceTypes}}" wx:key="{{index}}" class='tab-item {{index == deviceTypesIndex?"active":""}}' bindtap="setTab" data-id='{{item.id}}' data-tabindex="{{index}}" style="">{{item.name}}</view>
+      <view wx:for="{{deviceTypes}}" wx:key="{{index}}" class='tab-item {{index == deviceTypesIndex?"active":""}}' bindtap="setTab" data-wxaIndex='{{item.wxaIndex}}' data-id='{{item.id}}' data-tabindex="{{index}}" style="">{{item.name}}</view>
       <view class="tab-line" style="width:30%;transform:translateX({{100*deviceTypesIndex}}%);"></view>
     </view>
   </view>
@@ -18,7 +18,7 @@
 </view>
 
 <scroll-view class='device-list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}">
-  <view class='card' wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' data-typeid='{{item.typeId}}' bindtap='showActionSheet'>
+  <view class='card' wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' data-name='{{item.name}}' data-typeid='{{item.typeId}}' bindtap='showActionSheet'>
     <view class="weui-cell weui-cell_select card-item">
       <view class="weui-cell__bd">
         <view class="weui-select weui-select_in-select-after item-body">

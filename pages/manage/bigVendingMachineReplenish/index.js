@@ -16,12 +16,15 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.setData({
       deviceId: options.sence
     }, () => {
-      this.fetchDeviceInfo();
+
     })
+  },
+  onReady: function () {
+    this.fetchDeviceInfo();
   },
 
 
@@ -29,14 +32,15 @@ Page({
   /**
    * 获取设备信息
    */
-  fetchDeviceInfo: function() {
+  fetchDeviceInfo: function () {
     fetch({
-        url: '/restocks/deviceInfo',
-        data: {
-          deviceId: this.data.deviceId
-        }
-      })
+      url: '/restocks/deviceInfo',
+      data: {
+        deviceId: this.data.deviceId
+      }
+    })
       .then(res => {
+
         let shelfs = res.data.shelfs.map(item => {
           item.replenishNum = item.stock
           return item;
@@ -46,6 +50,7 @@ Page({
           deviceInfo: res.data,
           shelfs
         })
+
       })
       .catch(err => {
         console.error(err);
@@ -55,33 +60,49 @@ Page({
   /**
    * 重置补货数
    */
-  onResetReplenishNum: function() {
+  onResetReplenishNum: function () {
     let shelfs = this.data.shelfs
     shelfs = shelfs.map(item => {
       item.replenishNum = item.stock
       return item;
     })
     this.setData({
-      shelfs: shelfs
+      shelfs: shelfs,
+      isCanNext: false
     })
   },
 
   /**
    * 一键补满
    */
-  onFillReplenishNum: function() {
-    let shelfs = this.data.shelfs;
+  onFillReplenishNum: function () {
+    let shelfs = this.data.shelfs,
+      isCanNext, len = shelfs.length;
+    for (let i = 0; i < len; i++) {
+      if (shelfs[i].replenishNum == shelfs[i].maxStock) {
+        isCanNext = false
+      } else {
+        isCanNext = true
+        break;
+      }
+    }
     shelfs = shelfs.map(item => {
       item.replenishNum = item.maxStock
       return item;
     })
+    if (!isCanNext) {
+      wx.showToast({
+        title: '货物已经补满，无需补货',
+        icon: 'none'
+      })
+    }
     this.setData({
       shelfs,
-      isCanNext: true
+      isCanNext
     })
   },
 
-  handleStepperChange: function(e) {
+  handleStepperChange: function (e) {
     let shelfs = this.data.shelfs;
     shelfs[e.currentTarget.dataset.index].replenishNum = e.detail
     this.setData({
@@ -105,7 +126,7 @@ Page({
   /**
    * 全部 / 缺货 切换
    */
-  toggleShelfs: function(e) {
+  toggleShelfs: function (e) {
     this.setData({
       isFilterOutOfStock: !this.data.isFilterOutOfStock
     })
@@ -125,7 +146,7 @@ Page({
   /**
    * 下一步
    */
-  nextStep: function() {
+  nextStep: function () {
     if (this.data.isCanNext) {
       wx.navigateTo({
         url: './replenishNum',
@@ -137,7 +158,7 @@ Page({
   /***
    * 查看补货记录
    */
-  showReplenishRecord: function() {
+  showReplenishRecord: function () {
     wx.navigateTo({
       url: '/pages/manage/replenishRecord/replenishRecord?id=' + this.data.deviceId,
     })

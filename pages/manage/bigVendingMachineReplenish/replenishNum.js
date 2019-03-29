@@ -54,6 +54,9 @@ Page({
 
 
         prepage.fetchDeviceInfo();
+        prepage.setData({
+          isCanNext: false
+        })
         setTimeout(() => {
           wx.navigateBack({
             detal: 1

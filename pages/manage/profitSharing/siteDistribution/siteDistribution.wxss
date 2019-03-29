@@ -58,7 +58,7 @@
   margin-left: 20rpx;
 }
 
-.weui-select{
+.weui-select {
   min-height: 0;
   line-height: inherit;
 }
@@ -72,4 +72,22 @@
   width: 120rpx;
   height: 120rpx;
   margin-right: 12rpx;
+}
+
+.enabled {
+  margin-left: 20rpx;
+  padding: 5rpx 10rpx;
+  border-radius: 20rpx;
+  color: #fff;
+  font-size: 24rpx;
+  background: #ff9500;
+}
+
+.unenabled {
+  margin-left: 20rpx;
+  padding: 5rpx 10rpx;
+  border-radius: 20rpx;
+  color: #fff;
+  font-size: 24rpx;
+  background: #d1d1d6;
 }

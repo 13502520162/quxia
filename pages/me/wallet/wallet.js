@@ -2,6 +2,7 @@
 import fetch from '../../../lib/fetch.js';
 import getStorePermissions from '../../../utils/getStorePremissioin.js';
 let permissions = [];
+const app = getApp()
 Page({
 
   /**
@@ -12,23 +13,30 @@ Page({
     balance: '0.00'
   },
 
-  onLoad: function (options) {
+  onLoad: function(options) {
     permissions = getStorePermissions();
-    if (permissions.permissions.includes(52) ){
+    if (app.hasPermission()) {
       this.setData({
         isCanWithdraw: true
       })
+    } else {
+      if (permissions.permissions.includes(52)) {
+        this.setData({
+          isCanWithdraw: true
+        })
+      }
     }
+
     this.fetchAccountBalance();
   },
 
   /**
    * 获取账户余额
    */
-  fetchAccountBalance: function () {
+  fetchAccountBalance: function() {
     fetch({
-      url: '/balance'
-    })
+        url: '/balance'
+      })
       .then(res => {
         this.setData({
           balance: res.data.toFixed(2)
@@ -42,16 +50,16 @@ Page({
   /**
    * 跳转提现
    */
-  gotoWithdraw: function () {
-      wx.navigateTo({
-        url: './withDraw',
-      })
+  gotoWithdraw: function() {
+    wx.navigateTo({
+      url: './withDraw',
+    })
   },
 
   /**
    * 跳转交易记录
    */
-  gotoTransation: function () {
+  gotoTransation: function() {
     wx.navigateTo({
       url: './transaction',
     })

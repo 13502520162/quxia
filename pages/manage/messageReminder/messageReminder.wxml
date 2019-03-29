@@ -18,30 +18,61 @@
         <view class="weui-tab__content">
           <scroll-view scroll-y="true" bindscrolltolower="loadMoreListData">
             <view class='news' wx:for='{{listData}}' wx:key='{{index}}' data-id='{{item.id}}'>
-              <view>
+
+              <view wx:if='{{type=="STOCK_ALERT"}}'>
+
                 <view>
                   <text>设备编号：</text>
                   <text>{{item.data.deviceId}}</text>
                 </view>
+
                 <view>
                   <text>设备名称：</text>
-                  <text>{{item.data.deviceName}}</text> </view>
+                  <text>{{item.data.deviceName}}</text>
+                </view>
+
                 <view>
                   <text>场地：</text>
                   <text>{{item.data.locationName}}</text>
                 </view>
+
                 <view>
                   <text>地址：</text>
                   <text>{{item.data.province + item.data.city + item.data.district + item.data.street}}</text>
                 </view>
+
                 <view class='date'>
                   <text>{{item.createdDate}}</text>
                 </view>
+
               </view>
+
+
+              <view wx:if='{{type=="INCOME"}}'>
+                <view>
+                  <text>收益金额:</text>
+                  <text>{{item.data.amount}}</text>
+                </view>
+
+                <view>
+                  <text>到账时间：</text>
+                  <text>{{item.data.date}}</text>
+                </view>
+
+                <view>
+                  <text>收益来源：</text>
+                  <text wx:if='{{item.data.source=="RECHARGE"}}'>充值</text>
+                  <text wx:if='{{item.data.source=="PURCHASE"}}'>商品销售</text>
+                </view>
+
+              </view>
+
               <view class='state'>
                 <text wx:if='{{!item.read}}' class='read' data-id='{{item.id}}' bindtap='markedRead'>标记已读</text>
                 <text wx:else>已读</text>
               </view>
+
+
             </view>
 
             <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
