@@ -48,7 +48,7 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "首页",
+					"name": "首 页",
 					"pathName": "pages/index/index",
 					"query": ""
 				},
