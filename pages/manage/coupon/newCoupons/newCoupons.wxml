@@ -40,7 +40,7 @@
     </view>
     <view class='full-order full-order-quota' wx:else>
       <text>打 </text>
-      <input class="full-order-ipt {{isDisabled?'disabledColor':''}}" bindinput='amount' value='{{amount}}' disabled="{{isDisabled}}" type='number' />
+      <input class="full-order-ipt {{isDisabled?'disabledColor':''}}" bindinput='amount' value='{{amount}}' disabled="{{isDisabled}}" type='digit' />
       <text> 折</text>
     </view>
   </view>
@@ -161,7 +161,7 @@
   </view>
 
 
-  <view class="weui-cell field" hidden='{{isAllVenues}}'>
+  <view class="weui-cell field weui-cellsss" hidden='{{isAllVenues}}'>
     <view class="weui-cell__hd">
       <view class="weui-label">适用场地</view>
     </view>

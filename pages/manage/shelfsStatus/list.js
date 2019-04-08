@@ -1,6 +1,18 @@
 // pages/manage/device/list/list.js
 import fetch from '../../../lib/fetch.js'
 import getStorePermissions from '../../../utils/getStorePremissioin.js';
+
+const DEVICE_TYPES = {
+  'quxia' : {
+    managePage : './details'
+  },
+  'quxia-vm': {
+    managePage : '../bigVendingMachineShelfsStatus/details'
+  }
+
+};
+
+
 Page({
 
   /**
@@ -382,15 +394,16 @@ Page({
         if (!res.cancel) {
           switch (res.tapIndex) {
             case 0:
-              if (index == 0) {
+
+              var type = DEVICE_TYPES[deviceTypeId];
+              if(type){
                 wx.navigateTo({
-                  url: './details?id=' + id + '&planid=' + planid + '&deviceTypeId=' + deviceTypeId,
+                  url: type.managePage + '?id=' + id + '&planid=' + planid + '&deviceTypeId=' + deviceTypeId,
                 })
-              } else {
-                wx.navigateTo({
-                  url: '../bigVendingMachineShelfsStatus/details?id=' + id + '&planid=' + planid + '&deviceTypeId=' + deviceTypeId,
-                })
+              }else{
+                console.log("deviceTypeId ", deviceTypeId, " is not valid!");
               }
+
 
               break;
             case 1:

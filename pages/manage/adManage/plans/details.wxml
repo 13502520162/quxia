@@ -1,97 +1,107 @@
-<form bindsubmit='onConfirm' >
-  <view class="weui-panel">
-    <view class="weui-panel__bd">
-        <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__hd">
-                <view class="weui-label">名称</view>
+<form bindsubmit='onConfirm'>
+    <view class="weui-panel">
+        <view class="weui-panel__bd">
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">名称</view>
+                </view>
+                <view class="weui-cell__bd">
+
+
+                    <input class="weui-input" bindinput='onNameChange' placeholder="请输入名称" name="name"
+                           value='{{adData.name}}'/>
+                </view>
             </view>
-            <view class="weui-cell__bd">
-                <input class="weui-input" bindinput='onNameChange'  placeholder="请输入名称" name="name" value='{{adData.name}}'/>
+            <view class="weui-cell weui-cell_select">
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                    <view class="weui-label">广告类型</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <picker bindchange="bindTypeChange" value="{{typeIndex}}" range="{{typesData}}" range-key="name">
+                        <view class="weui-select weui-select_in-select-after">{{typesData[typeIndex].name}}</view>
+                    </picker>
+                </view>
             </view>
-        </view>
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="weui-label">广告类型</view>
-          </view>
-          <view class="weui-cell__bd">
-              <picker bindchange="bindTypeChange" value="{{typeIndex}}" range="{{typesData}}" range-key="name">
-                  <view class="weui-select weui-select_in-select-after">{{typesData[typeIndex].name}}</view>
-              </picker>
-          </view>
-        </view>
 
-        <view class="weui-cell weui-cell_input" wx:if="{{typeIndex == 0}}">
-            <view class="weui-cell__hd">
-                <view class="weui-label">间隔时间(秒)</view>
+            <view class="weui-cell weui-cell_input" wx:if="{{typeIndex == 0}}">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">间隔时间(秒)</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <input class="weui-input" bindinput='onIntervalChange' placeholder="请输入图片间隔时间" type='number'
+                           name="interval" value='{{adData.interval}}'/>
+                </view>
             </view>
-            <view class="weui-cell__bd">
-                <input class="weui-input" bindinput='onIntervalChange'  placeholder="请输入图片间隔时间" type='number' name="interval" value='{{adData.interval}}'/>
+
+            <view class="weui-cell weui-cell_select">
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                    <view class="weui-label">设备类型</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <picker bindchange="bindDeviceTypeChange" value="{{deviceTypeIndex}}" range="{{deviceTypesData}}"
+                            range-key="name">
+                        <view class="weui-select weui-select_in-select-after">
+                            {{deviceTypesData[deviceTypeIndex].name}}
+                        </view>
+                    </picker>
+                </view>
             </view>
-        </view>
 
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="weui-label">设备类型</view>
-          </view>
-          <view class="weui-cell__bd">
-              <picker bindchange="bindDeviceTypeChange" value="{{deviceTypeIndex}}" range="{{deviceTypesData}}" range-key="name">
-                  <view class="weui-select weui-select_in-select-after">{{deviceTypesData[deviceTypeIndex].name}}</view>
-              </picker>
-          </view>
-        </view>
-
-         <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="weui-label">广告位类型</view>
-          </view>
-          <view class="weui-cell__bd">
-              <picker bindchange="bindAdSpaceTypeChange" value="{{adSpaceTypeIndex}}" range="{{adSpaceData}}" range-key="name">
-                  <view class="weui-select weui-select_in-select-after">{{adSpaceData[adSpaceTypeIndex].name}}</view>
-              </picker>
-          </view>
-        </view>
+            <view class="weui-cell weui-cell_select">
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                    <view class="weui-label">广告位类型</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <picker bindchange="bindAdSpaceTypeChange" value="{{adSpaceTypeIndex}}" range="{{adSpaceData}}"
+                            range-key="name" data-id="{{adSpaceData[adSpaceTypeIndex].id}}">
+                        <view class="weui-select weui-select_in-select-after">{{adSpaceData[adSpaceTypeIndex].name}}
+                        </view>
+                    </picker>
+                </view>
+            </view>
 
 
-        <view class="weui-cell weui-cell_select" bindtap='goToSelectDevices'>
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="weui-label">设备</view>
-          </view>
-          <view class="weui-cell__bd">
-                <view class="weui-select weui-select_in-select-after">{{adData.deviceIds.length}}台设备</view>
-          </view>
-        </view>
+            <view class="weui-cell weui-cell_select" bindtap='goToSelectDevices'>
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                    <view class="weui-label">设备</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <view class="weui-select weui-select_in-select-after">{{adData.deviceIds.length}}台设备</view>
+                </view>
+            </view>
 
-        <view class="weui-cell weui-cell_select"  bindtap='goToSelectResource'>
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-              <view class="weui-label">素材</view>
-          </view>
-          <view class="weui-cell__bd">
-                <view class="weui-select weui-select_in-select-after">{{adData.resources.length}}个素材</view>
-          </view>
+            <view class="weui-cell weui-cell_select" bindtap='goToSelectResource'>
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                    <view class="weui-label">素材</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <view class="weui-select weui-select_in-select-after">{{adData.resources.length}}个素材</view>
+                </view>
+            </view>
         </view>
     </view>
-  </view>
-  
-<view class="page__bd" wx:if="{{adData.resources.length}}">
-  <view class="weui-cells__title">已选素材</view>
-  <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell">
-          <view class="weui-cell__bd" class='resource'>
-              <image wx:if="{{typeIndex == 0}}" wx:for="{{adData.resources}}" wx:key="{{index}}" src='{{item}}'  mode='aspectFit'></image>
-              <video wx:if="{{typeIndex == 1}}" wx:for="{{adData.resources}}" wx:key="{{index}}" src='{{item}}'  objectFit="contain"></video>
-          </view>
-      </view>
-  </view>
-</view>
+
+    <view class="page__bd" wx:if="{{adData.resources.length}}">
+        <view class="weui-cells__title">已选素材</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd" class='resource'>
+                    <image wx:if="{{typeIndex == 0}}" wx:for="{{adData.resources}}" wx:key="{{index}}" src='{{item}}'
+                           mode='aspectFit'></image>
+                    <video wx:if="{{typeIndex == 1}}" wx:for="{{adData.resources}}" wx:key="{{index}}" src='{{item}}'
+                           objectFit="contain"></video>
+                </view>
+            </view>
+        </view>
+    </view>
 
 
-  
-<view class='bottom-btn' wx:if="{{!disPublish}}">
-  <button  class="weui-btn" type="primary" form-type="submit">确定</button>
-</view>
+    <view class='bottom-btn' wx:if="{{!disPublish}}">
+        <button class="weui-btn" type="primary" form-type="submit">确定</button>
+    </view>
 
-<view  class='bottom-btn' wx:else>
-  <button  class="weui-btn" type="warn" bindtap='planPauseHandle'>暂停</button>
-</view>
+    <view class='bottom-btn' wx:else>
+        <button class="weui-btn" type="warn" bindtap='planPauseHandle'>暂停</button>
+    </view>
 
 </form>

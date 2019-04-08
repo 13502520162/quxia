@@ -71,7 +71,7 @@
 
   <view class="weui-cell weui-cell_access reset-weui-cell" bindtap='jumpClient'>
     <view class="weui-cell__bd">
-      <view style="display: inline-block; vertical-align: middle">跳转客户端</view>
+      <view style="display: inline-block; vertical-align: middle">打开客户端</view>
     </view>
     <view class="weui-cell__ft weui-cell__ft_in-access"> </view>
   </view>

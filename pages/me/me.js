@@ -1,6 +1,7 @@
 // pages/me/me.js
 import fetch from '../../lib/fetch.js';
 import getStorePermissions from '../../utils/getStorePremissioin.js';
+import WxHelper from './getSession.js';
 let permissions = [];
 const app = getApp()
 Page({
@@ -10,6 +11,9 @@ Page({
    */
   data: {
     personInfo: {},
+    session: {},
+    isBindingPhone: false,
+    avatarUrl: '',
     isBinding: false,
     menuList: [{
         icon: '../../assets/images/withDraw.png',
@@ -20,8 +24,16 @@ Page({
         hide: true
       },
       {
+        icon: '../../assets/images/bindCellPhone.png',
+        name: '绑定手机',
+        url: '',
+        tapEvent: 'bindCellPhone',
+        permission: '',
+        hide: false
+      },
+      {
         icon: '../../assets/images/wxbing.png',
-        name: '绑定微信',
+        name: '微信绑定',
         url: '',
         tapEvent: 'weChatBinding',
         permission: '',
@@ -57,6 +69,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    let that = this
     let permissions = getStorePermissions();
 
     let menuList = this.data.menuList.map(item => {
@@ -70,9 +83,13 @@ Page({
 
       return item;
     });
+    that.setData({
+      avatarUrl: wx.getStorageSync('userInfo').avatarUrl || app.globalData.userInfo.avatarUrl 
+    })
 
     this.setData({
-      menuList: menuList
+      menuList: menuList,
+      session: app.globalData.loginInfo
     })
     this.getPersonInfo();
     this.getWx()
@@ -215,6 +232,136 @@ Page({
           icon: 'none'
         })
       })
-  }
+  },
 
+
+  /**
+   * 绑定手机
+   */
+  bindCellPhone(e) {
+    let that = this
+
+    if (e.detail.errMsg == 'getPhoneNumber:ok') {
+      let {
+        encryptedData,
+        iv
+      } = e.detail
+
+      // WxHelper.login(session => {
+      //   fetch({
+      //       // url: '/decrypt?sessionKey=' + encodeURIComponent(session.sessionKey) + '&encryptedData=' + encodeURIComponent(encryptedData) + '&iv=' + encodeURIComponent(iv),
+      //       url: '/decrypt',
+      //       data: {
+      //         sessionKey: session.sessionKey,
+      //         encryptedData: encryptedData,
+      //         iv: iv,
+      //       },
+      //       method: 'post'
+      //     })
+      //     .then(result => {
+      //       fetch({
+      //         url: '/bindMobile?mobile=' + JSON.parse(result.data).phoneNumber,
+      //         method: 'post',
+      //         data: {
+      //           mobile: JSON.parse(result.data).phoneNumber
+      //         }
+      //       }).then(res => {
+      //         wx.showToast({
+      //           title: '绑定成功',
+      //           icon: 'none'
+      //         })
+      //       })
+      //     })
+      // });
+
+
+
+
+
+      that.isLogin(session => {
+        fetch({
+            url: '/decrypt',
+            data: {
+              sessionKey: session.sessionKey,
+              encryptedData: encryptedData,
+              iv: iv,
+            },
+            method: 'post'
+          })
+          .then(reslut => {
+            if (JSON.stringify(reslut.data) != '{}') {
+              fetch({
+                url: '/bindMobile?mobile=' + JSON.parse(reslut.data).phoneNumber,
+                method: 'post',
+                data: {
+                  mobile: JSON.parse(reslut.data).phoneNumber
+                }
+              }).then(res => {
+                wx.showToast({
+                  title: '绑定成功',
+                  icon: 'none'
+                })
+                that.setData({
+                  personInfo: {
+                    ...that.data.personInfo,
+                    mobile: JSON.parse(reslut.data).phoneNumber
+                  }
+                })
+              })
+            } else {
+              wx.showToast({
+                title: '绑定失败，请重试',
+                icon: 'none'
+              })
+            }
+
+          })
+      })
+
+    }
+  },
+
+  isLogin: function(loginInfo) {
+    let that = this
+    let session = this.data.session
+    if (session) {
+      wx.checkSession({
+        success: function() {
+          console.log('成功')
+          loginInfo(session)
+        },
+        fail() {
+          console.log('失败')
+          that.doLogin(loginInfo)
+        }
+      });
+    } else {
+      console.log('没有值，重新获取')
+      that.doLogin(loginInfo)
+    }
+
+  },
+  doLogin: function(loginInfo) {
+    let that = this
+    return new Promise(function(resolve, reject) {
+      wx.login({
+        success: res => {
+          var code = res.code;
+          if (code) {
+            fetch({
+                url: '/login?code=' + code,
+                method: 'post'
+              })
+              .then(res => {
+                resolve(res.data)
+                that.setData({
+                  session: res.data
+                })
+                loginInfo(res.data)
+              })
+          }
+        }
+      })
+    })
+  }
 })

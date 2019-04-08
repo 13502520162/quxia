@@ -124,12 +124,14 @@
   right: 0rpx;
   top: 10rpx;
 }
-.huodaohao{
+
+.huodaohao {
   position: relative;
   top: -10rpx;
 }
+
 .cargo-number {
-  width: 100rpx;
+  width: 60rpx;
   display: inline-block;
   border: 1px solid #d9d9d9;
   border-radius: 10rpx;
@@ -139,4 +141,8 @@
 
 .bottom-btn1 {
   bottom: 105rpx;
+}
+
+.weui-grids-reset {
+  margin-bottom: 100rpx;
 }

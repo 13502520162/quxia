@@ -1,7 +1,6 @@
 
 <sliding-tab id='slidingTab' items="{{cargoState}}" bind:onMyEvent="setTab"> </sliding-tab>
 
-
 <view>
   <view>
     <view>

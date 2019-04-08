@@ -145,6 +145,7 @@ Page({
     } else {
       itemList[1] = "开始投放"
     }
+    console.log(id)
 
 
     wx.showActionSheet({

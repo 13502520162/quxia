@@ -21,13 +21,18 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     let pages = getCurrentPages();
-    let prePage = pages[pages.length -2];
+    let prePage = pages[pages.length - 2];
     let locationIds = prePage.data.accountData.locationIds;
-    if (locationIds){
+    if (locationIds) {
+      let newlocationIds = []
+      let len = locationIds.length;
+      for (let i = 0; i < len; i++) {
+        newlocationIds.push(locationIds[i].toString())
+      }
       this.setData({
-        choosePlaces: locationIds
+        choosePlaces: newlocationIds
       });
     }
     this.fetchPlaces();
@@ -38,12 +43,12 @@ Page({
    * 获取场地
    */
 
-  fetchPlaces: function () {
-    if (this.data.listLoading ) {
+  fetchPlaces: function() {
+    if (this.data.listLoading) {
       return;
     }
 
-    if (this.data.listEnd){
+    if (this.data.listEnd) {
       return;
     }
 
@@ -52,12 +57,12 @@ Page({
     })
 
     fetch({
-      url: '/locations/select',
-      data: {
-        ...this.data.listParams,
-        ...this.filterParams
-      }
-    })
+        url: '/locations/select',
+        data: {
+          ...this.data.listParams,
+          ...this.filterParams
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
@@ -66,7 +71,7 @@ Page({
         }
 
         res.data.map(item => {
-          if (this.data.choosePlaces.includes(item.id)) {
+          if (this.data.choosePlaces.includes(item.id.toString())) {
             item.checked = true;
           } else {
             item.checked = false;
@@ -92,11 +97,13 @@ Page({
   /**
    * 列表触底加更多列表数据
    */
-  loadMoreListData: function () {
+  loadMoreListData: function() {
 
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchPlaces();
     }
@@ -108,9 +115,10 @@ Page({
   /**
    * 选择场地
    */
-  checkboxChange: function (e) {
+  checkboxChange: function(e) {
 
-    var listData = this.data.listData, values = e.detail.value;
+    var listData = this.data.listData,
+      values = e.detail.value;
     for (var i = 0, lenI = listData.length; i < lenI; ++i) {
       listData[i].checked = false;
       for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
@@ -121,6 +129,7 @@ Page({
       }
     }
 
+
     this.setData({
       choosePlaces: values,
       listData: listData
@@ -130,7 +139,7 @@ Page({
   /**
    * 确定所选
    */
-  onConfirm: function () {
+  onConfirm: function() {
     let pages = getCurrentPages();
     let prepage = pages[pages.length - 2];
     let accountData = prepage.data.accountData;

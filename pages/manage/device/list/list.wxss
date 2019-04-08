@@ -45,7 +45,7 @@
 }
 
 .item-body {
-  height: 140rpx;
+  height: auto;
   margin-left: 20rpx;
 }
 

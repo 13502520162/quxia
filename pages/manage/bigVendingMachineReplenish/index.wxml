@@ -1,8 +1,8 @@
 <view class='header'>
-  <view class='location-name'>{{deviceInfo.locationName}}
+  <view class='location-name' wx:if='{{deviceInfo.locationName}}'>{{deviceInfo.locationName}}
     <span class="replenish-record-btn" bindtap="showReplenishRecord">补货记录</span>
   </view>
-  <view class='location-adress'>{{deviceInfo.province + deviceInfo.city + deviceInfo.district + deviceInfo.street }}</view>
+  <view class='location-adress' wx:if='{{deviceInfo.province + deviceInfo.city + deviceInfo.district + deviceInfo.street}}'>{{deviceInfo.province + deviceInfo.city + deviceInfo.district + deviceInfo.street }}</view>
   <view class='device-id'>
     <text>{{deviceInfo.deviceId}}</text>
     <text wx:if="{{deviceInfo.active}}" class='card-status-success'>在线</text>

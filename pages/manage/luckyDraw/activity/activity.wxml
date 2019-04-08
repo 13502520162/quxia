@@ -54,14 +54,14 @@
     </view>
     <view class="dl">
       每人每天可抽取
-      <input disabled="{{isDisabled}}" class='full-order-ipt {{isDisabled?"disabledColor":""}}' value='{{maxTrys}}' bindinput='maxTrys' /> 次， 共
-      <input disabled="{{isDisabled}}" class='full-order-ipt {{isDisabled?"disabledColor":""}}' value='{{maxTrysDaily}}' bindinput='maxTrysDaily' />次
+      <input type='number' disabled="{{isDisabled}}" class='full-order-ipt {{isDisabled?"disabledColor":""}}' value='{{maxTrys}}' bindinput='maxTrys' /> 次， 共
+      <input type='number' disabled="{{isDisabled}}" class='full-order-ipt {{isDisabled?"disabledColor":""}}' value='{{maxTrysDaily}}' bindinput='maxTrysDaily' />次
     </view>
 
     <view class="dl">
       每人每天可中奖
-      <input disabled="{{isDisabled}}" class='full-order-ipt {{isDisabled?"disabledColor":""}}' value='{{maxRewards}}' bindinput='maxRewards' /> 次， 共
-      <input disabled="{{isDisabled}}" class='full-order-ipt {{isDisabled?"disabledColor":""}}' value='{{maxRewardsDaily}}' bindinput='maxRewardsDaily' />次
+      <input type='number' disabled="{{isDisabled}}" class='full-order-ipt {{isDisabled?"disabledColor":""}}' value='{{maxRewards}}' bindinput='maxRewards' /> 次， 共
+      <input type='number' disabled="{{isDisabled}}" class='full-order-ipt {{isDisabled?"disabledColor":""}}' value='{{maxRewardsDaily}}' bindinput='maxRewardsDaily' />次
     </view>
 
   </view>

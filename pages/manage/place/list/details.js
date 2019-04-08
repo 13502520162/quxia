@@ -53,6 +53,10 @@ Page({
         isShowLoading: true
       })
       .then(res => {
+        res.data.unshift({
+          id: '',
+          name: '请选择'
+        })
         if (res.data && Array.isArray(res.data)) {
           this.setData({
             tradeList: res.data

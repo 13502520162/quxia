@@ -78,11 +78,11 @@ Page({
     })
   },
 
-  showActionSheet: function(e) {
-    wx.navigateTo({
-      url: '../../../royalty/selectUser?usersDataIndex=' + e.currentTarget.dataset.index,
-    })
-  },
+  // showActionSheet: function(e) {
+  //   wx.navigateTo({
+  //     url: '../../../royalty/selectUser?usersDataIndex=' + e.currentTarget.dataset.index,
+  //   })
+  // },
 
 
 
@@ -160,7 +160,6 @@ Page({
    */
   onConfirm: function() {
     let newOrUpdateParams = this.data.newOrUpdateParams;
-    console.log(newOrUpdateParams)
     if (newOrUpdateParams.users == undefined || !newOrUpdateParams.users.length) {
       wx.showToast({
         title: '请选择分润对象',

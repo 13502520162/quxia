@@ -37,6 +37,8 @@ Page({
   getWXuserinfo: function() {
     wx.getUserInfo({
       success: res => {
+        app.globalData.userInfo = res.userInfo
+        wx.setStorageSync('userInfo', res.userInfo)
         this.setData({
           userInfo: res.userInfo
         })

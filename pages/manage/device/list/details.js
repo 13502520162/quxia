@@ -19,7 +19,8 @@ Page({
     imgSrc: '',
     isImg: false,
     typeId: '',
-    wxaIndex: ''
+    wxaIndex: '',
+    id: ''
 
   },
 
@@ -31,6 +32,7 @@ Page({
       details: { ...this.details,
         id: options.id
       },
+      id: options.id,
       typeId: options.typeId,
       wxaIndex: options.wxaIndex
     })
@@ -175,6 +177,10 @@ Page({
           url: '/deviceGroups/select'
         })
         .then(res => {
+          res.data.unshift({
+            id: '',
+            name: '请选择'
+          })
           this.setData({
             groupsData: res.data
           })
@@ -197,6 +203,10 @@ Page({
           url: '/plans/select'
         })
         .then(res => {
+          res.data.unshift({
+            id: '',
+            name: '请选择'
+          })
           this.setData({
             tollsData: res.data
           });
@@ -219,6 +229,10 @@ Page({
           url: '/locations/select'
         })
         .then(res => {
+          res.data.unshift({
+            id: '',
+            name: '请选择'
+          })
           this.setData({
             placeData: res.data
           });
@@ -282,7 +296,39 @@ Page({
             })
           },
           fail: function(err) {
-            console.log(err)
+            if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+              // 这边微信做过调整，必须要在按钮中触发，因此需要在弹框回调中进行调用
+              wx.showModal({
+                title: '提示',
+                content: '需要您授权保存相册',
+                showCancel: false,
+                success: modalSuccess => {
+                  wx.openSetting({
+                    success(settingdata) {
+                      if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                        wx.showModal({
+                          title: '提示',
+                          content: '获取权限成功,再次点击图片即可保存',
+                          showCancel: false,
+                        })
+                      } else {
+                        wx.showModal({
+                          title: '提示',
+                          content: '获取权限失败，将无法保存到相册哦~',
+                          showCancel: false,
+                        })
+                      }
+                    },
+                    fail(failData) {
+                      console.log("failData", failData)
+                    },
+                    complete(finishData) {
+                      console.log("finishData", finishData)
+                    }
+                  })
+                }
+              })
+            }
           }
         })
       },
@@ -331,17 +377,17 @@ Page({
    */
 
   jumpClient: function() {
-    let typeId = this.data.typeId
+    let deviceId = this.data.id
     let wxaIndex = this.data.wxaIndex
 
     wx.navigateToMiniProgram({
-      appId: 'wx247b749513f26a07', // 要跳转的小程序的appid
-      path: wxaIndex, // 跳转的目标页面
+      appId: 'wx8cf8de405bd24d30', // 要跳转的小程序的appid
+      path: wxaIndex + '?scene=' + deviceId, // 跳转的目标页面
       extarData: {
         open: 'auth'
       },
       success(res) {
-        console.log(res)
+        console.log(wxaIndex + '?scene=' + deviceId)
       }
     })
   }

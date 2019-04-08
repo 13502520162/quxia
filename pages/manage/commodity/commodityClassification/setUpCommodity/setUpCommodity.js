@@ -159,7 +159,6 @@ Page({
   onConfirm: function() {
     let pages = getCurrentPages();
     let prepage = pages[pages.length - 2];
-    console.log(this.data.choosePlaces)
     prepage.updateProducts(this.data.choosePlaces)
 
     wx.navigateBack({

@@ -37,7 +37,11 @@ Page({
   },
   onShow: function() {
     this.setData({
-      listData: []
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 10
+      }
     })
     this.fetchList()
   },
@@ -49,7 +53,9 @@ Page({
    */
 
   fetchList: function() {
-
+    // if(this.data.listEnd){
+    //   return;
+    // }
 
     this.setData({
       listLoading: true
@@ -232,7 +238,7 @@ Page({
         from: this.data.listParams.from + this.data.listParams.size
       }
     })
-    this.fetchList();
+    //this.fetchList();
 
   },
 

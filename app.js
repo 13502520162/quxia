@@ -25,6 +25,7 @@ App({
   getToken(cb) {
     let self = this
     this.globalData.token = wx.getStorageSync('tokenInfo');
+    this.globalData.loginInfo = wx.getStorageSync('loginInfo');
     if (this.globalData.token && this.globalData.token.expireTime > new Date().getTime()) {
       cb(this.globalData.token.access_token)
       return
@@ -41,6 +42,7 @@ App({
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
+          console.log('run')
           // 登录
           wx.login({
             success: res => {
@@ -49,13 +51,17 @@ App({
               if (code) {
                 let p = new Promise(function(resolve, reject) {
                   wx.request({
-                    url: BASE_URL + '/merchant/api/wx/openId?code=' + code,
-                    method: 'GET',
+                    url: BASE_URL + '/merchant/api/wx/login?code=' + code,
+                    data: {
+                      code
+                    },
+                    method: 'post',
                     header: {
                       'content-type': 'application/json'
                     },
                     success: function(res) {
-                      resolve(res.data)
+                      wx.setStorageSync('loginInfo', res.data.data)
+                      self.globalData.loginInfo = res.data.data;
                       self.fetchWxlogin(res.data)
                     }
                   })
@@ -98,7 +104,7 @@ App({
         username: '',
         password: '',
         grant_type: 'merchant_wxa',
-        openId: res.data,
+        openId: res.data.openId,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -203,6 +209,7 @@ App({
 
   globalData: {
     userInfo: null,
+    loginInfo: null,
     _events: {},
     listenerID: 0,
     token: null,

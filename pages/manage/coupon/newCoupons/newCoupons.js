@@ -72,7 +72,7 @@ Page({
       endDate: TIME,
       field: options.field
     });
-    if (options.couponId) {
+    if (options.id) {
       this.setData({
         couponId: options.id
       });
@@ -242,7 +242,8 @@ Page({
       });
     } else {
       this.setData({
-        discount: false
+        discount: false,
+        amount: ''
       });
     }
 
@@ -354,10 +355,11 @@ Page({
    * 适用场地
    */
   choiceOfVenue: function() {
-
-    wx.navigateTo({
-      url: '../choiceOfVenue/choiceOfVenue?locationIds=' + JSON.stringify(this.data.locationIds),
-    })
+    if (!isDisabled) {
+      wx.navigateTo({
+        url: '../choiceOfVenue/choiceOfVenue?locationIds=' + JSON.stringify(this.data.locationIds),
+      })
+    }
   },
   /**
    * 优惠券名称
@@ -388,12 +390,16 @@ Page({
    */
   amount: function(e) {
     let value = e.detail.value
-    if (value >= 10) {
-      wx.showToast({
-        title: '打折额度不能超过10',
-        icon: 'none'
-      })
-      value = ''
+    let discount = this.data.discount
+    console.log(discount)
+    if (!discount) {
+      if (value >= 10) {
+        wx.showToast({
+          title: '打折额度不能超过10',
+          icon: 'none'
+        })
+        value = ''
+      }
     }
     this.setData({
       amount: value
@@ -532,6 +538,7 @@ Page({
    */
   preservationFetch: function() {
     let couponId = parseInt(this.data.couponId);
+    console.log(couponId)
 
     fetch({
         url: couponId ? '/coupons?id=' + couponId : '/coupons',
@@ -554,7 +561,7 @@ Page({
       })
       .then(res => {
         wx.showToast({
-          title: '优惠券添加成功',
+          title: '操作成功',
           icon: 'success'
         })
 

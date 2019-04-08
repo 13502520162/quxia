@@ -12,7 +12,7 @@
     <view class="weui-cell weui-cell_select card-item">
       <view class="weui-cell__bd">
         <view class="weui-select weui-select_in-select-after item-body">
-          <view wx:if='{{stateIndex==0}}'>
+          <view wx:if='{{cargoState[stateIndex].id=="quxia"}}'>
             <text wx:for="{{item.shelfs}}" wx:key="{{index}}" wx:for-item="shelf" class='{{ shelf.state==="NORMAL" ? "shelf-status" : "shelf-status-danger" }}'>{{shelf.number}}</text>
           </view>
           <view class='item-top'>
@@ -24,7 +24,7 @@
             <text>{{item.name}}</text>
             <text style='margin-left: 40rpx;'> {{item.locationName}}</text>
           </view>
-          <view wx:if='{{stateIndex==1}}'>{{ item.info}}</view>
+          <view wx:if='{{cargoState[stateIndex].id=="quxia-vm"}}'>{{ item.info}}</view>
         </view>
       </view>
     </view>

@@ -63,10 +63,10 @@ Page({
       this.setData({
         disList: false
       })
-      let itemIndex = actionSheetListItems.indexOf('入库') || actionSheetListItems.indexOf('退货') || ctionSheetListItems.indexOf('发货') || actionSheetListItems.indexOf('库存记录');
-      if (itemIndex > -1) {
-        actionSheetListItems.splice(itemIndex, 1);
-      }
+      // let itemIndex = actionSheetListItems.indexOf('入库') || actionSheetListItems.indexOf('退货') || ctionSheetListItems.indexOf('发货') || actionSheetListItems.indexOf('库存记录');
+      // if (itemIndex > -1) {
+      //   actionSheetListItems.splice(itemIndex, 1);
+      // }
     } else {
 
       //列表
@@ -129,6 +129,7 @@ Page({
       listEnd: false,
       listData: [],
     })
+    this.permissionFilter();
     this.fetchInventoryList();
     this.fetchInventorySummary();
   },
@@ -232,7 +233,10 @@ Page({
     let id = e.currentTarget.dataset.id;
     let itemList = this.data.actionSheetListItems;
     if (this.data.systemInfo.platform == 'android') {
-      itemList.push('取消')
+      if (itemList.indexOf('取消') == -1) {
+        itemList.push('取消')
+      }
+
     }
 
 

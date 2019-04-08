@@ -53,14 +53,16 @@
   width: 100%;
 }
 
-.item-body {
-  height: 140rpx;
-  margin-left: 20rpx;
-}
+
 
 .weui-select {
   min-height: 0;
   line-height: inherit;
+}
+
+.item-body {
+  height: auto;
+  margin-left: 20rpx;
 }
 
 .item-top {

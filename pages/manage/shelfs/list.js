@@ -1,6 +1,66 @@
 import fetch from '../../../lib/fetch.js'
 import getStorePermissions from '../../../utils/getStorePremissioin.js';
-const app = getApp()
+import ActionSheet from '../../../utils/actionSheet.js';
+
+const app = getApp();
+
+const DEVICE_TYPES = {
+  'quxia' : {
+      managePage : './details'
+  },
+  'quxia-vm': {
+      managePage : '../bigVendingMachineShelfs/details'
+  }
+
+};
+
+const ACTIONS =  [
+    {
+        name : '方案上架',
+        click : function(id){
+            wx.navigateTo({
+                url: './putaway?id=' + id,
+            });
+        }
+    },
+    {
+        name : '编辑方案',
+        click : function(id,deviceTypeId){
+            var type = DEVICE_TYPES[deviceTypeId];
+            if(type){
+                wx.navigateTo({
+                    url: type.managePage + '?type=edit&id=' + id + '&deviceTypeId=' + deviceTypeId,
+                })
+            }else{
+                console.log("deviceTypeId ", deviceTypeId, " is not valid!");
+            }
+        },
+        test : function(){
+            return !this.data.disEdit;
+        }
+    },
+    {
+        name : '删除',
+        click : function(id){
+            let self = this;
+            wx.showModal({
+                content: '是否删除该方案?',
+                success(res) {
+                    if (res.confirm) {
+                        self.delShelfs(id);
+                    } else if (res.cancel) {
+                        console.log('用户点击取消')
+                    }
+                }
+            })
+
+        },
+        test : function(){
+            return !this.data.disEdit;
+        }
+    }
+];
+
 Page({
 
   /**
@@ -43,9 +103,6 @@ Page({
     });
   },
 
-  onReady: function() {
-    this.slidingTab = this.selectComponent('#slidingTab')
-  },
 
   /**
    * 权限过滤
@@ -119,7 +176,7 @@ Page({
 
 
   /**
-   * 搜索框事件 
+   * 搜索框事件
    */
   showInput: function() {
     this.setData({
@@ -248,66 +305,11 @@ Page({
    * 列表每一项操作
    */
   showActionSheet: function(e) {
-    let that = this
     let id = e.currentTarget.dataset.id;
-    let cargoStateIndex = this.data.cargoStateIndex;
-    let enable = e.currentTarget.dataset.enbale;
-    let deviceTypeId = this.data.deviceTypeId
-    let itemList = [];
-    if (this.data.systemInfo.platform == 'android') {
-      itemList = ['方案上架', '编辑方案', '删除', '取消'];
-    } else {
-      itemList = ['方案上架', '编辑方案', '删除'];
-    }
-    if (this.data.disEdit) {
-      itemList.splice(1, 2);
-    }
+    let deviceTypeId = this.data.deviceTypeId;
+      ActionSheet.show(ACTIONS,this, id,deviceTypeId);
 
-    wx.showActionSheet({
-      itemList: itemList,
-      success: res => {
-        if (!res.cancel) {
-          switch (res.tapIndex) {
-            case 0:
-              wx.navigateTo({
-                url: './putaway?id=' + id,
-              })
-              break;
-            case 1:
-              if (!this.data.disEdit) {
-                if (cargoStateIndex === 0) {
-                  wx.navigateTo({
-                    url: './details?type=edit&id=' + id + '&deviceTypeId=' + deviceTypeId,
-                  })
-                } else if (cargoStateIndex === 1) {
-                  wx.navigateTo({
-                    url: '../bigVendingMachineShelfs/details?type=edit&id=' + id + '&deviceTypeId=' + deviceTypeId,
-                  })
-                }
-              }
-              break;
-            case 2:
-              if (!this.data.disEdit) {
 
-                wx.showModal({
-                  content: '是否删除该方案?',
-                  success(res) {
-                    if (res.confirm) {
-                      that.delShelfs(id);
-                    } else if (res.cancel) {
-                      console.log('用户点击取消')
-                    }
-                  }
-                })
-
-              }
-              break;
-            default:
-              break;
-          }
-        }
-      }
-    })
   },
 
   /**

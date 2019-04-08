@@ -116,7 +116,7 @@ Page({
           },
           {
             name: "商品分类管理",
-            icon: "../../assets/images/commodity.png",
+            icon: "../../assets/images/commodityClassification.png",
             pageUrl: './commodity/commodityClassification/commodityClassification',
             permission: 91,
             hide: true

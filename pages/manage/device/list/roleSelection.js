@@ -26,16 +26,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.setData({
-      users: options.users
-    })
+    
     if (options.id) {
       this.setData({
         id: options.id
       })
     }
-    this.fetchUsers();
-
+ 
+    this.setData({
+      users: options.users
+    }, () => {
+      this.fetchUsers();
+    })
   },
 
   /**
@@ -68,6 +70,7 @@ Page({
 
         res.data.map(item => {
           if (this.data.users.includes(item.id)) {
+          
             item.checked = true;
             choosePlaces.push(item.id)
           } else {
@@ -186,7 +189,15 @@ Page({
         }
       })
       .then(res => {
-        console.log(res)
+
+        wx.showToast({
+          title: '操作成功',
+        })
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 1500)
       })
       .catch(err => {
         console.error(err);
@@ -197,9 +208,6 @@ Page({
         })
       })
 
-    wx.navigateBack({
-      detal: 1
-    })
   }
 
 

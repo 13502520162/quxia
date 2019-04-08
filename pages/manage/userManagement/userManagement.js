@@ -54,7 +54,7 @@ Page({
     cardId: '',
 
     sexArr: [{
-      id: '',
+      id: null,
       name: '全部',
       checked: true
     }, {
@@ -117,7 +117,7 @@ Page({
    */
   fetchUserData: function() {
     let joinDateStart = this.data.joinDate.joinDateStart,
-      joinDateEnd = this.data.joinDate.joinDateEnd
+      joinDateEnd = this.data.joinDate.joinDateEnd;
     if (joinDateStart == '开始时间') {
       joinDateStart = ''
     }
@@ -128,12 +128,26 @@ Page({
         joinDateEnd = joinDateStart
       }
     }
+
+    let start = this.data.date.start,
+      end = this.data.date.end
+    if (start == '开始时间') {
+      start = ''
+    }
+
+    if (end == '结束时间') {
+      end = ''
+      if (start != '开始时间') {
+        end = start
+      }
+    }
+
     fetch({
       url: '/customers',
       method: 'GET',
       data: {
-        start: this.data.date.start,
-        end: this.data.date.end,
+        start,
+        end,
         joinDateStart,
         joinDateEnd,
         ...this.data.listParams,
@@ -142,7 +156,7 @@ Page({
         name: this.data.name,
         mobile: this.data.mobile,
         cardId: this.data.cardId,
-        sex: this.data.sex,
+        sex: this.data.sex == null ? '' : this.data.sex,
       }
     }).then(res => {
       let screenItem = this.data.screenItem
@@ -257,8 +271,8 @@ Page({
         joinDateEnd: this.data.joinDate.joinDateEnd || '结束时间'
       },
       date: {
-        start: this.data.date.start,
-        end: this.data.date.end
+        start: this.data.date.start || '开始时间',
+        end: this.data.date.end || '结束时间'
       }
     })
   },

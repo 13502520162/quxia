@@ -9,13 +9,13 @@
       <view class="weui-search-bar__form">
           <view class="weui-search-bar__box">
               <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-              <input 
-                type="text" 
-                class="weui-search-bar__input" 
-                placeholder="搜索" 
-                confirm-type="search"  
-                value="{{inputVal}}" 
-                focus="{{inputShowed}}" 
+              <input
+                type="text"
+                class="weui-search-bar__input"
+                placeholder="搜索"
+                confirm-type="search"
+                value="{{inputVal}}"
+                focus="{{inputShowed}}"
                 bindinput="inputTyping"
                 bindconfirm="searchInputConfirm"
               />
@@ -35,16 +35,18 @@
   <view class='card'>
       <view class="weui-cell weui-cell_select card-item">
           <view class="weui-cell__bd">
-                <checkbox-group bindchange="checkboxChange">
+
                     <label class="weui-cell weui-check__label" wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' wx:key="value">
-                        <checkbox class="weui-check" value="{{item.id}}" checked="{{item.checked}}"/>
+                        <checkbox-group bindchange="checkboxChange" data-id="{{item.id}}">
+                        <checkbox class="weui-check" value="{{item.id}}" data-id="{{item.id}}" checked="{{item.checked}}" />
+                        </checkbox-group>
                         <view class="weui-cell__hd weui-check__hd_in-checkbox">
                             <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
                             <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
                         </view>
                         <view class="weui-cell__bd"><view>{{item.id}}</view><view>{{item.name}}</view></view>
                     </label>
-                </checkbox-group>
+
           </view>
       </view>
 
@@ -53,7 +55,7 @@
   <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
       <view class="weui-loadmore__tips weui-loadmore__tips_in-line">请选择场地添加设备</view>
   </view>
-  
+
   <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
       <view class="weui-loading"></view>
       <view class="weui-loadmore__tips">正在加载</view>

@@ -26,7 +26,7 @@ Page({
         usersDataIndex: options.usersDataIndex,
         userIndex: options.usersDataIndex,
         rate: newOrUpdateParams.users[options.usersDataIndex].rate,
-        userId: newOrUpdateParams.users[options.usersDataIndex].id
+        userId: newOrUpdateParams.users[options.usersDataIndex].userId
       })
     }
     this.fetchUsers();
@@ -93,11 +93,16 @@ Page({
     let pages = getCurrentPages();
     let prepage = pages[pages.length - 2];
     let newOrUpdateParams = prepage.data.newOrUpdateParams;
-    if (newOrUpdateParams.users == undefined) {
-      newOrUpdateParams.users = []
-    }
+  
+    // if (newOrUpdateParams.users == undefined ||JSON.stringify(newOrUpdateParams.users=='{}')) {
+    //   newOrUpdateParams.users = []
+    //   console.log(newOrUpdateParams)
+    // }
+
     if (this.data.usersDataIndex == null) {
+ 
       for (let i = 0; i < newOrUpdateParams.users.length; i++) {
+      
         if (newOrUpdateParams.users[i].userId == this.data.usersData[this.data.userIndex].id) {
           wx.showToast({
             title: '子账号不能相同,请重新选择',

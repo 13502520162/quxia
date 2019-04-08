@@ -42,7 +42,7 @@
                     </view>
                     <view class='item-bottom'>
                         <text>{{item.type =='IMAGE' ? '图片' : '视频'}}</text>
-                        <text style='margin-left:20rpx'>{{item.devices}}台设备数</text>
+                        <text style='margin-left:20rpx'>{{item.deviceCount}}台设备数</text>
                     </view>
                   </view>
                   <view class='item-right'>

@@ -30,13 +30,14 @@
           </view>
         </view>
 
-        <view class="weui-cell weui-cell_input">
+        <view class="weui-cell weui-cell_input" style='height:60rpx;'>
           <view class="weui-cell__hd">
             <view class="weui-label">商品分类</view>
           </view>
           <view class="weui-cell__bd" style='padding:10rpx 10rpx 10rpx 0'>
             <picker bindchange="onFilterTradeChange" value="{{index}}" range="{{trade}}" range-key='name'>
-              <text>{{trade[tradeIndex].name}}</text>
+              <text wx:if='{{categoryId}}'>{{trade[tradeIndex].name}}</text>
+              <text wx:else>请选择分类</text>
               <text class='arrow'></text>
             </picker>
           </view>
@@ -47,7 +48,9 @@
 
     <view class="weui-panel img-upload">
       <view class="weui-uploader__hd">
-        <view class="weui-uploader__title">商品图</view>
+        <view class="weui-uploader__title">商品图
+          <text>( 建议尺寸：354(高)*288(宽)像素 )</text>
+        </view>
       </view>
       <view class="weui-uploader__bd">
         <view class="weui-uploader__input-box" wx:if='{{!commodityImage}}'>
@@ -59,9 +62,29 @@
       </view>
     </view>
 
+
+
     <view class="weui-panel img-upload">
       <view class="weui-uploader__hd">
-        <view class="weui-uploader__title">商品详情图</view>
+        <view class="weui-uploader__title">商品展示图
+          <text>( 建议尺寸：400(高)*750(宽)像素 )</text>
+        </view>
+      </view>
+      <view class="weui-uploader__bd">
+        <view class="weui-uploader__input-box" wx:if='{{!displayImage}}'>
+          <view class="weui-uploader__input" bindtap="chooseDisplayImage"></view>
+        </view>
+        <view class="weui-uploader__file" wx:else>
+          <image class="weui-uploader__img" src="{{displayImage}}" mode="aspectFill" name="image" bindtap="chooseDisplayImage" />
+        </view>
+      </view>
+    </view>
+
+    <view class="weui-panel img-upload">
+      <view class="weui-uploader__hd">
+        <view class="weui-uploader__title">商品详情图
+          <text>( 建议尺寸：高(不限)*750(宽)像素 )</text>
+        </view>
       </view>
       <view class="weui-uploader__bd">
         <view class="weui-uploader__input-box" wx:if='{{!commodityDetailImage}}'>
@@ -73,22 +96,17 @@
       </view>
     </view>
 
-    <view class="weui-panel img-upload">
+    <view class="weui-panel img-upload img-upload1">
       <view class="weui-uploader__hd">
         <view class="weui-uploader__title">商品描述</view>
       </view>
       <view class="weui-uploader__bd">
-        <textarea class="weui-textarea" placeholder="请输入商品描述" style="height: 3.3em" value='{{commodityDetail.description}}' maxlength='200' name="description" />
-        <view class="weui-textarea-counter">0/200</view>
+        <textarea class="weui-textarea" placeholder="请输入商品描述" value='{{commodityDetail.description}}' maxlength='200' name="description" />
       </view>
     </view>
   </view>
-
-  <view class='footer'>
-    <view class="weui-btn-area">
-      <button form-type="submit" class="weui-btn" type="primary">确定</button>
-    </view>
-  </view>
-
+  <cover-view class='footer'>
+    <button form-type="submit" class="weui-btn-area weui-btn" type="primary">确定</button>
+  </cover-view>
 
 </form>

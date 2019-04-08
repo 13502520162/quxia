@@ -19,7 +19,7 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
-      balance: parseInt(options.balance),
+      balance: parseFloat(options.balance),
       id: options.id
     })
   },
@@ -132,13 +132,31 @@ Page({
 
 
   balanceIpt: function(e) {
-    if (e.detail.value == '') {
-      e.detail.value = 0
+    let value = e.detail.value
+    var replaceArray = [];
+    for (let i = 0; i < value.length; ++i) { //正则判断是否合法
+      var textValue = (/^[0-9_.+-]$/.test(value.charAt(i)));
+      if (!textValue) {
+        replaceArray.push(value.charAt(i));
+      }
+    }
+    if (replaceArray.length != 0) {
+      wx.showToast({
+        title: '只能输入数字，减号',
+        icon: 'none'
+      })
+      for (let j = 0; j < replaceArray.length; ++j) { //循环删除不合法内容
+        value = value.replace(replaceArray[j], '');
+      }
+    }
+
+    if (value == '') {
+      value = 0
     }
 
     this.setData({
-      adjustment: parseInt(e.detail.value),
-      balanceIpt: parseInt(e.detail.value)
+      adjustment: parseFloat(value),
+      balanceIpt: parseFloat(value)
     })
   }
 })

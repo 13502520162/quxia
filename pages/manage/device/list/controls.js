@@ -169,11 +169,11 @@ Page({
         icon: 'success'
       })
 
-      setTimeout(res => {
-        wx.navigateBack({
-          detil: 1
-        })
-      }, 1500)
+      // setTimeout(res => {
+      //   wx.navigateBack({
+      //     detil: 1
+      //   })
+      // }, 1500)
     })
   }
 

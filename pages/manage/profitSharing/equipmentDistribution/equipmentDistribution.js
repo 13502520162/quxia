@@ -331,7 +331,11 @@ Page({
       groupId: this.data.groupData[this.data.groupIndex].id,
       query: this.data.number,
       showFilterMenue: false,
-      listData: []
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 10
+      }
     })
     this.fetchDistribution();
   },

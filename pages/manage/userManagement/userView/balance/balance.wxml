@@ -14,7 +14,7 @@
     <view>
       <view class='adjustment'>
         <text class=' {{balance + adjustment?"" :"noData"}}' bindtap='reduce'>-</text>
-        <input type='number' value='{{balanceIpt}}' bindinput='balanceIpt' />
+        <input type='text' value='{{balanceIpt}}' bindinput='balanceIpt' />
         <text bindtap='plus'>+</text>
       </view>
       <view class='adjustment-info'>

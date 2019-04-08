@@ -10,6 +10,7 @@ Page({
   data: {
     commodityId: null,
     commodityImage: null,
+    displayImage: null,
     commodityDetailImage: null,
     commodityDetail: {},
     trade: [],
@@ -65,6 +66,29 @@ Page({
       })
   },
 
+
+  chooseDisplayImage: function() {
+    this.initQiniu().then(options => {
+        wx.chooseImage({
+          count: 1,
+          success: res => {
+            let filePath = res.tempFilePaths[0];
+            // 交给七牛上传
+            let that = this;
+            qiniuUploader.upload(filePath, (res) => {
+              that.setData({
+                displayImage: res.imageURL
+              });
+            });
+          }
+        })
+      })
+      .catch(err => {
+        console.error(err);
+      })
+  },
+
+
   chooseCommodityDetailImage: function() {
     this.initQiniu().then(options => {
         wx.chooseImage({
@@ -98,6 +122,7 @@ Page({
         commodityId: options.id
       }, () => {
         this.fetchCommodityDetail();
+
       })
     }
   },
@@ -123,7 +148,13 @@ Page({
    * 表单提交
    */
   submit: function(e) {
-    let categoryId = this.data.trade[this.data.tradeIndex].id
+    let categoryId = ""
+    if (this.data.categoryId == undefined) {
+      categoryId = ""
+    } else {
+      categoryId = this.data.trade.length ? this.data.trade[this.data.tradeIndex].id : ""
+    }
+
     let {
       name,
       price,
@@ -160,13 +191,13 @@ Page({
     }
 
 
-    if (!categoryId) {
-      wx.showToast({
-        title: '请选择商品分类',
-        icon: 'none'
-      })
-      return
-    }
+    // if (!categoryId) {
+    //   wx.showToast({
+    //     title: '请选择商品分类',
+    //     icon: 'none'
+    //   })
+    //   return
+    // }
 
     if (!this.data.commodityImage) {
       wx.showToast({
@@ -175,6 +206,16 @@ Page({
       })
       return
     }
+
+
+    if (!this.data.displayImage) {
+      wx.showToast({
+        title: '请添加商品展示图',
+        icon: 'none'
+      })
+      return
+    }
+
 
     if (!this.data.commodityDetailImage) {
       wx.showToast({
@@ -189,6 +230,7 @@ Page({
     let commodityValues = { ...e.detail.value,
       image: this.data.commodityImage,
       categoryId,
+      displayImage: this.data.displayImage,
       detailImage: this.data.commodityDetailImage
     }
 
@@ -202,7 +244,8 @@ Page({
 
   onFilterTradeChange: function(e) {
     this.setData({
-      tradeIndex: e.detail.value
+      tradeIndex: e.detail.value,
+      categoryId: this.data.trade[e.detail.value]
     })
   },
 
@@ -258,8 +301,10 @@ Page({
         this.setData({
           commodityImage: res.data.image,
           commodityDetailImage: res.data.detailImage,
+          displayImage: res.data.displayImage,
           commodityDetail: res.data,
-          tradeIndex: index
+          tradeIndex: index,
+          categoryId: res.data.categoryId
         })
       })
       .catch(err => {

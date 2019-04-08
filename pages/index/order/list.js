@@ -498,7 +498,12 @@ Page({
           from: this.data.listParams.from + this.data.listParams.size
         }
       })
-      this.fetchSaleOrders();
+      if(this.data.cargoStateIndex===0){
+        this.fetchSaleOrders();
+      }else{
+        this.fetchLuckyOrders()
+      }
+  
     }
   },
 

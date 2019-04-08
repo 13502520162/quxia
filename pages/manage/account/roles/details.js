@@ -22,7 +22,7 @@ Page({
         permission: { name: '设备管理', value: '7' },
         subpermissions: [
           { name: '设备列表', value: '8' },
-          { name: '设备绑定', value: '9' },
+          { name: '设备授权', value: '9' },
           { name: '设备编辑', value: '10' }
         ]
       },

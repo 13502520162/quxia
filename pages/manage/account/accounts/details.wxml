@@ -36,7 +36,7 @@
           </view>
           <view class="weui-cell__bd weui-cell_switch">
             <view class="weui-cell__ft">
-              <switch name="royaltyPermission" disabled="{{accountData.admin}}" bindchange='isAdmin' checked="{{accountData.admin}}" />
+              <switch name="royaltyPermission" disabled='{{!editAdmin}}'  bindchange='isAdmin' checked="{{accountData.admin}}" />
             </view>
           </view>
         </view>

@@ -231,7 +231,11 @@ Page({
     this.setData({
       listEnd: false,
       showFilterMenue: false,
-      listData: []
+      listData: [],
+      listParams: {
+        from: 0,
+        size: 20
+      }
     },()=> {
       this.fetchDevices();
       this.fetchDevicesSummary();

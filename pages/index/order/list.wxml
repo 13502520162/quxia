@@ -9,7 +9,7 @@
 </view>
 
 <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}">
-  <view wx:if='{{cargoStateIndex==0}}'>
+  <view wx:if='{{cargoState[cargoStateIndex].name=="销售订单"}}'>
     <view class='card' wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='gotoOrderDetail'>
       <view class='card-top'>
         <text>{{item.state =='COMPLETED'?'支付成功':'支付失败'}}</text>
@@ -20,7 +20,7 @@
           <view class="weui-select weui-select_in-select-after item-body">
             <view class='item-top'>
               <text>{{ item.id }}</text>
-              <text>{{item.deviceName}}</text>
+              <text wx:if='{{item.deviceName}}'>{{item.deviceName}}</text>
             </view>
             <view class='location-name'>{{item.createdDate}}</view>
             <view class='location-name'>{{item.locationName}}</view>

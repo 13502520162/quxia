@@ -15,7 +15,6 @@ Page({
     deviceTypeIndex: 0,
     adSpaceData:[],
     adSpaceTypeIndex:0,
-
     id: null,
     adData: {
       resources: [],
@@ -64,7 +63,17 @@ Page({
       url: "/devices/types"
     })
       .then(res => {
+        var index = this.findListIndex(this.data.adData.deviceTypeId, res.data, (item, val)=>{return item.id === val});
+
+        res.data.unshift({
+          id: '',
+          name: '请选择'
+        });
+
+        index++;
+
         this.setData({
+          deviceTypeIndex : index,
           deviceTypesData: res.data
         });
         this.fetchAdSpaceTypes();
@@ -77,23 +86,59 @@ Page({
   /**
    * 获取所有的广告位类型
    */
-  
+
   fetchAdSpaceTypes: function () {
-    fetch({
-      url:'/ad/plans/adSpaces',
-      data: {
-        deviceTypeId: this.data.deviceTypesData[this.data.deviceTypeIndex].id
+
+      var selectedDeviceType = this.data.deviceTypesData[this.data.deviceTypeIndex];
+      if(selectedDeviceType.id === ''){
+        this.setData({
+          adSpaceTypeIndex: 0,
+          adSpaceData: [{
+            id: '',
+            name: '请选择'
+          }]
+        })
+      }else{
+        fetch({
+          url:'/ad/plans/adSpaces',
+          data: {
+            deviceTypeId: this.data.deviceTypesData[this.data.deviceTypeIndex].id
+          }
+        })
+            .then( res => {
+              var index = this.findListIndex(this.data.adData.adSpaceTypeId, res.data, (item, val)=>{return item.id === val});
+
+              res.data.unshift({
+                id: '',
+                name: '请选择'
+              })
+
+              index++;
+
+              this.setData({
+                adSpaceTypeIndex: index,
+                adSpaceData: res.data
+              })
+            })
+            .catch( err =>{
+              console.error(err);
+            })
       }
-    })
-    .then( res => {
-       this.setData({
-         adSpaceTypeIndex: 0,
-         adSpaceData: res.data
-       })
-    })
-    .catch( err =>{
-      console.error(err);
-    })
+
+
+
+  },
+
+  findListIndex : function(currentValue, listData, testFn){
+    if(listData && listData.length> 0){
+        for(var i = 0; i<listData.length;i++){
+            if(testFn.call(listData[i], listData[i],currentValue)){
+              return i;
+            }
+        }
+
+    }
+     return -1;
   },
 
   /**
@@ -112,6 +157,7 @@ Page({
   bindAdSpaceTypeChange: function (e) {
     this.setData({
       adSpaceTypeIndex: e.detail.value,
+      adSpaceTypeId : e.target.dataset.id
     })
   },
 
@@ -132,7 +178,7 @@ Page({
       adData: { ...this.data.adData, interval: e.detail.value }
     })
   },
-  
+
   /**
  * 选择设备
  */

@@ -117,31 +117,34 @@ Page({
                 content: '你确定删除该授权账号嘛?',
                 success: res => {
                   if (res.errMsg === 'showModal:ok') {
-                    fetch({
-                      url: '/devices/users?deviceId=' + that.data.id + '&userId=' + userId,
-                        method: 'delete',
-                        data: {
-                          deviceId: parseInt(that.data.id),
-                          userId
-                        }
-                      })
-                      .then(res => {
-                        let listData = [];
-                        that.data.listData.map(item => {
-                          if (item.id != userId) {
-                            listData.push(item)
+                    if (res.confirm) {
+                      fetch({
+                          url: '/devices/users?deviceId=' + that.data.id + '&userId=' + userId,
+                          method: 'delete',
+                          data: {
+                            deviceId: parseInt(that.data.id),
+                            userId
                           }
-                        });
-                        that.setData({
-                          listData: listData
                         })
-                      })
-                      .catch(err => {
-                        console.error(err);
-                      })
-                      .finally(() => {
+                        .then(res => {
+                          let listData = [];
+                          that.data.listData.map(item => {
+                            if (item.id != userId) {
+                              listData.push(item)
+                            }
+                          });
+                          that.setData({
+                            listData: listData
+                          })
+                        })
+                        .catch(err => {
+                          console.error(err);
+                        })
+                        .finally(() => {
 
-                      })
+                        })
+                    }
+
                   }
                 }
               })

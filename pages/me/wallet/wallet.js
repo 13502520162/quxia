@@ -27,6 +27,9 @@ Page({
       }
     }
 
+
+  },
+  onShow() {
     this.fetchAccountBalance();
   },
 

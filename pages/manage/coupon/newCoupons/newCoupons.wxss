@@ -202,3 +202,7 @@ input {
   right: 10rpx;
   font-size: 25rpx;
 }
+
+.weui-cellsss {
+  margin-bottom: 110rpx;
+}

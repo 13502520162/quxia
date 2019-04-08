@@ -26,7 +26,7 @@
 
   <view class="weui-panel shelf-list">
     <view class="page__bd">
-      <view class="weui-grids">
+      <view class="weui-grids weui-grids-reset">
 
         <checkbox-group bindchange="checkboxChange">
           <label class=" weui-grid weui-check__label" hover-class="weui-grid_active" wx:for="{{shelfs.shelfs}}" wx:key="{{index}}">
@@ -42,8 +42,8 @@
               <view class="weui-grid__label">{{item.name ? item.name :'请选择商品'}}</view>
               <view class="weui-grid__label">{{ item.price ? '￥'+ item.price : '￥0' }}</view>
               <view class="weui-grid__label">
-                <text class='huodaohao'>货道号：</text>
-                <input type='number' data-index='{{index}}' class='cargo-number' data-item='{{shelfs.shelfs}}' value='{{item.number}}' bindinput='cargoNumber' placeholder='输入货道号'></input>
+                <text class='huodaohao'>货道：</text>
+                <input type='number' data-index='{{index}}' class='cargo-number' data-item='{{shelfs.shelfs}}' value='{{item.number}}' bindinput='cargoNumber' placeholder=''></input>
               </view>
             </view>
 

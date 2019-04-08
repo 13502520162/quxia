@@ -1,7 +1,10 @@
 .form-body {
-  height: calc( 100vh - 100rpx);
-  overflow: auto;
+  height: calc(100vh - 150rpx);
+  overflow: initial;
+  margin-bottom: 50rpx;
+  z-index: 1;
 }
+
 .img-upload {
   padding: 15px;
 }
@@ -12,5 +15,15 @@
   left: 0;
   right: 0;
   background: #fff;
+  z-index: 99;
 }
 
+.img-upload1 .weui-textarea {
+  margin-bottom: 50rpx;
+  height: 180rpx;
+}
+
+.weui-uploader__title text {
+  color: #ccc;
+  font-size: 25rpx;
+}

@@ -8,7 +8,7 @@ Page({
    */
   data: {
     authBtnText: '获取验证码',
-    restGetAuthCodeTime: 40,
+    restGetAuthCodeTime: 60,
     getAuthCodeTimer: null,
     ways: ['微信钱包'],
     wayIndex: 0,
@@ -164,6 +164,7 @@ Page({
   },
 
   withDrawAmountHandle: function(e) {
+    let that = this
     this.setData({
       showTopTips: false,
       withDrawParams: Object.assign({}, this.data.withDrawParams, {
@@ -183,6 +184,7 @@ Page({
 
 
   confirmWithDraw: function() {
+    let that = this
     this.setData({
       withDrawLoading: true
     });
@@ -244,9 +246,20 @@ Page({
           })
           .then(res => {
             if (!res || res.code == 0) {
-              wx.redirectTo({
-                url: '../../msg/msg_success',
+
+              that.setData({
+                withDrawInfo: {
+                  ...that.data.withDrawInfo,
+                  balance: balance - amount
+                }
               })
+
+              wx.showToast({
+                icon: 'success',
+                title: '提现成功',
+              })
+
+
             } else if (res && res.code == '-1003') {
               wx.showToast({
                 icon: 'none',

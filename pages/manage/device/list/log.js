@@ -20,7 +20,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.fetchLogs(options.id);
   },
 
@@ -28,13 +28,13 @@ Page({
    * 获取日志列表
    */
 
-  fetchLogs: function (id) {
+  fetchLogs: function(id) {
 
     if (this.data.listLoading) {
       return;
     }
 
-    if(this.data.listEnd){
+    if (this.data.listEnd) {
       return;
     }
 
@@ -43,23 +43,24 @@ Page({
     })
 
     fetch({
-      url: '/devices/onlineLogs?id='+id,
-      data: {
-        ...this.data.listParams
-      }
-    })
+        url: '/devices/onlineLogs?id=' + id,
+        data: {
+          ...this.data.listParams
+        }
+      })
       .then(res => {
         if (res.data.length < this.data.listParams.size) {
           this.setData({
             listEnd: true
           })
         }
-        if(res.data){
-          res.data = res.data.map( item => {
+        if (res.data) {
+          res.data = res.data.map(item => {
             item.createdDate = moment(item.createdDate).format('YYYY-MM-DD HH:mm')
+            item.active = item.state == 'online'
             return item;
           })
-          
+
         }
 
         this.setData({
@@ -76,11 +77,13 @@ Page({
       })
   },
 
-  loadMoreListData: function () {
+  loadMoreListData: function() {
 
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams, from: this.data.listParams.from + this.data.listParams.size }
+        listParams: { ...this.data.listParams,
+          from: this.data.listParams.from + this.data.listParams.size
+        }
       })
       this.fetchDevices();
     }

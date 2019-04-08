@@ -10,6 +10,7 @@ Page({
       from: 0,
       size: 20
     },
+    query:'',
     listLoading: false,
     listEnd: false,
     listData: [],
@@ -59,7 +60,8 @@ Page({
       url: '/devices',
       data: {
         ...this.data.listParams,
-        ...this.data.filterParams
+        ...this.data.filterParams,
+        query: this.data.inputVal
       }
     })
       .then(res => {

@@ -41,14 +41,14 @@ Page({
         premission: 8,
         hide: true
       },
-      {
-        title: '设备绑定',
-        icon: '../../assets/images/device.png',
-        desc: "扫描设备二维码",
-        pageUrl: '',
-        premission: 9,
-        hide: true
-      },
+      // {
+      //   title: '设备绑定',
+      //   icon: '../../assets/images/device.png',
+      //   desc: "扫描设备二维码",
+      //   pageUrl: '',
+      //   premission: 9,
+      //   hide: true
+      // },
       {
         title: '商品套餐',
         icon: '../../assets/images/toll.png',

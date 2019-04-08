@@ -21,7 +21,7 @@
 
   <view class='weui-info'>
     <view>总共：{{count}}</view>
-    <view>已选择：{{selCount}}</view>
+    <view>已选择：{{choosePlaces.length}}</view>
   </view>
 </view>
 
@@ -42,7 +42,7 @@
             </view>
             <view>
               <view class="">{{item.name}}</view>
-              <view class="">成本价： ￥{{item.price}}</view>
+              <view class="">成本价： ￥{{item.costPrice}}</view>
             </view>
           </label>
         </checkbox-group>

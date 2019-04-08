@@ -1,4 +1,5 @@
 /* pages/manage/bigVendingMachineReplenish/replenishNum.wxss */
+
 .item {
   display: flex;
   justify-content: space-between;
@@ -11,9 +12,10 @@
   height: 160rpx;
 }
 
-.item-left  {
+.item-left {
   display: flex;
 }
+
 .item-left .item-detail {
   display: flex;
   margin-left: 20rpx;
@@ -26,4 +28,8 @@
   flex-direction: column;
   justify-content: space-around;
   margin-right: 20rpx;
+}
+
+.itemList .item:last-child {
+  margin-bottom: 110rpx;
 }

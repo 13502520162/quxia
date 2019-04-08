@@ -48,7 +48,7 @@ Page({
     });
     this.initData();
     this.permissionFilter();
-    this.fetchDeviceTypes()
+
   },
 
   /**
@@ -74,15 +74,25 @@ Page({
           disEdit: false
         })
       }
+
+
+
     }
 
   },
 
 
   onShow: function() {
-
+    this.setData({
+      listParams: {
+        from: 0,
+        size: 10
+      },
+      listData: []
+    })
     this.fetchPlaces();
     this.fetchGroups();
+    this.fetchDeviceTypes()
   },
   onReady: function() {
 
@@ -358,7 +368,11 @@ Page({
     this.setData({
       listEnd: false,
       showFilterMenue: false,
-      listData: []
+      listData: [],
+      listParams: {
+        size: 10,
+        from: 0
+      }
     }, () => {
       this.fetchDevices();
       this.fetchDevicesSummary();
@@ -440,6 +454,7 @@ Page({
       itemList: itemList,
       success: res => {
         if (!res.cancel) {
+          console.log(itemList[res.tapIndex])
           switch (res.tapIndex) {
             case 0:
               if (!this.data.disEdit) {

@@ -14,8 +14,8 @@
 		"uglifyFileName": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.6.2",
-	"appid": "wx56a4557ca00a75a8",
+	"libVersion": "2.6.4",
+	"appid": "wx2aa5b53e979619d4",
 	"projectname": "newretail-merchant-miniprogram",
 	"debugOptions": {
 		"hidedInDevtools": []
@@ -26,6 +26,8 @@
 		"beforePreview": "",
 		"beforeUpload": ""
 	},
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -44,11 +46,11 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 17,
+			"current": 21,
 			"list": [
 				{
 					"id": -1,
-					"name": "首 页",
+					"name": "首页",
 					"pathName": "pages/index/index",
 					"query": ""
 				},
@@ -169,6 +171,33 @@
 					"name": "设备列表",
 					"pathName": "pages/manage/device/list/list",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "货道配货",
+					"pathName": "pages/manage/shelfs/list",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 19,
+					"name": "账号",
+					"pathName": "pages/manage/account/accounts/list",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品列表",
+					"pathName": "pages/manage/commodity/list",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/me/me",
 					"scene": null
 				}
 			]

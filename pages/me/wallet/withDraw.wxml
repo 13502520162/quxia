@@ -30,7 +30,7 @@
             <view class="weui-label">手机号</view>
         </view>
         <view class="weui-cell__bd">
-            <input class="weui-input"  value='{{withDrawInfo.mobile}}' />
+            <input class="weui-input" readonly='readonly'  disabled='true' value='{{withDrawInfo.mobile}}' />
         </view>
         <view class="weui-cell__ft">
             <view class="weui-vcode-btn" bindtap='getOathcode'>{{authBtnText}}</view>

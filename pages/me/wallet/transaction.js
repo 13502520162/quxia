@@ -50,7 +50,7 @@ Page({
         break;
       case 1: 
         this.setData({
-          filterParams: { ...this.data.filterParams, type: 'TRANSFER'}
+          filterParams: { ...this.data.filterParams, type: 'INCOME'}
         });
         break;
       case 2: 
@@ -106,13 +106,14 @@ Page({
             listEnd: true
           })
         }
-        res.data = res.data.map(item => {
+        let listData = res.data.map(item => {
           item.createdDate = moment(item.createdDate).format('YYYY-MM-DD HH:mm');
-          item.gatwayType == 'wx' ? item.gatwayType = '微信' : item.gatwayType = '支付宝';
+          item.gatwayType =  item.paymentGatewayType == "WX_CORP_TO_CHANGE" ?  '微信' :'支付宝';
           return item;
         })
+        console.log(listData)
         this.setData({
-          listData: [...this.data.listData, ...res.data]
+          listData: [...this.data.listData, ...listData]
         })
       })
       .catch(err => {

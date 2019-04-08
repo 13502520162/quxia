@@ -10,20 +10,21 @@ Page({
     deviceInfo: {},
     shelfs: [],
     isCanNext: false,
-    isFilterOutOfStock: false, //筛选缺货按钮
+    isFilterOutOfStock: false, //筛选缺货按钮,
+    isFillUp: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.setData({
       deviceId: options.sence
     }, () => {
 
     })
   },
-  onReady: function () {
+  onReady: function() {
     this.fetchDeviceInfo();
   },
 
@@ -32,13 +33,13 @@ Page({
   /**
    * 获取设备信息
    */
-  fetchDeviceInfo: function () {
+  fetchDeviceInfo: function() {
     fetch({
-      url: '/restocks/deviceInfo',
-      data: {
-        deviceId: this.data.deviceId
-      }
-    })
+        url: '/restocks/deviceInfo',
+        data: {
+          deviceId: this.data.deviceId
+        }
+      })
       .then(res => {
 
         let shelfs = res.data.shelfs.map(item => {
@@ -60,7 +61,7 @@ Page({
   /**
    * 重置补货数
    */
-  onResetReplenishNum: function () {
+  onResetReplenishNum: function() {
     let shelfs = this.data.shelfs
     shelfs = shelfs.map(item => {
       item.replenishNum = item.stock
@@ -75,9 +76,10 @@ Page({
   /**
    * 一键补满
    */
-  onFillReplenishNum: function () {
+  onFillReplenishNum: function() {
     let shelfs = this.data.shelfs,
-      isCanNext, len = shelfs.length;
+      isCanNext, len = shelfs.length,
+      isFillUp = this.data.isFillUp;
     for (let i = 0; i < len; i++) {
       if (shelfs[i].replenishNum == shelfs[i].maxStock) {
         isCanNext = false
@@ -90,19 +92,25 @@ Page({
       item.replenishNum = item.maxStock
       return item;
     })
-    if (!isCanNext) {
-      wx.showToast({
-        title: '货物已经补满，无需补货',
-        icon: 'none'
-      })
+    if (!isFillUp) {
+      if (!isCanNext) {
+        wx.showToast({
+          title: '货物已经补满，无需补货',
+          icon: 'none'
+        })
+      }
+    }
+    if (isFillUp) {
+      isCanNext = true
     }
     this.setData({
       shelfs,
-      isCanNext
+      isCanNext,
+      isFillUp: true
     })
   },
 
-  handleStepperChange: function (e) {
+  handleStepperChange: function(e) {
     let shelfs = this.data.shelfs;
     shelfs[e.currentTarget.dataset.index].replenishNum = e.detail
     this.setData({
@@ -126,7 +134,7 @@ Page({
   /**
    * 全部 / 缺货 切换
    */
-  toggleShelfs: function (e) {
+  toggleShelfs: function(e) {
     this.setData({
       isFilterOutOfStock: !this.data.isFilterOutOfStock
     })
@@ -146,7 +154,7 @@ Page({
   /**
    * 下一步
    */
-  nextStep: function () {
+  nextStep: function() {
     if (this.data.isCanNext) {
       wx.navigateTo({
         url: './replenishNum',
@@ -158,7 +166,7 @@ Page({
   /***
    * 查看补货记录
    */
-  showReplenishRecord: function () {
+  showReplenishRecord: function() {
     wx.navigateTo({
       url: '/pages/manage/replenishRecord/replenishRecord?id=' + this.data.deviceId,
     })

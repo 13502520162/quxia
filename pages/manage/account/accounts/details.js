@@ -16,7 +16,7 @@ Page({
     rolesIndex: 0,
     type: '',
     hides: false,
-    editAdmin: false
+    editAdmin: true
   },
 
   /**
@@ -119,9 +119,9 @@ Page({
 
     this.setData({
       accountData: { ...this.data.accountData,
-        admin: e.detail.value,
-        hides: e.detail.value
-      }
+        admin: value,
+      },
+      hides: value
     })
   },
 
@@ -169,7 +169,8 @@ Page({
         }
         this.setData({
           accountData: res.data,
-          isAdmin: res.data.admin
+          isAdmin: res.data.admin,
+          hides: res.data.admin,
         })
       })
       .catch(err => {
@@ -253,6 +254,12 @@ Page({
       }
     }
 
+    let roleId = this.data.roles[this.data.rolesIndex].id,
+      locationIds = this.data.accountData.locationIds
+    if (this.data.accountData.admin) {
+      roleId = '', locationIds = []
+    }
+
 
     fetch({
         url: this.data.id ? '/accounts?id=' + this.data.id : '/accounts',
@@ -260,8 +267,8 @@ Page({
         data: {
           ...e.detail.value,
           admin: this.data.accountData.admin,
-          roleId: this.data.roles[this.data.rolesIndex].id,
-          locationIds: this.data.accountData.locationIds,
+          roleId,
+          locationIds,
         }
       })
       .then(res => {
