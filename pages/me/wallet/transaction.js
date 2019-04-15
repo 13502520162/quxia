@@ -1,6 +1,11 @@
 import fetch from '../../../lib/fetch.js'
 import moment from '../../../lib/moment.js'
 var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
+
+const METHODS=  {
+  'WX_CORP_TO_CHANGE' : '微信钱包'
+};
+
 Page({
   data: {
     tabs: ["全部", "收入", "提现"],
@@ -108,7 +113,7 @@ Page({
         }
         let listData = res.data.map(item => {
           item.createdDate = moment(item.createdDate).format('YYYY-MM-DD HH:mm');
-          item.gatwayType =  item.paymentGatewayType == "WX_CORP_TO_CHANGE" ?  '微信' :'支付宝';
+          item.gatwayType =  METHODS[item.paymentGatewayType] || '';
           return item;
         })
         console.log(listData)

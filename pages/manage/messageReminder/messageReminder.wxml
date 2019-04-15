@@ -38,7 +38,7 @@
 
                 <view>
                   <text>地址：</text>
-                  <text>{{item.data.province + item.data.city + item.data.district + item.data.street}}</text>
+                  <text>{{(item.data.province  || '') + (item.data.city || '') + (item.data.district || '') + (item.data.street || '')}}</text>
                 </view>
 
                 <view class='date'>
@@ -50,8 +50,8 @@
 
               <view wx:if='{{type=="INCOME"}}'>
                 <view>
-                  <text>收益金额:</text>
-                  <text>{{item.data.amount}}</text>
+                  <text>收益金额：</text>
+                  <text>{{item.data.amount || 0}}</text>
                 </view>
 
                 <view>

@@ -55,8 +55,9 @@
 }
 
 .item-body {
-  height: 180rpx;
+  max-height: 180rpx;
   margin-left: 20rpx;
+  height: auto;
 }
 
 .item-top {

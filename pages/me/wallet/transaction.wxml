@@ -14,16 +14,16 @@
                   <!-- 全部交易记录 -->
                   <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
                       <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='gotoOrderDetail'>
-                          <view class='card-top'><text>{{item.state =='SUCCEEDED'?'支付成功':'支付失败'}}</text><text>￥{{item.amount}}</text></view>
+                          <view class='card-top'><text>{{item.state =='SUCCEEDED'?'交易成功':'交易失败'}}</text><text>￥{{item.amount}}</text></view>
                           <view class="weui-cell weui-cell_select card-item">
                               <view class="weui-cell__bd">
                                   <view class="weui-select weui-select_in-select-after item-body">
                                       <view class='item-top'>
                                         <text>{{ item.id }}</text>
                                       </view>
-                                      <view class='location-name'>{{item.gatwayType}}</view>
+                                      <view class='location-name' wx:if="{{item.gatwayType && item.gatwayType.length > 0}}">{{item.gatwayType}}</view>
                                       <view class='location-name'>{{item.createdDate}}</view>
-                                      <view class='location-name'>{{item.locationName}}</view>
+                                      <view class='location-name' wx:if="{{item.locationName && item.locationName.length > 0}}">{{item.locationName}}</view>
                                   </view>
                               </view>
                           </view>
@@ -41,7 +41,7 @@
                   <!-- 收入交易记录 -->
                     <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
                       <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='gotoOrderDetail'>
-                          <view class='card-top'><text>{{item.state =='SUCCEEDED'?'支付成功':'支付失败'}}</text><text>￥{{item.amount}}</text></view>
+                          <view class='card-top'><text>{{item.state =='SUCCEEDED'?'交易成功':'交易失败'}}</text><text>￥{{item.amount}}</text></view>
                           <view class="weui-cell weui-cell_select card-item">
                               <view class="weui-cell__bd">
                                   <view class="weui-select weui-select_in-select-after item-body">
@@ -70,7 +70,7 @@
                      <!-- 提现交易记录 -->
                     <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" >
                       <view class='card'  wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' bindtap='gotoOrderDetail'>
-                          <view class='card-top'><text>{{item.state =='SUCCEEDED'?'支付成功':'支付失败'}}</text><text>￥{{item.amount}}</text></view>
+                          <view class='card-top'><text>{{item.state =='SUCCEEDED'?'交易成功':'交易失败'}}</text><text>￥{{item.amount}}</text></view>
                           <view class="weui-cell weui-cell_select card-item">
                               <view class="weui-cell__bd">
                                   <view class="weui-select weui-select_in-select-after item-body">

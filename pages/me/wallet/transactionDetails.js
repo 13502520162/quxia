@@ -20,7 +20,7 @@ Page({
 
   getOrderDetailsData: function (orderId) {
     fetch({
-      url: `/orders/detail`,
+      url: '/orders/detail',
       data: {
         id: orderId
       },

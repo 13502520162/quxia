@@ -316,24 +316,35 @@ Page({
    * 删除
    */
   delAccount: function(id) {
-    fetch({
-        url: '/accounts?id=' + id,
-        method: 'delete'
-      })
-      .then(res => {
-        let listData = [];
-        this.data.listData.map(item => {
-          if (item.id != id) {
-            listData.push(item)
-          }
-        });
-        this.setData({
-          listData: listData
-        })
-      })
-      .catch(err => {
-        console.error(err);
-      })
+
+    let self = this;
+
+    wx.showModal({
+      content: '是否删除该账号？ 该账号关联的数据将被删除， 请慎重！',
+      success(res) {
+        if (res.confirm) {
+          fetch({
+            url: '/accounts?id=' + id,
+            method: 'delete'
+          })
+              .then(res => {
+                let listData = [];
+                self.data.listData.map(item => {
+                  if (item.id != id) {
+                    listData.push(item)
+                  }
+                });
+                self.setData({
+                  listData: listData
+                })
+              })
+              .catch(err => {
+                console.error(err);
+              })
+        }
+      }
+    })
+
   },
 
   /**

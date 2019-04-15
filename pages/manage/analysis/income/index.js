@@ -176,7 +176,7 @@ Page({
     })
 
     fetch({
-        url: '/analytics/list',
+        url: '/incomeAnalytics/list',
         data: {
           ...this.data.listParams,
           start: this.data.date.start.replace(/\//g, '-'),
