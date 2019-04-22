@@ -319,7 +319,8 @@ Page({
             isBatch: !this.data.isBatch,
             shelfs: {
               ...this.data.shelfs,
-              shelfs: newShelfs
+              shelfs: newShelfs,
+              shelfCount: newShelfs.length
             }
           })
         }

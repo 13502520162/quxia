@@ -17,7 +17,7 @@
           </view>
           <view class='item-top'>
             <text>{{ item.id }}</text>
-            <text wx:if="{{item.groupName}}">{{item.groupName}}</text>
+            <text wx:if="{{item.groupName}}" class='groupName'>{{item.groupName}}</text>
             <text class="{{item.active ? 'card-status-success':'card-status-fail'}}">{{item.active ? "在线": "离线"}}</text>
           </view>
           <view class='location-name'>

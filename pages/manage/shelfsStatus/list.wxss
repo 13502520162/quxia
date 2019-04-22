@@ -65,11 +65,20 @@
   padding: 10rpx 20rpx;
   font-size: 24rpx;
 }
-.item-top  text:nth-child(2) {
+.item-top .groupName {
   background: var(--main-color);
   color: #fff;
   border-radius: 10rpx;
 }
+
+.item-top .card-status-success {
+  background: var(--main-color);
+}
+
+.item-top .card-status-fail {
+  background: var(--error-color);
+}
+
 .location-name {
   color: var(--prompt-color)
 }
