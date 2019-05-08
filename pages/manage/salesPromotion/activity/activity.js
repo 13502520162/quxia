@@ -573,6 +573,12 @@ Page({
       return;
     }
 
+    if (this.data.isAllVenues) {
+      this.setData({
+        locationIds: []
+      })
+    }
+
 
     this.preservationFetch()
 

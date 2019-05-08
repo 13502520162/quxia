@@ -24,23 +24,47 @@
     </view>
   </view>
 
-  <view class='summary-data'>
-    <view class='summary-data-item'>
-      <view>营业额</view>
-      <view>{{summaryData.sales}}</view>
+  <view class='summary'>
+
+    <view class='summary-data summary-data1'>
+      <view class='summary-data-item' data-path='/pages/index/analysis' bindtap='navToUrl'>
+        <view>营业额</view>
+        <view>{{summaryData.sales}}</view>
+      </view>
+      <view class='split-line'></view>
+      <view class='summary-data-item' data-path='/pages/index/analysis' bindtap='navToUrl'>
+        <view>订单数</view>
+        <view>{{summaryData.orders}}</view>
+      </view>
+      <view class='split-line'></view>
+      <view class='summary-data-item' data-path='/pages/index/analysis' bindtap='navToUrl'>
+        <view>用户数</view>
+        <view>{{summaryData.customers}}</view>
+      </view>
     </view>
-    <view class='split-line'></view>
-    <view class='summary-data-item'>
-      <view>订单数</view>
-      <view>{{summaryData.orders}}</view>
+
+
+    <view class='summary-data summary-data2'>
+      <view class='summary-data-item' data-path='/pages/index/analysis' bindtap='navToUrl'>
+        <view>利润</view>
+        <view>{{summaryData.profit}}</view>
+      </view>
+      <view class='split-line'></view>
+      <view class='summary-data-item' data-path='/pages/manage/analysis/freeSingleStatistics/index' bindtap='navToUrl'>
+        <view>免单收入</view>
+        <view>{{summaryData.luckTotal}}</view>
+      </view>
+      <view class='split-line'></view>
+      <view class='summary-data-item' data-path='/pages/manage/analysis/freeSingleStatistics/index' bindtap='navToUrl'>
+        <view>免单利润</view>
+        <view>{{summaryData.luckProfit}}</view>
+      </view>
     </view>
-    <view class='split-line'></view>
-    <view class='summary-data-item'>
-      <view>用户数</view>
-      <view>{{summaryData.customers}}</view>
-    </view>
+
   </view>
+
 </view>
+
 
 <view class='func-list-title'>常用功能</view>
 <view class="func-list">
@@ -50,11 +74,14 @@
     </view>
     <view>
       <view class='func-item-title' wx:if="{{item.title=='消息提醒'}}">
-        <text wx:if="{{messageNumber}}" class='iconfont icon-gantanhao'></text> {{item.title}} </view>
+        <text wx:if="{{messageNumber}}" class='iconfont icon-gantanhao'></text> {{item.title}}
+      </view>
       <view class='func-item-title' wx:else>{{item.title}}</view>
       <view class='func-item-desc'>
-        <text wx:if="{{item.title=='设备列表'}}"> 在线{{deviceActiveInfo.activeDevices ? deviceActiveInfo.activeDevices : 0}}/{{deviceActiveInfo.devices ?deviceActiveInfo.devices: 0}}设备 </text>
-        <text wx:elif="{{item.title=='消息提醒'}}"> {{messageNumber + item.desc}} </text>
+        <text wx:if="{{item.title=='设备列表'}}"> 在线{{deviceActiveInfo.activeDevices ?
+                    deviceActiveInfo.activeDevices : 0}}/{{deviceActiveInfo.devices ?deviceActiveInfo.devices: 0}}设备
+                </text>
+        <text wx:elif="{{item.title=='消息提醒'}}"> {{messageNumber + item.desc}}</text>
         <text wx:else>{{item.desc}}</text>
       </view>
     </view>

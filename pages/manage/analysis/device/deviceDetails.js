@@ -171,7 +171,9 @@ Page({
           orders: newData.orders,
           diffOrders: newData.orders - oldData.orders,
           customers: newData.customers,
-          diffCustomers: newData.customers - oldData.customers
+          diffCustomers: newData.customers - oldData.customers,
+          profit: newData.profit,
+          diffprofit: newData.profit - oldData.profit
         })
       })
     })

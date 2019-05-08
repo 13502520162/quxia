@@ -1,0 +1,132 @@
+<!--pages/manage/luckyFree/activity/setupProbability/index.wxml-->
+<view class='setupProbability'>
+
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd weui-label">中奖浮动比例
+        <text bindtap='floatInfo' class='iconfont icon-wen'></text>
+      </view>
+      <view class="weui-cell__ft">
+        <text class='weui-label'>不设置</text>
+        <switch size="23" checked='{{enableProbabilityAdjustment}}' class='{{state?"disabledColor":""}}' disabled="{{state}}" bindchange="enableProbabilityAdjustment" />
+      </view>
+    </view>
+    <view class='full-order full-order2  {{isDisabled?"disabledColor":""}}' hidden='{{enableProbabilityAdjustment}}'>
+      中奖概率上浮
+      <input type='text' value='{{probabilityAdjustment}}'  disabled="{{state}}" bindinput='frequency' class="full-order-ipt {{state?'disabledColor':''}}" /> %
+    </view>
+  </view>
+
+
+  <view class="weui-cells weui-cells_after-title weui-cell-reset">
+
+    <view class="weui-cell weui-cell_switch" wx:if='{{!enableProbabilityAdjustment}}'>
+      <view class="weui-cell__bd weui-label">显示真实概率
+
+      </view>
+      <view class="weui-cell__ft">
+        <text class='weui-label'>显示</text>
+        <switch size="23" checked='{{showRealProbability}}' class='{{state?"disabledColor":""}}'  disabled="{{state}}" bindchange="isShow" />
+      </view>
+    </view>
+
+    <view class='full-order full-order3  {{isDisabled?"disabledColor":""}}' >
+      中奖阈值
+      <text bindtap='threshold' class='iconfont icon-wen'></text>
+      <view class='full-order1'>
+        <input type='number' value='{{maxRate}}' class='{{state?"disabledColor":""}}' disabled="{{state}}" bindinput='maxRate' /> %
+      </view>
+    </view>
+
+    <view class='full-order full-order3  {{isDisabled?"disabledColor":""}}' >
+      中奖保底值
+      <text bindtap='bottomGuard' class='iconfont icon-wen'></text>
+      <view class='full-order1'>
+        <input type='number' value='{{minRate}}' class='{{state?"disabledColor":""}}'  disabled="{{state}}" bindinput='minRate' /> %
+      </view>
+    </view>
+  </view>
+
+
+
+  <view class="weui-loadmore weui-loadmore_line">
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">概率计算</view>
+  </view>
+
+
+  <view class="weui-cells weui-cells_after-title  weui-cell-reset">
+    <view class='full-order full-order3  {{isDisabled?"disabledColor":""}}'>
+      订单金额
+      <view class='full-order1'>
+        <input type='number' value='{{orderTotal}}' class='{{state?"disabledColor":""}}'  disabled="{{state}}" bindinput='orderTotal' />
+      </view>
+    </view>
+
+    <view class='full-order full-order3  {{isDisabled?"disabledColor":""}}'>
+      档次
+      <view class='full-order1'>
+        <picker bindchange="bindPickerChange" value="{{index}}"  class='{{state?"disabledColor":""}}' disabled="{{state}}" range="{{array}}" bindchange='Grade'>
+          <view class="picker">
+            {{array[index]}}
+            <text class='arrow'> </text>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+  </view>
+
+  <view class="button-sp-area">
+    <button class="weui-btn mini-btn" type="primary" class='{{state?"disabledColor":""}}'  disabled="{{state}}" bindtap='calculation' size="mini">计算</button>
+  </view>
+
+  <view class="weui-loadmore weui-loadmore_line">
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">计算结果</view>
+  </view>
+
+
+
+  <view class="weui-cells weui-cells_after-title  weui-cell-reset">
+
+    <view class='full-order full-order3'>
+      真实概率
+      <view class='full-order1'>
+        {{calculationResults.realProbability||0}}%
+      </view>
+    </view>
+
+
+    <view class='full-order full-order3'>
+      显示概率
+      <view class='full-order1'>
+        {{calculationResults.probability||0}}%
+      </view>
+    </view>
+
+
+    <view class='full-order full-order3'>
+      中奖金额
+      <view class='full-order1'>
+        {{calculationResults.price||0}}元
+      </view>
+    </view>
+
+    <view class='full-order full-order3'>
+      抽奖最多
+      <text>{{calculationResults.maxCount||0}}</text>次必中,收入最高
+      <text>{{calculationResults.paidMax||0}}</text>元
+    </view>
+
+    <view class='full-order full-order3'>
+      抽奖最少
+      <text>{{calculationResults.minCount||0}}</text>次才有机会中奖,收入最底
+      <text>{{calculationResults.paidMin||0}}</text>元
+    </view>
+
+  </view>
+
+
+</view>
+
+
+<view hidden="{{state}}" class='preservation' bindtap='preservationFetch'>确定</view>

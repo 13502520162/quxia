@@ -125,8 +125,8 @@ Page({
           url: '/analytics/summary',
           isShowLoading: true,
           data: {
-            start: this.data.date.start.replace(/\//g, '-'),
-            end: this.data.date.end.replace(/\//g, '-')
+            start: start,
+            end: end
           }
         })
         .then(res => {
@@ -138,16 +138,15 @@ Page({
     })
 
   },
-
   /**
    * 获取两个时间段的差值数据
    */
   diffDurationData: function(diffDays) {
-    let startTime = moment(this.data.date.start.replace(/\//g, '-')).format('YYYY-MM-DD');
-    let endTime = this.data.date.end.replace(/\//g, '-');
+    let startTime = moment().subtract(diffDays === 1 ? 0 : diffDays, 'day').format('YYYY-MM-DD');
+    let endTime = moment().format('YYYY-MM-DD');
     this.fetchSummaryData(startTime, endTime).then(newData => {
-      startTime = moment(startTime).subtract(diffDays === 1 ? 1 : diffDays, 'day').format('YYYY-MM-DD');
-      endTime = moment(endTime).subtract(diffDays, 'day').format('YYYY-MM-DD');
+      startTime = moment().subtract(diffDays === 1 ? 1 : diffDays * 2, 'day').format('YYYY-MM-DD');
+      endTime = moment().subtract(diffDays, 'day').format('YYYY-MM-DD');
       this.fetchSummaryData(startTime, endTime).then(oldData => {
         this.setData({
           sales: newData.sales,
@@ -155,7 +154,9 @@ Page({
           orders: newData.orders,
           diffOrders: newData.orders - oldData.orders,
           customers: newData.customers,
-          diffCustomers: newData.customers - oldData.customers
+          diffCustomers: newData.customers - oldData.customers,
+          profit: newData.profit,
+          diffprofit: newData.profit - oldData.profit
         })
       })
     })

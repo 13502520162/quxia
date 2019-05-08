@@ -121,13 +121,16 @@ Page({
       this.setData({
         commodityId: options.id
       }, () => {
-        this.fetchCommodityDetail();
 
       })
     }
   },
   onShow: function() {
-
+    setTimeout(() => {
+      if (this.data.commodityId) {
+        this.fetchCommodityDetail();
+      }
+    }, 500)
 
   },
   fetchselect: function() {
@@ -135,6 +138,10 @@ Page({
         url: '/categories/select'
       })
       .then(res => {
+        res.data.unshift({
+          id:'',
+          name:'请选择分类'
+        })
         this.setData({
           trade: res.data
         })
@@ -282,7 +289,7 @@ Page({
    */
 
   fetchCommodityDetail: function() {
-    let trade = this.data.trade
+
     fetch({
         url: '/products/detail',
         data: {
@@ -291,6 +298,7 @@ Page({
         isShowLoading: true
       })
       .then(res => {
+        let trade = this.data.trade
         let index = ''
         trade.map((item, idx) => {
           if (item.id == res.data.categoryId) {
@@ -303,7 +311,7 @@ Page({
           commodityDetailImage: res.data.detailImage,
           displayImage: res.data.displayImage,
           commodityDetail: res.data,
-          tradeIndex: index,
+          tradeIndex: index || 0,
           categoryId: res.data.categoryId
         })
       })

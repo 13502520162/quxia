@@ -7,7 +7,7 @@
   <image src='../../../assets/images/filter.png' mode='widthFix' bindtap='toggleFilterMenue'></image>
 </view>
 
-<scroll-view class='device-list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}">
+<scroll-view class='device-list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}" scroll-top='{{scrollTop}}'>
   <view class='card' wx:for="{{listData}}" wx:key="{{item.id}}" data-id='{{item.id}}' data-planid='{{item.shelfPlanId}}' bindtap='showActionSheet'>
     <view class="weui-cell weui-cell_select card-item">
       <view class="weui-cell__bd">

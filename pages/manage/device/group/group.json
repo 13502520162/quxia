@@ -1,5 +1,6 @@
 {
   "component": true,
+  "navigationBarTitleText": "设备分组",
   "usingComponents": {
     "dialog": "../../../../components/dialog/index",
     "field": "../../../../components/field/index"

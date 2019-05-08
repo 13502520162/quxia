@@ -80,7 +80,7 @@
     <view class="weui-cell__hd">
       <view class="weui-label">适用方式</view>
     </view>
-    <view class='field-num {{isDisabled?"disabledColor":""}}' bindtap='choiceOfVenue'>
+    <view class='field-num {{isDisabled?"disabledColor":""}}'>
       <text>支付</text>
       <image src='/assets/images/rightBackBtn.png'></image>
     </view>

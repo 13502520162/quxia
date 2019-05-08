@@ -364,7 +364,18 @@ Page({
    */
   goToAnalysis: function() {
     wx.navigateTo({
-      url: './analysis',
+      url: '/pages/manage/analysis/income/index',
+    })
+  },
+
+
+  /**
+   * 去到对应页面
+   */
+  navToUrl: function(e) {
+    let path = e.currentTarget.dataset.path
+    wx.navigateTo({
+      url: path
     })
   },
 

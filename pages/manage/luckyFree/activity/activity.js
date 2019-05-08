@@ -19,6 +19,9 @@ Page({
     note: '',
     probabilityAdjustment: '',
     enableProbabilityAdjustment: '',
+    showRealProbability: false,
+    minRate: '',
+    maxRate: '',
 
     isDisabled: false,
     isUnlimited: false,
@@ -30,8 +33,10 @@ Page({
     dateTimeArray1: null,
     dateTime1: null,
     startYear: 2000,
-    endYear: 2050
+    endYear: 2050,
 
+    lastData: {},
+    state: '',
   },
 
   /**
@@ -40,11 +45,22 @@ Page({
   onLoad: function(options) {
     var TIME = util.formatTime(new Date());
     this.setData({
-      startDate: TIME,
-      endDate: TIME,
+      startDate: '开始时间',
+      endDate: '结束时间',
       field: options.field,
-      id: options.id
     });
+
+    if (options.id) {
+      let state = false;
+      if (options.state == 'DISABLED' || options.state == 'ENDED') {
+        state = true
+      }
+
+      this.setData({
+        id: options.id,
+        state
+      })
+    }
 
     this.fetchCouponsDetail()
 
@@ -172,7 +188,13 @@ Page({
           probabilityAdjustment: ress.probabilityAdjustment,
           isUnlimited: ress.enableProbabilityAdjustment,
           isDisabled: true,
-          isAllVenues: ress.locationIds.length === 0
+          isAllVenues: ress.locationIds.length === 0,
+
+          enableProbabilityAdjustment: ress.enableProbabilityAdjustment,
+          showRealProbability: ress.showRealProbability,
+          minRate: ress.minRate,
+          maxRate: ress.maxRate,
+          lastData: ress
         })
       })
     } else {
@@ -182,23 +204,6 @@ Page({
     }
 
 
-  },
-
-
-
-
-
-
-
-
-  /**
-   * 是否不设置中奖浮动比例
-   */
-  Unlimited: function(e) {
-
-    this.setData({
-      isUnlimited: e.detail.value
-    })
   },
 
 
@@ -254,11 +259,13 @@ Page({
    * 适用场地
    */
   choiceOfVenue: function() {
-    if (!this.data.isDisabled) {
-      wx.navigateTo({
-        url: '../../coupon/choiceOfVenue/choiceOfVenue?locationIds=' + JSON.stringify(this.data.locationIds),
-      })
+
+    if (this.data.state) {
+      return false;
     }
+    wx.navigateTo({
+      url: '../../coupon/choiceOfVenue/choiceOfVenue?locationIds=' + JSON.stringify(this.data.locationIds),
+    })
   },
 
 
@@ -271,15 +278,6 @@ Page({
     })
   },
 
-
-  /**
-   * 中奖上浮比例
-   */
-  frequency: function(e) {
-    this.setData({
-      probabilityAdjustment: e.detail.value
-    })
-  },
 
 
 
@@ -294,20 +292,10 @@ Page({
   },
 
 
-  floatInfo: function() {
-    wx.showModal({
-      title: '浮动比例',
-      showCancel: false,
-      confirmText: "关闭",
-      content: "注意事项:\r\nA.抽奖档位有三个档次:\r\n “1元”、“x3倍”、“x5倍”,\r\n 具体档位由该笔订单总金额决定; \r\n如:\r\n 订单总金额 > 5元, 会出现三个大乐购档次;\r\n B.中奖概率 = 抽奖档次 / 订单金额 + (抽奖档次 / 订单金额 * 中奖浮动比例)",
-    })
-  },
 
 
-  /**
-   * 确定事件
-   */
-  preservation: function() {
+
+  setupProbability: function() {
 
     if (this.data.name == '') {
       wx.showToast({
@@ -315,6 +303,27 @@ Page({
         icon: 'none'
       })
       return;
+    }
+
+
+    if (!this.data.isPermanent) {
+      if (this.data.startDate == '开始时间') {
+        wx.showToast({
+          title: '请选择开始时间',
+          icon: 'none'
+        })
+        return;
+      }
+    }
+
+    if (!this.data.isPermanent) {
+      if (this.data.endDate == '结束时间') {
+        wx.showToast({
+          title: '请选择结束时间',
+          icon: 'none'
+        })
+        return;
+      }
     }
 
 
@@ -327,15 +336,15 @@ Page({
     }
 
 
-    if (!this.data.isUnlimited) {
-      if (this.data.probabilityAdjustment == '') {
-        wx.showToast({
-          title: '请填写中奖上浮%',
-          icon: 'none'
-        })
-        return;
-      }
-    }
+    // if (!this.data.isUnlimited) {
+    //   if (this.data.probabilityAdjustment == '') {
+    //     wx.showToast({
+    //       title: '请填写中奖上浮%',
+    //       icon: 'none'
+    //     })
+    //     return;
+    //   }
+    // }
 
 
 
@@ -348,47 +357,25 @@ Page({
       return;
     }
 
-    this.preservationFetch()
-
-  },
-
-
-  /**
-   * 发送确定请求
-   */
-  preservationFetch: function() {
-    fetch({
-        url: '/luckfree',
-        method: 'post',
-        isShowLoading: true,
-        data: {
-          name: this.data.name,
-          startDate: new Date(this.data.startDate).getTime(),
-          endDate: new Date(this.data.endDate).getTime(),
-          locationIds: this.data.locationIds,
-          permanent: this.data.isPermanent,
-          note: this.data.note,
-          probabilityAdjustment: parseInt(this.data.probabilityAdjustment),
-          enableProbabilityAdjustment: this.data.isUnlimited
-        }
+    if (this.data.isAllVenues) {
+      this.setData({
+        locationIds: []
       })
-      .then(res => {
+    }
 
-        wx.showToast({
-          title: '活动添加成功',
-          icon: 'success'
-        })
 
-        let timer = null
-        timer = setTimeout(function() {
-          wx.navigateBack({
-            delta: 1
-          })
-        }, 2000)
-      })
-      .catch(err => {
-        console.error(err);
-      })
+    let obj = {
+      name: this.data.name,
+      startDate: new Date(this.data.startDate).getTime(),
+      endDate: new Date(this.data.endDate).getTime(),
+      locationIds: this.data.locationIds,
+      permanent: this.data.isPermanent,
+      note: this.data.note,
+      state: this.data.state,
+    }
+
+    wx.navigateTo({
+      url: './setupProbability/index?firstData=' + JSON.stringify(obj) + '&lastData=' + JSON.stringify(this.data.lastData),
+    })
   }
-
 })

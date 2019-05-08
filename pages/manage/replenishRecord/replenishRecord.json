@@ -1,5 +1,6 @@
 {
   "component": true,
+  "navigationBarTitleText": "补货记录",
   "usingComponents": {
     "popup": "../../../components/popup/index"
   }

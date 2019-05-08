@@ -45,9 +45,16 @@ Page({
             hide: true
           },
           {
-            name: "订单统计",
-            icon: "../../assets/images/orders.png",
-            pageUrl: '/pages/index/order/list',
+            name: "免单统计",
+            icon: "../../assets/images/freeSingleStatistics.png",
+            pageUrl: '/pages/manage/analysis/freeSingleStatistics/index',
+            permission: 6,
+            hide: true
+          },
+          {
+            name: "商品分析",
+            icon: "../../assets/images/commodityAnalysis.png",
+            pageUrl: '/pages/manage/analysis/commodityAnalysis/index',
             permission: 6,
             hide: true
           }
@@ -115,7 +122,7 @@ Page({
             hide: true
           },
           {
-            name: "商品分类管理",
+            name: "商品分类",
             icon: "../../assets/images/commodityClassification.png",
             pageUrl: './commodity/commodityClassification/commodityClassification',
             permission: 91,
@@ -208,7 +215,7 @@ Page({
             hide: true
           },
           {
-            name: "会员卡管理",
+            name: "会员卡",
             icon: "../../assets/images/coupon.png",
             pageUrl: './membershipCard/membershipCard',
             permission: 84,
@@ -370,7 +377,7 @@ Page({
           hide: true
         },
         items: [{
-            name: "优惠券管理",
+            name: "优惠券",
             icon: "../../assets/images/coupon.png",
             pageUrl: './coupon/coupon',
             permission: 72,

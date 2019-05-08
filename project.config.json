@@ -46,7 +46,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 21,
+			"current": 9,
 			"list": [
 				{
 					"id": -1,
@@ -62,23 +62,30 @@
 					"scene": null
 				},
 				{
-					"id": 6,
-					"name": "用户管理",
-					"pathName": "pages/manage/userManagement/userManagement",
+					"id": 22,
+					"name": "免单统计详情",
+					"pathName": "pages/manage/analysis/freeSingleStatistics/detail/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "商品分析",
+					"pathName": "pages/manage/analysis/commodityAnalysis/index",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "充值管理",
-					"pathName": "pages/manage/rechargeManagement/rechargeManagement",
+					"name": "商品详细分析",
+					"pathName": "pages/manage/analysis/commodityAnalysis/detailedAnalysis/index",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "会员卡",
-					"pathName": "pages/manage/membershipCard/membershipCard",
+					"name": "免单统计",
+					"pathName": "pages/manage/analysis/freeSingleStatistics/index",
 					"query": "",
 					"scene": null
 				},
@@ -91,113 +98,22 @@
 				},
 				{
 					"id": -1,
-					"name": "抽取活动",
-					"pathName": "pages/manage/luckyDraw/luckyDraw",
+					"name": "新建免单",
+					"pathName": "pages/manage/luckyFree/activity/activity",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "抽取活动--设置奖项",
-					"pathName": "pages/manage/luckyDraw/setAwards/setAwards",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 8,
-					"name": "设备分润",
-					"pathName": "pages/manage/profitSharing/equipmentDistribution/equipmentDistribution",
+					"name": "设置中奖概率",
+					"pathName": "pages/manage/luckyFree/activity/setupProbability/index",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "商品分类管理",
-					"pathName": "pages/manage/commodity/commodityClassification/commodityClassification",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "支付有礼",
-					"pathName": "pages/manage/paymentOfCourtesy/paymentOfCourtesy",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "促销活动",
-					"pathName": "pages/manage/salesPromotion/salesPromotion",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "场地分润",
-					"pathName": "pages/manage/profitSharing/siteDistribution/siteDistribution",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "大配货",
-					"pathName": "pages/manage/bigVendingMachineShelfs/list",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "自助远程控制",
-					"pathName": "pages/manage/device/list/controls",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "货道状态",
-					"pathName": "pages/manage/shelfsStatus/list",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 17,
-					"name": "账户管理",
-					"pathName": "pages/manage/account/accounts/list",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 17,
-					"name": "设备列表",
-					"pathName": "pages/manage/device/list/list",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "货道配货",
-					"pathName": "pages/manage/shelfs/list",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 19,
-					"name": "账号",
-					"pathName": "pages/manage/account/accounts/list",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "商品列表",
-					"pathName": "pages/manage/commodity/list",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "我的",
-					"pathName": "pages/me/me",
+					"name": "用户管理",
+					"pathName": "pages/manage/userManagement/userManagement",
 					"scene": null
 				}
 			]

@@ -355,7 +355,7 @@ Page({
    * 适用场地
    */
   choiceOfVenue: function() {
-    if (!isDisabled) {
+    if (!this.data.isDisabled) {
       wx.navigateTo({
         url: '../choiceOfVenue/choiceOfVenue?locationIds=' + JSON.stringify(this.data.locationIds),
       })
@@ -528,6 +528,13 @@ Page({
         icon: 'none'
       })
       return;
+    }
+
+
+    if (this.data.isAllVenues) {
+      this.setData({
+        locationIds: []
+      })
     }
 
     this.preservationFetch()

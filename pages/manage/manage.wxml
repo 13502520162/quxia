@@ -2,6 +2,8 @@
 <view class='card' wx:for="{{funcMenu}}" wx:key="{{index}}" wx:for-item="func" wx:if="{{!func.title.hide}}">
   <view class='card-title'>{{func.title.name}}</view>
   <view class='card-items'>
+
+
     <view class='card-item' wx:for="{{func.items}}" wx:key="{{index}}" wx:if="{{!item.hide}}" data-url="{{item.pageUrl}}" bindtap='gotoPage'>
       <view>
         <image class='card-icon' src="{{item.icon}}"></image>
@@ -10,5 +12,9 @@
         <text>{{item.name}}</text>
       </view>
     </view>
+
+
+    
+
   </view>
 </view>

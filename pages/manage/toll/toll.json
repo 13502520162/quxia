@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "商品套餐",
   "usingComponents": {
     "error": "../../../components/error/index"
   }

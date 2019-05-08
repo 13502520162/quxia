@@ -7,3 +7,6 @@
 .coupon-name {
   text-align: right;
 }
+.weui-cell-reset{
+  margin: 10rpx 0;
+}

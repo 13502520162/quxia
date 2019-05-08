@@ -97,15 +97,16 @@ Page({
   showActionSheet: function(e) {
     let that = this
     let id = e.currentTarget.dataset.id;
+    let displayOrder = e.currentTarget.dataset.displayorder;
     let name = e.currentTarget.dataset.name;
     let itemList;
     if (this.data.systemInfo.platform == 'android') {
-      itemList = ['查看', '上移', '下移', '设置商品', '删除', '取消'];
+      itemList = ['查看',  '设置商品', '删除', '取消'];
     } else {
-      itemList = ['查看', '上移', '下移', '设置商品', '删除'];
+      itemList = ['查看',  '设置商品', '删除'];
     }
 
-
+  console.log(e.currentTarget.dataset)
 
     wx.showActionSheet({
       itemList: itemList,
@@ -114,16 +115,10 @@ Page({
           switch (res.tapIndex) {
             case 0:
               wx.navigateTo({
-                url: './newProducts/newProducts?field=view&id=' + id + '&name=' + name,
+                url: './newProducts/newProducts?field=view&id=' + id + '&name=' + name + '&displayOrder=' + displayOrder,
               })
               break;
             case 1:
-              that.moveUpward(id)
-              break;
-            case 2:
-              that.moveDown(id)
-              break;
-            case 3:
               this.setData({
                 currId: id
               })
@@ -131,7 +126,7 @@ Page({
                 url: './setUpCommodity/setUpCommodity?field=view&id=' + id,
               })
               break;
-            case 4:
+            case 2:
               wx.showModal({
                 content: '是否删除分类?',
                 success(res) {

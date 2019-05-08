@@ -134,7 +134,7 @@ view .weui-label {
 .date-ipt {
   text-align: center;
   color: #b2b2b2;
-  /* width: 220rpx; */
+  min-width: 200rpx;
   border-bottom: 1rpx solid #b2b2b2;
 }
 

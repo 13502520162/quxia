@@ -1,0 +1,126 @@
+/* pages/manage/luckyFree/activity/setupProbability/index.wxss */
+
+.setupProbability {
+  margin-bottom: 100rpx;
+}
+
+view {
+  background: #fff;
+}
+.disabledColor {
+  color: #ccc;
+}
+
+.weui-cell:before {
+  border-top: none;
+}
+
+.weui-cells:after {
+  bottom: 0;
+  border-bottom: none;
+}
+
+.weui-cells:before {
+  top: 0;
+  border-top: none;
+}
+
+.weui-cell__ft .weui-label {
+  position: relative;
+  top: 5rpx;
+  right: 10rpx;
+  font-size: 25rpx;
+}
+
+.icon-wen {
+  color: #188ae2;
+  font-size: 40rpx;
+}
+
+.full-order {
+  position: relative;
+  top: 2rpx;
+  left: 15rpx;
+}
+
+.full-order, .full-order .full-order-ipt {
+  display: inline-block;
+}
+
+.full-order2 {
+  position: relative;
+  top: -15rpx;
+  left: 24rpx;
+  display: inline-block;
+}
+
+.full-order .full-order-ipt {
+  width: 80rpx;
+  border-bottom: 2rpx solid #ccc;
+  height: 20rpx;
+  position: relative;
+  top: 4rpx;
+  padding-left: 5rpx;
+}
+
+.full-order3 {
+  display: inline-block;
+  width: 100%;
+  padding-left: 10rpx;
+}
+
+.full-order3 .full-order1 {
+  float: right;
+  margin-right: 55rpx;
+}
+
+.full-order3 .full-order1 input {
+  display: inline-block;
+  width: 120rpx;
+  border-bottom: 2rpx solid #ccc;
+  height: 20rpx;
+}
+
+.weui-loadmore {
+  width: 100%;
+  background: #fff;
+  margin: 0;
+  margin-top: 2em;
+}
+
+.weui-cell-reset .full-order3 {
+  margin: 10rpx 0;
+}
+
+.weui-cell-reset .full-order>text {
+  margin: 0 20rpx;
+  color: #188ae2;
+}
+
+input {
+  text-align: center;
+}
+
+.button-sp-area {
+  text-align: right;
+  margin-top: 50rpx;
+  padding-right: 20rpx;
+}
+
+.full-order1 picker {
+  width: 110rpx;
+  padding-left: 10rpx;
+  border: 2rpx solid #ccc;
+  border-radius: 5rpx;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #9b9b9b transparent transparent transparent;
+  position: relative;
+  top: 15px;
+  margin-left: 50rpx;
+}

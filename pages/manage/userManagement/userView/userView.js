@@ -41,13 +41,19 @@ Page({
     fetch({
       url: '/customers/detail?id=' + this.data.id
     }).then(res => {
+      console.log(res)
       let cardPermanent = res.data.cardPermanent;
       let cardDate = moment(res.data.cardExpiry).format('YYYY-MM-DD')
-      if (cardPermanent) {
-        res.data.cardExpiry = '永久有效'
-      } else {
-        res.data.cardExpiry = moment(res.data.cardExpiry).format('YYYY-MM-DD') + '前有效'
+      if (res.data.cardName){
+        if (cardPermanent) {
+          res.data.cardExpiry = '永久有效'
+        } else {
+          res.data.cardExpiry = moment(res.data.cardExpiry).format('YYYY-MM-DD') + '前有效'
+        }
+      }else{
+        res.data.cardExpiry = ''
       }
+   
 
       this.setData({
         userInfo: res.data,

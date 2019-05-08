@@ -149,7 +149,12 @@
     "pages/manage/luckyFree/dataStatistics/dataStatistics",
     "pages/manage/bigVendingMachineShelfsStatus/setShelfs",
     "pages/manage/device/list/authorizationManagement",
-    "pages/manage/device/list/roleSelection"
+    "pages/manage/device/list/roleSelection",
+    "pages/manage/analysis/freeSingleStatistics/index",
+    "pages/manage/analysis/freeSingleStatistics/detail/index",
+    "pages/manage/analysis/commodityAnalysis/index",
+    "pages/manage/analysis/commodityAnalysis/detailedAnalysis/index",
+    "pages/manage/luckyFree/activity/setupProbability/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

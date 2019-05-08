@@ -1,6 +1,6 @@
 .summary-data-change {
   background: var(--main-color);
-  min-height: 260rpx;
+  min-height: 300rpx;
   display: flex;
   justify-content: space-around;
   padding-top: 40rpx;
@@ -24,18 +24,39 @@
   padding-right: 40rpx;
 }
 
+.summary{
+  height: 130rpx;
+  float: left;
+  width: 100%;
+}
+
 .summary-data {
   display: flex;
   justify-content: space-around;
   text-align: center;
   color: var(--main-color);
-  padding: 40rpx;
+  padding: 25rpx;
   background: #fff;
   position: relative;
-  top: -50rpx;
+  top: -120rpx;
   margin: 0rpx 40rpx;
-  border-radius: 10rpx;
   box-shadow: 1rpx 10rpx 10rpx 0rpx rgba(0, 0, 0, 0.1);
+}
+
+.summary-data1 {
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+  padding-bottom: 0;
+}
+
+.summary-data2 {
+  border-bottom-left-radius: 10rpx;
+  border-bottom-right-radius: 10rpx;
+  padding-top: 10rpx;
+}
+
+.summary-data-item {
+  flex: 1;
 }
 
 .left-btn, .right-btn {
@@ -71,11 +92,13 @@
 }
 
 .func-list-title {
+  display: inline-block;
   margin: 0rpx 40rpx;
   border-left: 10rpx solid var(--main-color);
   font-size: 32rpx;
   font-weight: bold;
   padding-left: 10rpx;
+  margin-top: 20rpx;
 }
 
 .coupon {

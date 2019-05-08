@@ -1,0 +1,114 @@
+<!--pages/index/analysis.wxml-->
+
+<view class="title">
+  {{offerName}}
+  <text v-if='{{offerState == "ACTIVE"}}'>进行中</text>
+</view>
+<view class='header'>
+  <view class='date'>
+    <view class='date-item {{dateItem.today? "active":""}}' data-item='today' bindtap='selectDateItem'>今天</view>
+    <view class='date-item {{dateItem.week? "active":""}}' data-item='week' bindtap='selectDateItem'>本周</view>
+    <view class='date-item {{dateItem.month? "active":""}}' data-item='month' bindtap='selectDateItem'>本月</view>
+    <view class='date-item {{dateItem.all? "active":""}}' data-item='all' bindtap='selectDateItem'>累计</view>
+  </view>
+</view>
+
+<view class='analysis-date'>
+  <view class='analysis-date-header'>
+    <view>
+      <image src='../../../../../assets/images/leftBackBtn.png' bindtap='lastData'></image>
+    </view>
+    <view class='date-range'>
+      <view>
+        <picker mode="date" bindchange="onStartDateChange">{{date.start}}</picker>
+        -
+        <picker mode="date" bindchange='onEndDateChange'>{{date.end}}</picker>
+      </view>
+    </view>
+    <view>
+      <image src='../../../../../assets/images/rightBackBtn.png' bindtap='nextData'></image>
+    </view>
+  </view>
+
+  <view class="weui-grids">
+    <view class="weui-grid">
+      <view class="weui-grid__label">
+        <view>参与人数</view>
+        <view>{{luckAnalyticsSummary.users}}人</view>
+      </view>
+    </view>
+    <view class="weui-grid">
+      <view class="weui-grid__label">
+        <view>抽奖次数</view>
+        <view>{{luckAnalyticsSummary.orders}}次</view>
+      </view>
+    </view>
+    <view class="weui-grid">
+      <view class="weui-grid__label">
+        <view>中奖次数</view>
+        <view>{{luckAnalyticsSummary.wins}}次</view>
+      </view>
+    </view>
+    <view class="weui-grid">
+      <view class="weui-grid__label">
+        <view>支付金额</view>
+        <view>￥{{luckAnalyticsSummary.paidAmount}}</view>
+      </view>
+    </view>
+    <view class="weui-grid">
+      <view class="weui-grid__label">
+        <view>奖品价值</view>
+        <view>￥{{luckAnalyticsSummary.prizeValue}}</view>
+      </view>
+    </view>
+    <view class="weui-grid">
+      <view class="weui-grid__label">
+        <view>奖品成本</view>
+        <view>￥{{luckAnalyticsSummary.costPrice}}</view>
+      </view>
+    </view>
+    <view class="weui-grid">
+      <view class="weui-grid__label">
+        <view>利润</view>
+        <view>￥{{luckAnalyticsSummary.profit}}</view>
+      </view>
+    </view>
+  </view>
+
+</view>
+
+<view class='report'>
+  <view class='report-title'>报表明细</view>
+  <scroll-view class='list' bindscrolltolower="loadMoreListData" scroll-y="{{true}}">
+
+    <view wx:for="{{listData}}" wx:key="title">
+
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__bd">
+          <image src='../../../../../assets/images/calendar.png' class='calendar-icon'></image>
+          <text class='date_bd' style='vertical-align:middle;'>{{item.date}}</text>
+        </view>
+        <view class="weui-cell__ft">
+          <view class="info">
+            支付金额:
+            <text>￥ {{item.paidAmount}} </text>
+          </view>
+          <view class='info'>
+            利润:
+            <text>￥  {{item.profit}} </text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+    </view>
+
+    <view class="weui-loadmore" style='{{listLoading ? "display:block": "display:none"}}'>
+      <view class="weui-loading"></view>
+      <view class="weui-loadmore__tips">正在加载</view>
+    </view>
+  </scroll-view>
+</view>

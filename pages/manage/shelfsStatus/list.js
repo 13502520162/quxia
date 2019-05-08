@@ -3,11 +3,11 @@ import fetch from '../../../lib/fetch.js'
 import getStorePermissions from '../../../utils/getStorePremissioin.js';
 
 const DEVICE_TYPES = {
-  'quxia' : {
-    managePage : './details'
+  'quxia': {
+    managePage: './details'
   },
   'quxia-vm': {
-    managePage : '../bigVendingMachineShelfsStatus/details'
+    managePage: '../bigVendingMachineShelfsStatus/details'
   }
 
 };
@@ -40,14 +40,23 @@ Page({
         })
       },
     });
+    this.initData()
   },
 
 
 
   onShow: function() {
-    this.initData();
-    this.fetchDevicesTpes()
-    this.fetchPlaces();
+    this.setData({
+      listData: [],
+      listParams: {
+        size: 20,
+        from: 0
+      }
+    }, () => {
+      this.fetchDevicesTpes()
+      this.fetchPlaces();
+    })
+
   },
 
   /**
@@ -70,7 +79,9 @@ Page({
         from: 0,
         size: 20
       },
+      scrollTop:-1,
       listLoading: false,
+      showLoading: false,
       listEnd: false,
       listData: [],
 
@@ -205,7 +216,6 @@ Page({
     this.setData({
       listLoading: true
     })
-
     fetch({
         url: '/shelfs/devices',
         data: {
@@ -360,10 +370,10 @@ Page({
    * 列表触底加更多列表数据
    */
   loadMoreListData: function() {
-
     if (!this.data.listLoading) {
       this.setData({
-        listParams: { ...this.data.listParams,
+        listParams: {
+          ...this.data.listParams,
           from: this.data.listParams.from + this.data.listParams.size
         }
       })
@@ -392,15 +402,18 @@ Page({
       itemList: itemList,
       success: res => {
         if (!res.cancel) {
+          this.setData({
+            scrollTop: 0,
+          })
           switch (res.tapIndex) {
             case 0:
 
               var type = DEVICE_TYPES[deviceTypeId];
-              if(type){
+              if (type) {
                 wx.navigateTo({
                   url: type.managePage + '?id=' + id + '&planid=' + planid + '&deviceTypeId=' + deviceTypeId,
                 })
-              }else{
+              } else {
                 console.log("deviceTypeId ", deviceTypeId, " is not valid!");
               }
 

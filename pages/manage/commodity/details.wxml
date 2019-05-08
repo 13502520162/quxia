@@ -36,8 +36,7 @@
           </view>
           <view class="weui-cell__bd" style='padding:10rpx 10rpx 10rpx 0'>
             <picker bindchange="onFilterTradeChange" value="{{index}}" range="{{trade}}" range-key='name'>
-              <text wx:if='{{categoryId}}'>{{trade[tradeIndex].name}}</text>
-              <text wx:else>请选择分类</text>
+              <text>{{trade[tradeIndex].name}}</text>
               <text class='arrow'></text>
             </picker>
           </view>

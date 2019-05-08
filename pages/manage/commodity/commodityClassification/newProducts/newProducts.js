@@ -10,7 +10,8 @@ Page({
    */
   data: {
     id: '',
-    name: ''
+    name: '',
+    displayOrder: ''
   },
 
   /**
@@ -20,7 +21,8 @@ Page({
     if (options.id) {
       this.setData({
         id: options.id,
-        name: options.name
+        name: options.name,
+        displayOrder: options.displayOrder == 'null' ? '' : options.displayOrder
       })
     }
   },
@@ -44,6 +46,12 @@ Page({
     })
   },
 
+  displayOrder: function (e) {
+    this.setData({
+      displayOrder: e.detail.value
+    })
+  },
+
   preservation: function() {
     if (this.data.name == '') {
       wx.showToast({
@@ -60,7 +68,8 @@ Page({
       method: id ? 'PUT' : "POST",
       data: {
         name: this.data.name,
-        id: parseInt(id)
+        id: parseInt(id),
+        displayOrder: this.data.displayOrder
       }
     }).then(res => {
       let info = id ? '更新成功' : '新增成功'

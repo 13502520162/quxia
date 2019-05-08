@@ -111,6 +111,10 @@ Page({
     })
 
   },
+  onShow() {
+    this.fetchUserData()
+    this.fetchVipCards()
+  },
 
   /**
    *  获取列表数据 
@@ -380,6 +384,7 @@ Page({
     this.setData({
       name: "",
       mobile: "",
+      cardId: '',
       vipCards: vipCards,
       sexArr: [{
         id: null,

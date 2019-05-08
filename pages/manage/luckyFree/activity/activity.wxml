@@ -6,7 +6,7 @@
       <view class="weui-label">活动名称</view>
     </view>
     <view class="weui-cell__bd">
-      <input class="weui-input" disabled="{{isDisabled}}" class='coupon-name {{isDisabled?"disabledColor":""}}' value='{{name}}' bindinput='activityName' placeholder="请输入活动名称" />
+      <input class="weui-input" class='coupon-name {{state?"disabledColor":""}}' value='{{name}}' disabled="{{state}}" bindinput='activityName' placeholder="请输入活动名称" />
     </view>
   </view>
 
@@ -40,28 +40,12 @@
     <view class="weui-cell weui-cell_switch">
       <view class="weui-cell__bd weui-label" style='padding-right:20rpx;'>活动规则</view>
       <view class="weui-cell__ft">
-        <textarea class='activity-rules' value='{{note}}' bindinput='activityRules'></textarea>
+        <textarea class='activity-rules' disabled="{{state}}" value='{{note}}' bindinput='activityRules'></textarea>
       </view>
     </view>
   </view>
 
 
-
-
-  <view class="weui-cells weui-cells_after-title  weui-cell-reset">
-    <view class="weui-cell weui-cell_switch">
-      <view class="weui-cell__bd weui-label">中奖浮动比例
-        <text bindtap='floatInfo' class='iconfont icon-wen'></text> </view>
-      <view class="weui-cell__ft">
-        <text class='weui-label'>不设置</text>
-        <switch size="23" checked='{{isUnlimited}}' bindchange="Unlimited" disabled="{{isDisabled}}" />
-      </view>
-    </view>
-    <view class='full-order full-order2  {{isDisabled?"disabledColor":""}}' hidden='{{isUnlimited}}'>
-      中奖概率上浮
-      <input type='number' value='{{probabilityAdjustment}}' disabled="{{isDisabled}}" bindinput='frequency' class="full-order-ipt" /> %
-    </view>
-  </view>
 
 
 
@@ -71,7 +55,7 @@
       <view class="weui-cell__bd weui-label">活动场地</view>
       <view class="weui-cell__ft">
         <text class='weui-label'>全部场地</text>
-        <switch size="23" checked='{{isAllVenues}}' bindchange="activityVenue" disabled="{{isDisabled}}" />
+        <switch size="23" checked='{{isAllVenues}}' disabled="{{state}}" bindchange="activityVenue" />
       </view>
     </view>
   </view>
@@ -92,5 +76,4 @@
 
 </view>
 
-
-<view class='preservation' wx:if="{{!isDisabled}}" bindtap='preservation'>确定</view>
+<view class='preservation' bindtap='setupProbability'>下一步:设置中奖概率</view>

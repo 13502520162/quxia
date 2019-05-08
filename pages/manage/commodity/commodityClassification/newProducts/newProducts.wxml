@@ -1,6 +1,7 @@
 <!--pages/manage/commodity/commodityClassification/newProducts/newProducts.wxml-->
 <view class='newProducts'>
-  <view class="weui-cell weui-cell_input weui-cell-reset">
+
+  <view class="weui-cell weui-cell_input">
     <view class="weui-cell__hd">
       <view class="weui-label">名称</view>
     </view>
@@ -8,6 +9,18 @@
       <input class="weui-input" disabled="{{isDisabled}}" class='coupon-name {{isDisabled?"disabledColor":""}}' value='{{name}}' bindinput='activityName' placeholder="请输入名称" />
     </view>
   </view>
+
+
+  
+  <view class="weui-cell weui-cell_input weui-cell-reset">
+    <view class="weui-cell__hd">
+      <view class="weui-label">排序</view>
+    </view>
+    <view class="weui-cell__bd">
+      <input class="weui-input" disabled="{{isDisabled}}" type='number' class='coupon-name {{isDisabled?"disabledColor":""}}' value='{{displayOrder}}' bindinput='displayOrder' placeholder="请输入排序" />
+    </view>
+  </view>
+
 </view>
 
 <view class='preservation' wx:if="{{!isDisabled}}" bindtap='preservation'>确定</view>

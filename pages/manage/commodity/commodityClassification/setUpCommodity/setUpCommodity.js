@@ -58,7 +58,7 @@ Page({
         url: '/products',
         data: {
           ...this.data.listParams,
-          categoryId: this.data.categoryId,
+          // categoryId: this.data.categoryId,
           query: this.data.inputVal
         }
       })
@@ -82,8 +82,7 @@ Page({
 
         this.setData({
           listData: [...this.data.listData, ...res.data],
-
-          choosePlaces
+          choosePlaces: [...this.data.choosePlaces, ...choosePlaces]
         })
       })
       .catch(err => {

@@ -1,5 +1,6 @@
 {
   "component": true,
+  "navigationBarTitleText": "设备列表",
   "usingComponents": {
     "popup": "../../../../components/popup/index"
   }

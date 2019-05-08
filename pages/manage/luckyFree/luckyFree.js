@@ -172,7 +172,7 @@ Page({
           switch (res.tapIndex) {
             case 0:
               wx.navigateTo({
-                url: './activity/activity?field=view&id=' + id,
+                url: './activity/activity?field=view&id=' + id + '&state=' + state,
               })
               break;
             case 1:

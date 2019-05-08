@@ -1,0 +1,196 @@
+<!--pages/index/analysis.wxml-->
+
+
+<view class="weui-cell" style='background:#fff'>
+  <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+    <image src="{{product.image}}" style="width: 50px; height: 50px; display: block" />
+  </view>
+  <view class="weui-cell__bd">
+    <view class='commodity'>
+      <text>{{product.name}}</text>
+    </view>
+    <view style="font-size: 13px;color: #888888;">
+      成本价：
+      <text>￥{{product.costPrice}} </text> 零售价:
+      <text>￥{{product.price}}</text>
+    </view>
+  </view>
+</view>
+
+<view id='userScreen'>
+  <view class='header'>
+    <view class='place-info'>
+      <view class='date'>
+        <view class='date-item {{dateItem.today? "active":""}}' data-item='today' bindtap='selectDateItem'>今天</view>
+        <view class='date-item {{dateItem.week? "active":""}}' data-item='week' bindtap='selectDateItem'>本周</view>
+        <view class='date-item {{dateItem.month? "active":""}}' data-item='month' bindtap='selectDateItem'>本月</view>
+      </view>
+      <image src='../../../../../assets/images/filter.png' mode='widthFix' bindtap='toggleFilterMenue'></image>
+    </view>
+
+  </view>
+
+
+
+  <view class='analysis-date-header'>
+    <view>
+      <image src='../../../../../assets/images/leftBackBtn.png' bindtap='lastData'></image>
+    </view>
+    <view class='date-range'>
+      <view>
+        <picker mode="date" bindchange="onStartDateChange">{{date.start}}</picker>
+        -
+        <picker mode="date" bindchange='onEndDateChange'>{{date.end}}</picker>
+      </view>
+    </view>
+    <view>
+      <image src='../../../../../assets/images/rightBackBtn.png' bindtap='nextData'></image>
+    </view>
+  </view>
+
+  <view class='analysis'>
+
+    <view>
+      销售额
+      <text>￥{{amount || 0}} </text>
+      <text> ￥{{diffamount}}</text>
+      <image class='analysis-date-diff-img' src='{{diffamount > 0 ?"../../../../../assets/images/arrow-up.png":"../../../../../assets/images/arrow-down.png"}}'></image>
+    </view>
+
+    <view>
+      销量
+      <text>{{units || 0}} </text>
+      <text> {{diffunits}}</text>
+      <image class='analysis-date-diff-img' src='{{diffunits > 0 ?"../../../../../assets/images/arrow-up.png":"../../../../../assets/images/arrow-down.png"}}'></image>
+    </view>
+
+    <view>
+      成本
+      <text>￥{{costPrice || 0}} </text>
+    </view>
+
+    <view>
+      利润
+      <text>￥{{profit || 0}} </text>
+      <text> ￥{{diffprofit}}</text>
+      <image class='analysis-date-diff-img' src='{{diffprofit > 0 ?"../../../../../assets/images/arrow-up.png":"../../../../../assets/images/arrow-down.png"}}'></image>
+    </view>
+
+  </view>
+
+
+  <view class='content'>
+    <view class='screen'>
+      <view class='screen-item {{screenItem.units? "screenActive":""}}' data-item='units' bindtap='screenItem'>
+        <text class='title'>销量</text>
+        <text class='iconfont icon-xia {{isTop && screenItem.units? "iconActive":""}}'></text>
+        <text class='iconfont icon-shang {{!isTop && screenItem.units? "iconActive":""}}'></text>
+
+      </view>
+      <view class='screen-item {{screenItem.amount? "screenActive":""}}' data-item='amount' bindtap='screenItem'>
+        <text class='title'>销售额</text>
+        <text class='iconfont icon-xia {{isTop1 && screenItem.amount? "iconActive":""}}'></text>
+        <text class='iconfont icon-shang {{!isTop1  && screenItem.amount? "iconActive":""}}'></text>
+      </view>
+      <view class='screen-item {{screenItem.profit? "screenActive":""}}' data-item='profit' bindtap='screenItem'>
+        <text class='title'>利润</text>
+        <text class='iconfont icon-xia {{isTop2  && screenItem.profit? "iconActive":""}}'></text>
+        <text class='iconfont icon-shang {{!isTop2 && screenItem.profit? "iconActive":""}}'></text>
+      </view>
+      <view class='screen-item {{screenItem.date? "screenActive":""}}' data-item='date' bindtap='screenItem'>
+        <text class='title'>日期</text>
+        <text class='iconfont icon-xia {{isTop3  && screenItem.date? "iconActive":""}}'></text>
+        <text class='iconfont icon-shang {{!isTop3 && screenItem.date? "iconActive":""}}'></text>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<scroll-view scroll-y='true' style='height: calc( 100vh - {{userScreenHeight}} )' bindscrolltolower="userScrollLIst">
+  <view class='user'>
+
+    <view class="weui-cell" wx:for="{{listData}}" wx:key='{{index}}' bindtap='userInfo' data-id='{{item.id}}'>
+      <view class="weui-cell__bd">
+        <view>{{item.date}}</view>
+        <view class='detailInfo'>
+          <view>
+            销售额:
+            <text> ￥{{item.amount}}</text>
+          </view>
+          <view>
+            销量:
+            <text> {{item.units}}</text>
+          </view>
+          <view>
+            利润:
+            <text> ￥ {{item.profit}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="weui-cell__ft">
+
+      </view>
+    </view>
+
+  </view>
+
+  <view class="weui-loadmore" style='{{ listData.length === 0 ? "display:block": "display:none"}}'>
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+  </view>
+</scroll-view>
+
+
+
+
+
+<!-- 弹框数据筛选 -->
+<popup show="{{showFilterMenue}}" position="right" custom-class="popup" bind:close="toggleFilterMenue">
+  <view class='popup-content'>
+    <view class="popup-panel">
+
+      <view class='popup-device-place'>
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label popup-title" style='margin:0'>场地</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker bindchange="onFilterPlaceChange" range="{{placesData}}" value='全部' range-key="name">
+              <view class="weui-select">{{placesData[placesDataIndex].name}}</view>
+            </picker>
+          </view>
+        </view>
+      </view>
+
+      <view class='popup-device-id'>
+        <view class='popup-title'>设备编号</view>
+        <view>
+          <input placeholder='请输入设备编号' type='number' bindinput="onDeviceIdChange" value='{{filterParams.query}}'></input>
+        </view>
+      </view>
+
+
+
+
+
+
+      <view class='popup-device-place'>
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label popup-title" style='margin:0'>商品分类</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker bindchange="onFilterTradeChange" value="{{index}}" range="{{trade}}" range-key='name'>
+              <view class="weui-select">{{trade[tradeIndex].name}}</view>
+            </picker>
+          </view>
+        </view>
+      </view>
+
+    </view>
+    <view class='popup-bottom'>
+      <text bindtap='resetPopData'>重置</text>
+      <text bindtap='onSubmit'>确定</text>
+    </view>
+  </view>
+</popup>
